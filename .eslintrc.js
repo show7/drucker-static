@@ -27,5 +27,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 强制在注释中 // 或 /* 使用一致的空格
     'spaced-comment': 0,
+    // js语句结尾必须使用分号
+    'semi': ['off', 'always'],
   }
 }

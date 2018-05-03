@@ -7,6 +7,8 @@
 
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 
@@ -15,6 +17,7 @@ vue插件使用
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 
 Vue.use(VueResource)
+Vue.use(ElementUI)
 
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 关闭生产模式下给出的提示
