@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "element-ui": "^2.3.7",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "simditor": "^2.3.6",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1"
@@ -40,6 +43,7 @@
     "cross-env": "^5.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
+    "element-theme-chalk": "^2.4.2",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",

@@ -1,29 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import projectMain from '@/components/project/projectMain'
+import contentMain from '@/components/content/contentMain'
 
-const projectOne = () => import(/* webpackChunkName: "projectOne" */ '@/components/project/projectOne/projectOne')
-const projectTwo = () => import(/* webpackChunkName: "projectTwo" */ '@/components/project/projectTwo/projectTwo')
-const helloWorld = () => import(/* webpackChunkName: "projectOne" */ '@/components/project/projectOne/helloWorld/helloWorld')
+const project = () => import(/* webpackChunkName: "content" */ '@/components/content/project/project')
+const projectTwo = () => import(/* webpackChunkName: "projectTwo" */ '@/components/content/projectTwo/projectTwo')
+const courseIntroduce = () => import(/* webpackChunkName: "content" */ '@/components/content/project/course/courseIntroduce/courseIntroduce')
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
   routes: [
     {
-      path: '/project',
-      name: "projectMain",
-      component: projectMain,
+      path: '/content',
+      name: "contentMain",
+      component: contentMain,
       children: [
         {
-          path: '/',
-          name: "projectOne",
-          component: projectOne,
+          path: 'project',
+          name: "project",
+          component: project,
           children: [
             {
-              path: 'helloWorld',
-              name: "helloWorld",
-              component: helloWorld,
+              path: 'course/courseintroduce',
+              name: "courseIntroduce",
+              component: courseIntroduce,
             }
           ]
         },

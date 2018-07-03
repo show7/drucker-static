@@ -9,6 +9,7 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './style/theme/index.css'
 import App from './App'
 import router from './router'
 

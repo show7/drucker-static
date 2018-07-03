@@ -10,7 +10,26 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/pc/*': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/rise/*': ''
+        }
+      },
+      '/': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        },
+      },
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
