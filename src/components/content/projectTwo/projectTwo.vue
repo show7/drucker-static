@@ -42,18 +42,18 @@
 </template>
 
 <script>
-    export default {
-      name: "project-two",
-      methods: {
-        handleOpen(key, keyPath) {
-          console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-          console.log(key, keyPath);
-        }
-
-      }
+export default {
+  name: 'project-two',
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath);
     }
+
+  }
+}
 </script>
 
 <style scoped>

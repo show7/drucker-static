@@ -15,25 +15,25 @@ export default new Router({
   routes: [
     {
       path: '/content',
-      name: "contentMain",
+      name: 'contentMain',
       component: contentMain,
       children: [
         {
           path: 'project',
-          name: "project",
+          name: 'project',
           component: project,
           children: [
             {
               path: 'course/courseintroduce',
-              name: "courseIntroduce",
-              component: courseIntroduce,
+              name: 'courseIntroduce',
+              component: courseIntroduce
             }
           ]
         },
         {
           path: 'projectTwo',
-          name: "projectTwo",
-          component: projectTwo,
+          name: 'projectTwo',
+          component: projectTwo
         }
       ]
     }
