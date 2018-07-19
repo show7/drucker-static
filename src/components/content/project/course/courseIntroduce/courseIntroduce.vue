@@ -5,7 +5,7 @@
       <el-col :span="6">
         <div class="box">
           <p>小课标题</p>
-          <el-select v-model="courseTitleValue" @change="sendData(courseTitleValue)" placeholder="请选择小课标题">
+          <el-select v-model="courseTitleValueId" @change="sendData(courseTitleValueId)" placeholder="请选择小课标题">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -101,13 +101,16 @@
       </el-col>
     </el-row>
 
-   <!--上传图片与适用人群-->
+   <!--上传工具图片与适用人群-->
     <el-row class="">
-      <el-col :span="8">
+      <el-col :span="10">
+        <p class="upload-pic">上传工具图片</p>
         <el-upload
           action="/pc/upload/file"
           list-type="picture-card"
+          :file-list="toolPic"
           :limit="1"
+          :on-success="sendPicSuccess"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove">
           <i class="el-icon-plus"></i>
@@ -116,17 +119,51 @@
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
       </el-col>
-      <el-col :span="16">
-        <label class="text-name">适用人群：</label>
+      <el-col :span="14">
+        <p class="text-name">适用人群：</p>
         <el-input
           type="textarea"
-          :rows="7"
+          :rows="8"
           placeholder="请输入内容"
           v-model="who">
         </el-input>
       </el-col>
     </el-row>
-
+    <!--上传讲师介绍图片和版本迭代-->
+    <el-row class="">
+      <el-col :span="10">
+        <p class="upload-pic">上传讲师介绍图片</p>
+        <el-upload
+          action="/pc/upload/file"
+          list-type="picture-card"
+          :limit="1"
+          :file-list="authorPic"
+          :on-success="sendAuthorPicSuccess"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
+      </el-col>
+      <el-col :span="14">
+        <p class="upload-pic">版本迭代</p>
+        <el-date-picker
+          class="date-time"
+          v-model="dateTimeValue"
+          type="datetime"
+          value-format="yyyy-MM-dd HH-mm-ss"
+          placeholder="选择日期时间">
+        </el-date-picker>
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="请输入内容"
+          v-model="changeLog">
+        </el-input>
+      </el-col>
+    </el-row>
     <!--弹框-->
     <el-dialog
       :title="popName"
@@ -174,15 +211,21 @@
       <h3>课程介绍</h3>
       <Editor id="oneEditor"
               ref="oneEditor"
-              @change="change"></Editor>
+              @change="oneEditorChange"></Editor>
     </div>
     <div class="project-introduce">
-      <h3>知识体系</h3>
+      <h3>课程资料</h3>
       <Editor id="twoEditor"
               ref="twoEditor"
-              @change="change"></Editor>
+              @change="twoEditorChange"></Editor>
     </div>
-    <el-button size="medium" type="primary">更新数据</el-button>
+    <div class="project-introduce">
+      <h3>案例分析</h3>
+      <Editor id="fourEditor"
+              ref="fourEditor"
+              @change="fourEditorChange"></Editor>
+    </div>
+    <el-button size="medium" type="primary" @click="handleSendAll">更新数据</el-button>
   </div>
 </template>
 
@@ -197,7 +240,8 @@ export default {
   data () {
     return {
       courseTitleList: [], // 小课标题list
-      courseTitleValue: '', // 选择小课标题之后的id
+      courseTitleValueId: '', // 选择小课标题之后的id
+      abbreviation: '', //小课标题
       courseChangeData: {}, // 选择小课之后的返回的数据
       catalogMain: {}, // 小课类别
       catalogsValue: '', //小课主类别value
@@ -216,11 +260,21 @@ export default {
       audioId: 0, // 需要编辑的audioId
       actionRrl: '', //语音上传的url
       fileAudioUrl: '', // 从语音list点击编辑获取的url
+      fourEditorVal: '', //案例分析文本
+      twoEditorVal: '', //课程资料文本
+      oneEditorVal: '', //课程介绍文本
+      toolPic: [], //工具图片Url
+      toolPicResult:'',
+      authorPic: [], //讲师介绍图片
+      authorPicResult:'',
+      lastModifiedTime: '', //版本选择的变更时间
       outerVisible: false,
       innerVisible: false,
       centerDialogVisible: false,
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      dateTimeValue: '', //时间选择
+      changeLog:'', //版本迭代说明
     }
   },
   methods: {
@@ -228,8 +282,7 @@ export default {
       let self = this;
       // 获取小课名称列表
       ApiDataFilter.request({
-        apiPath: 'project.course.courseIntroduction.simple',
-        method: 'get',
+        apiPath: 'common.simple',
         successCallback (res) {
           self.courseTitleList = res.msg
         }
@@ -237,54 +290,82 @@ export default {
       // 获取小课主次类别
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.catalog',
-        method: 'get',
         successCallback (res) {
           self.catalogMain = res.msg
         }
       });
     },
-    // 发送选择小课名称接口
+    /* 发送选择小课名称接口*/
     sendData (value) {
       let self = this;
+      this.toolPic=[];
+      this.authorPic=[];
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.sendData',
         method: 'get',
         pathParams: [value],
         successCallback (res) {
           self.courseChangeData = res.msg;
+          self.abbreviation = res.msg.abbreviation;
           self.catalogsValue = res.msg.catalogId;
           self.subCatalogsValue = res.msg.subCatalogId;
           self.problem = res.msg.problem;
           self.tableData = self.handleChangeData(res.msg.audioList);
+          self.dateTimeValue = res.msg.lastModifiedTime;
+          self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
-          self.$refs.oneEditor.editor.setValue(res.msg.why);
-          self.$refs.twoEditor.editor.setValue(res.msg.how);
+          res.msg.tool ?  self.toolPic.push({url:res.msg.tool}):"";
+          self.toolPicResult = res.msg.tool;
+          self.authorPic.push({url:res.msg.authorPic});
+          self.authorPicResult = res.msg.authorPic;
+          self.$refs.oneEditor.editor.setValue(res.msg.introduction);
+          self.$refs.twoEditor.editor.setValue(res.msg.courseMaterial);
+          self.$refs.fourEditor.editor.setValue(res.msg.caseIntroduction);
         }
       })
     },
     /*发送所有修改数据*/
-    handleSendAll(){
+    handleSendAll () {
+      if( !this.problem || !this.abbreviation ||  !this.oneEditorVal || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
+        this.$message.error('请将所有信息填写完毕');
+        return
+      }
       let self = this;
-      let bodyData={
-        abbreviation:''
+      let bodyData = {
+        abbreviation: this.abbreviation,
+        catalogId: this.catalogsValue,
+        id: this.courseTitleValueId,
+        problem: this.problem,
+        subCatalogId: this.subCatalogsValue,
+        who: this.who,
+        length: 0,
+        tool: this.toolPicResult,
+        introduction: this.oneEditorVal,
+        courseMaterial: this.twoEditorVal,
+        caseIntroduction: this.fourEditorVal,
+        authorPic: this.authorPicResult,
+        lastModifiedTime: this.dateTimeValue,
+        changeLog: this.changeLog
       };
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.save',
-        method:  'post',
-        data:bodyData,
+        method: 'post',
+        data: bodyData,
         successCallback (res) {
+          self.$message.success('发送成功');
           console.log(res)
         }
       })
     },
-    //发送添加和编辑的语音
+    /*发送添加和编辑的语音*/
     handleSendAudio (ftpFileName) {
       let self = this;
       let dataBody = {
         audioId: this.audioId,
         ftpFileName: ftpFileName,
         name: this.audioName,
-        words: this.audioWords
+        words: this.audioWords,
+        referenceId: this.courseTitleValueId
       };
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.uploadAudio',
@@ -292,13 +373,21 @@ export default {
         data: dataBody,
         successCallback (res) {
           self.centerDialogVisible = false;
-          self.$message.success('恭喜你，这是一条成功消息')
-          console.log(res)
+          self.sendData(self.courseTitleValueId);
+          self.$message.success('发送成功');
         }
       })
     },
-    change (val) {
-
+    /*课程介绍*/
+    oneEditorChange (val) {
+      this.oneEditorVal = val
+    },
+    /*课程资料*/
+    twoEditorChange (val) {
+      this.twoEditorVal = val
+    },
+    fourEditorChange (val) {
+      this.fourEditorVal = val
     },
     /*语音文本描述*/
     changeAudio (val) {
@@ -312,6 +401,13 @@ export default {
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    /*图片上传成功*/
+    sendPicSuccess (res, file, fileList) {
+      this.toolPicResult = res.msg;
+    },
+    sendAuthorPicSuccess (res, file, fileList) {
+      this.authorPicResult = res.msg;
     },
     /*添加语音*/
     handleAddAudio () {
@@ -397,8 +493,9 @@ export default {
       newStr = newStr.replace(/&[^;]+;/g, '')
       return newStr
     },
-    // 处理语音list文案
+    /* 处理语音list文案*/
     handleChangeData (tableData) {
+      if (tableData.length == 0) return
       tableData.map((item, index) => {
         tableData[index].wordsString = this.removeHtmlTags(item.words)
       });
@@ -407,16 +504,6 @@ export default {
   },
   created () {
     this.getData()
-    /*   abbreviation:"战略管理"
-      audioId:null
-      catalogId:4
-      how:"<p>sdasdds</p>"
-      id:44
-      length:10
-      problem:"四两拨千斤的艺术"
-      why:"<p>你好，
-      subCatalogId:21
-      who:"公司管理层;↵创业公司的CEO;↵向管理岗位转变的技术从业者"*/
   }
 }
 </script>

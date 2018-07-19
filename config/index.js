@@ -15,8 +15,30 @@ module.exports = {
         target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
-        pathRewrite: {
-          '^/rise/*': ''
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        }
+      },
+      '/rise/*': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        },
+      },
+      '/subscribe/*': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
         }
       },
       '/': {

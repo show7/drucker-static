@@ -19,7 +19,7 @@ export default {
   name: 'contentMain',
   data () {
     return {
-      itemList: [{name: '课程相关', path: '/content/project'}, {name: '项目2', path: '/content/projectTwo'}],
+      itemList: [{name: '课程相关', path: '/content/project'}, {name: '运营功能相关', path: '/content/manage'}],
       activeIndex: '/content/project'
     }
   },
@@ -49,7 +49,7 @@ export default {
       if (pathArray[1] === 'content') {
         console.log(this.itemList[0].path)
       }
-      /* this.activeIndex = this.$route.matched[1].path*/
+      this.activeIndex = this.$route.matched[1].path
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);
