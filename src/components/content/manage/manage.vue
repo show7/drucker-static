@@ -24,7 +24,14 @@
               <el-menu-item index="/content/manage/opencourse">新开/解锁课程</el-menu-item>
               <el-menu-item index="/content/manage/application">申请审批</el-menu-item>
               <el-menu-item index="/content/manage/qrcode">推广二维码</el-menu-item>
-
+              <el-menu-item index="/content/manage/survey">问卷链接设置</el-menu-item>
+              <el-submenu index="2">
+                <template slot="title">首页资源管理</template>
+                <el-menu-item index="/content/manage/banner">首页 Banner 编辑</el-menu-item>
+                <el-menu-item index="/content/manage/lives">直播内容编辑</el-menu-item>
+                <el-menu-item index="1-4-1">线下活动编辑</el-menu-item>
+                <el-menu-item index="1-4-1">圈圈文章编辑</el-menu-item>
+              </el-submenu>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>

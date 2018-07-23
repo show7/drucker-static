@@ -7,6 +7,9 @@ const addvip = () => import(/* webpackChunkName: "manage" */ '@/components/conte
 const openCourse = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/openCourse/openCourse')  //新开/解锁课程
 const application = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/application/application')  //申请审批
 const qrcode = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/qrcode/qrcode')  //推广二维码
+const survey = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/survey/survey')  //问卷链接设置
+const banner = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/banner/banner')  //首页banner
+const lives = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/lives/lives')  //首页直播
 
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
@@ -17,4 +20,7 @@ export default [
   { path: 'opencourse', name: 'openCourse', component: openCourse},
   { path: 'application', name: 'application', component: application},
   { path: 'qrcode', name: 'qrcode', component: qrcode},
+  { path: 'survey', name: 'survey', component: survey},
+  { path: 'banner', name: 'banner', component: banner},
+  { path: 'lives', name: 'lives', component: lives},
 ]

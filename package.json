@@ -18,6 +18,7 @@
     "element-ui": "^2.3.7",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "simditor": "^2.3.6",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.0",

@@ -26,8 +26,20 @@
         .el-input{
           width: 70%;
           margin-bottom: 10px;
+          position: relative;
+          &.required{
+            &:before{
+              content: '*';
+              position: absolute;
+              color: #F56C6C;
+              left: -10px;
+            }
+          }
         }
       }
     }
+  }
+  .qrcode-pic{
+    margin-top: 56px;
   }
 }

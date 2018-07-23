@@ -52,6 +52,22 @@ export default {
         'sendCheckedApplication':'pc/operation/notice/bs/application',//发送审核结果
       },
       'qrCode':'subscribe/rule/tmp/qrCode' , //推广二维码
+      'survey': {   // 调查问卷
+        'surveyList':'pc/operation/survey/config/list', //获取问卷list
+        'surveyConfig':'pc/operation/survey/config', //修改新增问卷
+      },
+      'home':{   // 首页banner变价
+        'bannersList':'backend/flow/banners', //获取banner列表
+        'bannerInsert':'backend/flow/banner/insert' , //插入一条banner
+        'bannerUpdate':'backend/flow/banner/update' , //更新banner
+        'bannerDelete':'backend/flow/delete/banner' , //删除banner
+      },
+      'lives':{  //直播内容编辑
+        'livesList':'backend/flow/lives' , //直播内容list
+        'livesInsert':'backend/flow/lives/insert',//插入
+        'livesUpdate':'backend/flow/lives/update',//更新
+        'livesDelete':'backend/flow/delete/lives', //删除
+      }
     }
   }
 };

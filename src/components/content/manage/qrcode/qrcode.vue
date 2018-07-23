@@ -20,8 +20,8 @@
             <el-col :span="12">
               <div class="nickname-url">
                 <p>预置变量：{nickname} 昵称,{url}跳转链接 例如：你好，{nickanme}即将跳转到: {url}</p>
-                <el-input placeholder="请输入关注文案" v-model="ruleList[index].content" clearable></el-input>
-                <el-input placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
+                <el-input class="required" placeholder="请输入关注文案" v-model="ruleList[index].content" clearable></el-input>
+                <el-input class="required" placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
               </div>
             </el-col>
             <el-col :span="12">
@@ -31,34 +31,89 @@
               </div>
             </el-col>
           </el-row>
-          <el-button v-if="index != 0" type="primary" icon="el-icon-delete" @click="handleDel">删除</el-button>
+          <el-button v-if="index != 0" type="primary" icon="el-icon-delete" @click="handleDel(index)">删除</el-button>
         </div>
     </div>
-    <p>{{JSON.stringify(ruleList)}}</p>
+
     <el-row>
-      <el-col :span="12"><el-button type="primary" @click="handleAdd">添加规则</el-button></el-col>
-      <el-col :span="12"><el-button type="primary">点击生成</el-button></el-col>
+      <el-col :span="8"><el-button type="primary" @click="handleAdd">添加规则</el-button></el-col>
+      <el-col :span="8"><el-button type="primary" @click="checkData">点击生成</el-button></el-col>
+      <el-col v-if="qrCodeObj.link" :span="8"><el-button type="primary" @click="dialogVisible=true">查看二维码</el-button></el-col>
     </el-row>
+
+
+    <el-dialog
+      title="右击图片进行保存"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <span>活动链接地址：{{qrCodeObj.link}}</span>
+      <img :src="qrCodeObj.qrCode" alt="二维码">
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+  import ApiDataFilter from '@/libraries/apiDataFilter'
+
   export default {
     name: "qrcode",
     data() {
       return {
         remark:'', //中文活动名称
         scene:'',  //英文活动名称
-        ruleList:[{memberTypeIds: "", link: "", content: ""}]
+        ruleList:[{memberTypeIds: "", link: "", content: ""}],
+        qrCodeObj:{
+          link:'',
+          qrCode:''
+        },
+        dialogVisible:false
       }
     },
     methods:{
-        handleAdd(){
-          let ruleItem = {memberTypeIds: "", link: "", content: ""}
-          this.ruleList.push(ruleItem)
-        },
+      handleAdd(){
+        let ruleItem = {memberTypeIds: "", link: "", content: ""}
+        this.ruleList.push(ruleItem)
+      },
       handleDel(index){
           this.ruleList.splice(index,1)
+      },
+      checkData(){
+          if (!this.remark) {
+            this.$message.error('请输入中文活动名称');
+            return
+          }
+          if (!this.scene) {
+            this.$message.error('请输入英文活动名和编号');
+            return
+          }
+          let ruleList = [];
+        this.ruleList.forEach((item ,index)=>{
+          if (!item.link || !item.content) {
+            ruleList.push(item)
+          }
+        });
+        if (ruleList.length > 0){
+          this.$message.error('请填写完整必要信息');
+          return
+        }
+        this.sendData();
+      },
+      sendData(){
+        let self =this;
+        let param = {remark:this.remark,scene:this.scene,ruleList:this.ruleList}
+        ApiDataFilter.request({
+          apiPath:'manage.qrCode',
+          method:'post',
+          data:param,
+          successCallback(res){
+            self.dialogVisible = true;
+            self.$message.success('提交成功');
+            self.qrCodeObj=res.msg;
+          }
+        })
       }
     },
     created(){
