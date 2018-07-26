@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import contentMain from '@/components/content/contentMain'
+import contentMain from '@/components/content/index'
 
-const project = () => import(/* webpackChunkName: "content" */ '@/components/content/project/project')
-const courseIntroduce = () => import(/* webpackChunkName: "content" */ '@/components/content/project/course/courseIntroduce/courseIntroduce')
+const project = () => import(/* webpackChunkName: "project" */ '@/components/content/project/index')
+const courseIntroduce = () => import(/* webpackChunkName: "project" */ '@/components/content/project/course/courseIntroduce/courseIntroduce')
 
-const manage = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/manage')
-import manager from './manage'
+const manage = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/index')
+import managerRouter from './manage'
 
+const weChat = () => import(/* webpackChunkName: "manage" */ '@/components/content/weChat/index')
+import wechatRouter from './weChat'
 Vue.use(Router)
 
 export default new Router({
@@ -17,7 +19,7 @@ export default new Router({
   },
   routes: [
     {
-      path: '/content',
+      path: '/management',
       name: 'contentMain',
       component: contentMain,
       children: [
@@ -37,7 +39,13 @@ export default new Router({
           path: 'manage',
           name: 'manage',
           component: manage,
-          children: manager
+          children: managerRouter
+        },
+        {
+          path:'wechat',
+          name:'weChat',
+          component:weChat,
+          children: wechatRouter
         }
       ]
     }

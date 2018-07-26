@@ -1,7 +1,6 @@
 <template>
     <div class="project-one">
-    <!--  <el-row>
-        <el-col :span="4">-->
+
       <div class="left-table">
         <el-menu
           :default-active="onRoutes"
@@ -18,20 +17,16 @@
               <span>课程导入</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/content/project/course/courseintroduce">小课导入</el-menu-item>
-              <el-menu-item index="1-1">选项2</el-menu-item>
+              <el-menu-item index="/management/project/course/courseintroduce">小课导入</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
       </div>
 
-    <!--    </el-col>
-        <el-col :span="19">-->
           <div class="router-class">
              <router-view/>
           </div>
-   <!--     </el-col>
-      </el-row>-->
+
     </div>
 </template>
 
@@ -64,5 +59,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import "project.less";
+  @import "index.less";
 </style>

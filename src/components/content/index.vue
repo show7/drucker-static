@@ -19,8 +19,8 @@ export default {
   name: 'contentMain',
   data () {
     return {
-      itemList: [{name: '课程相关', path: '/content/project'}, {name: '运营功能相关', path: '/content/manage'}],
-      activeIndex: '/content/project'
+      itemList: [{name: '课程相关', path: '/management/project'}, {name: '运营功能相关', path: '/management/manage'},{name: '小程序', path: '/management/wechat'}],
+      activeIndex: '/management/project'
     }
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
     updateForcus () {
       let path = this.$route.path;
       let pathArray = path.split('/');
-      if (pathArray[1] === 'content') {
+      if (pathArray[1] === 'management') {
         console.log(this.itemList[0].path)
       }
       this.activeIndex = this.$route.matched[1].path
@@ -59,5 +59,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import "contentMain.less";
+  @import "index.less";
 </style>

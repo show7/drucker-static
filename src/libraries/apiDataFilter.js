@@ -42,7 +42,7 @@ let apiDataFilter = {
     if (method === 'post') {
       Vue.http[method](apiUrl, data, opts).then((res) => {
         if (parseInt(res.body.code, 10) === apiConf.successStatusCode)  {successCallback(res.body) ;}
-         else { errorCallback(res && res.body.msg);}
+         else { errorCallback(res && res.body.msg,res);}
           loadingInstance.close()
       }, ()=>{ errorCallback ;loadingInstance.close()});
     } else if (method === 'jsonp' || method === 'get') {
@@ -80,7 +80,7 @@ let apiDataFilter = {
     请求错误处理方法
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
   errorCallback (res, arg) {
-    //console.log(res);
+    console.log(213121231);
     Message.error(typeof res === 'string' && res || '网络错误，请重试^_^');
   },
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -95,6 +95,7 @@ let apiDataFilter = {
       suffix = suffix[pathArray[n]];
     }
     if (suffix === undefined) suffix = '';
+
     return prefix + suffix;
   },
 

@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/pc/*': {
-        target: 'http://beta.confucius.mobi',
+        target: 'http://192.168.1.125:8080',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -32,6 +32,16 @@ module.exports = {
         },
       },
       '/subscribe/*': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        }
+      },
+      '/cache/*': {
         target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
