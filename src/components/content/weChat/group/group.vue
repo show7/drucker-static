@@ -357,8 +357,13 @@
       /*搜索接口*/
       groupSearch(){
         let self = this;
+        if (this.createTime == null) {
+          this.createTime = []
+        }if (this.publishTime == null){
+          this.publishTime =[];
+        }
         let param = { queryAccount : this.queryAccount ? this.queryAccount:null,statusId:this.statusId,communityId:this.communityId,wechatGroupId:this.wechatGroupId,
-          createStartTime:this.createTime.length > 0 ? this.createTime[0]:null,createEndTime:this.createTime.length > 0 ? this.createTime[1]:null,
+          createStartTime: this.createTime.length > 0 ? this.createTime[0]:null,createEndTime:this.createTime.length > 0 ? this.createTime[1]:null,
           publishStartTime:this.publishTime.length > 0 ? this.publishTime[0]:null,publishEndTime:this.publishTime.length > 0 ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
         this.groupList =[];
