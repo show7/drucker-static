@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/pc/*': {
-        target: 'http://192.168.1.125:8080',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -101,7 +101,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/drucker-static/',
 
     /**
      * Source Maps
