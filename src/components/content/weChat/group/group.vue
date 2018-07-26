@@ -1,6 +1,7 @@
 <template>
   <div class="group-container">
     <h3>群内容管理</h3>
+    <!--头部内容-->
     <div class="group-top">
       <el-row>
         <el-col :span="6">
@@ -59,7 +60,7 @@
       <el-row>
         <el-col :span="12">
           <div class="grid-content-left">
-            <el-button type="primary" size="medium" @click="groupPublish">发布</el-button>
+            <el-button type="primary" size="medium" @click="groupPublish(checkbox)">发布</el-button>
           </div>
         </el-col>
         <el-col :span="12">
@@ -68,13 +69,14 @@
           </div>
         </el-col>
       </el-row>
+      <!--table表格-->
       <el-table
         :data="groupList"
         style="width: 100%">
         <el-table-column
           label="选择">
           <template slot-scope="scope">
-              <el-checkbox :disabled="scope.row.publishStatus == 1 ? true : false " @change="(val)=>{checkboxChange(scope.row.esChatId,val)}"></el-checkbox>
+              <el-checkbox  :disabled="scope.row.publishStatus == 1 ? true:false " @change="(val)=>{checkboxChange(scope.row.esChatId,val)}"></el-checkbox>
           </template>
         </el-table-column>
         <el-table-column
@@ -127,10 +129,11 @@
               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button
               size="mini"
-                >发布</el-button>
+              @click="groupPublish([scope.row.esChatId])"  >发布</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
       <div class="pagination">
         <el-pagination
           background
@@ -140,6 +143,7 @@
         </el-pagination>
       </div>
     </div>
+    <!--编辑和新增弹框-->
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
@@ -226,7 +230,7 @@
           <el-button type="primary" @click="checkSaveData">确 定</el-button>
       </span>
     </el-dialog>
-
+   <!--详情-->
     <el-dialog
       title="详情"
       :visible.sync="dialogVisibleDesc"
@@ -357,6 +361,7 @@
           createStartTime:this.createTime.length > 0 ? this.createTime[0]:null,createEndTime:this.createTime.length > 0 ? this.createTime[1]:null,
           publishStartTime:this.publishTime.length > 0 ? this.publishTime[0]:null,publishEndTime:this.publishTime.length > 0 ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
+        this.groupList =[];
         ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupSearch',
           method:'post',
@@ -364,9 +369,9 @@
           successCallback(res){
             self.groupList = res.msg.content;
             if(self.groupList.length > 0){
-              self.groupList.forEach((item,index)=>{
-                self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
-                self.groupList[index]['words']= self.removeHtmlTags(item.content);
+                self.groupList.forEach((item,index)=>{
+                  self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
+                  self.groupList[index]['words']= self.removeHtmlTags(item.content);
               })
             }
             self.pageCount = res.msg.page.pageCount;
@@ -464,18 +469,21 @@
         }
       },
       /*发布*/
-      groupPublish() {
+      groupPublish(checkbox) {
         let self = this;
         ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupPublish',
           method:'post',
-          data: {groupContents: self.checkbox},
+          data: {esIds: checkbox},
           successCallback(res){
             self.$message.success('发布成功');
             self.groupSearch();
             self.checkbox = [];
           }
         })
+      },
+      handlePublish(){
+
       },
       /*新增弹框*/
       newAdd(){
