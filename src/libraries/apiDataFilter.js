@@ -18,7 +18,9 @@ let apiDataFilter = {
     method = method.toLowerCase();
     let opts = {
       'timeout': apiConf.timeout,
-      'headers': {}
+      'headers': {
+        platform:'pc'
+      }
     };
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         如果启用jsonp模式，而且如果设置了jsonp参数
