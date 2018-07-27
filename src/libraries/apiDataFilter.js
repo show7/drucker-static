@@ -75,6 +75,7 @@ let apiDataFilter = {
         env = 'dev';
         break;
     }
+    console.log(env+'21321');
     return env;
   },
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,7 +114,7 @@ let apiDataFilter = {
       suffix = suffix[pathArray[n]];
     }
     if (suffix === undefined) suffix = '';
-
+    console.log(prefix + suffix+'21321');
     return prefix + suffix;
   },
 
