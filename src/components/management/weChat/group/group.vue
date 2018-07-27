@@ -454,7 +454,16 @@
       },
       /*清除部分查询条件*/
       Clear(index){
-        index == 0 ? this.statusId = null : index == 1 ?  this.communityId= null : this.wechatGroupId = null;
+        if (index == 0 ) {
+          this.statusId = null
+        }else if ( index == 1) {
+          this.communityId= null;
+          this.wechatGroupId = null;
+          this.wechatGroupList = [];
+        }else {
+          this.wechatGroupId = null;
+          this.wechatGroupList = [];
+        }
       },
       /*清除搜索条件*/
       clearSearch(){
