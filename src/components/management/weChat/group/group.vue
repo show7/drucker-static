@@ -533,9 +533,11 @@
         this.content = row.content;
         this.imgList = row.picGroup;
         let picGroup = [];
-        row.picGroup.forEach((item,index)=>{
-          picGroup.push({id:index,url:item})
-        });
+        if(row.picGroup.length > 0){
+          row.picGroup.forEach((item,index)=>{
+            picGroup.push({id:index,url:item})
+          });
+        }
         this.picGroupList = picGroup
       },
       /*查看详情*/

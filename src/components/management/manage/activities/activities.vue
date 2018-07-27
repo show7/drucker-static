@@ -178,8 +178,8 @@
         dateList:[],
         dialogVisible: false,
         title:'新增',
-        id:'',
-        way:0
+        id:'',//编辑时需要入参
+        way:0 ,//
       }
     },
     methods:{
