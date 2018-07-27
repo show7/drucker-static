@@ -441,6 +441,7 @@
               this.wechatGroupList = item.wechatGroupList
             }
         })
+        this.wechatGroupId = null;
       },
       /*弹框群组选择change事件*/
       popOutCommunityChange(val){
