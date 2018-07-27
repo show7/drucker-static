@@ -33,6 +33,8 @@
           <el-date-picker
             v-model="createTime"
             type="daterange"
+            :default-time="defaultTime"
+            :picker-options="pickerOptions"
             value-format="timestamp"
             range-separator="至"
             start-placeholder="开始日期"
@@ -44,6 +46,8 @@
           <el-date-picker
             v-model="publishTime"
             type="daterange"
+            :picker-options="pickerOptions"
+            :default-time="defaultTime"
             value-format="timestamp"
             range-separator="至"
             start-placeholder="开始日期"
@@ -93,12 +97,12 @@
           label="微信群">
         </el-table-column>
         <el-table-column
-          prop="words"
+          prop="content"
           width="300"
           label="发表内容">
           <template slot-scope="scope">
             <div class="content-box">
-              <p class="content">{{scope.row.words}}</p>
+              <p class="content">{{scope.row.content}}</p>
             </div>
           </template>
         </el-table-column>
@@ -130,7 +134,7 @@
             <el-button
               v-if="scope.row.publishStatus != 1"
               size="mini"
-              @click="groupPublish([scope.row.esChatId])"  >发布</el-button>
+              @click="groupPublish([scope.row.esChatId])">发布</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -196,9 +200,7 @@
         <el-row>
           <el-col :span="24">
             <h4>发布内容</h4>
-            <Editor id="oneEditor"
-                    ref="oneEditor"
-                    @change="oneEditorChange"></Editor>
+            <el-input type="textarea" placeholder="请输入" :row="4" v-model="content" ></el-input>
           </el-col>
         </el-row>
         <el-row>
@@ -208,6 +210,7 @@
               action="/pc/upload/file"
               list-type="picture-card"
               :limit="9"
+              :file-list ="picGroupList"
               :on-success="sendPicSuccess"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove">
@@ -271,7 +274,7 @@
         <el-row>
           <el-col :span="24">
             <h4>发布内容</h4>
-            <p>{{words ? words : '无内容'}}</p>
+            <p>{{content ? content : '无内容'}}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -323,6 +326,7 @@
         dialogImageUrl: '',
         dialogVisiblePic: false,
         imgList:[],//图片list
+        picGroupList:[],//展示的pic
         publish: '1' ,//操作
         riseId:'',//riseId填写
         headimgurl:'',//头像
@@ -333,8 +337,15 @@
         postProfileId:'',//新增和编辑的id
         editorFlag:false,
         pageIndex:1,
-        words:'',//描述
         picGroup:[],//图片列表
+        esChatId:'',//编辑的id
+        content:'',//文本内容
+        defaultTime:['00:00:00','23:59:59'],
+        pickerOptions: {
+          disabledDate: (time) => {
+            return time.getTime() > Date.now() - 8.64e6
+          }
+        },
       }
     },
     methods:{
@@ -348,7 +359,6 @@
             if(self.groupList.length > 0){
               self.groupList.forEach((item,index)=>{
                 self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
-                self.groupList[index]['words']= self.removeHtmlTags(item.content);
               })
             }
             self.pageCount = res.msg.content.page.pageCount;
@@ -358,26 +368,26 @@
       /*搜索接口*/
       groupSearch(){
         let self = this;
-        let param = { queryAccount : this.queryAccount ? this.queryAccount:null,statusId:this.statusId,communityId:this.communityId,wechatGroupId:this.wechatGroupId,
+        let param = { queryAccount : this.queryAccount ? this.queryAccount:null,status:this.statusId,communityId:this.communityId,wechatGroupId:this.wechatGroupId,
           createStartTime: this.createTime != null ? this.createTime[0]:null,createEndTime:this.createTime != null ? this.createTime[1]:null,
           publishStartTime:this.publishTime != null ? this.publishTime[0]:null,publishEndTime:this.publishTime != null ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
         this.groupList =[];
-        ApiDataFilter.request({
+        setTimeout(()=>{ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupSearch',
           method:'post',
           data:param,
           successCallback(res){
             self.groupList = res.msg.content;
             if(self.groupList.length > 0){
-                self.groupList.forEach((item,index)=>{
-                  self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
-                  self.groupList[index]['words']= self.removeHtmlTags(item.content);
+              self.groupList.forEach((item,index)=>{
+                self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
               })
             }
             self.pageCount = res.msg.page.pageCount;
           }
-        })
+        })},500)
+
       },
       /*新增状态下查询*/
       getAdd(){
@@ -400,6 +410,7 @@
       handleGroupSave(){
         let  self = this;
         let  param = { picGroup:this.imgList,publish:this.publish,postProfileId:this.postProfileId,groupId:this.popOutWechatGroupId,content:this.content};
+        this.esChatId ? Object.assign(param,{esChatId:this.esChatId}):'';
         ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupSave',
           method:'post',
@@ -419,6 +430,7 @@
          }
          if(!this.content && this.imgList.length == 0){
             this.$message.error('内容和图片至少填写一项')
+           return
          }
          this.handleGroupSave();
       },
@@ -448,8 +460,9 @@
         this.statusId = null;
         this.communityId = null;
         this.wechatGroupId = null;
-        this.createTime = [];
-        this.publishTime = [];
+        this.createTime = null;
+        this.publishTime = null;
+        this.wechatGroupList = [];
         this.getGroupList();
       },
       /*得到当前页数*/
@@ -471,6 +484,10 @@
       },
       /*发布*/
       groupPublish(checkbox) {
+        if (checkbox.length == 0){
+          this.$message.error('请先选择需要发布的选项');
+          return
+        }
         let self = this;
         ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupPublish',
@@ -487,49 +504,71 @@
       newAdd(){
         this.editorFlag = false;
         this.riseId = null;
+        this.nickname = null;
         this.headimgurl = null;
+        this.esChatId =null;
         this.popOutCommunityId = null;
         this.popOutWechatGroupId= null;
         this.postProfileId = null;
         this.publish = '1';
         this.dialogVisible = true;
-        setTimeout(()=>{this.$refs.oneEditor.editor.setValue('');},200)
+        this.content = '';
+        this.picGroupList = []
+
       },
       /*编辑弹框*/
       handleEdit(index,row){
+        this.title = '编辑';
+        this.nickname = row.nickname;
+        this.esChatId =row.esChatId;
        this.editorFlag = true;
        this.riseId = row.riseId;
        this.headimgurl = row.avatar;
        this.postProfileId =row.profileId;
+       this.popOutCommunityChange(row.communityId);
        this.popOutCommunityId = row.communityId;
        this.popOutWechatGroupId=row.groupId;
         this.publish = row.publish.toString();
         this.dialogVisible = true;
-        setTimeout(()=>{this.$refs.oneEditor.editor.setValue(row.communityDescription);},200)
+        this.content = row.content;
+        this.imgList = row.picGroup;
+        let picGroup = [];
+        row.picGroup.forEach((item,index)=>{
+          picGroup.push({id:index,url:item})
+        });
+        this.picGroupList = picGroup
       },
       /*查看详情*/
       handleOnlook(index,row){
         this.riseId = row.riseId;
+        this.nickname = row.nickname;
         this.headimgurl = row.avatar;
         this.communityName = row.communityName;
         this.groupName=row.groupName;
         this.publish = row.publish.toString();
         this.dialogVisibleDesc = true;
-        this.words = row.words
+        this.content = row.content
         this.picGroup = row.picGroup;
       },
       /*上传图片*/
       sendPicSuccess(res, file, fileList){
+        this.imgList = this.handleAddReducePic(fileList);
+      },
+      /*图片数据列表形式*/
+      handleAddReducePic(fileList){
         let imgList = [];
         if (fileList.length > 0){
           fileList.forEach((item,index)=>{
-            imgList.push(item.response.msg)
+            if ('response' in item) {
+              imgList.push(item.response.msg)
+            }else {
+              imgList.push(item.url)
+            }
           })
         }else {
           imgList = []
         }
-        this.imgList = imgList;
-
+        return imgList
       },
       /*文本编辑器的取值*/
       oneEditorChange(val){
@@ -537,7 +576,8 @@
       },
       /*删除图片*/
       handleRemove(file, fileList) {
-        let imgList = [];
+        this.imgList = this.handleAddReducePic(fileList);
+        /*let imgList = [];
         if (fileList.length > 0){
           fileList.forEach((item,index)=>{
             imgList.push(item.response.msg)
@@ -545,7 +585,7 @@
         }else {
           imgList = []
         }
-        this.imgList = imgList;
+        this.imgList = imgList;*/
       },
       /*图片预览*/
       handlePictureCardPreview(file) {
