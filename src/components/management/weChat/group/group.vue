@@ -28,7 +28,7 @@
         </el-col>
       </el-row>
       <el-row class="second-line">
-        <el-col :span="8">
+        <el-col :span="9">
           <h4>创建时间</h4>
           <el-date-picker
             v-model="createTime"
@@ -39,7 +39,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <h4>发布时间</h4>
           <el-date-picker
             v-model="publishTime"
@@ -50,7 +50,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col :span="8" class="buttons">
+        <el-col :span="5" class="buttons">
           <el-button type="primary" @click="groupSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
@@ -128,6 +128,7 @@
               size="mini"
               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button
+              v-if="scope.row.publishStatus != 1"
               size="mini"
               @click="groupPublish([scope.row.esChatId])"  >发布</el-button>
           </template>
@@ -311,10 +312,10 @@
         wechatGroupList:[],//微信群list,
         wechatGroupId:null,//微信群id
         groupName:'',//所属群名
-        createTime:[],//创建时间list
+        createTime:null,//创建时间list
         createStartTime:null,//创建开始时间
         createEndTime:null,//创建结束时间
-        publishTime:[],//发布时间list
+        publishTime:null,//发布时间list
         publishStartTime:null,//发布开始时间
         publishEndTime:null,//发布结束时间
         pageCount:null,//总共的页数
@@ -357,14 +358,9 @@
       /*搜索接口*/
       groupSearch(){
         let self = this;
-        if (this.createTime == null) {
-          this.createTime = []
-        }if (this.publishTime == null){
-          this.publishTime =[];
-        }
         let param = { queryAccount : this.queryAccount ? this.queryAccount:null,statusId:this.statusId,communityId:this.communityId,wechatGroupId:this.wechatGroupId,
-          createStartTime: this.createTime.length > 0 ? this.createTime[0]:null,createEndTime:this.createTime.length > 0 ? this.createTime[1]:null,
-          publishStartTime:this.publishTime.length > 0 ? this.publishTime[0]:null,publishEndTime:this.publishTime.length > 0 ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
+          createStartTime: this.createTime != null ? this.createTime[0]:null,createEndTime:this.createTime != null ? this.createTime[1]:null,
+          publishStartTime:this.publishTime != null ? this.publishTime[0]:null,publishEndTime:this.publishTime != null ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
         this.groupList =[];
         ApiDataFilter.request({

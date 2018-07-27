@@ -3,7 +3,7 @@
     <h3>证书发送</h3>
     <div class="send-top">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="8">
           <el-select v-model="certificateYear" placeholder="请选择证书年份">
             <el-option
               v-for="item in certificateYearList"
@@ -13,7 +13,7 @@
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <el-select v-model="certificateMonth" placeholder="请选择证书月份">
             <el-option
               v-for="item in certificateMonthList"
@@ -23,7 +23,7 @@
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <el-select v-model="certificateProject" placeholder="请选择生成学习项目">
             <el-option
               v-for="item in certificateProjectList"
@@ -33,11 +33,13 @@
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="6">
+      </el-row>
+      <el-row>
+        <el-col :span="24">
           <el-button type="primary" @click="handleShowtitle(0)">生成证书</el-button>
           <el-button type="primary" @click="handleShowtitle(1)">发送证书</el-button>
           <el-button type="primary" @click="handleShowtitle(2)">发送全勤奖</el-button>
-        </el-col>
+         </el-col>
       </el-row>
     </div>
     <el-dialog

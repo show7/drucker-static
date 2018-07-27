@@ -82,7 +82,14 @@ let apiDataFilter = {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
   errorCallback (res, arg) {
     if('status' in res){
-       this.callbackUrl(res);
+      if(res.status === 700) {
+        window.location.href = decodeURI(`${window.location.protocol}//${window.location.host}/login?callbackUrl=`) + encodeURIComponent(window.location.href)
+      } else if(res.status === 701) {
+        alert('抱歉，当前页面无权访问')
+        window.location.href = '/403.jsp'
+      } else {
+        Message.error('网络错误，请重试^_^');
+      }
        return
      }else {
       Message.error(typeof res.msg === 'string' && res.msg || '网络错误，请重试^_^');
@@ -92,12 +99,7 @@ let apiDataFilter = {
   重定向到登录页
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
   callbackUrl(res){
-    if(res.status === 700) {
-      window.location.href = decodeURI(`${window.location.protocol}//${window.location.host}/login?callbackUrl=`) + encodeURIComponent(window.location.href)
-    } else if(res.status === 701) {
-      alert('抱歉，当前页面无权访问')
-      window.location.href = '/403.jsp'
-    }
+
   },
 
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
