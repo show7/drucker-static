@@ -120,7 +120,7 @@
           prop="publishStatus"
           label="发布状态">
           <template slot-scope="scope">
-              <p class="publishStatus">{{scope.row.publishStatus == 1 ? '已发布':scope.row.publishStatus == 0 ? '未修改':'已修改'}}</p>
+              <p class="publishStatus" :class="scope.row.publishStatus == 1 ? 'primary':''">{{scope.row.publishStatus == 1 ? '已发布':scope.row.publishStatus == 0 ? '未修改':'已修改'}}</p>
           </template>
         </el-table-column>
         <el-table-column width="300" fixed="right" label="操作">
@@ -386,7 +386,7 @@
             }
             self.pageCount = res.msg.page.pageCount;
           }
-        })},500)
+        })},1000)
 
       },
       /*新增状态下查询*/
@@ -463,7 +463,7 @@
         this.createTime = null;
         this.publishTime = null;
         this.wechatGroupList = [];
-        this.getGroupList();
+        this.groupSearch();
       },
       /*得到当前页数*/
       currentChange(pageIndex){
