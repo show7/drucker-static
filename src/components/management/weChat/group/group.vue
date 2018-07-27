@@ -405,7 +405,7 @@
           method:'post',
           data: param,
           successCallback(res){
-            self.$message.success('上传成功');
+            self.$message.success( self.publish == 1  ? '上架成功':'保存成功');
             self.dialogVisible = false;
             self.groupSearch();
           }
