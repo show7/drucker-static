@@ -143,6 +143,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          :current-page="pageIndex"
           @current-change="currentChange"
           :page-count="pageCount">
         </el-pagination>
