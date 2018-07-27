@@ -62,7 +62,7 @@ let apiDataFilter = {
     let env = 'dev';
     let domain = document.domain;
     switch (domain) {
-      case 'mypc.test.iqw' :
+      case 'www.confucius.mobi' :
         env = 'test';
         break;
       case 'mypc.sim.iqw' :
