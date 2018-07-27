@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import apiConf from '@/configs/api';
-import '@/libraries/jquery.tips';
+import apiConf from '@/apiConfigs/api';
+/*import '@/libraries/jquery.tips';*/
 import { Loading } from 'element-ui';
 import { Message } from 'element-ui'
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -81,17 +81,16 @@ let apiDataFilter = {
     请求错误处理方法
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
   errorCallback (res, arg) {
-    if('status' in res){
-      if(res.status === 700) {
+    if ('status' in res) {
+      if (res.status === 700) {
         window.location.href = decodeURI(`${window.location.protocol}//${window.location.host}/login?callbackUrl=`) + encodeURIComponent(window.location.href)
-      } else if(res.status === 701) {
+      } else if (res.status === 701) {
         alert('抱歉，当前页面无权访问')
         window.location.href = '/403.jsp'
       } else {
         Message.error('网络错误，请重试^_^');
       }
-       return
-     }else {
+    } else {
       Message.error(typeof res.msg === 'string' && res.msg || '网络错误，请重试^_^');
     }
   },
