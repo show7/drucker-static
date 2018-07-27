@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import contentMain from '@/components/content/index'
+import management from '@/components/management/index'
 
-const project = () => import(/* webpackChunkName: "project" */ '@/components/content/project/index')
-const courseIntroduce = () => import(/* webpackChunkName: "project" */ '@/components/content/project/course/courseIntroduce/courseIntroduce')
+const project = () => import(/* webpackChunkName: "project" */ '@/components/management/project/index')
+const courseIntroduce = () => import(/* webpackChunkName: "project" */ '@/components/management/project/course/courseIntroduce/courseIntroduce')
 
-const manage = () => import(/* webpackChunkName: "manage" */ '@/components/content/manage/index')
+const manage = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/index')
 import managerRouter from './manage'
 
-const weChat = () => import(/* webpackChunkName: "manage" */ '@/components/content/weChat/index')
+const weChat = () => import(/* webpackChunkName: "manage" */ '@/components/management/weChat/index')
 import wechatRouter from './weChat'
 Vue.use(Router)
 
@@ -20,8 +20,8 @@ export default new Router({
   routes: [
     {
       path: '/management',
-      name: 'contentMain',
-      component: contentMain,
+      name: 'management',
+      component: management,
       children: [
         {
           path: 'project',

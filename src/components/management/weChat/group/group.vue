@@ -154,7 +154,7 @@
         <el-row>
           <el-col :span="12">
             <h4><span>*</span>riseId</h4>
-            <el-input class="riseId-input" placeholder="请输入riseId" v-model="riseId" :disabled="editorFlag" clearable></el-input>
+            <el-input class="riseId-input" placeholder="请输入riseId" v-model="riseId" :disabled="editorFlag" clearable @clear="riseIdClear"></el-input>
             <el-button type="primary" size="small" :disabled="editorFlag" @click="getAdd">确 定</el-button>
           </el-col>
           <el-col :span="12">
@@ -442,11 +442,11 @@
           }
         })
       },
-      /*微信清除查询全部*/
+      /*清除部分查询条件*/
       Clear(index){
         index == 0 ? this.statusId = null : index == 1 ?  this.communityId= null : this.wechatGroupId = null;
       },
-      /*清除搜索*/
+      /*清除搜索条件*/
       clearSearch(){
         this.queryAccount = null;
         this.statusId = null;
@@ -486,9 +486,6 @@
             self.checkbox = [];
           }
         })
-      },
-      handlePublish(){
-
       },
       /*新增弹框*/
       newAdd(){
@@ -554,9 +551,17 @@
         }
         this.imgList = imgList;
       },
+      /*图片预览*/
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisiblePic = true;
+      },
+      /*清除弹框的riseId*/
+      riseIdClear(){
+          this.headimgurl = null;
+          this.nickname= null;
+          this.popOutCommunityId = null;
+          this.popOutWechatGroupId = null;
       },
       /*去除标签*/
       removeHtmlTags (str) {

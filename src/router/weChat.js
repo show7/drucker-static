@@ -5,7 +5,7 @@
 3. 作者：liyang@iquanwai.com
 4. 备注：
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-const group = () => import(/* webpackChunkName: "manage" */ '@/components/content/weChat/group/group')  //群内容管理
+const group = () => import(/* webpackChunkName: "manage" */ '@/components/management/weChat/group/group')  //群内容管理
 export default [
   { path: 'group', name: 'group', component: group },
 ]

@@ -52,9 +52,8 @@ let apiDataFilter = {
         if (parseInt(res.body.code, 10) === apiConf.successStatusCode) {successCallback(res.body);}
          else { errorCallback(res && res.body && res.body, res);}
           loadingInstance.close()
-      }, (res)=>{console.log('机那里'+res); errorCallback(res) ;loadingInstance.close()});
+      }, (res)=>{ errorCallback(res) ;loadingInstance.close()});
     }
-
   },
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     通过域名来获取当前阶段环境
@@ -82,14 +81,25 @@ let apiDataFilter = {
     请求错误处理方法
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
   errorCallback (res, arg) {
+    if('status' in res){
+       this.callbackUrl(res);
+       return
+     }else {
+      Message.error(typeof res.msg === 'string' && res.msg || '网络错误，请重试^_^');
+    }
+  },
+  /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  重定向到登录页
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+  callbackUrl(res){
     if(res.status === 700) {
       window.location.href = decodeURI(`${window.location.protocol}//${window.location.host}/login?callbackUrl=`) + encodeURIComponent(window.location.href)
     } else if(res.status === 701) {
       alert('抱歉，当前页面无权访问')
       window.location.href = '/403.jsp'
     }
-    Message.error(typeof res.msg === 'string' && res.msg || '网络错误，请重试^_^');
   },
+
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     根据apiPath返回apiUrl
     @apiPath：从api配置中suffix往下层写如："example.rent.detail"
