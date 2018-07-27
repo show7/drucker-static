@@ -65,7 +65,7 @@ let apiDataFilter = {
       case 'www.confucius.mobi' :
         env = 'test';
         break;
-      case 'mypc.sim.iqw' :
+      case 'mypc.sim.mobi' :
         env = 'sim';
         break;
       case 'www.iquanwai.com' :

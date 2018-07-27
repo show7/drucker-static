@@ -579,15 +579,6 @@
       /*删除图片*/
       handleRemove(file, fileList) {
         this.imgList = this.handleAddReducePic(fileList);
-        /*let imgList = [];
-        if (fileList.length > 0){
-          fileList.forEach((item,index)=>{
-            imgList.push(item.response.msg)
-          })
-        }else {
-          imgList = []
-        }
-        this.imgList = imgList;*/
       },
       /*图片预览*/
       handlePictureCardPreview(file) {
