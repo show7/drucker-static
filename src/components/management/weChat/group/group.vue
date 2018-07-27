@@ -55,7 +55,7 @@
           </el-date-picker>
         </el-col>
         <el-col :span="5" class="buttons">
-          <el-button type="primary" @click="groupSearch">搜索</el-button>
+          <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
       </el-row>
@@ -365,6 +365,11 @@
             self.pageCount = res.msg.content.page.pageCount;
           }
         })
+      },
+      /*点击搜索*/
+      handleSearch(){
+        this.pageIndex = 1;
+        this.groupSearch()
       },
       /*搜索接口*/
       groupSearch(){
