@@ -101,7 +101,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/drucker-static/',
+    assetsPublicPath: '/drucker_js/',
 
     /**
      * Source Maps
