@@ -373,7 +373,8 @@
           publishStartTime:this.publishTime != null ? this.publishTime[0]:null,publishEndTime:this.publishTime != null ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
         this.groupList =[];
-        setTimeout(()=>{ApiDataFilter.request({
+        /*setTimeout(()=>{*/
+          ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupSearch',
           method:'post',
           data:param,
@@ -386,7 +387,8 @@
             }
             self.pageCount = res.msg.page.pageCount;
           }
-        })},1000)
+        })
+     /*   },1000)*/
 
       },
       /*新增状态下查询*/
@@ -428,7 +430,7 @@
             this.$message.error('请完善信息')
             return
          }
-         if(!this.content && this.imgList.length == 0){
+         if(!this.content && (this.imgList.length == 0 || this.imgList == null)){
             this.$message.error('内容和图片至少填写一项')
            return
          }
@@ -513,8 +515,9 @@
         this.publish = '1';
         this.dialogVisible = true;
         this.content = '';
-        this.picGroupList = []
-
+        this.picGroupList = [];
+        this.imgList = [];
+        this.popOutWechatGroupList = [];
       },
       /*编辑弹框*/
       handleEdit(index,row){
@@ -533,7 +536,7 @@
         this.content = row.content;
         this.imgList = row.picGroup;
         let picGroup = [];
-        if(row.picGroup.length > 0){
+        if(row.picGroup != null && row.picGroup.length > 0){
           row.picGroup.forEach((item,index)=>{
             picGroup.push({id:index,url:item})
           });
