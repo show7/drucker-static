@@ -210,6 +210,7 @@
               action="/pc/upload/file"
               list-type="picture-card"
               :limit="9"
+               :on-exceed="onExceed"
               :file-list ="picGroupList"
               :on-success="sendPicSuccess"
               :on-preview="handlePictureCardPreview"
@@ -340,7 +341,7 @@
         picGroup:[],//图片列表
         esChatId:'',//编辑的id
         content:'',//文本内容
-        defaultTime:['00:00:00','23:59:59'],
+        defaultTime:['00:00:00','23:59:59'], //设置时间段 日期截止时间
         pickerOptions: {
           disabledDate: (time) => {
             return time.getTime() > Date.now() - 8.64e6
@@ -373,7 +374,6 @@
           publishStartTime:this.publishTime != null ? this.publishTime[0]:null,publishEndTime:this.publishTime != null ? this.publishTime[1]:null,page:{pageSize:10,page:this.pageIndex}
         };
         this.groupList =[];
-        /*setTimeout(()=>{*/
           ApiDataFilter.request({
           apiPath:'weChat.groupManage.groupSearch',
           method:'post',
@@ -388,8 +388,6 @@
             self.pageCount = res.msg.page.pageCount;
           }
         })
-     /*   },1000)*/
-
       },
       /*新增状态下查询*/
       getAdd(){
@@ -462,7 +460,6 @@
           this.wechatGroupList = [];
         }else {
           this.wechatGroupId = null;
-          this.wechatGroupList = [];
         }
       },
       /*清除搜索条件*/
@@ -596,6 +593,10 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisiblePic = true;
+      },
+      /*超出图片上传限时*/
+      onExceed(){
+        this.$message.error('图片最多上传九张')
       },
       /*清除弹框的riseId*/
       riseIdClear(){
