@@ -4,7 +4,7 @@
 3. 作者：liyang@iquanwai.com
 4. 备注：
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-/*const userInfo = () => import( '@/components/management/manage/userInfo/userInfo')   //用户信息
+const userInfo = () => import( '@/components/management/manage/userInfo/userInfo')   //用户信息
 const certificate = () => import( '@/components/management/manage/certificate/certificate')    //添加证书
 const certificateSend = () => import( '@/components/management/manage/certificateSend/certificateSend') // 发送证书
 const templateMessage = () => import( '@/components/management/manage/templateMessage/templateMessage') //模板消息
@@ -20,9 +20,9 @@ const articles = ()=> import( '@/components/management/manage/articles/articles'
 const social = ()=> import( '@/components/management/manage/social/social')  //社群信息导入
 const autoReply = ()=> import( '@/components/management/manage/autoReply/autoReply')  //服务号自动回复
 const subscribe = ()=> import( '@/components/management/manage/subscribe/subscribe')  //服务号关注回复
-const coupon = ()=> import( '@/components/management/manage/coupon/coupon')  //创建优惠券*/
+const coupon = ()=> import( '@/components/management/manage/coupon/coupon')  //创建优惠券
 
-import userInfo from '@/components/management/manage/userInfo/userInfo'
+/*import userInfo from '@/components/management/manage/userInfo/userInfo'
 import certificate from '@/components/management/manage/certificate/certificate'
 import certificateSend from '@/components/management/manage/certificateSend/certificateSend'
 import templateMessage from '@/components/management/manage/templateMessage/templateMessage'
@@ -38,7 +38,7 @@ import articles  from '@/components/management/manage/articles/articles'  //文�
 import social  from '@/components/management/manage/social/social'  //社群信息导入
 import autoReply  from '@/components/management/manage/autoReply/autoReply'  //服务号自动回复
 import subscribe  from '@/components/management/manage/subscribe/subscribe'  //服务号关注回复
-import coupon  from '@/components/management/manage/coupon/coupon'  //创建优惠券*/
+import coupon  from '@/components/management/manage/coupon/coupon'  //创建优惠券*!/*/
 
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
