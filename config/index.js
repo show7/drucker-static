@@ -101,7 +101,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: process.env.VERSION ? `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/`:'/script/drucker_js/',
 
     /**
      * Source Maps

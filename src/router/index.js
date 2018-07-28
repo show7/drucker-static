@@ -2,14 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import management from '@/components/management/index'
 
-/*const project = () => import('@/components/management/project/index')
-const courseIntroduce = () => import('@/components/management/project/course/courseIntroduce/courseIntroduce')*/
-import project  from '@/components/management/project/index'
-import courseIntroduce  from '@/components/management/project/course/courseIntroduce/courseIntroduce'
-import manage from '@/components/management/manage/index'
+const project = () => import('@/components/management/project/index')
+const courseIntroduce = () => import('@/components/management/project/course/courseIntroduce/courseIntroduce')
+/*import project  from '@/components/management/project/index'
+import courseIntroduce  from '@/components/management/project/course/courseIntroduce/courseIntroduce'*/
+
+const manage  = ()=> import('@/components/management/manage/index');
+/*import manage from '@/components/management/manage/index'*/
 import managerRouter from './manage'
 
-import weChat from '@/components/management/weChat/index'
+const weChat = () => import('@/components/management/weChat/index');
+/*import weChat from '@/components/management/weChat/index'*/
 import wechatRouter from './weChat'
 Vue.use(Router)
 
