@@ -2,12 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import management from '@/components/management/index'
 
-const project = () => import(/* webpackChunkName: "project" */ '@/components/management/project/index')
-const courseIntroduce = () => import(/* webpackChunkName: "project" */ '@/components/management/project/course/courseIntroduce/courseIntroduce')
+/*课程路由*/
+const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index')
+import courseRouter from './course'
 
+/*运营路由*/
 const manage  = ()=> import(/* webpackChunkName: "manage" */'@/components/management/manage/index');
 import managerRouter from './manage'
 
+/*小程序路由*/
 const weChat = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/index');
 import wechatRouter from './weChat'
 Vue.use(Router)
@@ -24,16 +27,10 @@ export default new Router({
       component: management,
       children: [
         {
-          path: 'project',
-          name: 'project',
-          component: project,
-          children: [
-            {
-              path: 'course/courseintroduce',
-              name: 'courseIntroduce',
-              component: courseIntroduce
-            }
-          ]
+          path: 'course',
+          name: 'course',
+          component: course,
+          children: courseRouter
         },
         {
           path: 'manage',

@@ -19,7 +19,7 @@ export default {
   name: 'contentMain',
   data () {
     return {
-      itemList: [{name: '小程序', path: '/management/wechat'}], //{name: '课程相关', path: '/management/project'}, {name: '运营功能相关', path: '/management/manage'},
+      itemList: [{name: '课程相关', path: '/management/course'}, {name: '运营功能相关', path: '/management/manage'},{name: '小程序', path: '/management/wechat'}], //
       activeIndex: '/management/wechat'
     }
   },
