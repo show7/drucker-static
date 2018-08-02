@@ -10,6 +10,11 @@ import managerRouter from './manage'
 
 const weChat = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/index');
 import wechatRouter from './weChat'
+
+const steve = () => import(/* webpackChunkName: "wechat" */ '@/components/management/steve/index');
+import steveRouter from './steve'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +51,12 @@ export default new Router({
           name:'weChat',
           component:weChat,
           children: wechatRouter
+        },
+        {
+          path:'steve',
+          name:'steve',
+          component:steve,
+          children: steveRouter
         }
       ]
     }
