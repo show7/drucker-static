@@ -230,7 +230,7 @@
 </template>
 
 <script>
-import Editor from '../../../../common/editor/editor'
+import Editor from '../../../common/editor/editor'
 import ApiDataFilter from '@/libraries/apiDataFilter'
 import _ from 'lodash'
 

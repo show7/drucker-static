@@ -38,6 +38,15 @@
               <el-menu-item index="/management/manage/coupon">创建优惠券</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-edit"></i>
+              <span>导流课管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/management/manage/coupon">导流课开课</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </div>
 

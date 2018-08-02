@@ -201,7 +201,7 @@
         <el-row>
           <el-col :span="24">
             <h4>发布内容</h4>
-            <el-input type="textarea" placeholder="请输入" :row="4" v-model="content" ></el-input>
+            <el-input type="textarea" placeholder="请输入" :row="8" v-model="content" ></el-input>
           </el-col>
         </el-row>
         <el-row>
