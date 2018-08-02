@@ -2,50 +2,50 @@
   <div class="job">
     <h3>数据查询</h3>
     <!--<div class="query-top">-->
-      <!--<el-row>-->
-        <!--<el-col :span="6">-->
-          <!--<h4>任务名(英文)</h4>-->
-          <!--<el-input placeholder="请输入任务名" v-model="search.name" clearable></el-input>-->
-        <!--</el-col>-->
-        <!--<el-col :span="6">-->
-          <!--<h4>任务状态</h4>-->
-          <!--<el-select v-model="search.statusId" placeholder="请选择状态" :clearable="true" @clear="Clear(0)">-->
-            <!--<el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>-->
-          <!--</el-select>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
-      <!--<el-row class="second-line">-->
-        <!--<el-col :span="9">-->
-          <!--<h4>创建时间</h4>-->
-          <!--<el-date-picker-->
-            <!--v-model="createTimeRange"-->
-            <!--type="datetimerange"-->
-            <!--:default-time="defaultTime"-->
-            <!--value-format="timestamp"-->
-            <!--range-separator="至"-->
-            <!--start-placeholder="开始日期"-->
-            <!--end-placeholder="结束日期">-->
-          <!--</el-date-picker>-->
-        <!--</el-col>-->
-        <!--<el-col :span="10">-->
-          <!--<h4>任务执行时间</h4>-->
-          <!--<el-date-picker-->
-            <!--v-model="actionTimeRange"-->
-            <!--type="datetimerange"-->
-            <!--:default-time="defaultTime"-->
-            <!--value-format="timestamp"-->
-            <!--range-separator="至"-->
-            <!--start-placeholder="开始日期"-->
-            <!--end-placeholder="结束日期">-->
-          <!--</el-date-picker>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
-      <!--<el-row class="second-line">-->
-        <!--<el-col :span="5" class="buttons">-->
-          <!--<el-button type="primary" @click="handleSearch">搜索</el-button>-->
-          <!--&lt;!&ndash;<el-button type="primary" @click="clearSearch">清除查询</el-button>&ndash;&gt;-->
-        <!--</el-col>-->
-      <!--</el-row>-->
+    <!--<el-row>-->
+    <!--<el-col :span="6">-->
+    <!--<h4>任务名(英文)</h4>-->
+    <!--<el-input placeholder="请输入任务名" v-model="search.name" clearable></el-input>-->
+    <!--</el-col>-->
+    <!--<el-col :span="6">-->
+    <!--<h4>任务状态</h4>-->
+    <!--<el-select v-model="search.statusId" placeholder="请选择状态" :clearable="true" @clear="Clear(0)">-->
+    <!--<el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>-->
+    <!--</el-select>-->
+    <!--</el-col>-->
+    <!--</el-row>-->
+    <!--<el-row class="second-line">-->
+    <!--<el-col :span="9">-->
+    <!--<h4>创建时间</h4>-->
+    <!--<el-date-picker-->
+    <!--v-model="createTimeRange"-->
+    <!--type="datetimerange"-->
+    <!--:default-time="defaultTime"-->
+    <!--value-format="timestamp"-->
+    <!--range-separator="至"-->
+    <!--start-placeholder="开始日期"-->
+    <!--end-placeholder="结束日期">-->
+    <!--</el-date-picker>-->
+    <!--</el-col>-->
+    <!--<el-col :span="10">-->
+    <!--<h4>任务执行时间</h4>-->
+    <!--<el-date-picker-->
+    <!--v-model="actionTimeRange"-->
+    <!--type="datetimerange"-->
+    <!--:default-time="defaultTime"-->
+    <!--value-format="timestamp"-->
+    <!--range-separator="至"-->
+    <!--start-placeholder="开始日期"-->
+    <!--end-placeholder="结束日期">-->
+    <!--</el-date-picker>-->
+    <!--</el-col>-->
+    <!--</el-row>-->
+    <!--<el-row class="second-line">-->
+    <!--<el-col :span="5" class="buttons">-->
+    <!--<el-button type="primary" @click="handleSearch">搜索</el-button>-->
+    <!--&lt;!&ndash;<el-button type="primary" @click="clearSearch">清除查询</el-button>&ndash;&gt;-->
+    <!--</el-col>-->
+    <!--</el-row>-->
     <!--</div>-->
     <div class="content-box">
       <el-row>
@@ -92,7 +92,7 @@
             </el-button>
             <el-button
               size="mini"
-              @click="handleOnDelete(scope.$index, scope.row,3)">删除
+              @click="handleOnDelete(scope.$index, scope.row)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -149,6 +149,7 @@
       <span slot="footer" class="dialog-footer">
           <el-button @click="cancelData">取 消</el-button>
           <el-button type="primary" @click="saveData">确 定</el-button>
+          <el-button type="primary" @click="actionTask">执 行</el-button>
       </span>
     </el-dialog>
   </div>
@@ -202,7 +203,7 @@
         console.log('showData:', this.showData);
         this.title = '查看';
       },
-      handleOnDelete(index, itemData, operation) {
+      handleOnDelete(index, itemData) {
         let self = this;
         ApiDataFilter.request({
           apiPath: 'steve.job.delete',
@@ -237,6 +238,22 @@
           })
         }
         console.log("data:", this.showData);
+      },
+      actionTask() {
+        if(!!this.showData.id) {
+          let self = this;
+          ApiDataFilter.request({
+            apiPath: 'steve.job.action',
+            pathParams: [ self.showData.id ],
+            method: 'post',
+            successCallback(res) {
+              console.log(res);
+              self.handleSearch();
+            }
+          })
+        } else {
+          alert("请先创建任务");
+        }
       },
       cancelData() {
         this.showData = { dialogVisible: false }

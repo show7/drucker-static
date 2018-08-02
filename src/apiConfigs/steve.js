@@ -10,5 +10,6 @@ export default {
     'list': 'steve/quartz/jobs',
     'add':'steve/quartz/job/add',
     'delete':'steve/quartz/job/delete',
+    'action':'steve/quartz/job/action',
   }
 }
