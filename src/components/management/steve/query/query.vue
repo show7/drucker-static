@@ -1,6 +1,27 @@
 <template>
   <div class="query">
     <h3>数据查询</h3>
+    <div class="query-top">
+      <el-row>
+        <el-col :span="6">
+          <h4>任务名</h4>
+          <el-input placeholder="请输入任务名" v-model="name" clearable></el-input>
+        </el-col>
+        <el-col :span="6">
+          <h4>邮箱</h4>
+          <el-input placeholder="请输入邮箱" v-model="email" clearable></el-input>
+        </el-col>
+        <el-col :span="6">
+          <h4>备注</h4>
+          <el-input placeholder="请输入备注" v-model="remark" clearable></el-input>
+        </el-col>
+        <el-col :span="6">
+          <h4><span>*</span>数据库</h4>
+          <el-radio v-model="database" label="1">备份</el-radio>
+          <el-radio v-model="database" label="2">线上</el-radio>
+        </el-col>
+      </el-row>
+    </div>
     <div class="content">
       <el-row>
         <h4>查询sql</h4>
@@ -35,7 +56,11 @@
     name: 'query',
     data() {
       return {
-        sql: '',
+        email: null,
+        name: null,
+        remark: null,
+        database: "1",
+        sql: null,
         queryResult: [],
         queryCols: []
       }
@@ -47,7 +72,13 @@
         ApiDataFilter.request({
           apiPath: 'steve.query',
           method: 'post',
-          data: { sql: this.sql },
+          data: {
+            sql: this.sql,
+            email: this.email,
+            name: this.name,
+            remark: this.remark,
+            database: this.database
+          },
           successCallback(res) {
             let queryResult = res.msg;
             if(queryResult.length > 0) {
