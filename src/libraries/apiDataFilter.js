@@ -44,7 +44,7 @@ let apiDataFilter = {
       Vue.http[method](apiUrl, data, opts).then((res) => {
         if (parseInt(res.body.code, 10) === apiConf.successStatusCode) { successCallback(res.body); } else { errorCallback(res && res.body, res); }
         loadingInstance.close()
-      }, () => { errorCallback; loadingInstance.close() });
+      }, (res) => { errorCallback(res); loadingInstance.close() });
     } else if (method === 'jsonp' || method === 'get') {
       Vue.http[method](apiUrl, opts).then((res) => {
         if (parseInt(res.body.code, 10) === apiConf.successStatusCode) { successCallback(res.body); } else { errorCallback(res && res.body && res.body, res); }
