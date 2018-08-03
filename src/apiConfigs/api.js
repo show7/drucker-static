@@ -1,6 +1,7 @@
-
 import weChat from './weChat'
 import manage from './manage'
+import steve from './steve'
+
 export default {
   'timeout': 60 * 1000, //超时请求时间，单位：毫秒
   'successStatusCode': 200,
@@ -24,7 +25,8 @@ export default {
         }
       }
     },
-    'manage':manage,
-    'weChat':weChat
+    'manage': manage,
+    'weChat': weChat,
+    'steve': steve
   }
 };
