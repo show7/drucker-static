@@ -341,228 +341,242 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: "application",
-    data() {
-      return {
-        tableData: [],
-        pageData: {}, //分页的数据
-        dialogVisible: false,
-        anotherDialogVisible:false,
-        rowData: {},
-        applySource: [{id: 1, value: '电话面试'}, {id: 2, value: '问卷申请'}],  //申请来源
-        targetSource:'',
-        interviewTime:'',//面试时间
-        question:'',//学员提问
-        targetChannel:'',//关注渠道
-        targetTouchDuration:'',//接触圈外时长
-        targetApplyEvent:'',//申请商学院事件
-        targetLearningWill:'',//学习意愿评估结果
-        targetPotentialScore:'',//发展潜力评估结果
-        targetAward:'',//奖学金
-        targetAdmit:'',//是否录取
-        remark:'',//面试备注
-        coupon: 0,//优惠券
-        focusChannelName:'',//自定义关注渠道
-        touchDurationName:'',//自定义接触圈外时长
-        applyEventName:'',//自定义事件
-        showCouponChoose:false,
-        focusChannels: [
-          {id: 1, value: '圈圈的书'},
-          {id: 2, value: '好友推荐'},
-          {id: 3, value: '朋友圈'},
-          {id: 4, value: '奴隶社会'},
-          {id: 5, value: '分答&在行'},
-          {id: 6, value: '知乎'},
-          {id: 7, value: '领英'},
-          {id: 8, value: '其他，请详述'},
-          {id: 9, value: '不记得了'}
-        ],
-        touchDurations: [
-          {id: 1, value: '不到一周'},
-          {id: 2, value: '不到一个月（超过一周）'},
-          {id: 3, value: '1-6个月'},
-          {id: 4, value: '6个月以上'},
-          {id: 5, value: '其他，请详述'},
-          {id: 6, value: '不记得了'}
-        ],
-        applyEvents: [
-          {id: 1, value: '朋友推荐'},
-          {id: 2, value: '领导推荐'},
-          {id: 3, value: '招募文章'},
-          {id: 4, value: '圈圈直播'},
-          {id: 5, value: '其他，请详述'},
-          {id: 6, value: '不记得了'}
-        ],
-        potentialScores: [
-          {id: 1, value: '1分'},
-          {id: 2, value: '2分'},
-          {id: 3, value: '3分'},
-          {id: 4, value: '4分'},
-          {id: 5, value: '5分'}
-        ],
-        pageIndex:1,
-        innerVisible:false,
-        interviewerList:[],
-        profileId:'', //面试官profileId
-        threeDialogVisible:false,
-      }
-    },
-    methods: {
-      getList(pageIndex) {
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'manage.application.applicationList',
-          data: {page: pageIndex},
-          successCallback(res) {
-            self.tableData = res.msg.data;
-            self.pageData = res.msg.page;
-          }
-        })
-      },
-      /*获取面试官*/
-      getInterviewerList(){
-        let self=this;
-        ApiDataFilter.request({
-          apiPath:'manage.application.interviewerList',
-          successCallback(res){
-            let interviewerList = res.msg;
-            if (interviewerList.length >0){
-              interviewerList.map((item,index)=>{
-                interviewerList[index]['label'] = `${item.asstType} ${item.asstName}  已分配${item.assignCount}人`
-              })
-            }
-             self.interviewerList = interviewerList;
-          }
-        })
-      },
-      /*分配面试官*/
-      sendAssignInterviewer(){
-        let self =this;
-        ApiDataFilter.request({
-          apiPath:'manage.application.assignInterviewer',
-          method:'post',
-          data:{applyId: self.rowData.id, profileId: self.profileId},
-          successCallback(res){
-            self.$message.success('分配成功');
-            self.anotherDialogVisible = false;
-            self.profileId = '';
-            self.getList();
-          }
-        })
-      },
-      /*发送审核结果*/
-      sendCheckedApplication(){
-        let self = this;
-        let now = new Date()
-        let year = now.getFullYear()
-        let month = (now.getMonth() + 1 < 10) ? ('0' + (now.getMonth() + 1)) : (now.getMonth() + 1)
-        let day = (now.getDate() < 10) ? ('0' + now.getDate()) : now.getDate()
-        let dateStr = year + '-' + month + '-' + day
-        ApiDataFilter.request({
-          apiPath:'manage.application.sendCheckedApplication',
-          pathParams:[dateStr],
-          successCallback(res){
-            self.$message.success('发送成功');
-            self.threeDialogVisible = false;
-          }
-        })
-      },
-      /*拒绝通过数据验证*/
-      rejectCheck(){
-        if (!this.targetSource || !this.remark) {
-          this.$message.info('请选择申请来源');
-          return
-        }
-        this.innerVisible = true
-      },
-      /*获得页数*/
-      getPageIndex(val){
-        this.getPageIndex = val;
-        this.getList(val);
-      },
-      /*弹框分配*/
-      handleAllocation($index, row){
-        this.rowData = row;
-        this.anotherDialogVisible = true;
-        this.getInterviewerList();
-      },
-      /*点击弹框*/
-      handleEdit($index, row) {
-        this.dialogVisible = true;
-        this.showCouponChoose = false;
-         this.targetSource='';
-          this.interviewTime='';
-          this.question='';
-          this.targetChannel='';
-          this.targetTouchDuratio='';
-          this.targetApplyEvent='';
-          this.targetLearningWill='';
-          this.targetPotentialScore='';
-          this.targetAward='';
-          this.targetAdmit='';
-          this.remark='';
-          this.coupon='';
-          this.focusChannelName ='';
-          this.touchDurationName = '';
-          this.applyEventName = '';
-        this.rowData = row;
-      },
-      /*检验填写字段*/
-      handleCheck(){
-        if (!this.targetSource) {
-           this.$message.info('请选择申请来源');
-           return
-        }
-        if (this.targetSource == 2) {
-          if (!this.remark){
-            this.$message.info('请输入面试备注');
-            return
-          }
-        }else if(!this.interviewTime || !this.question || !this.targetChannel || !this.targetTouchDuration ||
-          !this.targetApplyEvent || !this.targetLearningWill || !this.targetPotentialScore ||
-          !this.targetAward || !this.remark ){
-          this.$message.info('请将信息填写完成');
-          return
-        }
-        this.showCouponChoose = true
-      },
-      /*确认通过发送数据*/
-      sendData(flag){
-        let apiPath = '';
-        let data={};
-        let self = this;
-        let param = {applyId:this.rowData.applyId, profileId:this.rowData.profileId, interviewTime:this.interviewTime, question:this.question, type: this.targetSource, focusChannelName:this.focusChannelName, touchDurationName:this.touchDurationName,
-          applyEventName:this.applyEventName, applyReason:this.applyReason, remark:this.remark,focusChannel:this.targetChannel,touchDuration:this.targetTouchDuration,applyEvent:this.targetApplyEvent,
-          learningWill:this.targetLearningWill,potentialScore:this.targetPotentialScore,applyAward:this.targetAward,admit:this.targetAdmit
-        }
-        if (flag ==1 ){
-          this.handleCheck();
-          apiPath = 'manage.application.approveBusinessApplication'
-          data = {id:this.rowData.id,coupon:this.coupon,interviewDto:param}
-        }else {
-          apiPath = 'manage.application.rejectBusinessApplication';
-          data = {id:this.rowData.id,interviewDto:param}
-        }
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data:data,
-          successCallback(res){
-            self.dialogVisible = false;
-            self.innerVisible = false;
-            self.getList(self.pageIndex);
-            self.$message.success('处理成功');
-          }
-        })
-      },
-    },
-    created() {
-      this.getList(this.pageIndex)
+export default {
+  name: 'application',
+  data () {
+    return {
+      tableData: [],
+      pageData: {}, //分页的数据
+      dialogVisible: false,
+      anotherDialogVisible: false,
+      rowData: {},
+      applySource: [{id: 1, value: '电话面试'}, {id: 2, value: '问卷申请'}], //申请来源
+      targetSource: '',
+      interviewTime: '', //面试时间
+      question: '', //学员提问
+      targetChannel: '', //关注渠道
+      targetTouchDuration: '', //接触圈外时长
+      targetApplyEvent: '', //申请商学院事件
+      targetLearningWill: '', //学习意愿评估结果
+      targetPotentialScore: '', //发展潜力评估结果
+      targetAward: '', //奖学金
+      targetAdmit: '', //是否录取
+      remark: '', //面试备注
+      coupon: 0, //优惠券
+      focusChannelName: '', //自定义关注渠道
+      touchDurationName: '', //自定义接触圈外时长
+      applyEventName: '', //自定义事件
+      showCouponChoose: false,
+      focusChannels: [
+        {id: 1, value: '圈圈的书'},
+        {id: 2, value: '好友推荐'},
+        {id: 3, value: '朋友圈'},
+        {id: 4, value: '奴隶社会'},
+        {id: 5, value: '分答&在行'},
+        {id: 6, value: '知乎'},
+        {id: 7, value: '领英'},
+        {id: 8, value: '其他，请详述'},
+        {id: 9, value: '不记得了'}
+      ],
+      touchDurations: [
+        {id: 1, value: '不到一周'},
+        {id: 2, value: '不到一个月（超过一周）'},
+        {id: 3, value: '1-6个月'},
+        {id: 4, value: '6个月以上'},
+        {id: 5, value: '其他，请详述'},
+        {id: 6, value: '不记得了'}
+      ],
+      applyEvents: [
+        {id: 1, value: '朋友推荐'},
+        {id: 2, value: '领导推荐'},
+        {id: 3, value: '招募文章'},
+        {id: 4, value: '圈圈直播'},
+        {id: 5, value: '其他，请详述'},
+        {id: 6, value: '不记得了'}
+      ],
+      potentialScores: [
+        {id: 1, value: '1分'},
+        {id: 2, value: '2分'},
+        {id: 3, value: '3分'},
+        {id: 4, value: '4分'},
+        {id: 5, value: '5分'}
+      ],
+      pageIndex: 1,
+      innerVisible: false,
+      interviewerList: [],
+      profileId: '', //面试官profileId
+      threeDialogVisible: false
     }
+  },
+  methods: {
+    getList (pageIndex) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.application.applicationList',
+        data: {page: pageIndex},
+        successCallback (res) {
+          self.tableData = res.msg.data;
+          self.pageData = res.msg.page;
+        }
+      })
+    },
+    /*获取面试官*/
+    getInterviewerList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.application.interviewerList',
+        successCallback (res) {
+          let interviewerList = res.msg;
+          if (interviewerList.length > 0) {
+            interviewerList.map((item, index) => {
+              interviewerList[index]['label'] = `${item.asstType} ${item.asstName}  已分配${item.assignCount}人`
+            })
+          }
+          self.interviewerList = interviewerList;
+        }
+      })
+    },
+    /*分配面试官*/
+    sendAssignInterviewer () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.application.assignInterviewer',
+        method: 'post',
+        data: {applyId: self.rowData.id, profileId: self.profileId},
+        successCallback (res) {
+          self.$message.success('分配成功');
+          self.anotherDialogVisible = false;
+          self.profileId = '';
+          self.getList();
+        }
+      })
+    },
+    /*发送审核结果*/
+    sendCheckedApplication () {
+      let self = this;
+      let now = new Date()
+      let year = now.getFullYear()
+      let month = (now.getMonth() + 1 < 10) ? ('0' + (now.getMonth() + 1)) : (now.getMonth() + 1)
+      let day = (now.getDate() < 10) ? ('0' + now.getDate()) : now.getDate()
+      let dateStr = year + '-' + month + '-' + day
+      ApiDataFilter.request({
+        apiPath: 'manage.application.sendCheckedApplication',
+        pathParams: [dateStr],
+        successCallback (res) {
+          self.$message.success('发送成功');
+          self.threeDialogVisible = false;
+        }
+      })
+    },
+    /*拒绝通过数据验证*/
+    rejectCheck () {
+      if (!this.targetSource || !this.remark) {
+        this.$message.info('请选择申请来源');
+        return
+      }
+      this.innerVisible = true
+    },
+    /*获得页数*/
+    getPageIndex (val) {
+      this.getPageIndex = val;
+      this.getList(val);
+    },
+    /*弹框分配*/
+    handleAllocation ($index, row) {
+      this.rowData = row;
+      this.anotherDialogVisible = true;
+      this.getInterviewerList();
+    },
+    /*点击弹框*/
+    handleEdit ($index, row) {
+      this.dialogVisible = true;
+      this.showCouponChoose = false;
+      this.targetSource = '';
+      this.interviewTime = '';
+      this.question = '';
+      this.targetChannel = '';
+      this.targetTouchDuratio = '';
+      this.targetApplyEvent = '';
+      this.targetLearningWill = '';
+      this.targetPotentialScore = '';
+      this.targetAward = '';
+      this.targetAdmit = '';
+      this.remark = '';
+      this.coupon = '';
+      this.focusChannelName = '';
+      this.touchDurationName = '';
+      this.applyEventName = '';
+      this.rowData = row;
+    },
+    /*检验填写字段*/
+    handleCheck () {
+      if (!this.targetSource) {
+        this.$message.info('请选择申请来源');
+        return
+      }
+      if (this.targetSource == 2) {
+        if (!this.remark) {
+          this.$message.info('请输入面试备注');
+          return
+        }
+      } else if (!this.interviewTime || !this.question || !this.targetChannel || !this.targetTouchDuration ||
+          !this.targetApplyEvent || !this.targetLearningWill || !this.targetPotentialScore ||
+          !this.targetAward || !this.remark) {
+        this.$message.info('请将信息填写完成');
+        return
+      }
+      this.showCouponChoose = true
+    },
+    /*确认通过发送数据*/
+    sendData (flag) {
+      let apiPath = '';
+      let data = {};
+      let self = this;
+      let param = {applyId: this.rowData.applyId,
+        profileId: this.rowData.profileId,
+        interviewTime: this.interviewTime,
+        question: this.question,
+        type: this.targetSource,
+        focusChannelName: this.focusChannelName,
+        touchDurationName: this.touchDurationName,
+        applyEventName: this.applyEventName,
+        applyReason: this.applyReason,
+        remark: this.remark,
+        focusChannel: this.targetChannel,
+        touchDuration: this.targetTouchDuration,
+        applyEvent: this.targetApplyEvent,
+        learningWill: this.targetLearningWill,
+        potentialScore: this.targetPotentialScore,
+        applyAward: this.targetAward,
+        admit: this.targetAdmit
+      }
+      if (flag == 1) {
+        this.handleCheck();
+        apiPath = 'manage.application.approveBusinessApplication'
+        data = {id: this.rowData.id, coupon: this.coupon, interviewDto: param}
+      } else {
+        apiPath = 'manage.application.rejectBusinessApplication';
+        data = {id: this.rowData.id, interviewDto: param}
+      }
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: data,
+        successCallback (res) {
+          self.dialogVisible = false;
+          self.innerVisible = false;
+          self.getList(self.pageIndex);
+          self.$message.success('处理成功');
+        }
+      })
+    }
+  },
+  created () {
+    this.getList(this.pageIndex)
   }
+}
 </script>
 
 <style scoped lang="less">

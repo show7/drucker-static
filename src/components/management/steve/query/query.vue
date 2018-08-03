@@ -52,53 +52,53 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: 'query',
-    data() {
-      return {
-        email: null, // 邮箱
-        name: null, // 任务
-        remark: null, // 备注
-        database: "1", // 数据库，默认冷备
-        sql: null, // sql
-        queryResult: [], // 查询结果
-        queryCols: [] // 结果列
-      }
-    },
-    methods: {
-      /* 查询 */
-      handleSearch() {
-        console.log(this.sql);
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'steve.query',
-          method: 'post',
-          data: {
-            sql: this.sql,
-            email: this.email,
-            name: this.name,
-            remark: this.remark,
-            database: this.database
-          },
-          successCallback(res) {
-            let queryResult = res.msg;
-            if(queryResult.length > 0) {
-              let queryCols = []
-              for(let col in queryResult[ 0 ]) {
-                queryCols.push(col);
-              }
-              self.queryCols = queryCols;
-              self.queryResult = queryResult;
-            }
-          }
-        })
-      }
-    },
-    created() {
+export default {
+  name: 'query',
+  data () {
+    return {
+      email: null, // 邮箱
+      name: null, // 任务
+      remark: null, // 备注
+      database: '1', // 数据库，默认冷备
+      sql: null, // sql
+      queryResult: [], // 查询结果
+      queryCols: [] // 结果列
     }
+  },
+  methods: {
+    /* 查询 */
+    handleSearch () {
+      console.log(this.sql);
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'steve.query',
+        method: 'post',
+        data: {
+          sql: this.sql,
+          email: this.email,
+          name: this.name,
+          remark: this.remark,
+          database: this.database
+        },
+        successCallback (res) {
+          let queryResult = res.msg;
+          if (queryResult.length > 0) {
+            let queryCols = []
+            for (let col in queryResult[ 0 ]) {
+              queryCols.push(col);
+            }
+            self.queryCols = queryCols;
+            self.queryResult = queryResult;
+          }
+        }
+      })
+    }
+  },
+  created () {
   }
+}
 </script>
 
 <style scoped lang="less">

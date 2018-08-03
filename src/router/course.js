@@ -9,11 +9,9 @@ const courseIntroduce = () => import(/* webpackChunkName: "course" */ '@/compone
 const courseKnowledge = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseKnowledge/courseKnowledge') //小课知识导入
 const courseThinking = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseThinking/courseThinking') // 课前思考导入
 
-
-
 export default [
   { path: 'courseIntroduce', name: 'courseIntroduce', component: courseIntroduce },
   { path: 'courseKnowledge', name: 'courseKnowledge', component: courseKnowledge },
-  { path: 'courseThinking', name: 'courseThinking', component: courseThinking },
+  { path: 'courseThinking', name: 'courseThinking', component: courseThinking }
 
 ]

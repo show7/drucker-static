@@ -145,93 +145,92 @@ fdsfs
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: "templateMessage",
-    data() {
-      return {
-        templateMsgs:[],
-        templateValue:'' ,//模板消息类型
-        forcePushList:[{id:0,name:'是',value:true},{id:1,name:'否',value:false}],
-        forcePushValue: false ,//选择是否强制推送的
-        forcePush:true,   //知否显示强制推送选项
-        comment:'',   //消息用途中文
-        source:'',//消息用途英文
-        first:'',//输入内容
-        keyword1:'',//
-        keyword2:'',
-        keyword3:'',
-        keyword4:'',
-        keyword5:'',
-        remark:'',
-        url:'',
-        openIds:'',
-        excludeOpenIds:''
-      }
-    },
-    methods: {
-      getTemplate(){
-        let self =this;
-        ApiDataFilter.request({
-          apiPath:'manage.templates.loadTemplates',
-          method:'get',
-          successCallback(res){
-           self.templateMsgs = res.msg.templateMsgs;
-           self.forcePush = res.msg.showForcePush
-          }
-        })
-      },
-      handleCheckData(){
-        if(this.template && this.comment && this.keyword1 && this.openIds && this.source) {
-          this.$message.error('请将信息填写完成');
-          return false
-        }
-        if(this.source.length > 32) {
-          this.$message.error('英文消息用途过长');
-          return false
-        }
-      },
-      /*发送模板数据*/
-      sendData(index){
-        if( !this.forcePush && this.openIds.split("\n").length > 1000) {
-          this.$message.error('发送人数过多');
-          return
-        }
-        let self = this;
-        let param = {
-          templateId: this.templateValue,
-          comment:this.comment,
-          first:this.first,
-          remark:this.remark,
-          url:this.url,
-          keyword1:this.keyword1,
-          keyword2:this.keyword2,
-          keyword3:this.keyword3,
-          keyword4:this.keyword4,
-          keyword5:this.keyword5,
-          openIds:this.openIds,
-          source:this.source,
-          forcePush: this.forcePushValue,
-          isMime: index === 0 ? true : false
-        };
-        index===1 ? Object.assign(param,{ excludeOpenIds:this.excludeOpenIds,}):'';
-        ApiDataFilter.request({
-          apiPath:'manage.templates.sendTemplate',
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.$message.success(res.msg)
-          }
-        })
-      }
-    },
-    created(){
-      this.getTemplate()
+export default {
+  name: 'templateMessage',
+  data () {
+    return {
+      templateMsgs: [],
+      templateValue: '', //模板消息类型
+      forcePushList: [{id: 0, name: '是', value: true}, {id: 1, name: '否', value: false}],
+      forcePushValue: false, //选择是否强制推送的
+      forcePush: true, //知否显示强制推送选项
+      comment: '', //消息用途中文
+      source: '', //消息用途英文
+      first: '', //输入内容
+      keyword1: '', //
+      keyword2: '',
+      keyword3: '',
+      keyword4: '',
+      keyword5: '',
+      remark: '',
+      url: '',
+      openIds: '',
+      excludeOpenIds: ''
     }
-
-
+  },
+  methods: {
+    getTemplate () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.templates.loadTemplates',
+        method: 'get',
+        successCallback (res) {
+          self.templateMsgs = res.msg.templateMsgs;
+          self.forcePush = res.msg.showForcePush
+        }
+      })
+    },
+    handleCheckData () {
+      if (this.template && this.comment && this.keyword1 && this.openIds && this.source) {
+        this.$message.error('请将信息填写完成');
+        return false
+      }
+      if (this.source.length > 32) {
+        this.$message.error('英文消息用途过长');
+        return false
+      }
+    },
+    /*发送模板数据*/
+    sendData (index) {
+      if (!this.forcePush && this.openIds.split('\n').length > 1000) {
+        this.$message.error('发送人数过多');
+        return
+      }
+      let self = this;
+      let param = {
+        templateId: this.templateValue,
+        comment: this.comment,
+        first: this.first,
+        remark: this.remark,
+        url: this.url,
+        keyword1: this.keyword1,
+        keyword2: this.keyword2,
+        keyword3: this.keyword3,
+        keyword4: this.keyword4,
+        keyword5: this.keyword5,
+        openIds: this.openIds,
+        source: this.source,
+        forcePush: this.forcePushValue,
+        isMime: index === 0
+      };
+      index === 1 ? Object.assign(param, { excludeOpenIds: this.excludeOpenIds}) : '';
+      ApiDataFilter.request({
+        apiPath: 'manage.templates.sendTemplate',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success(res.msg)
+        }
+      })
+    }
+  },
+  created () {
+    this.getTemplate()
   }
+
+}
 </script>
 
 <style scoped lang="less">

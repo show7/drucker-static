@@ -14,48 +14,48 @@
 </template>
 
 <script>
-  export default {
-    name: 'contentMain',
-    data() {
-      return {
-        //{name: '课程相关', path: '/management/project'}, {name: '运营功能相关', path: '/management/manage'},
-        itemList: [ { name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '小程序', path: '/management/wechat' }, { name: '数据运营', path: '/management/steve' } ], //
-        activeIndex: '/management/wechat'
-      }
-    },
-    computed: {
-      // 首次进入页面时展开当前页面所属的菜单
-      onRoutes() {
-        return this.$route.path
-      }
-    },
-    updated() { //路径及按键操作时调用
-      /*this.updateForcus();*/
-    },
+export default {
+  name: 'contentMain',
+  data () {
+    return {
+      //{name: '课程相关', path: '/management/project'}, {name: '运营功能相关', path: '/management/manage'},
+      itemList: [ { name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '小程序', path: '/management/wechat' }, { name: '数据运营', path: '/management/steve' } ], //
+      activeIndex: '/management/wechat'
+    }
+  },
+  computed: {
+    // 首次进入页面时展开当前页面所属的菜单
+    onRoutes () {
+      return this.$route.path
+    }
+  },
+  updated () { //路径及按键操作时调用
+    /*this.updateForcus();*/
+  },
 
-    mounted() { //载入时调用，F5刷新会起效
-      this.updateForcus();
-    },
-    created() {
+  mounted () { //载入时调用，F5刷新会起效
+    this.updateForcus();
+  },
+  created () {
 
-    },
-    beforeUpdate() {
-      this.updateForcus();
-    },
-    methods: {
-      updateForcus() {
-        let path = this.$route.path;
-        let pathArray = path.split('/');
-        if(pathArray[ 1 ] === 'management') {
-          console.log(this.itemList[ 0 ].path)
-        }
-        this.activeIndex = this.$route.matched[ 1 ].path
-      },
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+  },
+  beforeUpdate () {
+    this.updateForcus();
+  },
+  methods: {
+    updateForcus () {
+      let path = this.$route.path;
+      let pathArray = path.split('/');
+      if (pathArray[ 1 ] === 'management') {
+        console.log(this.itemList[ 0 ].path)
       }
+      this.activeIndex = this.$route.matched[ 1 ].path
+    },
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath);
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

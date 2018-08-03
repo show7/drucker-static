@@ -39,51 +39,51 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: "openCourse",
-    data(){
-      return{
-        problemId:null,//
-        sendWelcomeMsg:false, //是否发送模板消息
-        startDate:'',//课程开始时间
-        riseIds:'', //
-        courseTitleList:[]
-      }
-    },
-    methods:{
-      sendData(){
-        let self = this;
-        if (!this.problemId || !this.riseIds) {
-          this.$message.info('请补充完整数据再提交');
-          return
-        }
-        let param={riseIds:this.riseIds.split('\n'), problemId:this.problemId, startDate:this.startDate, sendWelcomeMsg:this.sendWelcomeMsg}
-        ApiDataFilter.request({
-          apiPath:"manage.openCourse.openCourseByriseIds",
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.$message.success('提交成功')
-          }
-        })
-      },
-    /* 获取小课名称列表*/
-      getList(){
-       let self =this;
-        ApiDataFilter.request({
-          apiPath: 'common.simple',
-          successCallback (res) {
-            self.courseTitleList = res.msg
-          }
-        });
-      }
-    },
-    created(){
-      this.getList()
+export default {
+  name: 'openCourse',
+  data () {
+    return {
+      problemId: null, //
+      sendWelcomeMsg: false, //是否发送模板消息
+      startDate: '', //课程开始时间
+      riseIds: '', //
+      courseTitleList: []
     }
+  },
+  methods: {
+    sendData () {
+      let self = this;
+      if (!this.problemId || !this.riseIds) {
+        this.$message.info('请补充完整数据再提交');
+        return
+      }
+      let param = {riseIds: this.riseIds.split('\n'), problemId: this.problemId, startDate: this.startDate, sendWelcomeMsg: this.sendWelcomeMsg}
+      ApiDataFilter.request({
+        apiPath: 'manage.openCourse.openCourseByriseIds',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功')
+        }
+      })
+    },
+    /* 获取小课名称列表*/
+    getList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'common.simple',
+        successCallback (res) {
+          self.courseTitleList = res.msg
+        }
+      });
+    }
+  },
+  created () {
+    this.getList()
   }
+}
 </script>
 
 <style scoped lang="less">

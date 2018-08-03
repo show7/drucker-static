@@ -18,7 +18,7 @@ let apiDataFilter = {
     let opts = {
       'timeout': apiConf.timeout,
       'headers': {
-        platform:'pc'
+        platform: 'pc'
       }
     };
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -42,16 +42,14 @@ let apiDataFilter = {
     errorCallback = errorCallback || this.errorCallback;
     if (method === 'post') {
       Vue.http[method](apiUrl, data, opts).then((res) => {
-        if (parseInt(res.body.code, 10) === apiConf.successStatusCode)  {successCallback(res.body) ;}
-         else { errorCallback(res && res.body,res);}
-          loadingInstance.close()
-      }, ()=>{ errorCallback ;loadingInstance.close()});
+        if (parseInt(res.body.code, 10) === apiConf.successStatusCode) { successCallback(res.body); } else { errorCallback(res && res.body, res); }
+        loadingInstance.close()
+      }, () => { errorCallback; loadingInstance.close() });
     } else if (method === 'jsonp' || method === 'get') {
       Vue.http[method](apiUrl, opts).then((res) => {
-        if (parseInt(res.body.code, 10) === apiConf.successStatusCode) {successCallback(res.body);}
-         else { errorCallback(res && res.body && res.body, res);}
-          loadingInstance.close()
-      }, (res)=>{ errorCallback(res) ;loadingInstance.close()});
+        if (parseInt(res.body.code, 10) === apiConf.successStatusCode) { successCallback(res.body); } else { errorCallback(res && res.body && res.body, res); }
+        loadingInstance.close()
+      }, (res) => { errorCallback(res); loadingInstance.close() });
     }
   },
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +94,7 @@ let apiDataFilter = {
   /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
   重定向到登录页
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-  callbackUrl(res){
+  callbackUrl (res) {
 
   },
 

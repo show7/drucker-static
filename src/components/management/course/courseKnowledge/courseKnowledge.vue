@@ -5,20 +5,20 @@
 </template>
 
 <script>
-    export default {
-      name: "courseKnowledge",
-      data(){
-          return {
+export default {
+  name: 'courseKnowledge',
+  data () {
+    return {
 
-          }
-      },
-      methods:{
-
-      },
-      created(){
-
-      }
     }
+  },
+  methods: {
+
+  },
+  created () {
+
+  }
+}
 </script>
 
 <style scoped lang='less'>

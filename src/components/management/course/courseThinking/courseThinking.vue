@@ -43,16 +43,16 @@
 </template>
 
 <script>
-    export default {
-        name: "courseThinking",
-        data() {
-            return {}
-        },
-        methods: {},
-        created() {
+export default {
+  name: 'courseThinking',
+  data () {
+    return {}
+  },
+  methods: {},
+  created () {
 
-        }
-    }
+  }
+}
 </script>
 
 <style scoped lang='less'>

@@ -175,138 +175,150 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  import moment from 'moment'
-  export default {
-    name: "lives",
-    data(){
-      return{
-        livesList:[], //总list
-        showLivesList:[], //展示的list
-        itemData:{
-          name:'', //直播名称
-          speaker:'',//主讲人名称
-          speakerDesc:'',//主讲人描述
-          speakerIntro:'',//主讲人简介
-          liveDesc:'',// 直播简介
-          thumbnail:'',//缩略图链接
-          banner:'',//大展示图
-          startTime:'',//开始时间
-          endTime:'',//结束时间
-          linkUrl:'',//链接地址
-          permission:false,//是否会员可见
-          sequence:'',//排序
-          password:'',//密码
-        },
-        dateList:[],
-        dialogVisible: false,
-        title:'新增',
-        id:'',
-        way:0
-      }
-    },
-    methods:{
-      getLivesList(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.lives.livesList',
-          successCallback(res){
-            self.livesList = res.msg;
-            if (res.msg.length >0){
-              res.msg.forEach((item,index)=>{
-                self.livesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
-                self.livesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
-              })
-            }
-           self.currentChange(1)
-          }
-        })
+import ApiDataFilter from '@/libraries/apiDataFilter'
+import moment from 'moment'
+export default {
+  name: 'lives',
+  data () {
+    return {
+      livesList: [], //总list
+      showLivesList: [], //展示的list
+      itemData: {
+        name: '', //直播名称
+        speaker: '', //主讲人名称
+        speakerDesc: '', //主讲人描述
+        speakerIntro: '', //主讲人简介
+        liveDesc: '', // 直播简介
+        thumbnail: '', //缩略图链接
+        banner: '', //大展示图
+        startTime: '', //开始时间
+        endTime: '', //结束时间
+        linkUrl: '', //链接地址
+        permission: false, //是否会员可见
+        sequence: '', //排序
+        password: ''//密码
       },
-      /*处理时间显示方式*/
-      currentChange(pageIndex){
-        let start = (pageIndex -1)*10;
-        let end  =  pageIndex*10;
-        this.showLivesList = this.livesList.slice(start,end)
-      },
-      /*发送*/
-      send(){
-        this.handleInsertUpdate(this.way)
-      },
-      /*新增和更新数据*/
-      handleInsertUpdate(index){
-        let self =this;
-        let param = {banner: this.itemData.banner, del: false, endTime: this.dateList[1], linkUrl: this.itemData.linkUrl,liveDesc: this.itemData.liveDesc,
-          name: this.itemData.name, password: this.itemData.password, permission: this.itemData.permission, sequence: this.itemData.sequence, speaker: this.itemData.speaker,
-          speakerDesc: this.itemData.speakerDesc, speakerIntro:this.itemData.speakerIntro, startTime: this.dateList[0], startTimeStr: null, thumbnail: this.itemData.thumbnail};
-        index==0 ? '':Object.assign(param,{id:this.id})
-        let apiPath =  index == 0 ? 'manage.lives.livesInsert':'manage.lives.livesUpdate';
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data: param,
-          successCallback(res){
-            self.$message.success('提交成功');
-            self.dialogVisible = false;
-            self.getLivesList();
-          }
-        })
-      },
-      /*删除*/
-      livesDelete(index,row){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.lives.livesDelete',
-          method:'post',
-          data:{id:row.id},
-          successCallback(res){
-            self.$message.success('删除成功');
-            self.getLivesList();
-          }
-        })
-      },
-      /*编辑*/
-      handleEdit(index,row){
-        this.itemData.name = row.name;
-        this.itemData.speaker = row.speaker;
-        this.itemData.speakerDesc = row.speakerDesc;
-        this.itemData.speakerIntro = row.speakerIntro;
-        this.itemData.liveDesc = row.liveDesc;
-        this.itemData.thumbnail = row.thumbnail;
-        this.itemData.banner = row.banner;
-        this.dateList[0] = row.startTime;
-        this.dateList[1] = row.endTime;
-        this.itemData.linkUrl = row.linkUrl;
-        this.itemData.permission = row.permission;
-        this.itemData.sequence = row.sequence;
-        this.itemData.password = row.password;
-        this.way = 1;
-        this.id = row.id;
-        this.dialogVisible = true;
-        this.title = '编辑';
-      },
-      /*新增弹框*/
-      addItem(){
-        this.itemData.name = '';
-        this.itemData.speaker = '';
-        this.itemData.speakerDesc = '';
-        this.itemData.speakerIntro = '';
-        this.itemData.liveDesc = '';
-        this.itemData.thumbnail = '';
-        this.itemData.banner = '';
-        this.dateList = [];
-        this.itemData.linkUrl = '';
-        this.itemData.permission = false;
-        this.itemData.sequence = '';
-        this.itemData.password = '';
-        this.dialogVisible = true;
-        this.way = 0;
-        this.title = '新增';
-      }
-    },
-    created(){
-      this.getLivesList()
+      dateList: [],
+      dialogVisible: false,
+      title: '新增',
+      id: '',
+      way: 0
     }
+  },
+  methods: {
+    getLivesList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.lives.livesList',
+        successCallback (res) {
+          self.livesList = res.msg;
+          if (res.msg.length > 0) {
+            res.msg.forEach((item, index) => {
+              self.livesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
+              self.livesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
+            })
+          }
+          self.currentChange(1)
+        }
+      })
+    },
+    /*处理时间显示方式*/
+    currentChange (pageIndex) {
+      let start = (pageIndex - 1) * 10;
+      let end = pageIndex * 10;
+      this.showLivesList = this.livesList.slice(start, end)
+    },
+    /*发送*/
+    send () {
+      this.handleInsertUpdate(this.way)
+    },
+    /*新增和更新数据*/
+    handleInsertUpdate (index) {
+      let self = this;
+      let param = {banner: this.itemData.banner,
+        del: false,
+        endTime: this.dateList[1],
+        linkUrl: this.itemData.linkUrl,
+        liveDesc: this.itemData.liveDesc,
+        name: this.itemData.name,
+        password: this.itemData.password,
+        permission: this.itemData.permission,
+        sequence: this.itemData.sequence,
+        speaker: this.itemData.speaker,
+        speakerDesc: this.itemData.speakerDesc,
+        speakerIntro: this.itemData.speakerIntro,
+        startTime: this.dateList[0],
+        startTimeStr: null,
+        thumbnail: this.itemData.thumbnail};
+      index == 0 ? '' : Object.assign(param, {id: this.id})
+      let apiPath = index == 0 ? 'manage.lives.livesInsert' : 'manage.lives.livesUpdate';
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功');
+          self.dialogVisible = false;
+          self.getLivesList();
+        }
+      })
+    },
+    /*删除*/
+    livesDelete (index, row) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.lives.livesDelete',
+        method: 'post',
+        data: {id: row.id},
+        successCallback (res) {
+          self.$message.success('删除成功');
+          self.getLivesList();
+        }
+      })
+    },
+    /*编辑*/
+    handleEdit (index, row) {
+      this.itemData.name = row.name;
+      this.itemData.speaker = row.speaker;
+      this.itemData.speakerDesc = row.speakerDesc;
+      this.itemData.speakerIntro = row.speakerIntro;
+      this.itemData.liveDesc = row.liveDesc;
+      this.itemData.thumbnail = row.thumbnail;
+      this.itemData.banner = row.banner;
+      this.dateList[0] = row.startTime;
+      this.dateList[1] = row.endTime;
+      this.itemData.linkUrl = row.linkUrl;
+      this.itemData.permission = row.permission;
+      this.itemData.sequence = row.sequence;
+      this.itemData.password = row.password;
+      this.way = 1;
+      this.id = row.id;
+      this.dialogVisible = true;
+      this.title = '编辑';
+    },
+    /*新增弹框*/
+    addItem () {
+      this.itemData.name = '';
+      this.itemData.speaker = '';
+      this.itemData.speakerDesc = '';
+      this.itemData.speakerIntro = '';
+      this.itemData.liveDesc = '';
+      this.itemData.thumbnail = '';
+      this.itemData.banner = '';
+      this.dateList = [];
+      this.itemData.linkUrl = '';
+      this.itemData.permission = false;
+      this.itemData.sequence = '';
+      this.itemData.password = '';
+      this.dialogVisible = true;
+      this.way = 0;
+      this.title = '新增';
+    }
+  },
+  created () {
+    this.getLivesList()
   }
+}
 </script>
 
 <style scoped lang="less">

@@ -30,31 +30,31 @@
 </template>
 
 <script>
-  export default {
-    name: 'steve',
-    data () {
-      return {
-        itemList: ['项目1', '项目2'],
-        activeIndex: '0'
-      }
+export default {
+  name: 'steve',
+  data () {
+    return {
+      itemList: ['项目1', '项目2'],
+      activeIndex: '0'
+    }
+  },
+  computed: {
+    // 首次进入页面时展开当前页面所属的菜单
+    onRoutes () {
+      return this.$route.path
+    }
+  },
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath);
     },
-    computed: {
-      // 首次进入页面时展开当前页面所属的菜单
-      onRoutes () {
-        return this.$route.path
-      }
-    },
-    methods: {
-      handleOpen (key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose (key, keyPath) {
-        console.log(key, keyPath);
-      }
-
+    handleClose (key, keyPath) {
+      console.log(key, keyPath);
     }
 
   }
+
+}
 </script>
 
 <style lang="less" scoped>

@@ -54,7 +54,6 @@
       </el-table>
     </div>
 
-
     <!--编辑和新增弹框-->
     <el-dialog
       :title="title"
@@ -101,99 +100,99 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: 'job',
-    data() {
-      return {
-        title: '查看', // 弹窗标题
-        jobList: [], // 任务列表
-        showData: { dialogVisible: false } // 弹窗信息
-      }
+export default {
+  name: 'job',
+  data () {
+    return {
+      title: '查看', // 弹窗标题
+      jobList: [], // 任务列表
+      showData: { dialogVisible: false } // 弹窗信息
+    }
+  },
+  methods: {
+    /* 搜索 */
+    handleSearch () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'steve.job.list',
+        method: 'get',
+        successCallback (res) {
+          self.jobList = res.msg;
+        }
+      })
     },
-    methods: {
-      /* 搜索 */
-      handleSearch() {
+    /* 打开添加弹窗 */
+    addJob () {
+      this.showData = { dialogVisible: true };
+      this.title = '新增';
+    },
+    /* 查看任务 */
+    handleOnLook (index, itemData) {
+      this.showData = Object.assign({ dialogVisible: true }, itemData);
+      this.title = '查看';
+    },
+    /* 删除任务 */
+    handleOnDelete (index, itemData) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'steve.job.delete',
+        pathParams: [ itemData.id ],
+        method: 'post',
+        successCallback (res) {
+          console.log(res);
+          self.handleSearch();
+        }
+      })
+    },
+    /* 保存数据 */
+    saveData () {
+      if (this.showData.id) {
+        this.showData = { dialogVisible: false }
+      } else {
+        // 新增
         let self = this;
         ApiDataFilter.request({
-          apiPath: 'steve.job.list',
-          method: 'get',
-          successCallback(res) {
-            self.jobList = res.msg;
+          apiPath: 'steve.job.add',
+          method: 'post',
+          data: this.showData,
+          successCallback (res) {
+            console.log(res);
+            self.showData = { dialogVisible: false }
+            self.handleSearch();
           }
         })
-      },
-      /* 打开添加弹窗 */
-      addJob() {
-        this.showData = { dialogVisible: true };
-        this.title = '新增';
-      },
-      /* 查看任务 */
-      handleOnLook(index, itemData) {
-        this.showData = Object.assign({ dialogVisible: true }, itemData);
-        this.title = '查看';
-      },
-      /* 删除任务 */
-      handleOnDelete(index, itemData) {
+      }
+      console.log('data:', this.showData);
+    },
+    /* 执行任务 */
+    actionTask () {
+      if (this.showData.id) {
         let self = this;
         ApiDataFilter.request({
-          apiPath: 'steve.job.delete',
-          pathParams: [ itemData.id ],
+          apiPath: 'steve.job.action',
+          pathParams: [ self.showData.id ],
           method: 'post',
-          successCallback(res) {
+          successCallback (res) {
             console.log(res);
             self.handleSearch();
           }
         })
-      },
-      /* 保存数据 */
-      saveData() {
-        if(!!this.showData.id) {
-          this.showData = { dialogVisible: false }
-        } else {
-          // 新增
-          let self = this;
-          ApiDataFilter.request({
-            apiPath: 'steve.job.add',
-            method: 'post',
-            data: this.showData,
-            successCallback(res) {
-              console.log(res);
-              self.showData = { dialogVisible: false }
-              self.handleSearch();
-            }
-          })
-        }
-        console.log("data:", this.showData);
-      },
-      /* 执行任务 */
-      actionTask() {
-        if(!!this.showData.id) {
-          let self = this;
-          ApiDataFilter.request({
-            apiPath: 'steve.job.action',
-            pathParams: [ self.showData.id ],
-            method: 'post',
-            successCallback(res) {
-              console.log(res);
-              self.handleSearch();
-            }
-          })
-        } else {
-          alert("请先创建任务");
-        }
-      },
-      /* 清除数据 */
-      cancelData() {
-        this.showData = { dialogVisible: false }
+      } else {
+        alert('请先创建任务');
       }
-
     },
-    created() {
-      this.handleSearch();
+    /* 清除数据 */
+    cancelData () {
+      this.showData = { dialogVisible: false }
     }
+
+  },
+  created () {
+    this.handleSearch();
   }
+}
 </script>
 
 <style scoped lang="less">
