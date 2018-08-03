@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import apiConf from '@/apiConfigs/api';
-/*import '@/libraries/jquery.tips';*/
 import { Loading } from 'element-ui';
 import { Message } from 'element-ui'
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
