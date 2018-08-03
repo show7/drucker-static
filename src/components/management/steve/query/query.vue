@@ -1,5 +1,6 @@
 <template>
   <div class="query">
+    <!-- 查询请求入参 -->
     <h3>数据查询</h3>
     <div class="query-top">
       <el-row>
@@ -22,6 +23,7 @@
         </el-col>
       </el-row>
     </div>
+    <!-- 查询请求入参 -->
     <div class="content">
       <el-row>
         <h4>查询sql</h4>
@@ -56,16 +58,17 @@
     name: 'query',
     data() {
       return {
-        email: null,
-        name: null,
-        remark: null,
-        database: "1",
-        sql: null,
-        queryResult: [],
-        queryCols: []
+        email: null, // 邮箱
+        name: null, // 任务
+        remark: null, // 备注
+        database: "1", // 数据库，默认冷备
+        sql: null, // sql
+        queryResult: [], // 查询结果
+        queryCols: [] // 结果列
       }
     },
     methods: {
+      /* 查询 */
       handleSearch() {
         console.log(this.sql);
         let self = this;

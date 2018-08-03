@@ -1,52 +1,7 @@
 <template>
   <div class="job">
     <h3>数据查询</h3>
-    <!--<div class="query-top">-->
-    <!--<el-row>-->
-    <!--<el-col :span="6">-->
-    <!--<h4>任务名(英文)</h4>-->
-    <!--<el-input placeholder="请输入任务名" v-model="search.name" clearable></el-input>-->
-    <!--</el-col>-->
-    <!--<el-col :span="6">-->
-    <!--<h4>任务状态</h4>-->
-    <!--<el-select v-model="search.statusId" placeholder="请选择状态" :clearable="true" @clear="Clear(0)">-->
-    <!--<el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>-->
-    <!--</el-select>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
-    <!--<el-row class="second-line">-->
-    <!--<el-col :span="9">-->
-    <!--<h4>创建时间</h4>-->
-    <!--<el-date-picker-->
-    <!--v-model="createTimeRange"-->
-    <!--type="datetimerange"-->
-    <!--:default-time="defaultTime"-->
-    <!--value-format="timestamp"-->
-    <!--range-separator="至"-->
-    <!--start-placeholder="开始日期"-->
-    <!--end-placeholder="结束日期">-->
-    <!--</el-date-picker>-->
-    <!--</el-col>-->
-    <!--<el-col :span="10">-->
-    <!--<h4>任务执行时间</h4>-->
-    <!--<el-date-picker-->
-    <!--v-model="actionTimeRange"-->
-    <!--type="datetimerange"-->
-    <!--:default-time="defaultTime"-->
-    <!--value-format="timestamp"-->
-    <!--range-separator="至"-->
-    <!--start-placeholder="开始日期"-->
-    <!--end-placeholder="结束日期">-->
-    <!--</el-date-picker>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
-    <!--<el-row class="second-line">-->
-    <!--<el-col :span="5" class="buttons">-->
-    <!--<el-button type="primary" @click="handleSearch">搜索</el-button>-->
-    <!--&lt;!&ndash;<el-button type="primary" @click="clearSearch">清除查询</el-button>&ndash;&gt;-->
-    <!--</el-col>-->
-    <!--</el-row>-->
-    <!--</div>-->
+    <!-- 功能选项 -->
     <div class="content-box">
       <el-row>
         <el-col :span="5" class="grid-content-left">
@@ -97,16 +52,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <!--分页-->
-      <div class="pagination">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :current-page="pageIndex"
-          @current-change="currentChange"
-          :page-count="pageCount">
-        </el-pagination>
-      </div>
     </div>
 
 
@@ -162,24 +107,13 @@
     name: 'job',
     data() {
       return {
-        input: '',
-        title: '查看',
-        search: {
-          name: null,
-          statusId: null,
-        },
-        name: null,
-        statusList: [ { id: 0, name: '全部' }, { id: 1, name: '未删除' }, { id: 2, name: '激活' }, { id: 3, name: '冻结' } ],
-        createTimeRange: null,
-        actionTimeRange: null,
-        defaultTime: [ '00:00:00', '23:59:59' ], //设置时间段 日期截止时间
-        pageCount: 0,
-        pageIndex: 1,
-        jobList: [],
-        showData: { dialogVisible: false }
+        title: '查看', // 弹窗标题
+        jobList: [], // 任务列表
+        showData: { dialogVisible: false } // 弹窗信息
       }
     },
     methods: {
+      /* 搜索 */
       handleSearch() {
         let self = this;
         ApiDataFilter.request({
@@ -190,19 +124,17 @@
           }
         })
       },
-      clearSearch() {
-
-      },
+      /* 打开添加弹窗 */
       addJob() {
         this.showData = { dialogVisible: true };
         this.title = '新增';
       },
+      /* 查看任务 */
       handleOnLook(index, itemData) {
-        console.log(itemData);
         this.showData = Object.assign({ dialogVisible: true }, itemData);
-        console.log('showData:', this.showData);
         this.title = '查看';
       },
+      /* 删除任务 */
       handleOnDelete(index, itemData) {
         let self = this;
         ApiDataFilter.request({
@@ -215,11 +147,7 @@
           }
         })
       },
-      /*得到当前页数*/
-      currentChange(pageIndex) {
-        this.pageIndex = pageIndex;
-        this.groupSearch();
-      },
+      /* 保存数据 */
       saveData() {
         if(!!this.showData.id) {
           this.showData = { dialogVisible: false }
@@ -239,6 +167,7 @@
         }
         console.log("data:", this.showData);
       },
+      /* 执行任务 */
       actionTask() {
         if(!!this.showData.id) {
           let self = this;
@@ -255,6 +184,7 @@
           alert("请先创建任务");
         }
       },
+      /* 清除数据 */
       cancelData() {
         this.showData = { dialogVisible: false }
       }
