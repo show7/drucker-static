@@ -7,9 +7,9 @@
 export default {
   'query': 'steve/query/sql', //获取list
   'job': {
-    'list': 'steve/quartz/jobs',
-    'add':'steve/quartz/job/add',
-    'delete':'steve/quartz/job/delete',
-    'action':'steve/quartz/job/action',
+    'list': 'steve/quartz/jobs', // 获取任务列表
+    'add':'steve/quartz/job/add', // 添加任务
+    'delete':'steve/quartz/job/delete', // 删除任务
+    'action':'steve/quartz/job/action', // 执行任务
   }
 }
