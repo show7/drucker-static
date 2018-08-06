@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/steve/*': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8081',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://beta.confucius.mobi',
+        target: 'http://localhost:8081',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
