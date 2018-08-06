@@ -13,10 +13,11 @@
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-edit"></i>
-            <span>管理</span>
+            <span>数据化运营</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/management/wechat/group">群内容管理</el-menu-item>
+            <el-menu-item index="/management/steve/job">定时任务</el-menu-item>
+            <el-menu-item index="/management/steve/query">数据查询</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -30,7 +31,7 @@
 
 <script>
 export default {
-  name: 'wechat',
+  name: 'steve',
   data () {
     return {
       itemList: ['项目1', '项目2'],

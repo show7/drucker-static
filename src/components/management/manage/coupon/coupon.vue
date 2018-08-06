@@ -26,40 +26,40 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-        name: "coupon",
-      data(){
-          return{
-            amount:'',
-            description:'',//优惠券描述
-            expiredDate:'',
-            riseIdList:'',
-          }
-      },
-      methods:{
-          handleSendData(){
-            let  self =this;
-            let param={amount:this.amount,description:this.description,expiredDate:this.expiredDate,riseIdList:this.riseIdList.split(',')}
-            ApiDataFilter.request({
-              apiPath:'manage.couponAdd',
-              method:'post',
-              data:param,
-              successCallback(res){
-                self.$message.success('添加成功')
-              }
-            })
-          },
-        handleCheck(){
-            if (!this.amount || !this.description || !this.expiredDate || !this.riseIdList){
-              this.$message.error('请填写完整')
-              return
-            }
-            this.handleSendData();
-        }
-      }
+export default {
+  name: 'coupon',
+  data () {
+    return {
+      amount: '',
+      description: '', //优惠券描述
+      expiredDate: '',
+      riseIdList: ''
     }
+  },
+  methods: {
+    handleSendData () {
+      let self = this;
+      let param = {amount: this.amount, description: this.description, expiredDate: this.expiredDate, riseIdList: this.riseIdList.split(',')}
+      ApiDataFilter.request({
+        apiPath: 'manage.couponAdd',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('添加成功')
+        }
+      })
+    },
+    handleCheck () {
+      if (!this.amount || !this.description || !this.expiredDate || !this.riseIdList) {
+        this.$message.error('请填写完整')
+        return
+      }
+      this.handleSendData();
+    }
+  }
+}
 </script>
 
 <style scoped lang='less'>

@@ -54,69 +54,69 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  export default {
-    name: "survey",
-    data(){
-      return{
-        surveyList:[],
-        dialogVisible:false,
-        activityId:'', //问卷Id
-        name:'',//问卷名
-        realHref:'',//问卷星链接
-      }
-    },
-    methods:{
-      getSurveyList(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.survey.surveyList',
-          successCallback(res){
-            self.surveyList = res.msg;
-          }
-        })
-      },
-      /*新增*/
-      handleNewEdit(){
-        this.dialogVisible = true;
-          this.activityId = '';
-          this.name='';
-          this.realHref = '';
-      },
-      /*编辑数据*/
-      handleEdit($index,rowData){
-        this.dialogVisible = true;
-        this.activityId = rowData.activity;
-        this.name=rowData.name;
-        this.realHref =rowData.realHref
-      },
-      /*发送数据*/
-      sendData(){
-        let self =this;
-        if (!this.activityId) {
-          this.$message.error('请填写问卷Id')
-          return
-        }if (!this.realHref) {
-          this.$message.error('请问卷星链接')
-          return
-        }
-        let param = {activity: this.activityId, name: this.name, realHref: this.realHref}
-        ApiDataFilter.request({
-          apiPath:'manage.survey.surveyConfig',
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.$message.success('提交成功');
-            self.getSurveyList();
-            self.dialogVisible = false
-          }
-        })
-      }
-    },
-    created(){
-      this.getSurveyList()
+import ApiDataFilter from '@/libraries/apiDataFilter'
+export default {
+  name: 'survey',
+  data () {
+    return {
+      surveyList: [],
+      dialogVisible: false,
+      activityId: '', //问卷Id
+      name: '', //问卷名
+      realHref: ''//问卷星链接
     }
+  },
+  methods: {
+    getSurveyList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.survey.surveyList',
+        successCallback (res) {
+          self.surveyList = res.msg;
+        }
+      })
+    },
+    /*新增*/
+    handleNewEdit () {
+      this.dialogVisible = true;
+      this.activityId = '';
+      this.name = '';
+      this.realHref = '';
+    },
+    /*编辑数据*/
+    handleEdit ($index, rowData) {
+      this.dialogVisible = true;
+      this.activityId = rowData.activity;
+      this.name = rowData.name;
+      this.realHref = rowData.realHref
+    },
+    /*发送数据*/
+    sendData () {
+      let self = this;
+      if (!this.activityId) {
+        this.$message.error('请填写问卷Id')
+        return
+      } if (!this.realHref) {
+        this.$message.error('请问卷星链接')
+        return
+      }
+      let param = {activity: this.activityId, name: this.name, realHref: this.realHref}
+      ApiDataFilter.request({
+        apiPath: 'manage.survey.surveyConfig',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功');
+          self.getSurveyList();
+          self.dialogVisible = false
+        }
+      })
+    }
+  },
+  created () {
+    this.getSurveyList()
   }
+}
 </script>
 
 <style scoped lang="less">

@@ -68,106 +68,106 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  export default {
-    name: "autoReply",
-    data(){
-      return{
-        replyList:[], //总list
-        itemData:{
-          keyword:'', //回复关键词
-          message:'',//详细内容
-          exact:false,//是否精准匹配
-          isDefault:false,//是否默认回复
-        },
-        dialogVisible: false,
-        title:'新增',
-        id:'',
-        way:0
-      }
-    },
-    methods:{
-      getReplyList(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.reply.loadList',
-          successCallback(res){
-            self.replyList = res.msg;
-          }
-        })
+import ApiDataFilter from '@/libraries/apiDataFilter'
+export default {
+  name: 'autoReply',
+  data () {
+    return {
+      replyList: [], //总list
+      itemData: {
+        keyword: '', //回复关键词
+        message: '', //详细内容
+        exact: false, //是否精准匹配
+        isDefault: false//是否默认回复
       },
-      /*发送*/
-      send(){
-        if(!this.itemData.exact || !this.itemData.isDefault || !this.itemData.keyword || !this.itemData.message){
-          this.$message.error('请填写完整')
-          return
-        }
-        this.handleInsertUpdate(this.way)
-      },
-      /*新增和更新数据*/
-      handleInsertUpdate(index){
-        let self =this;
-        let param = {exact:this.itemData.exact,isDefault:this.itemData.isDefault,keyword:this.itemData.keyword,message:this.itemData.message,type:1 };
-        index==0 ? '':Object.assign(param,{id:this.id})
-        let apiPath =  index == 0 ? 'manage.reply.replyAdd':'manage.reply.replyUpdate';
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data: param,
-          successCallback(res){
-            self.$message.success('提交成功');
-            self.dialogVisible = false;
-            self.getReplyList();
-          }
-        })
-      },
-      /*删除*/
-      replyDelete(index,row){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.reply.replyDel',
-          data:{id:row.id},
-          successCallback(res){
-            self.$message.success('删除成功');
-            self.getReplyList();
-          }
-        })
-      },
-      /*编辑*/
-      handleEdit(index,row){
-        this.itemData.keyword = row.keyword;
-        this.itemData.message = row.message;
-        this.itemData.exact = row.exact;
-        this.itemData.isDefault = row.isDefault;
-        this.way = 1;
-        this.id = row.id;
-        this.dialogVisible = true;
-        this.title = '编辑';
-      },
-      /*新增弹框*/
-      addItem(){
-        this.itemData.keyword = '';
-        this.itemData.message = '';
-        this.itemData.exact = false;
-        this.itemData.isDefault = false;
-        this.dialogVisible = true;
-        this.way = 0;
-        this.title = '新增';
-      },
-      handleCache(){
-        let self =this;
-        ApiDataFilter.request({
-          apiPath:'manage.reply.cache',
-          successCallback(res){
-            self.$message.success('成功')
-          }
-        })
-      }
-    },
-    created(){
-      this.getReplyList()
+      dialogVisible: false,
+      title: '新增',
+      id: '',
+      way: 0
     }
+  },
+  methods: {
+    getReplyList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.reply.loadList',
+        successCallback (res) {
+          self.replyList = res.msg;
+        }
+      })
+    },
+    /*发送*/
+    send () {
+      if (!this.itemData.exact || !this.itemData.isDefault || !this.itemData.keyword || !this.itemData.message) {
+        this.$message.error('请填写完整')
+        return
+      }
+      this.handleInsertUpdate(this.way)
+    },
+    /*新增和更新数据*/
+    handleInsertUpdate (index) {
+      let self = this;
+      let param = {exact: this.itemData.exact, isDefault: this.itemData.isDefault, keyword: this.itemData.keyword, message: this.itemData.message, type: 1 };
+      index == 0 ? '' : Object.assign(param, {id: this.id})
+      let apiPath = index == 0 ? 'manage.reply.replyAdd' : 'manage.reply.replyUpdate';
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功');
+          self.dialogVisible = false;
+          self.getReplyList();
+        }
+      })
+    },
+    /*删除*/
+    replyDelete (index, row) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.reply.replyDel',
+        data: {id: row.id},
+        successCallback (res) {
+          self.$message.success('删除成功');
+          self.getReplyList();
+        }
+      })
+    },
+    /*编辑*/
+    handleEdit (index, row) {
+      this.itemData.keyword = row.keyword;
+      this.itemData.message = row.message;
+      this.itemData.exact = row.exact;
+      this.itemData.isDefault = row.isDefault;
+      this.way = 1;
+      this.id = row.id;
+      this.dialogVisible = true;
+      this.title = '编辑';
+    },
+    /*新增弹框*/
+    addItem () {
+      this.itemData.keyword = '';
+      this.itemData.message = '';
+      this.itemData.exact = false;
+      this.itemData.isDefault = false;
+      this.dialogVisible = true;
+      this.way = 0;
+      this.title = '新增';
+    },
+    handleCache () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.reply.cache',
+        successCallback (res) {
+          self.$message.success('成功')
+        }
+      })
+    }
+  },
+  created () {
+    this.getReplyList()
   }
+}
 </script>
 
 <style scoped lang="less">

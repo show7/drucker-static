@@ -1,17 +1,16 @@
-
 <template>
-    <div class="content-main">
-      <div class="header">
-        <el-menu :default-active="activeIndex"
-                 active-text-color="#7DBE00"
-                 class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
-          <el-menu-item  v-for="(item, index) in itemList" :index="item.path" :key="index" >{{item.name}}</el-menu-item>
-        </el-menu>
-      </div>
-      <div class="content">
-        <router-view/>
-      </div>
+  <div class="content-main">
+    <div class="header">
+      <el-menu :default-active="activeIndex"
+               active-text-color="#7DBE00"
+               class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
+        <el-menu-item v-for="(item, index) in itemList" :index="item.path" :key="index">{{item.name}}</el-menu-item>
+      </el-menu>
     </div>
+    <div class="content">
+      <router-view/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,7 +18,8 @@ export default {
   name: 'contentMain',
   data () {
     return {
-      itemList: [{name: '小程序', path: '/management/wechat'}], //{name: '课程相关', path: '/management/project'}, {name: '运营功能相关', path: '/management/manage'},
+      //{ name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '数据运营', path: '/management/steve' }
+      itemList: [  { name: '小程序', path: '/management/wechat' }],
       activeIndex: '/management/wechat'
     }
   },
@@ -46,10 +46,10 @@ export default {
     updateForcus () {
       let path = this.$route.path;
       let pathArray = path.split('/');
-      if (pathArray[1] === 'management') {
-        console.log(this.itemList[0].path)
+      if (pathArray[ 1 ] === 'management') {
+        console.log(this.itemList[ 0 ].path)
       }
-      this.activeIndex = this.$route.matched[1].path
+      this.activeIndex = this.$route.matched[ 1 ].path
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);

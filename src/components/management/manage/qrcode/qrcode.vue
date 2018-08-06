@@ -41,7 +41,6 @@
       <el-col v-if="qrCodeObj.link" :span="8"><el-button type="primary" @click="dialogVisible=true">查看二维码</el-button></el-col>
     </el-row>
 
-
     <el-dialog
       title="右击图片进行保存"
       :visible.sync="dialogVisible"
@@ -56,70 +55,70 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: "qrcode",
-    data() {
-      return {
-        remark:'', //中文活动名称
-        scene:'',  //英文活动名称
-        ruleList:[{memberTypeIds: "", link: "", content: ""}],
-        qrCodeObj:{
-          link:'',
-          qrCode:''
-        },
-        dialogVisible:false
-      }
-    },
-    methods:{
-      handleAdd(){
-        let ruleItem = {memberTypeIds: "", link: "", content: ""}
-        this.ruleList.push(ruleItem)
+export default {
+  name: 'qrcode',
+  data () {
+    return {
+      remark: '', //中文活动名称
+      scene: '', //英文活动名称
+      ruleList: [{memberTypeIds: '', link: '', content: ''}],
+      qrCodeObj: {
+        link: '',
+        qrCode: ''
       },
-      handleDel(index){
-          this.ruleList.splice(index,1)
-      },
-      checkData(){
-          if (!this.remark) {
-            this.$message.error('请输入中文活动名称');
-            return
-          }
-          if (!this.scene) {
-            this.$message.error('请输入英文活动名和编号');
-            return
-          }
-          let ruleList = [];
-        this.ruleList.forEach((item ,index)=>{
-          if (!item.link || !item.content) {
-            ruleList.push(item)
-          }
-        });
-        if (ruleList.length > 0){
-          this.$message.error('请填写完整必要信息');
-          return
-        }
-        this.sendData();
-      },
-      sendData(){
-        let self =this;
-        let param = {remark:this.remark,scene:this.scene,ruleList:this.ruleList}
-        ApiDataFilter.request({
-          apiPath:'manage.qrCode',
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.dialogVisible = true;
-            self.$message.success('提交成功');
-            self.qrCodeObj=res.msg;
-          }
-        })
-      }
-    },
-    created(){
-
+      dialogVisible: false
     }
+  },
+  methods: {
+    handleAdd () {
+      let ruleItem = {memberTypeIds: '', link: '', content: ''}
+      this.ruleList.push(ruleItem)
+    },
+    handleDel (index) {
+      this.ruleList.splice(index, 1)
+    },
+    checkData () {
+      if (!this.remark) {
+        this.$message.error('请输入中文活动名称');
+        return
+      }
+      if (!this.scene) {
+        this.$message.error('请输入英文活动名和编号');
+        return
+      }
+      let ruleList = [];
+      this.ruleList.forEach((item, index) => {
+        if (!item.link || !item.content) {
+          ruleList.push(item)
+        }
+      });
+      if (ruleList.length > 0) {
+        this.$message.error('请填写完整必要信息');
+        return
+      }
+      this.sendData();
+    },
+    sendData () {
+      let self = this;
+      let param = {remark: this.remark, scene: this.scene, ruleList: this.ruleList}
+      ApiDataFilter.request({
+        apiPath: 'manage.qrCode',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.dialogVisible = true;
+          self.$message.success('提交成功');
+          self.qrCodeObj = res.msg;
+        }
+      })
+    }
+  },
+  created () {
+
   }
+}
 </script>
 
 <style scoped lang="less">

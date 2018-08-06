@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import management from '@/components/management/index'
-
-const project = () => import(/* webpackChunkName: "project" */ '@/components/management/project/index')
-const courseIntroduce = () => import(/* webpackChunkName: "project" */ '@/components/management/project/course/courseIntroduce/courseIntroduce')
-
-const manage  = ()=> import(/* webpackChunkName: "manage" */'@/components/management/manage/index');
+import courseRouter from './course'
 import managerRouter from './manage'
-
-const weChat = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/index');
 import wechatRouter from './weChat'
+import steveRouter from './steve'
+
+/*课程路由*/
+const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index')
+
+/*运营路由*/
+const manage = () => import(/* webpackChunkName: "manage" */'@/components/management/manage/index');
+
+/*小程序路由*/
+const weChat = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/index');
+
+const steve = () => import(/* webpackChunkName: "wechat" */ '@/components/management/steve/index');
+
 Vue.use(Router)
 
 export default new Router({
@@ -24,16 +31,10 @@ export default new Router({
       component: management,
       children: [
         {
-          path: 'project',
-          name: 'project',
-          component: project,
-          children: [
-            {
-              path: 'course/courseintroduce',
-              name: 'courseIntroduce',
-              component: courseIntroduce
-            }
-          ]
+          path: 'course',
+          name: 'course',
+          component: course,
+          children: courseRouter
         },
         {
           path: 'manage',
@@ -42,10 +43,16 @@ export default new Router({
           children: managerRouter
         },
         {
-          path:'wechat',
-          name:'weChat',
-          component:weChat,
+          path: 'wechat',
+          name: 'weChat',
+          component: weChat,
           children: wechatRouter
+        },
+        {
+          path: 'steve',
+          name: 'steve',
+          component: steve,
+          children: steveRouter
         }
       ]
     }

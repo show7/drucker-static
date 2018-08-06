@@ -230,7 +230,7 @@
 </template>
 
 <script>
-import Editor from '../../../../common/editor/editor'
+import Editor from '../../../common/editor/editor'
 import ApiDataFilter from '@/libraries/apiDataFilter'
 import _ from 'lodash'
 
@@ -264,9 +264,9 @@ export default {
       twoEditorVal: '', //课程资料文本
       oneEditorVal: '', //课程介绍文本
       toolPic: [], //工具图片Url
-      toolPicResult:'',
+      toolPicResult: '',
       authorPic: [], //讲师介绍图片
-      authorPicResult:'',
+      authorPicResult: '',
       lastModifiedTime: '', //版本选择的变更时间
       outerVisible: false,
       innerVisible: false,
@@ -274,7 +274,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       dateTimeValue: '', //时间选择
-      changeLog:'', //版本迭代说明
+      changeLog: '' //版本迭代说明
     }
   },
   methods: {
@@ -298,8 +298,8 @@ export default {
     /* 发送选择小课名称接口*/
     sendData (value) {
       let self = this;
-      this.toolPic=[];
-      this.authorPic=[];
+      this.toolPic = [];
+      this.authorPic = [];
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.sendData',
         method: 'get',
@@ -314,9 +314,9 @@ export default {
           self.dateTimeValue = res.msg.lastModifiedTime;
           self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
-          res.msg.tool ?  self.toolPic.push({url:res.msg.tool}):"";
+          res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';
           self.toolPicResult = res.msg.tool;
-          self.authorPic.push({url:res.msg.authorPic});
+          self.authorPic.push({url: res.msg.authorPic});
           self.authorPicResult = res.msg.authorPic;
           self.$refs.oneEditor.editor.setValue(res.msg.introduction);
           self.$refs.twoEditor.editor.setValue(res.msg.courseMaterial);
@@ -326,7 +326,7 @@ export default {
     },
     /*发送所有修改数据*/
     handleSendAll () {
-      if( !this.problem || !this.abbreviation ||  !this.oneEditorVal || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
+      if (!this.problem || !this.abbreviation || !this.oneEditorVal || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
         this.$message.error('请将所有信息填写完毕');
         return
       }

@@ -107,105 +107,105 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  export default {
-    name: "articles",
-    data(){
-      return{
-        articlesList:[], //总list
-        showArticlesList:[], //展示的list
-        itemData:{
-          title:'', //名称
-          description:'',//文章描述
-          tag:'',//标签
-          thumbnail:'',//缩略图链接
-          linkUrl:'',//活动链接
-        },
-        dialogVisible: false,
-        title:'新增',
-        id:'',
-        way:0
-      }
-    },
-    methods:{
-      getArticlesList(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.articles.articlesList',
-          successCallback(res){
-            self.articlesList = res.msg;
-            self.currentChange(1)
-          }
-        })
+import ApiDataFilter from '@/libraries/apiDataFilter'
+export default {
+  name: 'articles',
+  data () {
+    return {
+      articlesList: [], //总list
+      showArticlesList: [], //展示的list
+      itemData: {
+        title: '', //名称
+        description: '', //文章描述
+        tag: '', //标签
+        thumbnail: '', //缩略图链接
+        linkUrl: ''//活动链接
       },
-      /*处理时间显示方式*/
-      currentChange(pageIndex){
-        let start = (pageIndex -1)*10;
-        let end  =  pageIndex*10;
-        this.showArticlesList = this.articlesList.slice(start,end)
-      },
-      /*发送*/
-      send(){
-        this.handleInsertUpdate(this.way)
-      },
-      /*新增和更新数据*/
-      handleInsertUpdate(index){
-        let self =this;
-        let param = {title:this.itemData.title,description:this.itemData.description,tag:this.itemData.tag,thumbnail:this.itemData.thumbnail,linkUrl:this.itemData.linkUrl };
-        index==0 ? '':Object.assign(param,{id:this.id})
-        let apiPath =  index == 0 ? 'manage.articles.articlesInsert':'manage.articles.articlesUpdate';
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data: param,
-          successCallback(res){
-            self.$message.success('提交成功');
-            self.dialogVisible = false;
-            self.getArticlesList();
-          }
-        })
-      },
-      /*删除*/
-      activitiesDelete(index,row){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.articles.articlesDelete',
-          method:'post',
-          data:{id:row.id},
-          successCallback(res){
-            self.$message.success('删除成功');
-            self.getArticlesList();
-          }
-        })
-      },
-      /*编辑*/
-      handleEdit(index,row){
-        this.itemData.title = row.title;
-        this.itemData.description = row.description;
-        this.itemData.tag = row.tag;
-        this.itemData.thumbnail = row.thumbnail;
-        this.itemData.linkUrl = row.linkUrl;
-        this.way = 1;
-        this.id = row.id;
-        this.dialogVisible = true;
-        this.title = '编辑';
-      },
-      /*新增弹框*/
-      addItem(){
-        this.itemData.title = '';
-        this.itemData.description = '';
-        this.itemData.tag = '';
-        this.itemData.thumbnail = '';
-        this.itemData.linkUrl = '';
-        this.dialogVisible = true;
-        this.way = 0;
-        this.title = '新增';
-      }
-    },
-    created(){
-      this.getArticlesList()
+      dialogVisible: false,
+      title: '新增',
+      id: '',
+      way: 0
     }
+  },
+  methods: {
+    getArticlesList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.articles.articlesList',
+        successCallback (res) {
+          self.articlesList = res.msg;
+          self.currentChange(1)
+        }
+      })
+    },
+    /*处理时间显示方式*/
+    currentChange (pageIndex) {
+      let start = (pageIndex - 1) * 10;
+      let end = pageIndex * 10;
+      this.showArticlesList = this.articlesList.slice(start, end)
+    },
+    /*发送*/
+    send () {
+      this.handleInsertUpdate(this.way)
+    },
+    /*新增和更新数据*/
+    handleInsertUpdate (index) {
+      let self = this;
+      let param = {title: this.itemData.title, description: this.itemData.description, tag: this.itemData.tag, thumbnail: this.itemData.thumbnail, linkUrl: this.itemData.linkUrl };
+      index == 0 ? '' : Object.assign(param, {id: this.id})
+      let apiPath = index == 0 ? 'manage.articles.articlesInsert' : 'manage.articles.articlesUpdate';
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功');
+          self.dialogVisible = false;
+          self.getArticlesList();
+        }
+      })
+    },
+    /*删除*/
+    activitiesDelete (index, row) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.articles.articlesDelete',
+        method: 'post',
+        data: {id: row.id},
+        successCallback (res) {
+          self.$message.success('删除成功');
+          self.getArticlesList();
+        }
+      })
+    },
+    /*编辑*/
+    handleEdit (index, row) {
+      this.itemData.title = row.title;
+      this.itemData.description = row.description;
+      this.itemData.tag = row.tag;
+      this.itemData.thumbnail = row.thumbnail;
+      this.itemData.linkUrl = row.linkUrl;
+      this.way = 1;
+      this.id = row.id;
+      this.dialogVisible = true;
+      this.title = '编辑';
+    },
+    /*新增弹框*/
+    addItem () {
+      this.itemData.title = '';
+      this.itemData.description = '';
+      this.itemData.tag = '';
+      this.itemData.thumbnail = '';
+      this.itemData.linkUrl = '';
+      this.dialogVisible = true;
+      this.way = 0;
+      this.title = '新增';
+    }
+  },
+  created () {
+    this.getArticlesList()
   }
+}
 </script>
 
 <style scoped lang="less">

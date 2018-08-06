@@ -55,53 +55,53 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
+import ApiDataFilter from '@/libraries/apiDataFilter'
 
-  export default {
-    name: "subscribe",
-    data() {
-      return {
-        subscribeList: [],
-        dialogVisible:false,
-        message:'',
-        useing:false,
-        id:''
-      }
-    },
-    methods: {
-      getList() {
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'manage.subscribe.subscribeLoad',
-          successCallback(res) {
-            self.subscribeList = res.msg;
-          }
-        })
-      },
-      handleEdit(index,row){
-         this.dialogVisible = true;
-         this.message = row.message;
-         this.useing = row.del==1 ? false:true,
-           this.id=row.id
-      },
-      send(){
-        let self = this;
-        let param = {id:this.id,message:this.message,del:this.useing ? 0:1};
-        ApiDataFilter.request({
-          apiPath: 'manage.subscribe.subscribeUpdate',
-          method:'post',
-          data:param,
-          successCallback(res) {
-            self.subscribeList = res.msg;
-            self.$message.success('提交成功')
-          }
-        })
-      }
-    },
-    created() {
-       this.getList()
+export default {
+  name: 'subscribe',
+  data () {
+    return {
+      subscribeList: [],
+      dialogVisible: false,
+      message: '',
+      useing: false,
+      id: ''
     }
+  },
+  methods: {
+    getList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.subscribe.subscribeLoad',
+        successCallback (res) {
+          self.subscribeList = res.msg;
+        }
+      })
+    },
+    handleEdit (index, row) {
+      this.dialogVisible = true;
+      this.message = row.message;
+      this.useing = row.del != 1,
+      this.id = row.id
+    },
+    send () {
+      let self = this;
+      let param = {id: this.id, message: this.message, del: this.useing ? 0 : 1};
+      ApiDataFilter.request({
+        apiPath: 'manage.subscribe.subscribeUpdate',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.subscribeList = res.msg;
+          self.$message.success('提交成功')
+        }
+      })
+    }
+  },
+  created () {
+    this.getList()
   }
+}
 </script>
 
 <style scoped lang='less'>

@@ -57,79 +57,79 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  export default {
-    name: "certificateSend",
-    data() {
-      return {
-        certificateYear: '',    // 请选择证书年份
-        certificateYearList: [], //证书年份list
-        certificateMonth: '',     // 请选择证书月份
-        certificateMonthList: [],// 月份list
-        certificateProject: '',   //请选择生成学习项目
-        certificateProjectList: [{id: 3, name: "核心能力项目"}, {id: 8, name: "商业思维项目"}, {id: 12, name: "L1项目项目"}, {
-          id: 10,
-          name: "L2项目项目"
-        }],//项目list
-        dialogVisible: false,
-        title:'',
-        index:null,
-      }
-    },
-    methods: {
-      getYearList() {
-        let date = new Date();
-        let year = date.getFullYear() - 2;
-        for (let i = 0; i < 3; i++) {
-          year += 1;
-          this.certificateYearList.push(year);
-        }
-        for (let i = 1; i < 13; i++) {
-          let month = i;
-          this.certificateMonthList.push(month);
-        }
-      },
-      certificate(apiPath){
-        let  self =this;
-        let param = {year: this.certificateYear, month: this.certificateMonth, memberTypeId: this.certificateProject};
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.dialogVisible = false;
-            self.$message.success('恭喜你，这是一条成功消息');
-            console.log(res)
-          }
-        })
-      },
-      /*更换标题*/
-      handleShowtitle(index){
-        this.dialogVisible = true;
-        this.index = index;
-        if (index === 0){
-          this.title=`点击生成${this.certificateYear} 年${this.certificateMonth} 月的证书`
-        } else if (index===1){
-          this.title=`点击发送${this.certificateYear} 年${this.certificateMonth} 月的证书（将会发送模板消息通知学员，谨慎操作）`
-        }else if (index===2) {
-          this.title=`点击发送${this.certificateYear} 年${this.certificateMonth} 月的全勤奖（将会发送模板消息通知学员，谨慎操作）`
-        }
-      },
-      /*发送数据*/
-      handleSendData(){
-        if (this.index === 0 ){
-          this.certificate('manage.certificateSend.generateCertificate')
-        } else if (this.index === 1 ) {
-          this.certificate('manage.certificateSend.sendCertificate')
-        }else if (this.index === 2) {
-          this.certificate('manage.certificateSend.Attendance')
-        }
-      }
-    },
-    created() {
-      this.getYearList();
+import ApiDataFilter from '@/libraries/apiDataFilter'
+export default {
+  name: 'certificateSend',
+  data () {
+    return {
+      certificateYear: '', // 请选择证书年份
+      certificateYearList: [], //证书年份list
+      certificateMonth: '', // 请选择证书月份
+      certificateMonthList: [], // 月份list
+      certificateProject: '', //请选择生成学习项目
+      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 8, name: '商业思维项目'}, {id: 12, name: 'L1项目项目'}, {
+        id: 10,
+        name: 'L2项目项目'
+      }], //项目list
+      dialogVisible: false,
+      title: '',
+      index: null
     }
+  },
+  methods: {
+    getYearList () {
+      let date = new Date();
+      let year = date.getFullYear() - 2;
+      for (let i = 0; i < 3; i++) {
+        year += 1;
+        this.certificateYearList.push(year);
+      }
+      for (let i = 1; i < 13; i++) {
+        let month = i;
+        this.certificateMonthList.push(month);
+      }
+    },
+    certificate (apiPath) {
+      let self = this;
+      let param = {year: this.certificateYear, month: this.certificateMonth, memberTypeId: this.certificateProject};
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.dialogVisible = false;
+          self.$message.success('恭喜你，这是一条成功消息');
+          console.log(res)
+        }
+      })
+    },
+    /*更换标题*/
+    handleShowtitle (index) {
+      this.dialogVisible = true;
+      this.index = index;
+      if (index === 0) {
+        this.title = `点击生成${this.certificateYear} 年${this.certificateMonth} 月的证书`
+      } else if (index === 1) {
+        this.title = `点击发送${this.certificateYear} 年${this.certificateMonth} 月的证书（将会发送模板消息通知学员，谨慎操作）`
+      } else if (index === 2) {
+        this.title = `点击发送${this.certificateYear} 年${this.certificateMonth} 月的全勤奖（将会发送模板消息通知学员，谨慎操作）`
+      }
+    },
+    /*发送数据*/
+    handleSendData () {
+      if (this.index === 0) {
+        this.certificate('manage.certificateSend.generateCertificate')
+      } else if (this.index === 1) {
+        this.certificate('manage.certificateSend.sendCertificate')
+      } else if (this.index === 2) {
+        this.certificate('manage.certificateSend.Attendance')
+      }
+    }
+  },
+  created () {
+    this.getYearList();
   }
+}
 </script>
 
 <style scoped lang="less">

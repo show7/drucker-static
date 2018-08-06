@@ -11,6 +11,16 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/steve/*': {
+        target: 'http://localhost:8080',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if(req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        }
+      },
       '/pc/*': {
         target: 'http://beta.confucius.mobi',
         secure: false,

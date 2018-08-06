@@ -154,132 +154,141 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  import moment from 'moment'
-  export default {
-    name: "activities",
-    data(){
-      return{
-        activitiesList:[], //总list
-        showactivitiesList:[], //展示的list
-        itemData:{
-          name:'', //名称
-          holder:'',//举办人名称
-          location:'',//地址
-          thumbnail:'',//缩略图链接
-          startTime:'',//开始时间
-          endTime:'',//结束时间
-          status:'', //状态
-          vipSaleLinkUrl:'',//会员售卖页链接
-          guestSaleLinkUrl:'',//普通用户售卖链接
-          linkUrl:'',//活动链接
-          sequence:'',//排序
-        },
-        dateList:[],
-        dialogVisible: false,
-        title:'新增',
-        id:'',//编辑时需要入参
-        way:0 ,//
-      }
-    },
-    methods:{
-      getActivitiesList(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.activities.activitiesList',
-          successCallback(res){
-            self.activitiesList = res.msg;
-            if (res.msg.length >0){
-              res.msg.forEach((item,index)=>{
-                self.activitiesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
-                self.activitiesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
-              })
-            }
-            self.currentChange(1)
-          }
-        })
+import ApiDataFilter from '@/libraries/apiDataFilter'
+import moment from 'moment'
+export default {
+  name: 'activities',
+  data () {
+    return {
+      activitiesList: [], //总list
+      showactivitiesList: [], //展示的list
+      itemData: {
+        name: '', //名称
+        holder: '', //举办人名称
+        location: '', //地址
+        thumbnail: '', //缩略图链接
+        startTime: '', //开始时间
+        endTime: '', //结束时间
+        status: '', //状态
+        vipSaleLinkUrl: '', //会员售卖页链接
+        guestSaleLinkUrl: '', //普通用户售卖链接
+        linkUrl: '', //活动链接
+        sequence: ''//排序
       },
-      /*处理时间显示方式*/
-      currentChange(pageIndex){
-        let start = (pageIndex -1)*10;
-        let end  =  pageIndex*10;
-        this.showactivitiesList = this.activitiesList.slice(start,end)
-      },
-      /*发送*/
-      send(){
-        this.handleInsertUpdate(this.way)
-      },
-      /*新增和更新数据*/
-      handleInsertUpdate(index){
-        let self =this;
-        let param = { del: false, endTime: this.dateList[1], linkUrl: this.itemData.linkUrl, name: this.itemData.name,  sequence: this.itemData.sequence,status:this.itemData.status,
-          thumbnail:this.itemData.thumbnail,vipSaleLinkUrl:this.itemData.vipSaleLinkUrl, guestSaleLinkUrl:this.itemData.guestSaleLinkUrl, holder:this.itemData.holder,
-          location:this.itemData.location,  startTime: this.dateList[0]};
-          index==0 ? '':Object.assign(param,{id:this.id})
-        let apiPath =  index == 0 ? 'manage.activities.activitiesInsert':'manage.activities.activitiesUpdate';
-        ApiDataFilter.request({
-          apiPath:apiPath,
-          method:'post',
-          data: param,
-          successCallback(res){
-            self.$message.success('提交成功');
-            self.dialogVisible = false;
-            self.getActivitiesList();
-          }
-        })
-      },
-      /*删除*/
-      activitiesDelete(index,row){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.activities.activitiesDelete',
-          method:'post',
-          data:{id:row.id},
-          successCallback(res){
-            self.$message.success('删除成功');
-            self.getActivitiesList();
-          }
-        })
-      },
-      /*编辑*/
-      handleEdit(index,row){
-        this.itemData.name = row.name;
-        this.itemData.holder = row.holder;
-        this.itemData.location = row.location;
-        this.itemData.thumbnail = row.thumbnail;
-        this.dateList[0] = row.startTime;
-        this.dateList[1] = row.endTime;
-        this.itemData.linkUrl = row.linkUrl;
-        this.itemData.status = row.status;
-        this.itemData.sequence = row.sequence;
-        this.itemData.vipSaleLinkUrl = row.vipSaleLinkUrl;
-        this.itemData.guestSaleLinkUrl = row.guestSaleLinkUrl;
-        this.way = 1;
-        this.id = row.id;
-        this.dialogVisible = true;
-        this.title = '编辑';
-      },
-      /*新增弹框*/
-      addItem(){
-        this.itemData.name = '';
-        this.itemData.holder = '';
-        this.itemData.location = '';
-        this.itemData.thumbnail = '';
-        this.dateList = [];
-        this.itemData.linkUrl = '';
-        this.itemData.status = '';
-        this.itemData.sequence = '';
-        this.itemData.vipSaleLinkUrl = '';
-        this.itemData.guestSaleLinkUrl = '';
-        this.dialogVisible = true;
-        this.way = 0;
-        this.title = '新增';
-      }
-    },
-    created(){
-      this.getActivitiesList()
+      dateList: [],
+      dialogVisible: false,
+      title: '新增',
+      id: '', //编辑时需要入参
+      way: 0 //
     }
+  },
+  methods: {
+    getActivitiesList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.activities.activitiesList',
+        successCallback (res) {
+          self.activitiesList = res.msg;
+          if (res.msg.length > 0) {
+            res.msg.forEach((item, index) => {
+              self.activitiesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
+              self.activitiesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
+            })
+          }
+          self.currentChange(1)
+        }
+      })
+    },
+    /*处理时间显示方式*/
+    currentChange (pageIndex) {
+      let start = (pageIndex - 1) * 10;
+      let end = pageIndex * 10;
+      this.showactivitiesList = this.activitiesList.slice(start, end)
+    },
+    /*发送*/
+    send () {
+      this.handleInsertUpdate(this.way)
+    },
+    /*新增和更新数据*/
+    handleInsertUpdate (index) {
+      let self = this;
+      let param = { del: false,
+        endTime: this.dateList[1],
+        linkUrl: this.itemData.linkUrl,
+        name: this.itemData.name,
+        sequence: this.itemData.sequence,
+        status: this.itemData.status,
+        thumbnail: this.itemData.thumbnail,
+        vipSaleLinkUrl: this.itemData.vipSaleLinkUrl,
+        guestSaleLinkUrl: this.itemData.guestSaleLinkUrl,
+        holder: this.itemData.holder,
+        location: this.itemData.location,
+        startTime: this.dateList[0]};
+      index == 0 ? '' : Object.assign(param, {id: this.id})
+      let apiPath = index == 0 ? 'manage.activities.activitiesInsert' : 'manage.activities.activitiesUpdate';
+      ApiDataFilter.request({
+        apiPath: apiPath,
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功');
+          self.dialogVisible = false;
+          self.getActivitiesList();
+        }
+      })
+    },
+    /*删除*/
+    activitiesDelete (index, row) {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.activities.activitiesDelete',
+        method: 'post',
+        data: {id: row.id},
+        successCallback (res) {
+          self.$message.success('删除成功');
+          self.getActivitiesList();
+        }
+      })
+    },
+    /*编辑*/
+    handleEdit (index, row) {
+      this.itemData.name = row.name;
+      this.itemData.holder = row.holder;
+      this.itemData.location = row.location;
+      this.itemData.thumbnail = row.thumbnail;
+      this.dateList[0] = row.startTime;
+      this.dateList[1] = row.endTime;
+      this.itemData.linkUrl = row.linkUrl;
+      this.itemData.status = row.status;
+      this.itemData.sequence = row.sequence;
+      this.itemData.vipSaleLinkUrl = row.vipSaleLinkUrl;
+      this.itemData.guestSaleLinkUrl = row.guestSaleLinkUrl;
+      this.way = 1;
+      this.id = row.id;
+      this.dialogVisible = true;
+      this.title = '编辑';
+    },
+    /*新增弹框*/
+    addItem () {
+      this.itemData.name = '';
+      this.itemData.holder = '';
+      this.itemData.location = '';
+      this.itemData.thumbnail = '';
+      this.dateList = [];
+      this.itemData.linkUrl = '';
+      this.itemData.status = '';
+      this.itemData.sequence = '';
+      this.itemData.vipSaleLinkUrl = '';
+      this.itemData.guestSaleLinkUrl = '';
+      this.dialogVisible = true;
+      this.way = 0;
+      this.title = '新增';
+    }
+  },
+  created () {
+    this.getActivitiesList()
   }
+}
 </script>
 
 <style scoped lang="less">

@@ -36,46 +36,46 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  export default {
-    name: "addVip",
-    data(){
-      return{
-        riseId:'',//圈外id
-        month:'',//会员有效期
-        memberTypeId:'',//会员类型
-        memberTypeIdList:[],
-        memo:'',//用户身份
-      }
-    },
-    methods:{
-      loadRiseMember(){
-        let self = this;
-        ApiDataFilter.request({
-          apiPath:'manage.addVip.loadRiseMember',
-          successCallback(res){
-            self.memberTypeIdList = res.msg
-          }
-        })
-      },
-      addRiseMember(){
-        let self = this;
-        let param = {riseId:this.riseId,memo:this.memo,month:this.month,memberTypeId:this.memberTypeId};
-        ApiDataFilter.request({
-          apiPath:'manage.addVip.addRiseMember',
-          method:'post',
-          data:param,
-          successCallback(res){
-            self.$message.success('提交成功')
-          }
-        })
-      }
-    },
-
-    created(){
-       this.loadRiseMember()
+import ApiDataFilter from '@/libraries/apiDataFilter'
+export default {
+  name: 'addVip',
+  data () {
+    return {
+      riseId: '', //圈外id
+      month: '', //会员有效期
+      memberTypeId: '', //会员类型
+      memberTypeIdList: [],
+      memo: ''//用户身份
     }
+  },
+  methods: {
+    loadRiseMember () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'manage.addVip.loadRiseMember',
+        successCallback (res) {
+          self.memberTypeIdList = res.msg
+        }
+      })
+    },
+    addRiseMember () {
+      let self = this;
+      let param = {riseId: this.riseId, memo: this.memo, month: this.month, memberTypeId: this.memberTypeId};
+      ApiDataFilter.request({
+        apiPath: 'manage.addVip.addRiseMember',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success('提交成功')
+        }
+      })
+    }
+  },
+
+  created () {
+    this.loadRiseMember()
   }
+}
 </script>
 
 <style scoped lang="less">
