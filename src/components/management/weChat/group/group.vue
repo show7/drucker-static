@@ -30,6 +30,24 @@
         </el-col>
       </el-row>
       <el-row class="second-line">
+        <el-col :span="8">
+          <h4>内容</h4>
+          <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
+        </el-col>
+        <el-col :span="8">
+          <h4>话题（清除查询分享）</h4>
+          <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
+            <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <h4>分享（清除查询话题）</h4>
+          <el-select v-model="shareId" placeholder="请选择分享" :clearable="true" @change="shareIdChange">
+            <el-option v-for="item in shareLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+      <el-row class="second-line">
         <el-col :span="9">
           <h4>创建时间</h4>
           <el-date-picker
@@ -56,31 +74,12 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="6">
-          <h4>内容</h4>
-          <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
-        </el-col>
-        <el-col :span="6">
-          <h4>话题（清除查询分享）</h4>
-          <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange"
-                     @clear="Clear(1)">
-            <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6">
-          <h4>分享（清除查询话题）</h4>
-          <el-select v-model="shareId" placeholder="请选择分享" :clearable="true" @change="shareIdChange"
-                     @clear="Clear(1)">
-            <el-option v-for="item in shareLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-col>
         <el-col :span="5" class="buttons">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
       </el-row>
+
     </div>
     <div class="content-box">
       <el-row>
@@ -185,22 +184,22 @@
       width="50%">
       <div class="popout-box">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <h4><span>*</span>riseId</h4>
             <el-input class="riseId-input" placeholder="请输入riseId" v-model="riseId" :disabled="editorFlag" clearable
                       @clear="riseIdClear"></el-input>
             <el-button type="primary" size="small" :disabled="editorFlag" @click="getAdd">确 定</el-button>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
+            <h4><span>*</span>发布昵称</h4>
+            <el-input placeholder="请输入昵称" v-model="nickname" :disabled="true"></el-input>
+          </el-col>
+          <el-col :span="8">
             <h4><span>*</span>头像</h4>
             <img :src="headimgurl" alt="头像">
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <h4><span>*</span>发布昵称</h4>
-            <el-input placeholder="请输入昵称" v-model="nickname" :disabled="true"></el-input>
-          </el-col>
           <el-col :span="12">
             <h4><span>*</span>所属群组</h4>
             <el-select v-model="popOutCommunityId" placeholder="请选择" :disabled="editorFlag"
@@ -213,7 +212,20 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="12">
+            <h4><span>*</span>所属微信群</h4>
+            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="editorFlag">
+              <el-option
+                v-for="item in popOutWechatGroupList"
+                :key="item.id"
+                :label="item.groupName"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <h4><span>*</span>话题</h4>
             <el-select v-model="popOutTopicId" placeholder="请选择"
                        @change="popOutTopicIdChange">
@@ -225,31 +237,18 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="6">
-            <h4><span>*</span>分享</h4>
-            <el-select v-model="popOutShareId" placeholder="请选择"
-                       @change="popOutShareIdChange">
-              <el-option
-                v-for="item in shareLabels"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4><span>*</span>所属微信群</h4>
-            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="editorFlag">
-              <el-option
-                v-for="item in popOutWechatGroupList"
-                :key="item.id"
-                :label="item.groupName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
+        <el-col :span="12">
+          <h4><span>*</span>分享</h4>
+          <el-select v-model="popOutShareId" placeholder="请选择"
+                     @change="popOutShareIdChange">
+            <el-option
+              v-for="item in shareLabels"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
@@ -421,7 +420,6 @@
             self.communityList = res.msg.communityList;
             self.topicLabels = res.msg.topicLabels;
             self.shareLabels = res.msg.shareLabels;
-
             if(self.groupList.length > 0) {
               self.groupList.forEach((item, index) => {
                 self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
@@ -563,8 +561,6 @@
           this.communityId = null;
           this.wechatGroupId = null;
           this.wechatGroupList = [];
-          this.topicId = null;
-          this.shareId = null;
         } else {
           this.wechatGroupId = null;
         }
@@ -578,6 +574,8 @@
         this.createTime = null;
         this.publishTime = null;
         this.wechatGroupList = [];
+        this.topicId = null;
+        this.shareId = null;
         this.groupSearch();
       },
       /*得到当前页数*/
