@@ -15,12 +15,18 @@
           </el-select>
         </el-col>
         <el-col :span="6">
+          <h4>内容</h4>
+          <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
+        </el-col>
+        <el-col :span="6">
           <h4>群组（清除查询全部）</h4>
           <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
                      @clear="Clear(1)">
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-col>
+      </el-row>
+      <el-row class="second-line">
         <el-col :span="6">
           <h4>微信群（清除查询全部）</h4>
           <el-select v-model="wechatGroupId" placeholder="请选择微信群" :clearable="true" @clear="Clear(2)">
@@ -28,19 +34,13 @@
                        :value="item.id"></el-option>
           </el-select>
         </el-col>
-      </el-row>
-      <el-row class="second-line">
-        <el-col :span="8">
-          <h4>内容</h4>
-          <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
-        </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <h4>话题（清除查询分享）</h4>
           <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
             <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <h4>分享（清除查询话题）</h4>
           <el-select v-model="shareId" placeholder="请选择分享" :clearable="true" @change="shareIdChange">
             <el-option v-for="item in shareLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -79,16 +79,15 @@
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
       </el-row>
-
     </div>
     <div class="content-box">
       <el-row>
-        <el-col :span="12">
+       <!-- <el-col :span="12">
           <div class="grid-content-left">
-            <el-button type="primary" size="medium" @click="groupPublish(checkbox)">发布</el-button>
+           &lt;!&ndash; <el-button type="primary" size="medium" @click="groupPublish(checkbox)">发布</el-button>&ndash;&gt;
           </div>
-        </el-col>
-        <el-col :span="12">
+        </el-col>-->
+        <el-col :span="24">
           <div class="grid-content-right">
             <el-button type="primary" size="medium" @click="newAdd">添加</el-button>
           </div>
@@ -98,13 +97,13 @@
       <el-table
         :data="groupList"
         style="width: 100%">
-        <el-table-column
+      <!--  <el-table-column
           label="选择">
           <template slot-scope="scope">
             <el-checkbox :disabled="scope.row.publishStatus == 1 ? true:false "
                          @change="(val)=>{checkboxChange(scope.row.esChatId,val)}"></el-checkbox>
           </template>
-        </el-table-column>
+        </el-table-column>-->
         <el-table-column
           prop="nickname"
           width="150"
@@ -117,6 +116,11 @@
         <el-table-column
           prop="groupName"
           label="微信群">
+        </el-table-column>
+        <el-table-column
+          prop="labelName"
+          width="200"
+          label="标签">
         </el-table-column>
         <el-table-column
           prop="content"
@@ -230,7 +234,7 @@
             <el-select v-model="popOutTopicId" placeholder="请选择"
                        @change="popOutTopicIdChange">
               <el-option
-                v-for="item in topicLabels"
+                v-for="item in popOuttopicLabels"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
@@ -242,7 +246,7 @@
           <el-select v-model="popOutShareId" placeholder="请选择"
                      @change="popOutShareIdChange">
             <el-option
-              v-for="item in shareLabels"
+              v-for="item in popOutshareLabels"
               :key="item.id"
               :label="item.name"
               :value="item.id">
@@ -326,6 +330,16 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <h4>话题</h4>
+            <p>{{topicName ? topicName :'无'}}</p>
+          </el-col>
+          <el-col :span="12">
+            <h4>分享</h4>
+            <p>{{shareName ? shareName :'无'}}</p>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="24">
             <h4>发布内容</h4>
             <p>{{content ? content : '无内容'}}</p>
@@ -358,10 +372,14 @@
       return {
         popOutShareId: null,
         popOutTopicId: null,
-        topicLabels: [],
-        shareLabels: [],
+        topicLabels: [],//话题列表
+        shareLabels: [],//分享列表
+        popOuttopicLabels:[],
+        popOutshareLabels:[],
         topicId: null,
         shareId: null,
+        topicName:null,
+        shareName:null,
         groupList: [],
         dialogVisible: false,
         dialogVisibleDesc: false, //查看详情弹框
@@ -418,8 +436,6 @@
           successCallback(res) {
             self.groupList = res.msg.content.content;
             self.communityList = res.msg.communityList;
-            self.topicLabels = res.msg.topicLabels;
-            self.shareLabels = res.msg.shareLabels;
             if(self.groupList.length > 0) {
               self.groupList.forEach((item, index) => {
                 self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
@@ -533,7 +549,9 @@
       communityIdChange(val) {
         this.communityList.forEach((item, index) => {
           if(item.id == val) {
-            this.wechatGroupList = item.wechatGroupList
+            this.wechatGroupList = item.wechatGroupList;
+            this.topicLabels = item.topicLabels;
+            this.shareLabels = item.shareLabels;
           }
         })
         this.wechatGroupId = null;
@@ -542,9 +560,14 @@
       popOutCommunityChange(val) {
         this.communityList.forEach((item, index) => {
           if(item.id == val) {
-            this.popOutWechatGroupList = item.wechatGroupList
+            this.popOutWechatGroupList = item.wechatGroupList;
+            this.popOuttopicLabels = item.topicLabels;
+            this.popOutshareLabels = item.shareLabels;
           }
         })
+        this.popOutShareId=null;
+        this.popOutTopicId= null;
+        this.popOutWechatGroupId = null;
       },
       /*弹窗选择topic*/
       popOutTopicIdChange(val) {
@@ -561,6 +584,10 @@
           this.communityId = null;
           this.wechatGroupId = null;
           this.wechatGroupList = [];
+          this.topicId = null;
+          this.shareId = null;
+          this.topicLabels = [];
+          this.shareLabels = [];
         } else {
           this.wechatGroupId = null;
         }
@@ -576,6 +603,9 @@
         this.wechatGroupList = [];
         this.topicId = null;
         this.shareId = null;
+        this.topicLabels = [];
+        this.shareLabels = [];
+        this.searchContent = null;
         this.groupSearch();
       },
       /*得到当前页数*/
@@ -615,6 +645,7 @@
       },
       /*新增弹框*/
       newAdd() {
+        this.title = '新增';
         this.editorFlag = false;
         this.riseId = null;
         this.nickname = null;
@@ -631,6 +662,8 @@
         this.picGroupList = [];
         this.imgList = [];
         this.popOutWechatGroupList = [];
+        this.popOuttopicLabels = [];
+        this.popOutshareLabels = [];
       },
       /*编辑弹框*/
       handleEdit(index, row) {
@@ -668,6 +701,8 @@
         this.publish = row.publish.toString();
         this.dialogVisibleDesc = true;
         this.content = row.content
+        this.topicName = row.topicName;
+        this.shareName = row.shareName;
         this.picGroup = row.picGroup;
       },
       /*上传图片*/
