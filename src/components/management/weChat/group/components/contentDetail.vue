@@ -410,7 +410,7 @@
       this.postProfileId = this.detail.postProfileId;
       this.popOutCommunityId = this.detail.popOutCommunityId;
       this.popOutWechatGroupId = this.detail.popOutWechatGroupId;
-      this.topicId = this.detail.popOutTopicId;
+      this.popOutTopicId = this.detail.popOutTopicId;
       this.content = this.detail.content;
       this.publish = this.detail.publish;
       this.picGroupList = this.detail.picGroupList;
