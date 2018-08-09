@@ -48,25 +48,25 @@ export default {
       description: '', //优惠券描述
       expiredDate: '',
       riseIdList: '',
-      couponTypeList:[],//优惠券类型
-      couponConfigId:null,//类型id
+      couponTypeList: [], //优惠券类型
+      couponConfigId: null//类型id
     }
   },
   methods: {
     /*获取优惠券类型*/
-    getLoadType(){
+    getLoadType () {
       let self = this;
       ApiDataFilter.request({
-        apiPath:'manage.coupon.loadType',
-        successCallback(res){
-         self.couponTypeList = res.msg;
+        apiPath: 'manage.coupon.loadType',
+        successCallback (res) {
+          self.couponTypeList = res.msg;
         }
       })
     },
     /*添加优惠券*/
     handleSendData () {
       let self = this;
-      let param = {amount: this.amount, description: this.description, expiredDate: this.expiredDate, riseIdList: this.riseIdList.split('\n'),couponConfigId:this.couponConfigId}
+      let param = {amount: this.amount, description: this.description, expiredDate: this.expiredDate, riseIdList: this.riseIdList.split('\n'), couponConfigId: this.couponConfigId}
       ApiDataFilter.request({
         apiPath: 'manage.coupon.couponAdd',
         method: 'post',
@@ -85,7 +85,7 @@ export default {
       this.handleSendData();
     }
   },
-  created(){
+  created () {
     this.getLoadType()
   }
 }

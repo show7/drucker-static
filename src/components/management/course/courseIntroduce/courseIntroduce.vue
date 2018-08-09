@@ -101,7 +101,6 @@
       </el-col>
     </el-row>
 
-
     <!--上传讲师介绍图片和版本迭代-->
     <el-row class="">
       <el-col :span="10">
@@ -321,8 +320,8 @@ export default {
           self.dateTimeValue = res.msg.lastModifiedTime;
           self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
-         /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
-         /* self.toolPicResult = res.msg.tool;*/
+          /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
+          /* self.toolPicResult = res.msg.tool;*/
           self.authorPic.push({url: res.msg.authorPic});
           self.authorPicResult = res.msg.authorPic;
           self.$refs.oneEditor.editor.setValue(res.msg.introduction);
@@ -398,7 +397,7 @@ export default {
       this.fourEditorVal = val
     },
     /*上传工具*/
-    fiveEditorChange(val){
+    fiveEditorChange (val) {
       this.toolResult = val
     },
     /*语音文本描述*/
@@ -507,7 +506,7 @@ export default {
     },
     /* 处理语音list文案*/
     handleChangeData (tableData) {
-      if (tableData.length == 0) return
+      if (tableData.length === 0) return
       tableData.map((item, index) => {
         tableData[index].wordsString = this.removeHtmlTags(item.words)
       });

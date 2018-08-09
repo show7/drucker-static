@@ -24,7 +24,9 @@
     </div>
 
     <div class="router-class">
-      <router-view/>
+      <transition name="slide-left">
+        <router-view class="child-view" />
+      </transition>
     </div>
   </div>
 </template>
