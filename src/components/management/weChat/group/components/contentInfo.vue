@@ -117,8 +117,6 @@
         headPicList: [], //头图
         title: '', //文章标题
         description: '', //描述
-        toolbarNormal: [ 'bold', 'indent', 'outdent'],
-        toolbarArticle: [ 'bold', 'ol', 'ul', 'image', 'hr', 'indent', 'outdent'],
         categoryId : null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
