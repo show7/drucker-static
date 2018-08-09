@@ -174,7 +174,8 @@
         </el-pagination>
       </div>
     </div>
-    <ContentDetail v-if="show" @dialogDetail="handleGet" :detail="detail" :dialogVisibleDesc="dialogVisibleDesc" :dialogVisible="dialogVisible" :editorFlag="editorFlag"/>
+    <ContentDetail v-if="showDetail" @closeDialog="handleGet" @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
+    <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
   </div>
 </template>
 
@@ -182,11 +183,12 @@
   import ApiDataFilter from '@/libraries/apiDataFilter'
   import moment from 'moment'
   import ContentDetail from './components/contentDetail'
+  import ContentInfo from './components/contentInfo'
   import _ from 'lodash'
 
   export default {
     name: 'group',
-    components: { ContentDetail },
+    components: { ContentDetail, ContentInfo },
     data() {
       return {
         topicLabels: [],//话题列表
@@ -199,7 +201,8 @@
         dialogVisible: false, //编辑弹框
         dialogVisibleDesc: false, //查看详情弹框
         imageUrl: '',
-        show : false,  //展示弹窗
+        showDetail : false,  //展示修改弹窗
+        showInfo : false,  //展示详情弹窗
         queryAccount: null, //搜索的昵称
         searchContent: null, // 搜索内容
         statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
@@ -391,7 +394,7 @@
         this.dialogVisible = true;
         this.editorFlag = false;
         this.dialogVisibleDesc = false;
-        this.show = true;
+        this.showDetail = true;
         this.detail.communityList = this.communityList;
         this.detail.wechatGroupList = this.wechatGroupList;
         this.detail.topicLabels = this.topicLabels;
@@ -420,7 +423,7 @@
         this.editorFlag = true;
         this.dialogVisibleDesc = false;
         this.dialogVisible = true;
-        this.show =true;
+        this.showDetail =true;
       },
       /*查看详情*/
       handleOnlook(index, row) {
@@ -445,13 +448,22 @@
         this.dialogVisibleDesc = true;
         this.dialogVisible = false;
         this.editorFlag = false;
-        this.show =true;
+        this.showInfo =true;
       },
       handleGet(){
         this.dialogVisibleDesc = false;
         this.dialogVisible = false;
         this.editorFlag = false;
-        this.show = false;
+        this.showInfo = false;
+        this.showDetail = false;
+      },
+      handleSave(){
+        this.dialogVisibleDesc = false;
+        this.dialogVisible = false;
+        this.editorFlag = false;
+        this.showInfo = false;
+        this.showDetail = false;
+        this.getGroupList();
       }
     },
     created() {

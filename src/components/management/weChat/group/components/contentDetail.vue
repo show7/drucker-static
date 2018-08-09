@@ -2,10 +2,11 @@
   <!--编辑和新增弹框-->
   <div class="content-detail-container">
     <el-dialog
+      :visible.sync="show"
       title="内容详情"
-      :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       :show-close="false"
+      :before-close="handleCancelEmit"
       width="60%">
       <div class="popout-box">
         <el-row>
@@ -155,14 +156,13 @@
         </el-dialog>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button @click="handleDetailEmit">取 消</el-button>
+      <el-button @click="handleCancelEmit">取 消</el-button>
       <el-button type="primary" @click="checkSaveData">确 定</el-button>
     </span>
     </el-dialog>
     <!--详情-->
     <el-dialog
       title="详情"
-      :visible.sync="dialogVisibleDesc"
       :show-close="false"
       width="60%">
       <div class="desc-box">
@@ -239,7 +239,7 @@
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-         <el-button type="primary" @click="handleDetailEmit">确 定</el-button>
+         <el-button type="primary" @click="handleCancelEmit">确 定</el-button>
        </span>
     </el-dialog>
   </div>
@@ -251,10 +251,11 @@
   import moment from 'moment'
   import _ from 'lodash'
   export default {
-    name: 'group',
+    name: 'contentDetail',
     components: { Editor },
     data() {
       return {
+        show: true, //对话框状态
         riseId: '', //圈外id
         nickname: '', //昵称
         content: '', //内容
@@ -297,7 +298,7 @@
         ]
       }
     },
-    props: ['dialogVisible', 'editorFlag', 'detail', 'dialogVisibleDesc'],
+    props: ['editorFlag', 'detail'],
     methods: {
       /*新增状态下查询*/
       getAdd() {
@@ -342,7 +343,7 @@
           successCallback(res) {
             self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
             self.dialogDetailVisible = false;
-            self.handleDetailEmit();
+            self.handleSaveEmit();
           }
         })
       },
@@ -448,8 +449,13 @@
         this.headimgurl = null;
         this.nickname = null;
       },
-      handleDetailEmit(){
-        this.$emit('dialogDetail')
+      handleCancelEmit(){
+        this.show =false;
+        this.$emit('closeDialog')
+      },
+      handleSaveEmit(){
+        this.show =false;
+        this.$emit('reloadList')
       },
       /*去除标签*/
       removeHtmlTags(str) {
