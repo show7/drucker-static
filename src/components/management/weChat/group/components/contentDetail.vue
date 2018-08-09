@@ -160,88 +160,6 @@
       <el-button type="primary" @click="checkSaveData">确 定</el-button>
     </span>
     </el-dialog>
-    <!--详情-->
-    <el-dialog
-      title="详情"
-      :show-close="false"
-      width="60%">
-      <div class="desc-box">
-        <el-row>
-          <el-col :span="8">
-            <h4>riseId</h4>
-            <p>{{riseId}}</p>
-          </el-col>
-          <el-col :span="8">
-            <h4>发布昵称</h4>
-            <p>{{nickname ? nickname:'无'}}</p>
-          </el-col>
-          <el-col :span="8">
-            <h4>头像</h4>
-            <img class="head-imgurl" :src="headimgurl" alt="头像">
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>所属群组</h4>
-            <p>{{communityName}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>所属微信群</h4>
-            <p>{{groupName}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>分类</h4>
-            <p>{{findCategory}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>话题</h4>
-            <p>{{topicName ? topicName :'无'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>操作</h4>
-            <p>{{publish == 1 ? '上架':'保存'}}</p>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :span="24">
-            <h4>标题</h4>
-            <p>{{title ? title :'无'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>摘要</h4>
-            <p>{{description ? description :'无'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>头图</h4>
-            <img class="img-list" :src="detail.headPic" alt='图片'>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>发布内容</h4>
-            <p v-html="content"></p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>上传图片</h4>
-            <img class="img-list" v-for="(item,index) in imgList" :key="index" :src="item" alt='图片'>
-          </el-col>
-        </el-row>
-      </div>
-      <span slot="footer" class="dialog-footer">
-         <el-button type="primary" @click="handleCancelEmit">确 定</el-button>
-       </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -502,6 +420,7 @@
       this.title = this.detail.title;
       this.description = this.detail.description;
       this.headPic = this.detail.headPic;
+      this.imgList = this.detail.imgList;
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }

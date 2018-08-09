@@ -401,7 +401,8 @@
       },
       /*编辑弹框*/
       handleEdit(index, row) {
-        this.detail = row
+        this.detail = row;
+        this.communityIdChange(row.communityId);
         this.detail.headimgurl = row.avatar;
         this.detail.postProfileId = row.profileId;
         this.detail.popOutCommunityId = row.communityId;
@@ -419,7 +420,8 @@
             picGroup.push({ id: index, url: item })
           });
         }
-        this.detail.imgList = picGroup;
+        this.detail.picGroupList = picGroup;
+        this.detail.imgList = row.picGroup;
         this.editorFlag = true;
         this.dialogVisibleDesc = false;
         this.dialogVisible = true;
@@ -444,6 +446,8 @@
         this.detail.picGroupList = picGroup;
         this.detail.communityList = this.communityList;
         this.detail.wechatGroupList = this.wechatGroupList;
+        this.detail.groupName = row.groupName;
+        this.detail.communityName = row.communityName;
         this.detail.topicLabels = this.topicLabels;
         this.dialogVisibleDesc = true;
         this.dialogVisible = false;
