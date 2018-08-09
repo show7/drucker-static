@@ -7,7 +7,7 @@
 
 <script>
 import $ from 'jquery'
-import Simditor from 'simditor'
+import Simditor from './simditor'
 
 export default {
   name: 'editor',
