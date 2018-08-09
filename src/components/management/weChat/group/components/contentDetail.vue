@@ -238,8 +238,15 @@
       /*新增和编辑接口*/
       handleContentSave() {
         let self = this;
+        let labelId = -1;
+        // 只有话题状态才传labelId
+        if(this.categoryId === 1){
+          if(this.popOutTopicId){
+            labelId = this.popOutTopicId;
+          }
+        }
         let param = {
-          labelId: this.popOutTopicId ? this.popOutTopicId : -1,
+          labelId,
           picGroup: this.imgList,
           publish: this.publish,
           postProfileId: this.postProfileId,
