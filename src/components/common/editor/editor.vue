@@ -7,7 +7,7 @@
 
 <script>
 import $ from 'jquery'
-import Simditor from 'simditor'
+import Simditor from './simditor'
 
 export default {
   name: 'editor',
@@ -16,7 +16,7 @@ export default {
       editor: '',
       options: {
         toolbarFloat: false,
-        toolbar: [ 'bold', 'italic', 'underline', 'strikethrough', 'ol', 'ul', 'blockquote', 'link', 'image', 'hr', 'indent', 'outdent', 'alignment' ],
+        toolbar: this.toolbar ? this.toolbar : [ 'bold', 'italic', 'underline', 'strikethrough', 'ol', 'ul', 'blockquote', 'link', 'image', 'hr', 'indent', 'outdent', 'alignment' ],
         pasteImage: false,
         imageButton: 'upload',
         defaultImage: 'https://static.iqycamp.com/images/imgLoading.png?imageslim',
@@ -30,7 +30,7 @@ export default {
       }
     }
   },
-  props: ['id'],
+  props: ['id', 'value', 'toolbar'],
   created () {
 
   },
@@ -42,6 +42,9 @@ export default {
     this.editor.on('valuechanged', (e, src) => {
       this.valueChange(e, src)
     })
+    if(this.value){
+      this.editor.setValue(this.value)
+    }
   },
   methods: {
     valueChange (e, val) {

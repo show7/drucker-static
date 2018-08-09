@@ -202,7 +202,6 @@ export default {
     handleEdit ($index, row) {
       this.dialogVisible = true;
       this.personData = row;
-      console.log(row)
     },
     /*获取个人数据*/
     getUserInfo () {

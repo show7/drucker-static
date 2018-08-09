@@ -360,7 +360,6 @@ export default {
         data: bodyData,
         successCallback (res) {
           self.$message.success('发送成功');
-          console.log(res)
         }
       })
     },
