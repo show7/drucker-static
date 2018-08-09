@@ -75,7 +75,7 @@ export default {
     'subscribeUpdate': 'pc/operation/message/subscribe/update' //更新
   },
   'coupon': {
-    'couponAdd':'pc/operation/add/coupon',//添加优惠券
-    'loadType':'pc/operation/load/couponConfig',//优惠券类型
+    'couponAdd': 'pc/operation/add/coupon', //添加优惠券
+    'loadType': 'pc/operation/load/couponConfig'//优惠券类型
   }
 }

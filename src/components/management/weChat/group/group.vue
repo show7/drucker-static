@@ -360,410 +360,410 @@
 </template>
 
 <script>
-  import ApiDataFilter from '@/libraries/apiDataFilter'
-  import Editor from '../../../common/editor/editor'
-  import moment from 'moment'
-  import _ from 'lodash'
+import ApiDataFilter from '@/libraries/apiDataFilter'
+import Editor from '../../../common/editor/editor'
+import moment from 'moment'
+import _ from 'lodash'
 
-  export default {
-    name: 'group',
-    components: { Editor },
-    data() {
-      return {
-        popOutShareId: null,
-        popOutTopicId: null,
-        topicLabels: [],//话题列表
-        shareLabels: [],//分享列表
-        popOuttopicLabels:[],
-        popOutshareLabels:[],
-        topicId: null,
-        shareId: null,
-        topicName:null,
-        shareName:null,
-        groupList: [],
-        dialogVisible: false,
-        dialogVisibleDesc: false, //查看详情弹框
-        title: '新增',
-        imageUrl: '',
-        queryAccount: null, //搜索的昵称
-        searchContent: null, // 搜索内容
-        statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
-        statusId: null, //状态id
-        communityList: [], //群组
-        communityId: null, //群组选择的ID
-        communityName: '', //所属群组name
-        wechatGroupList: [], //微信群list,
-        wechatGroupId: null, //微信群id
-        groupName: '', //所属群名
-        createTime: null, //创建时间list
-        createStartTime: null, //创建开始时间
-        createEndTime: null, //创建结束时间
-        publishTime: null, //发布时间list
-        publishStartTime: null, //发布开始时间
-        publishEndTime: null, //发布结束时间
-        pageCount: null, //总共的页数
-        checkbox: [], //checkbox发布选择
-        dialogImageUrl: '',
-        dialogVisiblePic: false,
-        imgList: [], //图片list
-        picGroupList: [], //展示的pic
-        publish: '1', //操作
-        riseId: '', //riseId填写
-        headimgurl: '', //头像
-        nickname: '', //昵称
-        popOutCommunityId: null, //弹框群组
-        popOutWechatGroupList: [], //弹框的微信群list
-        popOutWechatGroupId: null,
-        postProfileId: '', //新增和编辑的id
-        editorFlag: false,
-        pageIndex: 1,
-        picGroup: [], //图片列表
-        esChatId: '', //编辑的id
-        content: '', //文本内容
-        defaultTime: [ '00:00:00', '23:59:59' ], //设置时间段 日期截止时间
-        pickerOptions: {
-          disabledDate: (time) => {
-            return time.getTime() > Date.now() - 8.64e6
-          }
+export default {
+  name: 'group',
+  components: { Editor },
+  data () {
+    return {
+      popOutShareId: null,
+      popOutTopicId: null,
+      topicLabels: [], //话题列表
+      shareLabels: [], //分享列表
+      popOuttopicLabels: [],
+      popOutshareLabels: [],
+      topicId: null,
+      shareId: null,
+      topicName: null,
+      shareName: null,
+      groupList: [],
+      dialogVisible: false,
+      dialogVisibleDesc: false, //查看详情弹框
+      title: '新增',
+      imageUrl: '',
+      queryAccount: null, //搜索的昵称
+      searchContent: null, // 搜索内容
+      statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
+      statusId: null, //状态id
+      communityList: [], //群组
+      communityId: null, //群组选择的ID
+      communityName: '', //所属群组name
+      wechatGroupList: [], //微信群list,
+      wechatGroupId: null, //微信群id
+      groupName: '', //所属群名
+      createTime: null, //创建时间list
+      createStartTime: null, //创建开始时间
+      createEndTime: null, //创建结束时间
+      publishTime: null, //发布时间list
+      publishStartTime: null, //发布开始时间
+      publishEndTime: null, //发布结束时间
+      pageCount: null, //总共的页数
+      checkbox: [], //checkbox发布选择
+      dialogImageUrl: '',
+      dialogVisiblePic: false,
+      imgList: [], //图片list
+      picGroupList: [], //展示的pic
+      publish: '1', //操作
+      riseId: '', //riseId填写
+      headimgurl: '', //头像
+      nickname: '', //昵称
+      popOutCommunityId: null, //弹框群组
+      popOutWechatGroupList: [], //弹框的微信群list
+      popOutWechatGroupId: null,
+      postProfileId: '', //新增和编辑的id
+      editorFlag: false,
+      pageIndex: 1,
+      picGroup: [], //图片列表
+      esChatId: '', //编辑的id
+      content: '', //文本内容
+      defaultTime: [ '00:00:00', '23:59:59' ], //设置时间段 日期截止时间
+      pickerOptions: {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now() - 8.64e6
         }
       }
+    }
+  },
+  methods: {
+    getGroupList () {
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'weChat.groupManage.groupList',
+        successCallback (res) {
+          self.groupList = res.msg.content.content;
+          self.communityList = res.msg.communityList;
+          if (self.groupList.length > 0) {
+            self.groupList.forEach((item, index) => {
+              self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
+            })
+          }
+          self.pageCount = res.msg.content.page.pageCount;
+        }
+      })
     },
-    methods: {
-      getGroupList() {
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.groupList',
-          successCallback(res) {
-            self.groupList = res.msg.content.content;
-            self.communityList = res.msg.communityList;
-            if(self.groupList.length > 0) {
-              self.groupList.forEach((item, index) => {
-                self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
-              })
-            }
-            self.pageCount = res.msg.content.page.pageCount;
+    /*点击搜索*/
+    handleSearch () {
+      this.pageIndex = 1;
+      this.groupSearch()
+    },
+    /*搜索接口*/
+    groupSearch () {
+      let self = this;
+      let param = {
+        queryAccount: this.queryAccount ? this.queryAccount : null,
+        status: this.statusId,
+        communityId: this.communityId,
+        wechatGroupId: this.wechatGroupId,
+        createStartTime: this.createTime != null ? this.createTime[ 0 ] : null,
+        createEndTime: this.createTime != null ? this.createTime[ 1 ] : null,
+        publishStartTime: this.publishTime != null ? this.publishTime[ 0 ] : null,
+        publishEndTime: this.publishTime != null ? this.publishTime[ 1 ] : null,
+        searchContent: this.searchContent ? this.searchContent : null,
+        labelId: this.topicId ? this.topicId : this.shareId,
+        page: { pageSize: 10, page: this.pageIndex }
+      };
+      this.groupList = [];
+      ApiDataFilter.request({
+        apiPath: 'weChat.groupManage.groupSearch',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.groupList = res.msg.content;
+          if (self.groupList.length > 0) {
+            self.groupList.forEach((item, index) => {
+              self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
+            })
           }
-        })
-      },
-      /*点击搜索*/
-      handleSearch() {
-        this.pageIndex = 1;
-        this.groupSearch()
-      },
-      /*搜索接口*/
-      groupSearch() {
-        let self = this;
-        let param = {
-          queryAccount: this.queryAccount ? this.queryAccount : null,
-          status: this.statusId,
-          communityId: this.communityId,
-          wechatGroupId: this.wechatGroupId,
-          createStartTime: this.createTime != null ? this.createTime[ 0 ] : null,
-          createEndTime: this.createTime != null ? this.createTime[ 1 ] : null,
-          publishStartTime: this.publishTime != null ? this.publishTime[ 0 ] : null,
-          publishEndTime: this.publishTime != null ? this.publishTime[ 1 ] : null,
-          searchContent: this.searchContent ? this.searchContent : null,
-          labelId: this.topicId ? this.topicId : this.shareId,
-          page: { pageSize: 10, page: this.pageIndex }
-        };
-        this.groupList = [];
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.groupSearch',
-          method: 'post',
-          data: param,
-          successCallback(res) {
-            self.groupList = res.msg.content;
-            if(self.groupList.length > 0) {
-              self.groupList.forEach((item, index) => {
-                self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
-              })
-            }
-            self.pageCount = res.msg.page.pageCount;
-          }
-        })
-      },
-      /*新增状态下查询*/
-      getAdd() {
-        if(!this.riseId) {
-          this.$message.error('请填写riseId')
-          return
+          self.pageCount = res.msg.page.pageCount;
         }
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.getMember',
-          pathParams: [ this.riseId ],
-          successCallback(res) {
-            self.headimgurl = res.msg.headimgurl;
-            self.nickname = res.msg.nickname;
-            self.postProfileId = res.msg.id;
-          }
-        })
-      },
-      /*新增和编辑接口*/
-      handleGroupSave() {
-        let self = this;
-        let param = {
-          labelId: this.popOutTopicId ? this.popOutTopicId : this.popOutShareId,
-          picGroup: this.imgList,
-          publish: this.publish,
-          postProfileId: this.postProfileId,
-          groupId: this.popOutWechatGroupId,
-          content: this.content
-        };
-        this.esChatId ? Object.assign(param, { esChatId: this.esChatId }) : '';
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.groupSave',
-          method: 'post',
-          data: param,
-          successCallback(res) {
-            self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
-            self.dialogVisible = false;
-            self.groupSearch();
-          }
-        })
-      },
-      /*验证填写的数据*/
-      checkSaveData() {
-        if(!this.postProfileId || !this.popOutWechatGroupId) {
-          this.$message.error('请完善信息')
-          return
+      })
+    },
+    /*新增状态下查询*/
+    getAdd () {
+      if (!this.riseId) {
+        this.$message.error('请填写riseId')
+        return
+      }
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'weChat.groupManage.getMember',
+        pathParams: [ this.riseId ],
+        successCallback (res) {
+          self.headimgurl = res.msg.headimgurl;
+          self.nickname = res.msg.nickname;
+          self.postProfileId = res.msg.id;
         }
-        if(!this.content && (this.imgList.length == 0 || this.imgList == null)) {
-          this.$message.error('内容和图片至少填写一项')
-          return
+      })
+    },
+    /*新增和编辑接口*/
+    handleGroupSave () {
+      let self = this;
+      let param = {
+        labelId: this.popOutTopicId ? this.popOutTopicId : this.popOutShareId,
+        picGroup: this.imgList,
+        publish: this.publish,
+        postProfileId: this.postProfileId,
+        groupId: this.popOutWechatGroupId,
+        content: this.content
+      };
+      this.esChatId ? Object.assign(param, { esChatId: this.esChatId }) : '';
+      ApiDataFilter.request({
+        apiPath: 'weChat.groupManage.groupSave',
+        method: 'post',
+        data: param,
+        successCallback (res) {
+          self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
+          self.dialogVisible = false;
+          self.groupSearch();
         }
-        if(!this.popOutTopicId && !this.popOutShareId) {
-          this.$message.error('至少选一个话题或者分享');
-          return
+      })
+    },
+    /*验证填写的数据*/
+    checkSaveData () {
+      if (!this.postProfileId || !this.popOutWechatGroupId) {
+        this.$message.error('请完善信息')
+        return
+      }
+      if (!this.content && (this.imgList.length == 0 || this.imgList == null)) {
+        this.$message.error('内容和图片至少填写一项')
+        return
+      }
+      if (!this.popOutTopicId && !this.popOutShareId) {
+        this.$message.error('至少选一个话题或者分享');
+        return
+      }
+      this.handleGroupSave();
+    },
+    /*选择话题 */
+    topicIdChange (val) {
+      this.shareId = null;
+    },
+    shareIdChange (val) {
+      this.topicId = null;
+    },
+    /*群组选择change事件*/
+    communityIdChange (val) {
+      this.communityList.forEach((item, index) => {
+        if (item.id == val) {
+          this.wechatGroupList = item.wechatGroupList;
+          this.topicLabels = item.topicLabels;
+          this.shareLabels = item.shareLabels;
         }
-        this.handleGroupSave();
-      },
-      /*选择话题 */
-      topicIdChange(val) {
-        this.shareId = null;
-      },
-      shareIdChange(val) {
-        this.topicId = null;
-      },
-      /*群组选择change事件*/
-      communityIdChange(val) {
-        this.communityList.forEach((item, index) => {
-          if(item.id == val) {
-            this.wechatGroupList = item.wechatGroupList;
-            this.topicLabels = item.topicLabels;
-            this.shareLabels = item.shareLabels;
-          }
-        })
-        this.wechatGroupId = null;
-      },
-      /*弹框群组选择change事件*/
-      popOutCommunityChange(val) {
-        this.communityList.forEach((item, index) => {
-          if(item.id == val) {
-            this.popOutWechatGroupList = item.wechatGroupList;
-            this.popOuttopicLabels = item.topicLabels;
-            this.popOutshareLabels = item.shareLabels;
-          }
-        })
-        this.popOutShareId=null;
-        this.popOutTopicId= null;
-        this.popOutWechatGroupId = null;
-      },
-      /*弹窗选择topic*/
-      popOutTopicIdChange(val) {
-        this.popOutShareId = null;
-      },
-      popOutShareIdChange(val) {
-        this.popOutTopicId = null;
-      },
-      /*清除部分查询条件*/
-      Clear(index) {
-        if(index == 0) {
-          this.statusId = null
-        } else if(index == 1) {
-          this.communityId = null;
-          this.wechatGroupId = null;
-          this.wechatGroupList = [];
-          this.topicId = null;
-          this.shareId = null;
-          this.topicLabels = [];
-          this.shareLabels = [];
-        } else {
-          this.wechatGroupId = null;
+      })
+      this.wechatGroupId = null;
+    },
+    /*弹框群组选择change事件*/
+    popOutCommunityChange (val) {
+      this.communityList.forEach((item, index) => {
+        if (item.id == val) {
+          this.popOutWechatGroupList = item.wechatGroupList;
+          this.popOuttopicLabels = item.topicLabels;
+          this.popOutshareLabels = item.shareLabels;
         }
-      },
-      /*清除搜索条件*/
-      clearSearch() {
-        this.queryAccount = null;
-        this.statusId = null;
+      })
+      this.popOutShareId = null;
+      this.popOutTopicId = null;
+      this.popOutWechatGroupId = null;
+    },
+    /*弹窗选择topic*/
+    popOutTopicIdChange (val) {
+      this.popOutShareId = null;
+    },
+    popOutShareIdChange (val) {
+      this.popOutTopicId = null;
+    },
+    /*清除部分查询条件*/
+    Clear (index) {
+      if (index == 0) {
+        this.statusId = null
+      } else if (index == 1) {
         this.communityId = null;
         this.wechatGroupId = null;
-        this.createTime = null;
-        this.publishTime = null;
         this.wechatGroupList = [];
         this.topicId = null;
         this.shareId = null;
         this.topicLabels = [];
         this.shareLabels = [];
-        this.searchContent = null;
-        this.groupSearch();
-      },
-      /*得到当前页数*/
-      currentChange(pageIndex) {
-        this.pageIndex = pageIndex;
-        this.groupSearch();
-      },
-      /*选择框发生改变*/
-      checkboxChange(id, val) {
-        if(val) {
-          this.checkbox.push(id)
-        } else {
-          this.checkbox.forEach((item, index) => {
-            if(item == id) {
-              this.checkbox.splice(index, 1)
-            }
-          })
-        }
-      },
-      /*发布*/
-      groupPublish(checkbox) {
-        if(checkbox.length == 0) {
-          this.$message.error('请先选择需要发布的选项');
-          return
-        }
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.groupPublish',
-          method: 'post',
-          data: { esIds: checkbox },
-          successCallback(res) {
-            self.$message.success('发布成功');
-            self.groupSearch();
-            self.checkbox = [];
-          }
-        })
-      },
-      /*新增弹框*/
-      newAdd() {
-        this.title = '新增';
-        this.editorFlag = false;
-        this.riseId = null;
-        this.nickname = null;
-        this.headimgurl = null;
-        this.esChatId = null;
-        this.popOutCommunityId = null;
-        this.popOutWechatGroupId = null;
-        this.popOutTopicId = null;
-        this.popOutShareId = null;
-        this.postProfileId = null;
-        this.publish = '1';
-        this.dialogVisible = true;
-        this.content = '';
-        this.picGroupList = [];
-        this.imgList = [];
-        this.popOutWechatGroupList = [];
-        this.popOuttopicLabels = [];
-        this.popOutshareLabels = [];
-      },
-      /*编辑弹框*/
-      handleEdit(index, row) {
-        this.title = '编辑';
-        this.nickname = row.nickname;
-        this.esChatId = row.esChatId;
-        this.editorFlag = true;
-        this.riseId = row.riseId;
-        this.headimgurl = row.avatar;
-        this.postProfileId = row.profileId;
-        this.popOutCommunityChange(row.communityId);
-        this.popOutCommunityId = row.communityId;
-        this.popOutWechatGroupId = row.groupId;
-        this.popOutShareId = row.shareId;
-        this.popOutTopicId = row.topicId;
-        this.publish = row.publish.toString();
-        this.dialogVisible = true;
-        this.content = row.content;
-        this.imgList = row.picGroup;
-        let picGroup = [];
-        if(row.picGroup != null && row.picGroup.length > 0) {
-          row.picGroup.forEach((item, index) => {
-            picGroup.push({ id: index, url: item })
-          });
-        }
-        this.picGroupList = picGroup
-      },
-      /*查看详情*/
-      handleOnlook(index, row) {
-        this.riseId = row.riseId;
-        this.nickname = row.nickname;
-        this.headimgurl = row.avatar;
-        this.communityName = row.communityName;
-        this.groupName = row.groupName;
-        this.publish = row.publish.toString();
-        this.dialogVisibleDesc = true;
-        this.content = row.content
-        this.topicName = row.topicName;
-        this.shareName = row.shareName;
-        this.picGroup = row.picGroup;
-      },
-      /*上传图片*/
-      sendPicSuccess(res, file, fileList) {
-        this.imgList = this.handleAddReducePic(fileList);
-      },
-      /*图片数据列表形式*/
-      handleAddReducePic(fileList) {
-        let imgList = [];
-        if(fileList.length > 0) {
-          fileList.forEach((item, index) => {
-            if('response' in item) {
-              imgList.push(item.response.msg)
-            } else {
-              imgList.push(item.url)
-            }
-          })
-        } else {
-          imgList = []
-        }
-        return imgList
-      },
-      /*文本编辑器的取值*/
-      oneEditorChange(val) {
-        this.content = val;
-      },
-      /*删除图片*/
-      handleRemove(file, fileList) {
-        this.imgList = this.handleAddReducePic(fileList);
-      },
-      /*图片预览*/
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisiblePic = true;
-      },
-      /*超出图片上传限时*/
-      onExceed() {
-        this.$message.error('图片最多上传九张')
-      },
-      /*清除弹框的riseId*/
-      riseIdClear() {
-        this.headimgurl = null;
-        this.nickname = null;
-        this.popOutCommunityId = null;
-        this.popOutWechatGroupId = null;
-      },
-      /*去除标签*/
-      removeHtmlTags(str) {
-        let newStr = _.trim(str)
-        // 去除 html 标签
-        newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-        newStr = newStr.replace(/<\/?[^>]*>/g, '')
-        // 去除实体字符
-        newStr = newStr.replace(/&[^;]+;/g, '')
-        return newStr
+      } else {
+        this.wechatGroupId = null;
       }
     },
-    created() {
-      this.getGroupList()
+    /*清除搜索条件*/
+    clearSearch () {
+      this.queryAccount = null;
+      this.statusId = null;
+      this.communityId = null;
+      this.wechatGroupId = null;
+      this.createTime = null;
+      this.publishTime = null;
+      this.wechatGroupList = [];
+      this.topicId = null;
+      this.shareId = null;
+      this.topicLabels = [];
+      this.shareLabels = [];
+      this.searchContent = null;
+      this.groupSearch();
+    },
+    /*得到当前页数*/
+    currentChange (pageIndex) {
+      this.pageIndex = pageIndex;
+      this.groupSearch();
+    },
+    /*选择框发生改变*/
+    checkboxChange (id, val) {
+      if (val) {
+        this.checkbox.push(id)
+      } else {
+        this.checkbox.forEach((item, index) => {
+          if (item == id) {
+            this.checkbox.splice(index, 1)
+          }
+        })
+      }
+    },
+    /*发布*/
+    groupPublish (checkbox) {
+      if (checkbox.length == 0) {
+        this.$message.error('请先选择需要发布的选项');
+        return
+      }
+      let self = this;
+      ApiDataFilter.request({
+        apiPath: 'weChat.groupManage.groupPublish',
+        method: 'post',
+        data: { esIds: checkbox },
+        successCallback (res) {
+          self.$message.success('发布成功');
+          self.groupSearch();
+          self.checkbox = [];
+        }
+      })
+    },
+    /*新增弹框*/
+    newAdd () {
+      this.title = '新增';
+      this.editorFlag = false;
+      this.riseId = null;
+      this.nickname = null;
+      this.headimgurl = null;
+      this.esChatId = null;
+      this.popOutCommunityId = null;
+      this.popOutWechatGroupId = null;
+      this.popOutTopicId = null;
+      this.popOutShareId = null;
+      this.postProfileId = null;
+      this.publish = '1';
+      this.dialogVisible = true;
+      this.content = '';
+      this.picGroupList = [];
+      this.imgList = [];
+      this.popOutWechatGroupList = [];
+      this.popOuttopicLabels = [];
+      this.popOutshareLabels = [];
+    },
+    /*编辑弹框*/
+    handleEdit (index, row) {
+      this.title = '编辑';
+      this.nickname = row.nickname;
+      this.esChatId = row.esChatId;
+      this.editorFlag = true;
+      this.riseId = row.riseId;
+      this.headimgurl = row.avatar;
+      this.postProfileId = row.profileId;
+      this.popOutCommunityChange(row.communityId);
+      this.popOutCommunityId = row.communityId;
+      this.popOutWechatGroupId = row.groupId;
+      this.popOutShareId = row.shareId;
+      this.popOutTopicId = row.topicId;
+      this.publish = row.publish.toString();
+      this.dialogVisible = true;
+      this.content = row.content;
+      this.imgList = row.picGroup;
+      let picGroup = [];
+      if (row.picGroup != null && row.picGroup.length > 0) {
+        row.picGroup.forEach((item, index) => {
+          picGroup.push({ id: index, url: item })
+        });
+      }
+      this.picGroupList = picGroup
+    },
+    /*查看详情*/
+    handleOnlook (index, row) {
+      this.riseId = row.riseId;
+      this.nickname = row.nickname;
+      this.headimgurl = row.avatar;
+      this.communityName = row.communityName;
+      this.groupName = row.groupName;
+      this.publish = row.publish.toString();
+      this.dialogVisibleDesc = true;
+      this.content = row.content
+      this.topicName = row.topicName;
+      this.shareName = row.shareName;
+      this.picGroup = row.picGroup;
+    },
+    /*上传图片*/
+    sendPicSuccess (res, file, fileList) {
+      this.imgList = this.handleAddReducePic(fileList);
+    },
+    /*图片数据列表形式*/
+    handleAddReducePic (fileList) {
+      let imgList = [];
+      if (fileList.length > 0) {
+        fileList.forEach((item, index) => {
+          if ('response' in item) {
+            imgList.push(item.response.msg)
+          } else {
+            imgList.push(item.url)
+          }
+        })
+      } else {
+        imgList = []
+      }
+      return imgList
+    },
+    /*文本编辑器的取值*/
+    oneEditorChange (val) {
+      this.content = val;
+    },
+    /*删除图片*/
+    handleRemove (file, fileList) {
+      this.imgList = this.handleAddReducePic(fileList);
+    },
+    /*图片预览*/
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisiblePic = true;
+    },
+    /*超出图片上传限时*/
+    onExceed () {
+      this.$message.error('图片最多上传九张')
+    },
+    /*清除弹框的riseId*/
+    riseIdClear () {
+      this.headimgurl = null;
+      this.nickname = null;
+      this.popOutCommunityId = null;
+      this.popOutWechatGroupId = null;
+    },
+    /*去除标签*/
+    removeHtmlTags (str) {
+      let newStr = _.trim(str)
+      // 去除 html 标签
+      newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
+      newStr = newStr.replace(/<\/?[^>]*>/g, '')
+      // 去除实体字符
+      newStr = newStr.replace(/&[^;]+;/g, '')
+      return newStr
     }
+  },
+  created () {
+    this.getGroupList()
   }
+}
 </script>
 
 <style scoped lang="less">

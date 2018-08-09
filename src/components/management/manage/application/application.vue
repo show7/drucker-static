@@ -17,7 +17,7 @@
         <el-table-column
           prop="nickname"
           width="150"
-          label="	昵称">
+          label="昵称">
         </el-table-column>
         <el-table-column
           prop="project"
@@ -62,12 +62,12 @@
         <el-table-column
           prop="interviewerName"
           width="150"
-          label="	面试人">
+          label="面试人">
         </el-table-column>
         <el-table-column
           prop="isInterviewed"
           width="100"
-          label="是否已经面试	">
+          label="是否已经面试">
         </el-table-column>
         <el-table-column width="200" fixed="right" label="操作">
           <template slot-scope="scope">
@@ -114,7 +114,7 @@
           </ul>
           <h3 v-if="rowData.questionList">问卷信息：</h3>
           <ul v-if="rowData.questionList">
-            <li v-for="(item, index) in rowData.questionList" :key="item.id"><span>{{item.question}}</span>
+            <li v-for="(item) in rowData.questionList" :key="item.id"><span>{{item.question}}</span>
               <p>{{item.answer}}</p></li>
           </ul>
           <h3>评价：</h3>
@@ -516,7 +516,7 @@ export default {
         this.$message.info('请选择申请来源');
         return
       }
-      if (this.targetSource == 2) {
+      if (this.targetSource === 2) {
         if (!this.remark) {
           this.$message.info('请输入面试备注');
           return
@@ -552,7 +552,7 @@ export default {
         applyAward: this.targetAward,
         admit: this.targetAdmit
       }
-      if (flag == 1) {
+      if (flag === 1) {
         this.handleCheck();
         apiPath = 'manage.application.approveBusinessApplication'
         data = {id: this.rowData.id, coupon: this.coupon, interviewDto: param}

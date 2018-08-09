@@ -61,7 +61,7 @@
 <script>
 export default {
   name: 'manage',
-  data(){
+  data () {
     return {
       transitionName: 'slide-left'
     }
