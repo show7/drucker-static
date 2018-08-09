@@ -70,7 +70,6 @@ export default {
   methods: {
     /* 查询 */
     handleSearch () {
-      console.log(this.sql);
       let self = this;
       ApiDataFilter.request({
         apiPath: 'steve.query',

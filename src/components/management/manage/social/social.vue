@@ -24,7 +24,6 @@ export default {
     },
     beforeUpload (file) {
       let typeName = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-      console.log(typeName);
       const isXLS = typeName === 'xls';
       if (!isXLS) {
         this.$message.error('只能上传.xls格式!');
