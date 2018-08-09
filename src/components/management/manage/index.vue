@@ -51,7 +51,9 @@
       </div>
 
       <div class="router-class">
-        <router-view/>
+        <transition name="slide-left">
+          <router-view class="child-view" />
+        </transition>
       </div>
     </div>
 </template>
@@ -59,6 +61,11 @@
 <script>
 export default {
   name: 'manage',
+  data(){
+    return {
+      transitionName: 'slide-left'
+    }
+  },
   computed: {
     // 首次进入页面时展开当前页面所属的菜单
     onRoutes () {

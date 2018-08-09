@@ -8,7 +8,9 @@
       </el-menu>
     </div>
     <div class="content">
-      <router-view/>
+      <transition name="fade" mode="out-in">
+         <router-view/>
+      </transition>
     </div>
   </div>
 </template>
