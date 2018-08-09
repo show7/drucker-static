@@ -74,5 +74,8 @@ export default {
     'subscribeLoad': 'pc/operation/message/subscribe/load', //获取list
     'subscribeUpdate': 'pc/operation/message/subscribe/update' //更新
   },
-  'couponAdd': 'pc/operation/add/coupon'//添加优惠券
+  'coupon': {
+    'couponAdd':'pc/operation/add/coupon',//添加优惠券
+    'loadType':'pc/operation/load/couponConfig',//优惠券类型
+  }
 }
