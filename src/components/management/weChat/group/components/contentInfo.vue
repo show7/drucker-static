@@ -192,6 +192,7 @@
       this.headPic = this.detail.headPic;
       this.groupName = this.detail.groupName;
       this.communityName = this.detail.communityName;
+      this.imgList = this.detail.imgList;
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }

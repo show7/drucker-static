@@ -444,6 +444,7 @@
           });
         }
         this.detail.picGroupList = picGroup;
+        this.detail.imgList = row.picGroup;
         this.detail.communityList = this.communityList;
         this.detail.wechatGroupList = this.wechatGroupList;
         this.detail.groupName = row.groupName;
