@@ -29,5 +29,7 @@ module.exports = {
     'spaced-comment': 0,
     // js语句结尾必须使用分号
     'semi': ['off', 'always'],
+    // 禁止出现未使用过的表达式
+    "no-unused-expressions": 0,
   }
 }

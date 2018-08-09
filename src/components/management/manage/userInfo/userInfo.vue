@@ -29,14 +29,14 @@
                 </el-table-column>
                 <el-table-column
                   prop="headimgurl"
-                  label="	头像">
+                  label="头像">
                   <template slot-scope="scope">
                     <img class="head-pic" :src="scope.row.headimgurl" alt="">
                   </template>
                 </el-table-column>
                 <el-table-column
                   prop="nickname"
-                  label="	昵称">
+                  label="昵称">
                 </el-table-column>
                 <el-table-column
                   prop="memberId"
@@ -91,14 +91,14 @@
               </el-table-column>
               <el-table-column
                 prop="headimgurl"
-                label="	头像">
+                label="头像">
                 <template slot-scope="scope">
                   <img class="head-pic" :src="scope.row.headimgurl" alt="">
                 </template>
               </el-table-column>
               <el-table-column
                 prop="nickname"
-                label="	昵称">
+                label="昵称">
               </el-table-column>
               <el-table-column
                 prop="memberId"
@@ -112,7 +112,7 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    @click="handleEdit(scope.$index, scope.row)">	查看详情
+                    @click="handleEdit(scope.$index, scope.row)">查看详情
                   </el-button>
                 </template>
               </el-table-column>
@@ -252,7 +252,7 @@ export default {
       this.groupIds = [];
       if (this.classValue) {
         this.GroupData.groupIds.forEach((item, index) => {
-          if (item.className == this.classValue) {
+          if (item.className === this.classValue) {
             this.groupIds.push(item.groupId)
           }
         })

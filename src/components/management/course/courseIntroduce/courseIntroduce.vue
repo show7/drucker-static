@@ -101,34 +101,6 @@
       </el-col>
     </el-row>
 
-   <!--上传工具图片与适用人群-->
-    <el-row class="">
-      <el-col :span="10">
-        <p class="upload-pic">上传工具图片</p>
-        <el-upload
-          action="/pc/upload/file"
-          list-type="picture-card"
-          :file-list="toolPic"
-          :limit="1"
-          :on-success="sendPicSuccess"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
-      </el-col>
-      <el-col :span="14">
-        <p class="text-name">适用人群：</p>
-        <el-input
-          type="textarea"
-          :rows="8"
-          placeholder="请输入内容"
-          v-model="who">
-        </el-input>
-      </el-col>
-    </el-row>
     <!--上传讲师介绍图片和版本迭代-->
     <el-row class="">
       <el-col :span="10">
@@ -161,6 +133,35 @@
           :rows="4"
           placeholder="请输入内容"
           v-model="changeLog">
+        </el-input>
+      </el-col>
+    </el-row>
+
+    <!--上传工具图片与适用人群-->
+    <el-row class="">
+     <!-- <el-col :span="10">
+        <p class="upload-pic">上传工具图片</p>
+        <el-upload
+          action="/pc/upload/file"
+          list-type="picture-card"
+          :file-list="toolPic"
+          :limit="1"
+          :on-success="sendPicSuccess"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
+      </el-col>-->
+      <el-col :span="24">
+        <p class="text-name">适用人群：</p>
+        <el-input
+          type="textarea"
+          :rows="8"
+          placeholder="请输入内容"
+          v-model="who">
         </el-input>
       </el-col>
     </el-row>
@@ -225,6 +226,12 @@
               ref="fourEditor"
               @change="fourEditorChange"></Editor>
     </div>
+    <div class="project-introduce">
+      <h3>上传工具</h3>
+      <Editor id="fiveEditor"
+              ref="fiveEditor"
+              @change="fiveEditorChange"></Editor>
+    </div>
     <el-button size="medium" type="primary" @click="handleSendAll">更新数据</el-button>
   </div>
 </template>
@@ -264,7 +271,7 @@ export default {
       twoEditorVal: '', //课程资料文本
       oneEditorVal: '', //课程介绍文本
       toolPic: [], //工具图片Url
-      toolPicResult: '',
+      toolResult: '',
       authorPic: [], //讲师介绍图片
       authorPicResult: '',
       lastModifiedTime: '', //版本选择的变更时间
@@ -298,7 +305,6 @@ export default {
     /* 发送选择小课名称接口*/
     sendData (value) {
       let self = this;
-      this.toolPic = [];
       this.authorPic = [];
       ApiDataFilter.request({
         apiPath: 'project.course.courseIntroduction.sendData',
@@ -314,19 +320,20 @@ export default {
           self.dateTimeValue = res.msg.lastModifiedTime;
           self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
-          res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';
-          self.toolPicResult = res.msg.tool;
+          /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
+          /* self.toolPicResult = res.msg.tool;*/
           self.authorPic.push({url: res.msg.authorPic});
           self.authorPicResult = res.msg.authorPic;
           self.$refs.oneEditor.editor.setValue(res.msg.introduction);
           self.$refs.twoEditor.editor.setValue(res.msg.courseMaterial);
           self.$refs.fourEditor.editor.setValue(res.msg.caseIntroduction);
+          self.$refs.fiveEditor.editor.setValue(res.msg.tool);
         }
       })
     },
     /*发送所有修改数据*/
     handleSendAll () {
-      if (!this.problem || !this.abbreviation || !this.oneEditorVal || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
+      if (!this.problem || !this.abbreviation || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
         this.$message.error('请将所有信息填写完毕');
         return
       }
@@ -339,7 +346,7 @@ export default {
         subCatalogId: this.subCatalogsValue,
         who: this.who,
         length: 0,
-        tool: this.toolPicResult,
+        tool: this.toolResult,
         introduction: this.oneEditorVal,
         courseMaterial: this.twoEditorVal,
         caseIntroduction: this.fourEditorVal,
@@ -387,6 +394,10 @@ export default {
     },
     fourEditorChange (val) {
       this.fourEditorVal = val
+    },
+    /*上传工具*/
+    fiveEditorChange (val) {
+      this.toolResult = val
     },
     /*语音文本描述*/
     changeAudio (val) {
@@ -494,7 +505,7 @@ export default {
     },
     /* 处理语音list文案*/
     handleChangeData (tableData) {
-      if (tableData.length == 0) return
+      if (tableData.length === 0) return
       tableData.map((item, index) => {
         tableData[index].wordsString = this.removeHtmlTags(item.words)
       });
