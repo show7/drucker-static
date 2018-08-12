@@ -300,8 +300,8 @@
         }
 
         if(this.description && this.categoryId === 3){
-          if(this.description.split('\n').length>3){
-            this.$message.error('摘要不能超过3行');
+          if(this.description.split('\n').length>2){
+            this.$message.error('摘要不能超过2行');
             return
           }
         }
