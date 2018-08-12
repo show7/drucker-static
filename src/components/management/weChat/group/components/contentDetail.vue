@@ -73,7 +73,7 @@
         <el-row v-if="categoryId === 3">
           <el-col :span="20">
             <h4><span>*</span>摘要</h4>
-            <el-input type="textarea" :row="8" placeholder="输入摘要" v-model="description"></el-input>
+            <el-input type="textarea" :row="3" placeholder="输入摘要" v-model="description"></el-input>
           </el-col>
         </el-row>
         <el-row>
@@ -297,6 +297,13 @@
         if(!this.description && this.categoryId === 3) {
           this.$message.error('请输入文章摘要');
           return
+        }
+
+        if(this.description && this.categoryId === 3){
+          if(this.description.split('\n').length>3){
+            this.$message.error('摘要不能超过3行');
+            return
+          }
         }
         if(!this.title && this.categoryId === 3) {
           this.$message.error('请输入文章标题');
