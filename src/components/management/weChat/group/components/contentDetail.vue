@@ -39,7 +39,7 @@
           </el-col>
           <el-col :span="12" v-if="categoryId === 3">
             <h4><span>*</span>作者</h4>
-            <el-input placeholder="请输入作者" v-model="editorName" :disabled="editorFlag"></el-input>
+            <el-input placeholder="请输入作者" v-model="editorName"></el-input>
           </el-col>
         </el-row>
 
@@ -441,7 +441,7 @@
       this.description = this.detail.description;
       this.headPic = this.detail.headPic;
       this.imgList = this.detail.imgList;
-      this.editorName = this.detail.editorName;
+      this.editorName = this.detail.nickname;
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }
