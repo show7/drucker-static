@@ -58,10 +58,6 @@
                 @click="handleEdit(scope.$index, scope.row)">编辑
               </el-button>
               <el-button
-                size="mini"
-                @click="handleOnlook(scope.$index, scope.row)">删除
-              </el-button>
-              <el-button
                 v-if="!scope.row.publish"
                 size="mini"
                 @click="groupPublish([scope.row.esChatId])">发布
@@ -119,14 +115,14 @@
             <el-row>
               <el-col :span="4"><p>群组状态</p></el-col>
               <el-col :span="20">
-                <el-radio v-model="radio" label="1">上架</el-radio>
-                <el-radio v-model="radio" label="0">保存</el-radio>
+                <el-radio v-model="radio" label='1'>上架</el-radio>
+                <el-radio v-model="radio" label='0'>保存</el-radio>
               </el-col>
             </el-row>
           </div>
           <span slot="footer" class="dialog-footer">
                <el-button @click="dialogVisible = false">取 消</el-button>
-               <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+               <el-button type="primary" @click="handleConfor">确 定</el-button>
            </span>
         </el-dialog>
       </div>
@@ -146,10 +142,10 @@
               dialogVisible:false,
               dialogVisiblePic:false,
               imageUrl: '',
-              radio:'0',
+              radio:0,
               communityList:[],//列表
               page:1,//页码
-              pageCount:'',//总页码
+              pageCount:null,//总页码
               groupName:'',//群组名称
               groupDesc:'',//群组描述
             }
@@ -194,15 +190,35 @@
             this.groupDesc= '';
             this.radio = 2;
           },
+          handleEdit(index,row){
+            this.title = '编辑群组';
+            this.dialogVisible = true;
+            this.imageUrl = row.image;
+            this.groupName = row.name;
+            this.groupDesc= row.description;
+            this.radio = row.publish ? 1:0;
+          },
+          /*确定新增和编辑*/
+          handleConfor(){
+            if (!this.groupName || !this.groupDesc || !this.imageUrl) {
+              this.$message.error('请把信息填写完整');
+            }else {
+              this.sendAddData();
+            }
+          },
           /*新增和编辑接口*/
           sendAddData(){
-            let param ={name:this.groupName,description:this.groupDesc,publish:this.radio,image:this.imageUrl};
+            let self = this;
+            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl};
             apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
               method:'post',
               data:param,
               successCallback(){
-
+                 self.dialogVisible =false;
+                 self.page=1;
+                 self.searchName = '';
+                 self.getCommunityList();
               }
             })
           },
