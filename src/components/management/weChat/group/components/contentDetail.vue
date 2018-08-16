@@ -26,10 +26,6 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" v-if="categoryId === 3">
-            <h4><span>*</span>作者</h4>
-            <el-input placeholder="请输入作者" v-model="editorName" :disabled="editorFlag"></el-input>
-          </el-col>
           <el-col :span="12">
             <h4><span>*</span>分类</h4>
             <el-select v-model="categoryId" placeholder="请选择">
@@ -40,6 +36,10 @@
                 :value="item.id">
               </el-option>
             </el-select>
+          </el-col>
+          <el-col :span="12" v-if="categoryId === 3">
+            <h4><span>*</span>作者</h4>
+            <el-input placeholder="请输入作者" v-model="editorName" :disabled="editorFlag"></el-input>
           </el-col>
         </el-row>
 
