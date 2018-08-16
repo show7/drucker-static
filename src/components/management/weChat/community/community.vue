@@ -1,12 +1,12 @@
 <template>
     <div class="community-container">
       <h3>群管理</h3>
-      <el-tabs type="border-card">
-        <el-tab-pane label="社群组管理">
-          <communityList></communityList>
+      <el-tabs type="border-card" v-model="activeName">
+        <el-tab-pane label="社群组管理" name="first">
+          <communityList @groupDetail="handleGetId"></communityList>
         </el-tab-pane>
-        <el-tab-pane label="微信群管理">
-          <groupList></groupList>
+        <el-tab-pane label="微信群管理" name="second">
+          <groupList ref="group" :communityId="communityId"></groupList>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -19,9 +19,18 @@
         name: "community",
         components: { communityList,groupList },
         data() {
-            return {}
+            return {
+              communityId:null,
+              activeName: 'first'
+            }
         },
-        methods: {},
+        methods: {
+          handleGetId(id){
+            this.communityId = id;
+            this.activeName = 'second';
+            this.$refs.group.getGroupList();
+          }
+        },
         created() {
 
         }

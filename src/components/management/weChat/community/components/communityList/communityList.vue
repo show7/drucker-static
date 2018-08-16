@@ -48,10 +48,10 @@
             width="200"
             label="微信群">
             <template slot-scope="scope">
-              <p class="go-group-list">查看微信群</p>
+              <p class="go-group-list" @click="checkGroupDetail(scope.row.id)">查看微信群</p>
             </template>
           </el-table-column>
-          <el-table-column width="300" fixed="right" label="操作">
+          <el-table-column width="200" fixed="right" label="操作">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -60,7 +60,7 @@
               <el-button
                 v-if="!scope.row.publish"
                 size="mini"
-                @click="groupPublish([scope.row.esChatId])">发布
+                @click="handlePublish(scope.$index, scope.row)">发布
               </el-button>
             </template>
           </el-table-column>
@@ -142,12 +142,13 @@
               dialogVisible:false,
               dialogVisiblePic:false,
               imageUrl: '',
-              radio:0,
+              radio:'0',
               communityList:[],//列表
               page:1,//页码
               pageCount:null,//总页码
               groupName:'',//群组名称
               groupDesc:'',//群组描述
+              id:null,//编辑的条目id
             }
         },
         methods: {
@@ -155,7 +156,7 @@
           getCommunityList(){
             let  self = this;
             let param = { page:this.page};
-            this.searchName ? Object.assign(param,{communityName:this.searchName}):''
+            this.searchName ? Object.assign(param,{communityName:this.searchName}):'';
             apiDataFilter.request({
               apiPath:'weChat.community.communityList.list',
               data:param,
@@ -188,7 +189,8 @@
             this.imageUrl = '';
             this.groupName = '';
             this.groupDesc= '';
-            this.radio = 2;
+            this.radio = '0';
+            this.id= null;
           },
           handleEdit(index,row){
             this.title = '编辑群组';
@@ -196,7 +198,8 @@
             this.imageUrl = row.image;
             this.groupName = row.name;
             this.groupDesc= row.description;
-            this.radio = row.publish ? 1:0;
+            this.radio = row.publish ? '1' :'0';
+            this.id= row.id;
           },
           /*确定新增和编辑*/
           handleConfor(){
@@ -210,6 +213,7 @@
           sendAddData(){
             let self = this;
             let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl};
+             this.id ? Object.assign(param,{id:this.id}):'';
             apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
               method:'post',
@@ -222,22 +226,39 @@
               }
             })
           },
+          /*发布*/
+          handlePublish(index,row){
+            let self = this;
+            apiDataFilter.request({
+              apiPath:'weChat.community.communityList.publish',
+              method:'post',
+              data:{id:row.id},
+              successCallback(){
+                self.$message.success('发布成功')
+                self.getCommunityList();
+              }
+            })
+          },
           /*图片上传成功*/
           handleAvatarSuccess(res, file) {
             this.imageUrl = res.msg
          /*   this.imageUrl = URL.createObjectURL(file.raw);*/
           },
           beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
             const isLt2M = file.size / 1024 / 1024 < 2;
 
             if (!isJPG) {
-              this.$message.error('上传头像图片只能是 JPG 格式!');
+              this.$message.error('上传头像图片只能是 JPG / png 格式!');
             }
             if (!isLt2M) {
               this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+          },
+          /*弹射父组件id*/
+          checkGroupDetail(id){
+           this.$emit('groupDetail',id)
           }
         },
       created() {
