@@ -120,7 +120,6 @@ export default {
           successCallback (res) {
             self.dialogVisible = false;
             self.$message.success('恭喜你，这是一条成功消息');
-            console.log(res)
           }
         })
       } else {

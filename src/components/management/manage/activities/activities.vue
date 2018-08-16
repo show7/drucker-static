@@ -224,8 +224,8 @@ export default {
         holder: this.itemData.holder,
         location: this.itemData.location,
         startTime: this.dateList[0]};
-      index == 0 ? '' : Object.assign(param, {id: this.id})
-      let apiPath = index == 0 ? 'manage.activities.activitiesInsert' : 'manage.activities.activitiesUpdate';
+      index === 0 ? '' : Object.assign(param, {id: this.id});
+      let apiPath = index === 0 ? 'manage.activities.activitiesInsert' : 'manage.activities.activitiesUpdate';
       ApiDataFilter.request({
         apiPath: apiPath,
         method: 'post',

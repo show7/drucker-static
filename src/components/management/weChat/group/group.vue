@@ -82,11 +82,6 @@
     </div>
     <div class="content-box">
       <el-row>
-       <!-- <el-col :span="12">
-          <div class="grid-content-left">
-           &lt;!&ndash; <el-button type="primary" size="medium" @click="groupPublish(checkbox)">发布</el-button>&ndash;&gt;
-          </div>
-        </el-col>-->
         <el-col :span="24">
           <div class="grid-content-right">
             <el-button type="primary" size="medium" @click="newAdd">添加</el-button>
@@ -97,17 +92,17 @@
       <el-table
         :data="groupList"
         style="width: 100%">
-      <!--  <el-table-column
-          label="选择">
-          <template slot-scope="scope">
-            <el-checkbox :disabled="scope.row.publishStatus == 1 ? true:false "
-                         @change="(val)=>{checkboxChange(scope.row.esChatId,val)}"></el-checkbox>
-          </template>
-        </el-table-column>-->
         <el-table-column
           prop="nickname"
           width="150"
           label="用户昵称">
+        </el-table-column>
+        <el-table-column
+          prop="labelCategory"
+          label="分类">
+          <template slot-scope="scope">
+            <p>{{findCategory(scope.row.labelCategory)}}</p>
+          </template>
         </el-table-column>
         <el-table-column
           prop="communityName"
@@ -128,7 +123,7 @@
           label="发表内容">
           <template slot-scope="scope">
             <div class="content-box">
-              <p class="content">{{scope.row.content}}</p>
+              <p class="content">{{scope.row.displayContent}}</p>
             </div>
           </template>
         </el-table-column>
@@ -179,212 +174,35 @@
         </el-pagination>
       </div>
     </div>
-    <!--编辑和新增弹框-->
-    <el-dialog
-      :title="title"
-      :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-      :show-close="false"
-      width="50%">
-      <div class="popout-box">
-        <el-row>
-          <el-col :span="8">
-            <h4><span>*</span>riseId</h4>
-            <el-input class="riseId-input" placeholder="请输入riseId" v-model="riseId" :disabled="editorFlag" clearable
-                      @clear="riseIdClear"></el-input>
-            <el-button type="primary" size="small" :disabled="editorFlag" @click="getAdd">确 定</el-button>
-          </el-col>
-          <el-col :span="8">
-            <h4><span>*</span>发布昵称</h4>
-            <el-input placeholder="请输入昵称" v-model="nickname" :disabled="true"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <h4><span>*</span>头像</h4>
-            <img :src="headimgurl" alt="头像">
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4><span>*</span>所属群组</h4>
-            <el-select v-model="popOutCommunityId" placeholder="请选择" :disabled="editorFlag"
-                       @change="popOutCommunityChange">
-              <el-option
-                v-for="item in communityList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="12">
-            <h4><span>*</span>所属微信群</h4>
-            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="editorFlag">
-              <el-option
-                v-for="item in popOutWechatGroupList"
-                :key="item.id"
-                :label="item.groupName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4><span>*</span>话题</h4>
-            <el-select v-model="popOutTopicId" placeholder="请选择"
-                       @change="popOutTopicIdChange">
-              <el-option
-                v-for="item in popOuttopicLabels"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
-        <el-col :span="12">
-          <h4><span>*</span>分享</h4>
-          <el-select v-model="popOutShareId" placeholder="请选择"
-                     @change="popOutShareIdChange">
-            <el-option
-              v-for="item in popOutshareLabels"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>发布内容</h4>
-            <el-input type="textarea" placeholder="请输入" :row="8" v-model="content"></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>上传图片</h4>
-            <el-upload
-              action="/pc/upload/file"
-              list-type="picture-card"
-              :limit="9"
-              :on-exceed="onExceed"
-              :file-list="picGroupList"
-              :on-success="sendPicSuccess"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisiblePic">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4><span>*</span>操作</h4>
-            <el-radio v-model="publish" label="1">上架</el-radio>
-            <el-radio v-model="publish" label="0">保存</el-radio>
-          </el-col>
-        </el-row>
-      </div>
-      <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="checkSaveData">确 定</el-button>
-      </span>
-    </el-dialog>
-    <!--详情-->
-    <el-dialog
-      title="详情"
-      :visible.sync="dialogVisibleDesc"
-      :show-close="false"
-      width="40%">
-      <div class="desc-box">
-        <el-row>
-          <el-col :span="12">
-            <h4>riseId</h4>
-            <p>{{riseId}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>头像</h4>
-            <img class="head-imgurl" :src="headimgurl" alt="头像">
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>发布昵称</h4>
-            <p>{{nickname ? nickname:'无'}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>所属群组</h4>
-            <p>{{communityName}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>所属微信群</h4>
-            <p>{{groupName}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>操作</h4>
-            <p>{{publish == 1 ? '上架':'保存'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>话题</h4>
-            <p>{{topicName ? topicName :'无'}}</p>
-          </el-col>
-          <el-col :span="12">
-            <h4>分享</h4>
-            <p>{{shareName ? shareName :'无'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>发布内容</h4>
-            <p>{{content ? content : '无内容'}}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <h4>上传图片</h4>
-            <img class="img-list" v-for="(item,index) in picGroup" :key="index" :src="item" alt='图片'>
-          </el-col>
-        </el-row>
-      </div>
-      <span slot="footer" class="dialog-footer">
-         <el-button type="primary" @click="dialogVisibleDesc = false">确 定</el-button>
-       </span>
-    </el-dialog>
+    <ContentDetail v-if="showDetail" @closeDialog="handleGet" @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
+    <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
   </div>
 </template>
 
 <script>
   import ApiDataFilter from '@/libraries/apiDataFilter'
-  import Editor from '../../../common/editor/editor'
   import moment from 'moment'
+  import ContentDetail from './components/contentDetail'
+  import ContentInfo from './components/contentInfo'
   import _ from 'lodash'
 
   export default {
     name: 'group',
-    components: { Editor },
+    components: { ContentDetail, ContentInfo },
     data() {
       return {
-        popOutShareId: null,
-        popOutTopicId: null,
         topicLabels: [],//话题列表
         shareLabels: [],//分享列表
-        popOuttopicLabels:[],
-        popOutshareLabels:[],
         topicId: null,
         shareId: null,
         topicName:null,
         shareName:null,
         groupList: [],
-        dialogVisible: false,
+        dialogVisible: false, //编辑弹框
         dialogVisibleDesc: false, //查看详情弹框
-        title: '新增',
         imageUrl: '',
+        showDetail : false,  //展示修改弹窗
+        showInfo : false,  //展示详情弹窗
         queryAccount: null, //搜索的昵称
         searchContent: null, // 搜索内容
         statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
@@ -403,29 +221,18 @@
         publishEndTime: null, //发布结束时间
         pageCount: null, //总共的页数
         checkbox: [], //checkbox发布选择
-        dialogImageUrl: '',
-        dialogVisiblePic: false,
         imgList: [], //图片list
         picGroupList: [], //展示的pic
         publish: '1', //操作
-        riseId: '', //riseId填写
-        headimgurl: '', //头像
-        nickname: '', //昵称
-        popOutCommunityId: null, //弹框群组
-        popOutWechatGroupList: [], //弹框的微信群list
-        popOutWechatGroupId: null,
-        postProfileId: '', //新增和编辑的id
         editorFlag: false,
         pageIndex: 1,
-        picGroup: [], //图片列表
-        esChatId: '', //编辑的id
-        content: '', //文本内容
         defaultTime: [ '00:00:00', '23:59:59' ], //设置时间段 日期截止时间
         pickerOptions: {
           disabledDate: (time) => {
             return time.getTime() > Date.now() - 8.64e6
           }
-        }
+        },
+        detail: {}, // 内容详情
       }
     },
     methods: {
@@ -482,62 +289,6 @@
           }
         })
       },
-      /*新增状态下查询*/
-      getAdd() {
-        if(!this.riseId) {
-          this.$message.error('请填写riseId')
-          return
-        }
-        let self = this;
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.getMember',
-          pathParams: [ this.riseId ],
-          successCallback(res) {
-            self.headimgurl = res.msg.headimgurl;
-            self.nickname = res.msg.nickname;
-            self.postProfileId = res.msg.id;
-          }
-        })
-      },
-      /*新增和编辑接口*/
-      handleGroupSave() {
-        let self = this;
-        let param = {
-          labelId: this.popOutTopicId ? this.popOutTopicId : this.popOutShareId,
-          picGroup: this.imgList,
-          publish: this.publish,
-          postProfileId: this.postProfileId,
-          groupId: this.popOutWechatGroupId,
-          content: this.content
-        };
-        this.esChatId ? Object.assign(param, { esChatId: this.esChatId }) : '';
-        ApiDataFilter.request({
-          apiPath: 'weChat.groupManage.groupSave',
-          method: 'post',
-          data: param,
-          successCallback(res) {
-            self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
-            self.dialogVisible = false;
-            self.groupSearch();
-          }
-        })
-      },
-      /*验证填写的数据*/
-      checkSaveData() {
-        if(!this.postProfileId || !this.popOutWechatGroupId) {
-          this.$message.error('请完善信息')
-          return
-        }
-        if(!this.content && (this.imgList.length == 0 || this.imgList == null)) {
-          this.$message.error('内容和图片至少填写一项')
-          return
-        }
-        if(!this.popOutTopicId && !this.popOutShareId) {
-          this.$message.error('至少选一个话题或者分享');
-          return
-        }
-        this.handleGroupSave();
-      },
       /*选择话题 */
       topicIdChange(val) {
         this.shareId = null;
@@ -555,26 +306,6 @@
           }
         })
         this.wechatGroupId = null;
-      },
-      /*弹框群组选择change事件*/
-      popOutCommunityChange(val) {
-        this.communityList.forEach((item, index) => {
-          if(item.id == val) {
-            this.popOutWechatGroupList = item.wechatGroupList;
-            this.popOuttopicLabels = item.topicLabels;
-            this.popOutshareLabels = item.shareLabels;
-          }
-        })
-        this.popOutShareId=null;
-        this.popOutTopicId= null;
-        this.popOutWechatGroupId = null;
-      },
-      /*弹窗选择topic*/
-      popOutTopicIdChange(val) {
-        this.popOutShareId = null;
-      },
-      popOutShareIdChange(val) {
-        this.popOutTopicId = null;
       },
       /*清除部分查询条件*/
       Clear(index) {
@@ -625,6 +356,20 @@
           })
         }
       },
+      /*转译分类*/
+      findCategory: function (categoryId) {
+        if(categoryId){
+          if(categoryId === 1){
+            return '话题'
+          }else if(categoryId === 2){
+            return '分享'
+          }else if(categoryId === 3){
+            return '文章'
+          }
+        }else{
+          return '无'
+        }
+      },
       /*发布*/
       groupPublish(checkbox) {
         if(checkbox.length == 0) {
@@ -645,124 +390,90 @@
       },
       /*新增弹框*/
       newAdd() {
-        this.title = '新增';
-        this.editorFlag = false;
-        this.riseId = null;
-        this.nickname = null;
-        this.headimgurl = null;
-        this.esChatId = null;
-        this.popOutCommunityId = null;
-        this.popOutWechatGroupId = null;
-        this.popOutTopicId = null;
-        this.popOutShareId = null;
-        this.postProfileId = null;
-        this.publish = '1';
+        this.detail = {};
         this.dialogVisible = true;
-        this.content = '';
-        this.picGroupList = [];
-        this.imgList = [];
-        this.popOutWechatGroupList = [];
-        this.popOuttopicLabels = [];
-        this.popOutshareLabels = [];
+        this.editorFlag = false;
+        this.dialogVisibleDesc = false;
+        this.showDetail = true;
+        this.detail.communityList = this.communityList;
+        this.detail.wechatGroupList = this.wechatGroupList;
+        this.detail.topicLabels = this.topicLabels;
       },
       /*编辑弹框*/
       handleEdit(index, row) {
-        this.title = '编辑';
-        this.nickname = row.nickname;
-        this.esChatId = row.esChatId;
-        this.editorFlag = true;
-        this.riseId = row.riseId;
-        this.headimgurl = row.avatar;
-        this.postProfileId = row.profileId;
-        this.popOutCommunityChange(row.communityId);
-        this.popOutCommunityId = row.communityId;
-        this.popOutWechatGroupId = row.groupId;
-        this.popOutShareId = row.shareId;
-        this.popOutTopicId = row.topicId;
-        this.publish = row.publish.toString();
-        this.dialogVisible = true;
-        this.content = row.content;
-        this.imgList = row.picGroup;
+        this.detail = row;
+        this.communityIdChange(row.communityId);
+        this.detail.headimgurl = row.avatar;
+        this.detail.postProfileId = row.profileId;
+        this.detail.popOutCommunityId = row.communityId;
+        this.detail.popOutWechatGroupId = row.groupId;
+        this.detail.esChatId = row.esChatId;
+        this.detail.popOutShareId = row.shareId;
+        this.detail.popOutTopicId = row.topicId;
+        this.detail.publish = row.publish.toString();
+        this.detail.communityList = this.communityList;
+        this.detail.wechatGroupList = this.wechatGroupList;
+        this.detail.topicLabels = this.topicLabels;
         let picGroup = [];
         if(row.picGroup != null && row.picGroup.length > 0) {
           row.picGroup.forEach((item, index) => {
             picGroup.push({ id: index, url: item })
           });
         }
-        this.picGroupList = picGroup
+        this.detail.picGroupList = picGroup;
+        this.detail.imgList = row.picGroup;
+        this.editorFlag = true;
+        this.dialogVisibleDesc = false;
+        this.dialogVisible = true;
+        this.showDetail =true;
       },
       /*查看详情*/
       handleOnlook(index, row) {
-        this.riseId = row.riseId;
-        this.nickname = row.nickname;
-        this.headimgurl = row.avatar;
-        this.communityName = row.communityName;
-        this.groupName = row.groupName;
-        this.publish = row.publish.toString();
-        this.dialogVisibleDesc = true;
-        this.content = row.content
-        this.topicName = row.topicName;
-        this.shareName = row.shareName;
-        this.picGroup = row.picGroup;
-      },
-      /*上传图片*/
-      sendPicSuccess(res, file, fileList) {
-        this.imgList = this.handleAddReducePic(fileList);
-      },
-      /*图片数据列表形式*/
-      handleAddReducePic(fileList) {
-        let imgList = [];
-        if(fileList.length > 0) {
-          fileList.forEach((item, index) => {
-            if('response' in item) {
-              imgList.push(item.response.msg)
-            } else {
-              imgList.push(item.url)
-            }
-          })
-        } else {
-          imgList = []
+        this.detail = row
+        this.detail.headimgurl = row.avatar;
+        this.detail.postProfileId = row.profileId;
+        this.detail.popOutCommunityId = row.communityId;
+        this.detail.popOutWechatGroupId = row.groupId;
+        this.detail.popOutShareId = row.shareId;
+        this.detail.popOutTopicId = row.topicId;
+        this.detail.publish = row.publish.toString();
+        let picGroup = [];
+        if(row.picGroup != null && row.picGroup.length > 0) {
+          row.picGroup.forEach((item, index) => {
+            picGroup.push({ id: index, url: item })
+          });
         }
-        return imgList
+        this.detail.picGroupList = picGroup;
+        this.detail.imgList = row.picGroup;
+        this.detail.communityList = this.communityList;
+        this.detail.wechatGroupList = this.wechatGroupList;
+        this.detail.groupName = row.groupName;
+        this.detail.communityName = row.communityName;
+        this.detail.topicLabels = this.topicLabels;
+        this.dialogVisibleDesc = true;
+        this.dialogVisible = false;
+        this.editorFlag = false;
+        this.showInfo =true;
       },
-      /*文本编辑器的取值*/
-      oneEditorChange(val) {
-        this.content = val;
+      handleGet(){
+        this.dialogVisibleDesc = false;
+        this.dialogVisible = false;
+        this.editorFlag = false;
+        this.showInfo = false;
+        this.showDetail = false;
       },
-      /*删除图片*/
-      handleRemove(file, fileList) {
-        this.imgList = this.handleAddReducePic(fileList);
-      },
-      /*图片预览*/
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisiblePic = true;
-      },
-      /*超出图片上传限时*/
-      onExceed() {
-        this.$message.error('图片最多上传九张')
-      },
-      /*清除弹框的riseId*/
-      riseIdClear() {
-        this.headimgurl = null;
-        this.nickname = null;
-        this.popOutCommunityId = null;
-        this.popOutWechatGroupId = null;
-      },
-      /*去除标签*/
-      removeHtmlTags(str) {
-        let newStr = _.trim(str)
-        // 去除 html 标签
-        newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-        newStr = newStr.replace(/<\/?[^>]*>/g, '')
-        // 去除实体字符
-        newStr = newStr.replace(/&[^;]+;/g, '')
-        return newStr
+      handleSave(){
+        this.dialogVisibleDesc = false;
+        this.dialogVisible = false;
+        this.editorFlag = false;
+        this.showInfo = false;
+        this.showDetail = false;
+        this.getGroupList();
       }
     },
     created() {
       this.getGroupList()
-    }
+    },
   }
 </script>
 

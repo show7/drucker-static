@@ -141,7 +141,6 @@ export default {
         pathParams: [ itemData.id ],
         method: 'post',
         successCallback (res) {
-          console.log(res);
           self.handleSearch();
         }
       })
@@ -158,13 +157,11 @@ export default {
           method: 'post',
           data: this.showData,
           successCallback (res) {
-            console.log(res);
             self.showData = { dialogVisible: false }
             self.handleSearch();
           }
         })
       }
-      console.log('data:', this.showData);
     },
     /* 执行任务 */
     actionTask () {
@@ -175,7 +172,6 @@ export default {
           pathParams: [ self.showData.id ],
           method: 'post',
           successCallback (res) {
-            console.log(res);
             self.handleSearch();
           }
         })
