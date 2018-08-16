@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://192.168.1.148:8080',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
