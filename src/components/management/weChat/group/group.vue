@@ -426,6 +426,7 @@
         this.dialogVisibleDesc = false;
         this.dialogVisible = true;
         this.showDetail =true;
+        this.editorName = row.editorName;
       },
       /*查看详情*/
       handleOnlook(index, row) {

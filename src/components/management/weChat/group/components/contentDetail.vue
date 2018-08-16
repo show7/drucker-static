@@ -27,6 +27,10 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <h4><span>*</span>作者</h4>
+            <el-input placeholder="请输入作者" v-model="editorName" :disabled="editorFlag"></el-input>
+          </el-col>
+          <el-col :span="12">
             <h4><span>*</span>分类</h4>
             <el-select v-model="categoryId" placeholder="请选择">
               <el-option
@@ -195,6 +199,7 @@
         headPicList: [], //头图
         title: '', //文章标题
         description: '', //描述
+        editorName:'',//作者名称
         toolbarNormal: [ 'bold' ],
         toolbarArticle: [ 'bold', 'ol', 'ul', 'image', 'hr' ],
         categoryId : null,
@@ -435,6 +440,7 @@
       this.description = this.detail.description;
       this.headPic = this.detail.headPic;
       this.imgList = this.detail.imgList;
+      this.editorName = this.detail.editorName;
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }
