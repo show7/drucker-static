@@ -22,6 +22,11 @@ export default {
           'sendData': 'pc/asst/problem/load', // 发送选择的标题名称
           'uploadAudio': 'pc/upload/audio/revise', //上传和修改语音文案接口
           'save': 'pc/operation/problem/save' //更新小课导入数据
+        },
+        'courseThinking':{
+          'load':'pc/operation/preview/load',//课前思考列表
+          'update':'pc/operation/preview/update',//新增和编辑
+          'audioDb':'pc/upload/audio/db',//上传语音返回id
         }
       }
     },

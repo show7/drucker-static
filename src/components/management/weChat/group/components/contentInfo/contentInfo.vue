@@ -201,5 +201,5 @@
 </script>
 
 <style scoped lang="less">
-  @import "./contentInfo.less";
+  @import "contentInfo.less";
 </style>

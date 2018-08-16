@@ -182,8 +182,8 @@
 <script>
   import ApiDataFilter from '@/libraries/apiDataFilter'
   import moment from 'moment'
-  import ContentDetail from './components/contentDetail'
-  import ContentInfo from './components/contentInfo'
+  import ContentDetail from './components/contentDetail/contentDetail'
+  import ContentInfo from './components/contentInfo/contentInfo'
   import _ from 'lodash'
 
   export default {
