@@ -16,6 +16,7 @@ export default {
   'community':{
     'communityList':{
       'list':'pc/wxmini/community/list',//社群list
+      'revise':'pc/wxmini/community/revise',//编辑和新增
     }
   }
 }

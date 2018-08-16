@@ -6,8 +6,8 @@
             <el-input v-model="searchName" placeholder="请输入内容社群名称"></el-input>
           </el-col>
           <el-col :span="12">
-            <el-button type="primary">搜索</el-button>
-            <el-button type="primary">清除查询</el-button>
+            <el-button type="primary" @click="handleSearch">搜索</el-button>
+            <el-button type="primary" @click="handleClearSearch">清除查询</el-button>
           </el-col>
         </el-row>
       </div>
@@ -17,32 +17,39 @@
         </div>
         <!--table表格-->
         <el-table
-          :data="groupList"
+          :data="communityList"
           style="width: 100%">
           <el-table-column
-            prop="nickname"
+            prop="name"
             width="150"
             label="社群名称">
           </el-table-column>
           <el-table-column
-            prop="labelCategory"
+            prop="groupCount"
             label="微信群数量">
+          </el-table-column>
+          <el-table-column
+            prop="description"
+            label="微信群介绍">
             <template slot-scope="scope">
-              <p>{{findCategory(scope.row.labelCategory)}}</p>
+              <div class="content-box">
+                <p class="description">{{scope.row.description}}</p>
+              </div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="communityName"
-            label="微信群介绍">
-          </el-table-column>
-          <el-table-column
-            prop="groupName"
+            prop="publish"
             label="状态">
+            <template slot-scope="scope">
+              <p class="publish">{{scope.row.publish ? '已发布':'未发布'}}</p>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="labelName"
             width="200"
             label="微信群">
+            <template slot-scope="scope">
+              <p class="go-group-list">查看微信群</p>
+            </template>
           </el-table-column>
           <el-table-column width="300" fixed="right" label="操作">
             <template slot-scope="scope">
@@ -55,7 +62,7 @@
                 @click="handleOnlook(scope.$index, scope.row)">删除
               </el-button>
               <el-button
-                v-if="scope.row.publishStatus != 1"
+                v-if="!scope.row.publish"
                 size="mini"
                 @click="groupPublish([scope.row.esChatId])">发布
               </el-button>
@@ -68,7 +75,7 @@
           <el-pagination
             background
             layout="prev, pager, next"
-            :current-page="pageIndex"
+            :current-page="page"
             @current-change="currentChange"
             :page-count="pageCount">
           </el-pagination>
@@ -105,7 +112,7 @@
             <el-row>
               <el-col :span="4"><p>群组描述</p></el-col>
               <el-col :span="20">
-                <el-input type="textarea" v-model="groupName" placeholder="请输入群组描述"></el-input>
+                <el-input type="textarea" v-model="groupDesc" maxlength="40" placeholder="请输入群组描述"></el-input>
                 <span class="size">备注：描述40字及以内</span>
               </el-col>
             </el-row>
@@ -113,7 +120,7 @@
               <el-col :span="4"><p>群组状态</p></el-col>
               <el-col :span="20">
                 <el-radio v-model="radio" label="1">上架</el-radio>
-                <el-radio v-model="radio" label="2">保存</el-radio>
+                <el-radio v-model="radio" label="0">保存</el-radio>
               </el-col>
             </el-row>
           </div>
@@ -139,28 +146,70 @@
               dialogVisible:false,
               dialogVisiblePic:false,
               imageUrl: '',
-              radio:'2'
+              radio:'0',
+              communityList:[],//列表
+              page:1,//页码
+              pageCount:'',//总页码
+              groupName:'',//群组名称
+              groupDesc:'',//群组描述
             }
         },
         methods: {
+          /*得到list*/
           getCommunityList(){
             let  self = this;
-            let param = {};
+            let param = { page:this.page};
+            this.searchName ? Object.assign(param,{communityName:this.searchName}):''
             apiDataFilter.request({
-              apiPath:'community.communityList.list.weChat',
+              apiPath:'weChat.community.communityList.list',
               data:param,
               successCallback(res){
+                 self.communityList = res.msg.data || [];
+                 self.pageCount = res.msg.page.pageCount;
+              }
+            })
+          },
+          /*搜索按钮*/
+          handleSearch(){
+            this.page=1;
+            this.getCommunityList();
+          },
+          /*清除搜索*/
+          handleClearSearch(){
+            this.page=1;
+            this.searchName = '';
+            this.getCommunityList();
+          },
+          /*得到当前页数*/
+          currentChange(pageIndex) {
+            this.page = pageIndex;
+            this.getCommunityList();
+          },
+          /*新增按钮*/
+          handleAdd(){
+            this.title = '添加群组';
+            this.dialogVisible = true;
+            this.imageUrl = '';
+            this.groupName = '';
+            this.groupDesc= '';
+            this.radio = 2;
+          },
+          /*新增和编辑接口*/
+          sendAddData(){
+            let param ={name:this.groupName,description:this.groupDesc,publish:this.radio,image:this.imageUrl};
+            apiDataFilter.request({
+              apiPath:'weChat.community.communityList.revise',
+              method:'post',
+              data:param,
+              successCallback(){
 
               }
             })
           },
-          /*新增*/
-          handleAdd(){
-            this.title = '添加群组';
-            this.dialogVisible = true;
-          },
+          /*图片上传成功*/
           handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+            this.imageUrl = res.msg
+         /*   this.imageUrl = URL.createObjectURL(file.raw);*/
           },
           beforeAvatarUpload(file) {
             const isJPG = file.type === 'image/jpeg';
