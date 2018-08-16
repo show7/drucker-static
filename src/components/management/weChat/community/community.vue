@@ -5,16 +5,19 @@
         <el-tab-pane label="社群组管理">
           <communityList></communityList>
         </el-tab-pane>
-        <el-tab-pane label="微信群管理">微信群管理</el-tab-pane>
+        <el-tab-pane label="微信群管理">
+          <groupList></groupList>
+        </el-tab-pane>
       </el-tabs>
     </div>
 </template>
 
 <script>
   import communityList from './components/communityList/communityList'
+  import groupList from './components/groupList/groupList'
     export default {
         name: "community",
-        components: { communityList },
+        components: { communityList,groupList },
         data() {
             return {}
         },

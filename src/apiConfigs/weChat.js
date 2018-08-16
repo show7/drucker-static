@@ -12,5 +12,10 @@ export default {
     'getMember': 'pc/wxmini/member', //获取用户信息
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
     'groupPublish': 'pc/wxmini/content/publish'//发布接口
+  },
+  'community':{
+    'communityList':{
+      'list':'pc/wxmini/community/list',//社群list
+    }
   }
 }

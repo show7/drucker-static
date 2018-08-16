@@ -127,6 +127,8 @@
 </template>
 
 <script>
+    import apiDataFilter from "../../../../../../libraries/apiDataFilter";
+
     export default {
         name: "communityList",
 
@@ -141,6 +143,17 @@
             }
         },
         methods: {
+          getCommunityList(){
+            let  self = this;
+            let param = {};
+            apiDataFilter.request({
+              apiPath:'community.communityList.list.weChat',
+              data:param,
+              successCallback(res){
+
+              }
+            })
+          },
           /*新增*/
           handleAdd(){
             this.title = '添加群组';
@@ -162,9 +175,9 @@
             return isJPG && isLt2M;
           }
         },
-        created() {
-
-        }
+      created() {
+        this.getCommunityList()
+      }
     }
 </script>
 
