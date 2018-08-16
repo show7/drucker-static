@@ -26,7 +26,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="12" v-if="categoryId === 3">
             <h4><span>*</span>作者</h4>
             <el-input placeholder="请输入作者" v-model="editorName" :disabled="editorFlag"></el-input>
           </el-col>
@@ -265,6 +265,7 @@
           param.headPic = this.headPic;
           param.description = this.description;
           param.title = this.title;
+          param.editorName = this.editorName
         }
         ApiDataFilter.request({
           apiPath: 'weChat.groupManage.contentSave',
