@@ -6,7 +6,7 @@
           <communityList @groupDetail="handleGetId"></communityList>
         </el-tab-pane>
         <el-tab-pane label="微信群管理" name="second">
-          <groupList ref="group" :communityId="communityId"></groupList>
+          <groupList ref="group" @groupDetail="handleGetId" :groupNameS="groupNameSearch" :communityId="communityId"></groupList>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -21,14 +21,16 @@
         data() {
             return {
               communityId:null,
-              activeName: 'first'
+              activeName: 'first',
+              groupNameSearch:'',
             }
         },
         methods: {
-          handleGetId(id){
+          handleGetId(id,groupNameSearch){
             this.communityId = id;
             this.activeName = 'second';
-            this.$refs.group.getGroupList();
+            this.groupNameSearch = groupNameSearch || '';
+          /*  this.$refs.group.getGroupList();*/
           }
         },
         created() {

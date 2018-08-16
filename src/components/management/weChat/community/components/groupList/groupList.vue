@@ -31,7 +31,6 @@
         style="width: 100%">
         <el-table-column
           prop="groupName"
-          width="150"
           label="群名">
         </el-table-column>
         <el-table-column
@@ -167,7 +166,7 @@
   import lodash from 'lodash'
     export default {
         name: "groupList",
-        props:['communityId'],
+        props:['communityId','groupNameS'],
         data() {
             return {
               title:'新增',
@@ -191,19 +190,24 @@
               disabledFlag:false,
             }
         },
+      watch: {
+        communityId: function (val, old) {
+            this.infoId = val;
+            this.pageIndex = 1;
+            this.getGroupList();
+        },
+        groupNameS:function (val, old) {
+          this.groupNameSearch = val;
+          this.pageIndex = 1;
+          this.getGroupList();
+        }
+      },
         methods: {
           /*得到list*/
           getGroupList(){
             let  self = this;
             let param = { page:this.pageIndex};
             this.groupNameSearch ? Object.assign(param,{groupName:this.groupNameSearch}):'';
-            console.log(this.communityId);
-            if (this.communityId){
-              this.infoId = this.communityId;
-              /*this.disabledFlag = true;*/
-            }else {
-              this.disabledFlag = false;
-            }
             this.infoId != 0 ? Object.assign(param,{communityId:this.infoId}):'';
             apiDataFilter.request({
               apiPath:'weChat.community.groupList.list',
@@ -230,13 +234,14 @@
           },
           /*搜索*/
           handleSearch(){
-            this.getGroupList()
+            this.$emit('groupDetail',this.infoId,this.groupNameSearch)
           },
           /*清除搜索*/
           handleClear(){
+            this.pageIndex = 1;
             this.infoId = 0;
             this.groupNameSearch = '';
-            this.pageIndex = 1;
+            this.$emit('groupDetail',0,'')
           },
          /*翻页*/
           currentChange(pageIndex){
@@ -280,7 +285,7 @@
                 self.pageIndex = 1;
                 self.infoId = 0;
                 self.groupNameSearch = '';
-                self.getGroupList();
+                self.$emit('groupDetail',0,'')
               }
             })
           },
@@ -327,9 +332,6 @@
               successCallback(){
                 self.dialogVisibleEd =false;
                 self.$message.success('编辑成功');
-                self.pageIndex = 1;
-                self.infoId = 0;
-                self.groupNameSearch = '';
                 self.getGroupList();
               }
             })

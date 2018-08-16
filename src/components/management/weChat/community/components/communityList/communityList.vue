@@ -21,7 +21,6 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            width="150"
             label="社群名称">
           </el-table-column>
           <el-table-column
@@ -30,6 +29,7 @@
           </el-table-column>
           <el-table-column
             prop="description"
+            width="400"
             label="微信群介绍">
             <template slot-scope="scope">
               <div class="content-box">
@@ -109,7 +109,7 @@
               <el-col :span="4"><p>群组描述</p></el-col>
               <el-col :span="20">
                 <el-input type="textarea" v-model="groupDesc" maxlength="40" placeholder="请输入群组描述"></el-input>
-                <span class="size">备注：描述40字及以内</span>
+                <span class="size">备注：描述40字及以内 （剩余{{40 - groupDesc.length}}字）</span>
               </el-col>
             </el-row>
             <el-row>
@@ -214,14 +214,12 @@
             let self = this;
             let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl};
              this.id ? Object.assign(param,{id:this.id}):'';
-            apiDataFilter.request({
+             apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
               method:'post',
               data:param,
               successCallback(){
                  self.dialogVisible =false;
-                 self.page=1;
-                 self.searchName = '';
                  self.getCommunityList();
               }
             })
