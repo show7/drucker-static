@@ -194,7 +194,7 @@
             :on-change="handleChange"
             :on-remove="handleAudioRemove"
             :before-upload="beforeAvatarUpload"
-             :on-success = "handleAudioSuccess"
+            :on-success = "handleAudioSuccess"
             :file-list="fileList"
             :auto-upload="false">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>

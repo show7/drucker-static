@@ -12,5 +12,20 @@ export default {
     'getMember': 'pc/wxmini/member', //获取用户信息
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
     'groupPublish': 'pc/wxmini/content/publish'//发布接口
+  },
+  'community':{
+    'communityList':{
+      'list':'pc/wxmini/community/list',//社群list
+      'revise':'pc/wxmini/community/revise',//编辑和新增
+      'publish':'pc/wxmini/community/publish',//发布
+    },
+    'groupList':{
+      'list':'pc/wxmini/group/list',//群list
+      'infoList':'pc/wxmini/community/info',//社群列表
+      'validgroup':'pc/wxmini/validgroup/list',//
+      'addgroups':'pc/wxmini/community/addgroups',//添加群
+      'revise':'pc/wxmini/group/revise',//完善信息
+      'release':'pc/wxmini/group/release',//解绑
+    }
   }
 }

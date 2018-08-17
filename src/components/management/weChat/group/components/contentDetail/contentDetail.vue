@@ -169,7 +169,7 @@
 
 <script>
   import ApiDataFilter from '@/libraries/apiDataFilter'
-  import Editor from '../../../../common/editor/editor'
+  import Editor from '../../../../../common/editor/editor'
   import moment from 'moment'
   import _ from 'lodash'
   export default {
@@ -452,5 +452,5 @@
 </script>
 
 <style scoped lang="less">
-  @import "./contentDetail.less";
+  @import "contentDetail.less";
 </style>
