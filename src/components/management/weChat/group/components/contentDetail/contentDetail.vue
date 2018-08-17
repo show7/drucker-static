@@ -37,6 +37,10 @@
               </el-option>
             </el-select>
           </el-col>
+          <el-col :span="12" v-if="categoryId === 3">
+            <h4><span>*</span>作者</h4>
+            <el-input placeholder="请输入作者" v-model="editorName"></el-input>
+          </el-col>
         </el-row>
 
         <el-row>
@@ -195,6 +199,7 @@
         headPicList: [], //头图
         title: '', //文章标题
         description: '', //描述
+        editorName:'',//作者名称
         toolbarNormal: [ 'bold' ],
         toolbarArticle: [ 'bold', 'ol', 'ul', 'image', 'hr' ],
         categoryId : null,
@@ -260,6 +265,7 @@
           param.headPic = this.headPic;
           param.description = this.description;
           param.title = this.title;
+          param.editorName = this.editorName
         }
         ApiDataFilter.request({
           apiPath: 'weChat.groupManage.contentSave',
@@ -435,6 +441,7 @@
       this.description = this.detail.description;
       this.headPic = this.detail.headPic;
       this.imgList = this.detail.imgList;
+      this.editorName = this.detail.nickname;
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }

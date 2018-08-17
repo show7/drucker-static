@@ -38,7 +38,7 @@
       <h4>模板消息内容填写</h4>
       <el-row>
         <el-col :span="12">
-fdsfs
+
         </el-col>
         <el-col :span="12">
           <el-input
