@@ -57,7 +57,7 @@ export default {
     'activitiesUpdate': 'backend/flow/activities/update', //更新
     'activitiesDelete': 'backend/flow/delete/activities' //删除
   },
-  'articles': { //线下活动编辑
+  'articles': { //文章
     'articlesList': 'backend/flow/articles', //线下活动list
     'articlesInsert': 'backend/flow/articles/insert', //插入
     'articlesUpdate': 'backend/flow/articles/update', //更新

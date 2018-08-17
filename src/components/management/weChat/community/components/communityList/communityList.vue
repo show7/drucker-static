@@ -30,7 +30,7 @@
           <el-table-column
             prop="description"
             width="400"
-            label="微信群介绍">
+            label="群组介绍">
             <template slot-scope="scope">
               <div class="content-box">
                 <p class="description">{{scope.row.description}}</p>
@@ -85,7 +85,7 @@
            width="40%">
           <div class="popout-box">
             <el-row>
-              <el-col :span="4"><p>群组版图</p></el-col>
+              <el-col :span="4"><p>群组版图<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-upload
                   class="avatar-uploader-box"
@@ -100,20 +100,20 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群组名称</p></el-col>
+              <el-col :span="4"><p>群组名称<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-input v-model="groupName" placeholder="请输入群组名称"></el-input>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群组描述</p></el-col>
+              <el-col :span="4"><p>群组描述<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-input type="textarea" v-model="groupDesc" maxlength="40" placeholder="请输入群组描述"></el-input>
                 <span class="size">备注：描述40字及以内 （剩余{{40 - groupDesc.length}}字）</span>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群组状态</p></el-col>
+              <el-col :span="4"><p>群组状态<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-radio v-model="radio" label='1'>上架</el-radio>
                 <el-radio v-model="radio" label='0'>保存</el-radio>

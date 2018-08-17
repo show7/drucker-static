@@ -51,7 +51,7 @@
           label="群主二维码">
           <template slot-scope="scope">
             <div class="pic-code">
-              <img :src="scope.row.ownerCode" alt="二维码">
+              <img v-if="scope.row.ownerCode" :src="scope.row.ownerCode" alt="二维码">
             </div>
           </template>
         </el-table-column>
@@ -119,7 +119,7 @@
         width="40%">
         <div class="popout-box">
           <el-row>
-            <el-col :span="4"><p>上传群主二维码</p></el-col>
+            <el-col :span="4"><p>上传群主二维码<span>*</span></p></el-col>
             <el-col :span="20">
               <el-upload
                 class="avatar-uploader-box"
@@ -133,13 +133,13 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4"><p>群主</p></el-col>
+            <el-col :span="4"><p>群主<span>*</span></p></el-col>
             <el-col :span="20">
               <el-input v-model="ownerNickname" placeholder="请输入群主名称"></el-input>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4"><p>选择板块</p></el-col>
+            <el-col :span="4"><p>选择板块<span>*</span></p></el-col>
             <el-col :span="20">
               <el-select v-model="popInfoId" placeholder="请选择社群">
                 <el-option
@@ -186,7 +186,7 @@
               ownerNickname:'',//群主名称
               radio:'0',//状态
               popInfoId:null,//弹出框的板块id
-              Id:null,
+              Id:null, //编辑的id
               disabledFlag:false,
             }
         },
@@ -195,11 +195,13 @@
             this.infoId = val;
             this.pageIndex = 1;
             this.getGroupList();
+             this.getInfoList();
         },
         groupNameS:function (val, old) {
           this.groupNameSearch = val;
           this.pageIndex = 1;
           this.getGroupList();
+          this.getInfoList();
         }
       },
         methods: {
@@ -252,7 +254,7 @@
           handleAdd(){
             this.dialogVisible =true;
             this.title = '添加微信群';
-            this.searchValue =null;
+            this.searchValue = [];
           },
           remoteMethod(res){
             let self= this;
@@ -285,7 +287,8 @@
                 self.pageIndex = 1;
                 self.infoId = 0;
                 self.groupNameSearch = '';
-                self.$emit('groupDetail',0,'')
+                self.$emit('groupDetail',0,'');
+                self.getGroupList();
               }
             })
           },
