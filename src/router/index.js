@@ -5,7 +5,7 @@ import courseRouter from './course'
 import managerRouter from './manage'
 import wechatRouter from './weChat'
 import steveRouter from './steve'
-
+import apiDataFilter from "../libraries/apiDataFilter";
 /*课程路由*/
 const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index')
 
@@ -18,6 +18,7 @@ const weChat = () => import(/* webpackChunkName: "wechat" */ '@/components/manag
 const steve = () => import(/* webpackChunkName: "wechat" */ '@/components/management/steve/index');
 
 Vue.use(Router)
+
 
 export default new Router({
   mode: 'history',
@@ -58,3 +59,6 @@ export default new Router({
     }
   ]
 })
+
+
+

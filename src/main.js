@@ -12,6 +12,30 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './style/theme/index.css'
 import App from './App'
 import router from './router'
+import apiDataFilter from "./libraries/apiDataFilter";
+
+router.beforeEach((to, from, next) => {
+  let param = {uri: to.path};
+  apiDataFilter.request({
+    apiPath: 'common.permission',
+    method: 'post',
+    data: param,
+    successCallback(res) {
+      if (res.msg) {
+          next();
+      } else {
+        if (from.name) {
+          alert('抱歉，当前页面无权访问');
+          next({path: from.path})
+        } else {
+          alert('抱歉，当前页面无权访问');
+          window.location.href = '/403.jsp';
+          next()
+        }
+      }
+    }
+  })
+});
 
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 vue插件使用

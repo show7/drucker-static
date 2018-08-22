@@ -54,23 +54,10 @@ export default {
         console.log(this.itemList[ 0 ].path)
       }
       this.activeIndex = this.$route.matched[ 1 ].path;
-      this.permission();
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);
     },
-
-    permission(){
-      let param = {uri:this.$route.path};
-      apiDataFilter.request({
-        apiPath:'common.permission',
-        method:'post',
-        data:param,
-        successCallback(res){
-
-        }
-      })
-    }
   }
 }
 </script>
