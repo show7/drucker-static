@@ -7,9 +7,9 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 const content = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/group/content/content') //群内容管理
 const groups = () => import(/* webpackChunkName: "wechat" */ '@/components/management/weChat/admin/groups/groups') //群管理
-const statistics = () => import(/* webpackChunkName: "wechat" */'@/components/management/weChat/statistics/statistics') //社群数据
-const topic = ()=> import(/* webpackChunkName: "wechat" */'@/components/management/weChat/topic/topic') //话题管理
-const contentManage = ()=> import(/* webpackChunkName: "wechat" */'@/components/management/weChat/contentManage/contentManage') //内容管理
+const statistics = () => import(/* webpackChunkName: "wechat" */'@/components/management/weChat/group/statistics/statistics') //社群数据
+const topic = ()=> import(/* webpackChunkName: "wechat" */'@/components/management/weChat/community/topic/topic') //话题管理
+const contentManage = ()=> import(/* webpackChunkName: "wechat" */'@/components/management/weChat/admin/contentManage/contentManage') //内容管理
 
 
 export default [

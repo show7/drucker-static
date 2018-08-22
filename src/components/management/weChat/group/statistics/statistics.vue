@@ -121,7 +121,7 @@
 </template>
 
 <script>
-  import apiDataFilter from "../../../../libraries/apiDataFilter";
+  import apiDataFilter from "../../../../../libraries/apiDataFilter";
 
   export default {
     name: "statistics",
