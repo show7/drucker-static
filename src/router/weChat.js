@@ -15,7 +15,7 @@ const contentManage = ()=> import(/* webpackChunkName: "wechat" */'@/components/
 export default [
   { path: 'group/content', name: 'content', component: content },
   { path: 'admin/groups', name: 'group', component: groups },
-  { path: 'statistics', name: 'statistics', component: statistics },
-  { path: 'topic', name: 'topic', component: topic },
-  { path: 'contentmanage', name: 'contentManage', component: contentManage },
+  { path: 'group/statistics', name: 'statistics', component: statistics },
+  { path: 'community/topic', name: 'topic', component: topic },
+  { path: 'admin/contentmanage', name: 'contentManage', component: contentManage },
 ]
