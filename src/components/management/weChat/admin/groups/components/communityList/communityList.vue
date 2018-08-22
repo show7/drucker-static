@@ -130,7 +130,7 @@
 </template>
 
 <script>
-    import apiDataFilter from "../../../../../../libraries/apiDataFilter";
+    import apiDataFilter from "../../../../../../../libraries/apiDataFilter";
 
     export default {
         name: "communityList",
@@ -266,5 +266,5 @@
 </script>
 
 <style scoped lang='less'>
-    @import "./communityList.less";
+    @import "communityList.less";
 </style>

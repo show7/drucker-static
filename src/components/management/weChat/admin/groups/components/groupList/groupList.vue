@@ -162,7 +162,7 @@
 </template>
 
 <script>
-  import apiDataFilter from "../../../../../../libraries/apiDataFilter";
+  import apiDataFilter from "../../../../../../../libraries/apiDataFilter";
   import lodash from 'lodash'
     export default {
         name: "groupList",

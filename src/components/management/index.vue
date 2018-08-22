@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import apiDataFilter from "../../libraries/apiDataFilter";
+
 export default {
   name: 'contentMain',
   data () {
@@ -52,11 +54,11 @@ export default {
       if (pathArray[ 1 ] === 'management') {
         console.log(this.itemList[ 0 ].path)
       }
-      this.activeIndex = this.$route.matched[ 1 ].path
+      this.activeIndex = this.$route.matched[ 1 ].path;
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
   }
 }
 </script>

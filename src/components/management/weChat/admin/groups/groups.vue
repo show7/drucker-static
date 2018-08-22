@@ -47,5 +47,5 @@
 </script>
 
 <style scoped lang='less'>
-    @import "community.less";
+    @import "groups.less";
 </style>
