@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       //{ name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '数据运营', path: '/management/steve' }
-      itemList: [ { name: '小程序', path: '/management/wechat' }],
+      itemList: [ { name: '小程序', path: '/management/wechat' },{ name: '课程相关', path: '/management/course' }],
       activeIndex: '/management/wechat'
     }
   },
@@ -47,6 +47,7 @@ export default {
   methods: {
     updateForcus () {
       let path = this.$route.path;
+      console.log(path,'路径')
       let pathArray = path.split('/');
       if (pathArray[ 1 ] === 'management') {
         console.log(this.itemList[ 0 ].path)
