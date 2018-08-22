@@ -5,7 +5,7 @@ import courseRouter from './course'
 import managerRouter from './manage'
 import wechatRouter from './weChat'
 import steveRouter from './steve'
-import apiDataFilter from "../libraries/apiDataFilter";
+
 /*课程路由*/
 const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index')
 
