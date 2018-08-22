@@ -13,7 +13,7 @@ export default {
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
     'groupPublish': 'pc/wxmini/content/publish'//发布接口
   },
-  'community':{
+  'community':{  //社群管理
     'communityList':{
       'list':'pc/wxmini/community/list',//社群list
       'revise':'pc/wxmini/community/revise',//编辑和新增
@@ -27,5 +27,11 @@ export default {
       'revise':'pc/wxmini/group/revise',//完善信息
       'release':'pc/wxmini/group/release',//解绑
     }
+  },
+  'statistics': { //群数据
+    'group':'pc/wxmini/data/owner/group', //获取社群微信群
+    'words':'pc/wxmini/data/chat' , //发言信息
+    'coinList':'pc/wxmini/data/coin',//列表
+    'records':'pc/wxmini/data/coin/records',//礼金详情记录 
   }
 }
