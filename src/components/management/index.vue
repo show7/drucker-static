@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import apiDataFilter from "../../libraries/apiDataFilter";
+
 export default {
   name: 'contentMain',
   data () {
@@ -51,10 +53,23 @@ export default {
       if (pathArray[ 1 ] === 'management') {
         console.log(this.itemList[ 0 ].path)
       }
-      this.activeIndex = this.$route.matched[ 1 ].path
+      this.activeIndex = this.$route.matched[ 1 ].path;
+      this.permission();
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);
+    },
+
+    permission(){
+      let param = {uri:this.$route.path};
+      apiDataFilter.request({
+        apiPath:'common.permission',
+        method:'post',
+        data:param,
+        successCallback(res){
+
+        }
+      })
     }
   }
 }
