@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/steve/*': {
-        target: 'https://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -32,7 +32,7 @@ module.exports = {
         }
       },
       '/rise/*': {
-        target: 'http://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -42,7 +42,7 @@ module.exports = {
         },
       },
       '/subscribe/*': {
-        target: 'http://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -52,7 +52,7 @@ module.exports = {
         }
       },
       '/cache/*': {
-        target: 'http://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
