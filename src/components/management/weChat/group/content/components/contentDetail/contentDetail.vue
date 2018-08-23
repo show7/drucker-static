@@ -177,6 +177,8 @@
     components: { Editor },
     data() {
       return {
+        interval: null, //定时任务
+        esChatId: null, //eschat id
         show: true, //对话框状态
         riseId: '', //圈外id
         nickname: '', //昵称
@@ -240,8 +242,17 @@
           }
         })
       },
+
+      autoSave(){
+        if(this.popOutTopicId || this.publish === 0 || this.imgList  ||
+          this.content || this.categoryId || this.headPic || this.description || this.title || this.editorName
+        ){
+          this.handleContentSave(true)
+        }
+      },
+
       /*新增和编辑接口*/
-      handleContentSave() {
+      handleContentSave(autoSave = false) {
         let self = this;
         let labelId = -1;
         // 只有话题状态才传labelId
@@ -249,6 +260,10 @@
           if(this.popOutTopicId){
             labelId = this.popOutTopicId;
           }
+        }
+        // publish为空时，设置为0
+        if(!this.publish){
+          this.publish = 0;
         }
         let param = {
           labelId,
@@ -260,6 +275,7 @@
           labelCategory: this.categoryId,
           esChatId: this.esChatId ? this.esChatId : null,
         };
+        console.log(param)
         // 文章
         if(this.categoryId === 3){
           param.headPic = this.headPic;
@@ -272,9 +288,12 @@
           method: 'post',
           data: param,
           successCallback(res) {
-            self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
-            self.dialogDetailVisible = false;
-            self.handleSaveEmit();
+            if(!autoSave){
+              self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
+              self.dialogDetailVisible = false;
+              self.handleSaveEmit();
+            }
+            self.esChatId = res.msg
           }
         })
       },
@@ -445,6 +464,16 @@
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }
+
+      let self = this;
+      this.interval = setInterval(() => {
+        if(self.publish != 1 && self.postProfileId && this.popOutWechatGroupId){
+          self.autoSave()
+        }
+      }, 10000)
+    },
+    beforeDestroy(){
+      clearInterval(this.interval)
     }
   }
 
