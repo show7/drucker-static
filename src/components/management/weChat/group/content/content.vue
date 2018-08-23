@@ -479,5 +479,5 @@
 </script>
 
 <style scoped lang="less">
-  @import "./group.less";
+  @import "content.less";
 </style>

@@ -19,6 +19,7 @@ const steve = () => import(/* webpackChunkName: "wechat" */ '@/components/manage
 
 Vue.use(Router)
 
+
 export default new Router({
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {
@@ -58,3 +59,6 @@ export default new Router({
     }
   ]
 })
+
+
+
