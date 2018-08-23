@@ -6,6 +6,9 @@
 4. 备注：
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default {
+  'common':{
+    'group':'pc/wxmini/data/owner/group', //获取社群微信群
+  },
   'groupManage': { // 群内容管理
     'groupList': 'pc/wxmini/content/page', //获取list
     'groupSearch': 'pc/wxmini/content/list', //搜索接口
@@ -29,9 +32,13 @@ export default {
     }
   },
   'statistics': { //群数据
-    'group':'pc/wxmini/data/owner/group', //获取社群微信群
     'words':'pc/wxmini/data/chat' , //发言信息
     'coinList':'pc/wxmini/data/coin',//列表
     'records':'pc/wxmini/data/coin/records',//礼金详情记录 
+  },
+  'topic':{
+    'topicList':'pc/wxmini/topic/list',//话题list
+    'modify':'pc/wxmini/topic/modify',//话题新增和编辑
+    'publish':'pc/wxmini/data/publish/topic',//发布
   }
 }

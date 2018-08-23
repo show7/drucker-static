@@ -20,5 +20,29 @@
       margin-top: 20px;
       text-align: center;
     }
+    .description-box{
+      max-height: 64px;
+      >p{
+        overflow : hidden ;
+        text-overflow : ellipsis ;
+        display : -webkit-box !important ;
+        word-break : break-all ;
+        -webkit-box-orient : vertical ;
+        -webkit-line-clamp : 3 ;
+        display: inline-block;
+      }
+    }
+  }
+
+  .popOut-box{
+    .el-row{
+      margin-bottom: 10px;
+      p{
+        color: #50505a;
+        span{
+          color: red;
+        }
+      }
+    }
   }
 }

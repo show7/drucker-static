@@ -276,7 +276,7 @@
         this.groupList = [];
         ApiDataFilter.request({
           apiPath: 'weChat.groupManage.groupSearch',
-          method: 'get',
+          method: 'post',
           data: param,
           successCallback(res) {
             self.groupList = res.msg.content;

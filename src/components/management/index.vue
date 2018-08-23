@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       //{ name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '数据运营', path: '/management/steve' }
-      itemList: [ { name: '小程序', path: '/management/wechat' },{ name: '课程相关', path: '/management/course' }],
+      itemList: [ { name: '小程序', path: '/management/wechat' },{ name: '课程相关', path: '/management/course' }, { name: '运营功能相关', path: '/management/manage' }, { name: '数据运营', path: '/management/steve' }],
       activeIndex: '/management/wechat'
     }
   },

@@ -113,7 +113,6 @@
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-
          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
@@ -122,6 +121,7 @@
 
 <script>
   import apiDataFilter from "../../../../../libraries/apiDataFilter";
+  import lodash from 'lodash'
 
   export default {
     name: "statistics",
@@ -133,7 +133,7 @@
         communityList:[],//社群list
         communityId:0,//社群id
         isCommunityOwner:false,//是否有社群选项标识
-        groupList:[],//群list
+        groupList:[{id:0,name:'全部'}],//群list
         groupId:0,
         wordsNu:{
           dailyChatCount: 0,
@@ -155,14 +155,14 @@
       getGroup(){
         let self = this;
         apiDataFilter.request({
-          apiPath:'weChat.statistics.group',
+          apiPath:'weChat.common.group',
           successCallback(res){
             let result = res.msg.communityList || [];
             result.unshift({id:0,name:'全部',groupList:[]});
             self.communityList = result;
             self.isCommunityOwner = res.msg.isCommunityOwner;
             if (!self.isCommunityOwner ) {
-              let groupList = res.msg.groupList;
+              let groupList = lodash.cloneDeep(res.msg.groupList);
               groupList.unshift({id:0,name:'全部'});
               self.groupList = groupList;
             }
@@ -222,7 +222,9 @@
       handleSelectCommunity(val){
          this.communityList.forEach((item,index)=>{
            if (val === item.id){
-             this.groupList = item.groupList;
+             let groupList = lodash.cloneDeep(item.groupList);
+             groupList.unshift({id:0,name:'全部'});
+             this.groupList = groupList;
              this.groupId = 0;
              this.page = 1;
              this.getCoinList();
