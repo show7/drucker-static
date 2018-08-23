@@ -148,9 +148,9 @@
            </el-col>
          </el-row>
          <el-row>
-           <el-col :span="4"><p>话题详情 <span>*</span></p></el-col>
+           <el-col :span="4"><p>{{disabledFlag ? '今日话题':'话题详情'}} <span>*</span></p></el-col>
            <el-col :span="20">
-             <el-input type="textarea" :rows="6" placeholder="请输入内容" :disabled="disabledFlag" v-model="topicDetail"></el-input>
+             <el-input type="textarea" :rows="6" placeholder="请输入内容" :disabled="disabledFlag" v-model=" disabledFlag ? topicDetail:description"></el-input>
            </el-col>
          </el-row>
          <el-row>
@@ -208,6 +208,7 @@
               publishRadio:'1',
               disabledFlag:false,
               selectId:null, //需要编辑的id
+              description:'',//话题详情
             }
         },
         methods: {
@@ -270,7 +271,7 @@
           handleSend(){
             let self = this;
             let param = {communityId:this.popCommunityId,groupId:this.popGroupId,name:this.topicName,
-              description:this.topicDetail,publish:this.publishRadio == 1 ? false:true
+              description:this.description,publish:this.publishRadio == 1 ? false:true
             };
             this.selectId ? Object.assign(param,{id:this.selectId}):'';
             apiDataFilter.request({
@@ -330,6 +331,7 @@
             this.publishRadio = '1';
             this.disabledFlag = false;
             this.selectId = null;
+            this.description = null
           },
           // 编辑
           handleEdit(index,row,flag){
@@ -348,6 +350,7 @@
             this.publishRadio = row.publish ? '2':'1';
             this.disabledFlag = flag === 1 ? false : true;
             this.selectId = row.id;
+            this.description = row.description
           },
           /*搜索*/
           handleSearch(){
