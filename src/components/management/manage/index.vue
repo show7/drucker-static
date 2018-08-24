@@ -32,7 +32,7 @@
                 <el-menu-item index="/management/manage/activities">线下活动编辑</el-menu-item>
                 <el-menu-item index="/management/manage/articles">圈圈文章编辑</el-menu-item>
               </el-submenu>
-              <el-menu-item index="/management/manage/social">社群信息导入</el-menu-item>
+              <el-menu-item index="/management/manage/social">群组信息导入</el-menu-item>
               <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
               <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
               <el-menu-item index="/management/manage/coupon">创建优惠券</el-menu-item>

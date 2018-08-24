@@ -2,7 +2,7 @@
     <div class="community-container">
       <h3>群管理</h3>
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleTabChange">
-        <el-tab-pane label="社群管理" name="first">
+        <el-tab-pane label="群组管理" name="first">
           <communityList ref="community" @groupDetail="handleGetId"></communityList>
         </el-tab-pane>
         <el-tab-pane label="微信群管理" name="second">

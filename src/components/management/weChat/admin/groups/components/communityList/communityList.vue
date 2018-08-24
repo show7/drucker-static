@@ -3,7 +3,7 @@
       <div class="community-list-top">
         <el-row>
           <el-col :span="12">
-            <el-input v-model="searchName" placeholder="请输入内容社群名称"></el-input>
+            <el-input v-model="searchName" placeholder="请输入内容群组名称"></el-input>
           </el-col>
           <el-col :span="12">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
@@ -21,7 +21,7 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            label="社群名称">
+            label="群组名称">
           </el-table-column>
           <el-table-column
             prop="groupCount"
@@ -137,7 +137,7 @@
 
         data() {
             return {
-              searchName:'',//社群搜索
+              searchName:'',//群组搜索
               title:'添加群组',
               dialogVisible:false,
               dialogVisiblePic:false,

@@ -18,7 +18,7 @@
           <el-menu-item-group>
             <el-menu-item index="/management/wechat/group/content">群内容管理</el-menu-item>
             <el-menu-item index="/management/wechat/admin/groups">群管理</el-menu-item>
-            <el-menu-item index="/management/wechat/group/statistics">社群数据</el-menu-item>
+            <el-menu-item index="/management/wechat/group/statistics">群组数据</el-menu-item>
             <el-menu-item index="/management/wechat/community/topic">话题管理</el-menu-item>
            <!-- <el-menu-item index="/management/wechat/admin/contentmanage">内容管理</el-menu-item>-->
           </el-menu-item-group>

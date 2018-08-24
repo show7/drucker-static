@@ -1,6 +1,6 @@
 <template>
   <div class="statistics-container">
-    <h3>社群数据</h3>
+    <h3>群组数据</h3>
     <!--头部搜索展示-->
     <div class="statistics-top">
       <el-row>
@@ -11,8 +11,8 @@
           </el-select>
         </el-col>
         <el-col :span="8" v-if="isCommunityOwner">
-          <h4>社群</h4>
-          <el-select v-model="communityId" placeholder="请选择社群" @change="handleSelectCommunity">
+          <h4>群组</h4>
+          <el-select v-model="communityId" placeholder="请选择群组" @change="handleSelectCommunity">
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-col>
@@ -130,9 +130,9 @@
         dialogVisible:false,
         latesList:[{id:1,name:'今日'},{id:2,name:'最近七日'},{id:3,name:'最近30日'}],
         latesValue: 1,//近期统计选取值
-        communityList:[],//社群list
-        communityId:0,//社群id
-        isCommunityOwner:false,//是否有社群选项标识
+        communityList:[],//群组list
+        communityId:0,//群组id
+        isCommunityOwner:false,//是否有群组选项标识
         groupList:[{id:0,name:'全部'}],//群list
         groupId:0,
         wordsNu:{
@@ -150,7 +150,7 @@
       }
     },
     methods: {
-      /*获取社群、微信群、*/
+      /*获取群组、微信群、*/
       getGroup(){
         let self = this;
         apiDataFilter.request({
@@ -217,7 +217,7 @@
           }
         })
       },
-      /*社群选择*/
+      /*群组选择*/
       handleSelectCommunity(val){
          this.communityList.forEach((item,index)=>{
            if (val === item.id){

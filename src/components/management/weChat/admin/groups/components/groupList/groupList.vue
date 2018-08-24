@@ -3,7 +3,7 @@
     <div class="group-list-top">
       <el-row>
         <el-col :span="8">
-          <el-select v-model="infoId" placeholder="请选择社群" :disabled="disabledFlag">
+          <el-select v-model="infoId" placeholder="请选择群组" :disabled="disabledFlag">
             <el-option
               v-for="item in infoList"
               :key="item.id"
@@ -39,7 +39,7 @@
         </el-table-column>
         <el-table-column
           prop="communityName"
-          label="所属社群">
+          label="所属群组">
         </el-table-column>
         <el-table-column
           prop="groupMemberCount"
@@ -141,7 +141,7 @@
           <el-row>
             <el-col :span="4"><p>选择板块<span>*</span></p></el-col>
             <el-col :span="20">
-              <el-select v-model="popInfoId" placeholder="请选择社群">
+              <el-select v-model="popInfoId" placeholder="请选择群组">
                 <el-option
                   v-for="item in popInfoList"
                   :key="item.id"
@@ -175,9 +175,9 @@
               groupList:[],//列表
               pageCount:null,//总页数
               pageIndex:1,//第一页
-              infoList:[],//社群list
-              popInfoList:[],//社群list
-              infoId:0,//社群id
+              infoList:[],//群组list
+              popInfoList:[],//群组list
+              infoId:0,//群组id
               groupNameSearch:'',//搜索群名
               searchValue:null,//搜索结果
               searchList:[],//搜索list

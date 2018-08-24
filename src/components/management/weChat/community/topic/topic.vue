@@ -14,8 +14,8 @@
            </el-select>
          </el-col>
          <el-col :span="6">
-           <h4>社群</h4>
-           <el-select v-model="communityId" placeholder="请选择社群" @change="handleSelectCommunity">
+           <h4>群组</h4>
+           <el-select v-model="communityId" placeholder="请选择群组" @change="handleSelectCommunity">
              <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
            </el-select>
          </el-col>
@@ -58,7 +58,7 @@
          </el-table-column>
          <el-table-column
            prop="communityName"
-           label="所属社群">
+           label="所属群组">
          </el-table-column>
          <el-table-column
            prop="description"
@@ -184,8 +184,8 @@
               dialogVisible:false,
               topicName:'',//话题名称  编辑和新增
               topicNameSearch:'',//搜索框的值  话题名称
-              communityList:[],//社群list
-              communityId:0,//社群id
+              communityList:[],//群组list
+              communityId:0,//群组id
               groupList:[{id:0,name:'全部'}],//群list
               groupId:0,
               pageIndex:1,
@@ -200,8 +200,8 @@
               },
               pageCount:null,//总页数
               topicList:[],//话题列表
-              popCommunityList:[],//社群list
-              popCommunityId:null,//社群id
+              popCommunityList:[],//群组list
+              popCommunityId:null,//群组id
               popGroupList:[],//群list
               popGroupId:null,
               topicDetail:'',//话题详情
@@ -212,7 +212,7 @@
             }
         },
         methods: {
-          /*获取社群、微信群、*/
+          /*获取群组、微信群、*/
           getGroup(){
             let self = this;
             apiDataFilter.request({
@@ -293,7 +293,7 @@
               this.handleSend();
             }
           },
-          /*社群选择*/
+          /*群组选择*/
           handleSelectCommunity(val){
             this.communityList.forEach((item,index)=>{
               if (val === item.id){
@@ -305,7 +305,7 @@
               }
             })
           },
-          /*选择弹框社群*/
+          /*选择弹框群组*/
           handleSelectPopCommunity(val){
             this.popCommunityList.forEach((item,index)=>{
               if (val === item.id){

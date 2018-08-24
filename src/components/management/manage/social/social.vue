@@ -1,6 +1,6 @@
 <template>
 <div class="social-container">
-  <h3>社群信息导入</h3>
+  <h3>群组信息导入</h3>
   <div class="social-top">
     <el-upload
       class="upload-demo"

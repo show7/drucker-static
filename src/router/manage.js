@@ -17,7 +17,7 @@ const banner = () => import(/* webpackChunkName: "manage" */ '@/components/manag
 const lives = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/lives/lives') //首页直播
 const activities = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/activities/activities') //线下活动编辑
 const articles = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/articles/articles') //文章编辑
-const social = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/social/social') //社群信息导入
+const social = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/social/social') //群组信息导入
 const autoReply = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/autoReply/autoReply') //服务号自动回复
 const subscribe = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/subscribe/subscribe') //服务号关注回复
 const coupon = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon') //创建优惠券

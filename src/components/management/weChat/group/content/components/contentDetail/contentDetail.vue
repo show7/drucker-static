@@ -190,7 +190,7 @@
         popOutTopicId: null, //话题id
         publish : -1, //是否发布
         picGroupList : [], //图片列表
-        communityList : [], //社群列表
+        communityList : [], //群组列表
         wechatGroupList : [], //微信群列表
         topicLabels : [], //话题列表
         imgList : [], //图片列表
