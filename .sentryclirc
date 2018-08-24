@@ -1,0 +1,6 @@
+[defaults]
+url=https://sentry.iquanwai.com/
+project=drucker-static
+org=quanwai
+[auth]
+token="a2374af8472a4db2b3a3a51c589066d602843a1b71054474ae82ce9c2e84100d"

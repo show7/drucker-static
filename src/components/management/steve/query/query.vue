@@ -33,6 +33,7 @@
             <br/>
             <br/>
             <el-button type="primary" @click="handleSearch">查询</el-button>
+            <el-button type="primary" @click="handleClickError">报错</el-button>
           </el-col>
         </el-row>
       </el-row>
@@ -93,10 +94,13 @@ export default {
           }
         }
       })
+    },
+    handleClickError(){
+      console.log(a);
     }
   },
   created () {
-  }
+  },
 }
 </script>
 
