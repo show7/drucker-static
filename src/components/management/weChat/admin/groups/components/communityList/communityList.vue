@@ -156,7 +156,8 @@
               groupDesc:'',//群组描述
               id:null,//编辑的条目id
               riseId:'',
-              disabledFlag:false
+              disabledFlag:false,
+              nickName:'无'
             }
         },
         methods: {
@@ -200,7 +201,7 @@
             this.radio = '0';
             this.id= null;
             this.riseId='';
-            this.disabledFlag = false
+            this.disabledFlag = false;
           },
           /*编辑*/
           handleEdit(index,row){
@@ -225,7 +226,7 @@
           /*新增和编辑接口*/
           sendAddData(){
             let self = this;
-            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl};
+            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl,riseId:this.riseId};
              this.id ? Object.assign(param,{id:this.id}):'';
              apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',

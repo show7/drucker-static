@@ -135,7 +135,8 @@
           <el-row>
             <el-col :span="4"><p>群主riseId<span>*</span></p></el-col>
             <el-col :span="20">
-              <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入群主riseId"></el-input>
+              <el-input class="riseId" style="width: 40%" v-model="riseId" :disabled="disabledFlag" placeholder="请输入群主riseId"></el-input>
+              昵称：{{ownerNickname}}
             </el-col>
           </el-row>
           <el-row>

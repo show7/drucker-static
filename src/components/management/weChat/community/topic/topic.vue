@@ -270,7 +270,7 @@
           /*新增编辑接口*/
           handleSend(){
             let self = this;
-            let param = {communityId:this.popCommunityId,groupId:this.popGroupId,name:this.topicName,
+            let param = {communityId:this.popCommunityId,groupId:this.popGroupId,originName:this.topicName,
               description:this.description,publish:this.publishRadio == 1 ? false:true
             };
             this.selectId ? Object.assign(param,{id:this.selectId}):'';
