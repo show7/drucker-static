@@ -92,7 +92,7 @@
           <el-pagination
             background
             layout="prev, pager, next"
-            :current-page="page"
+            :current-page="pageIndex"
             @current-change="currentChange"
             :page-count="pageCount">
           </el-pagination>
@@ -145,7 +145,6 @@
         orderList:[{id:1,name:'正序'},{id:-1,name:'倒序'}],
         pageIndex:1,
         pageCount:null,//总页数
-        page:1,//当前页
         coinList:[],
         detailList:[],//详情list
       }
@@ -226,7 +225,7 @@
              groupList.unshift({id:0,name:'全部'});
              this.groupList = groupList;
              this.groupId = 0;
-             this.page = 1;
+             this.pageIndex = 1;
              this.getCoinList();
              this.getLatesList();
            }
@@ -234,7 +233,7 @@
       },
       /*群选择*/
       handleSelectGroup(){
-        this.page =1
+        this.pageIndex =1
         this.getCoinList();
         this.getLatesList();
       },
@@ -244,12 +243,12 @@
       },
       /*排序选择*/
       handleSelectOrder(){
-        this.page =1
+        this.pageIndex =1
         this.getCoinList();
       },
       /*得到当前页数*/
       currentChange(pageIndex) {
-        this.page = pageIndex;
+        this.pageIndex = pageIndex;
         this.getCoinList();
       },
     },

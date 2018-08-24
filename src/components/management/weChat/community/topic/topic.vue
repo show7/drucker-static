@@ -117,7 +117,7 @@
         width="40%"
        :close-on-click-modal="false">
        <div class="popOut-box">
-         <el-row>
+         <el-row v-if="!disabledFlag">
            <el-col :span="4"><p>话题名称 <span>*</span></p></el-col>
            <el-col :span="20"><el-input v-model="topicName" placeholder="请输入话题名称" :disabled="disabledFlag"></el-input></el-col>
          </el-row>
@@ -153,7 +153,7 @@
              <el-input type="textarea" :rows="6" placeholder="请输入内容" :disabled="disabledFlag" v-model=" disabledFlag ? topicDetail:description"></el-input>
            </el-col>
          </el-row>
-         <el-row>
+         <el-row v-if="!disabledFlag">
            <el-col :span="4"><p>操作 <span>*</span></p></el-col>
            <el-col :span="20">
              <el-radio :disabled="disabledFlag" v-model="publishRadio" label="2">上架</el-radio>
@@ -287,7 +287,7 @@
           },
           /*校验必填项提交*/
           handleCheckData(){
-            if (!this.topicName || !this.popCommunityId || !this.topicDetail){
+            if (!this.topicName || !this.popCommunityId || !this.description){
               this.$message.error('请填写必填项目');
             } else {
               this.handleSend();
@@ -327,6 +327,7 @@
             this.title='新增';
             this.popCommunityId = null;
             this.popGroupId = null;
+            this.popGroupList = [];
             this.topicDetail = '';
             this.publishRadio = '1';
             this.disabledFlag = false;
@@ -337,7 +338,7 @@
           handleEdit(index,row,flag){
             this.dialogVisible = true;
             this.topicName = row.name;
-            this.title='编辑';
+            this.title=flag === 1 ? '编辑' : '详情';
             this.popCommunityId = row.communityId;
             this.popCommunityList.forEach((item,index)=> {
               if (row.communityId === item.id) {
