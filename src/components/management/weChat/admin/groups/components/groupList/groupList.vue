@@ -3,7 +3,7 @@
     <div class="group-list-top">
       <el-row>
         <el-col :span="8">
-          <el-select v-model="infoId" placeholder="请选择群组" :disabled="disabledFlag">
+          <el-select v-model="infoId" placeholder="请选择群组" >
             <el-option
               v-for="item in infoList"
               :key="item.id"
@@ -13,7 +13,7 @@
           </el-select>
         </el-col>
         <el-col :span="8">
-          <el-input v-model="groupNameSearch" placeholder="请输入微信群名称" :disabled="disabledFlag"></el-input>
+          <el-input v-model="groupNameSearch" placeholder="请输入微信群名称"></el-input>
         </el-col>
         <el-col :span="8">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
@@ -133,9 +133,9 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4"><p>群主<span>*</span></p></el-col>
+            <el-col :span="4"><p>群主riseId<span>*</span></p></el-col>
             <el-col :span="20">
-              <el-input v-model="ownerNickname" placeholder="请输入群主名称"></el-input>
+              <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入群主riseId"></el-input>
             </el-col>
           </el-row>
           <el-row>
@@ -188,6 +188,7 @@
               popInfoId:null,//弹出框的板块id
               Id:null, //编辑的id
               disabledFlag:false,
+              riseId:''
             }
         },
       watch: {
@@ -316,9 +317,11 @@
             this.popInfoId = row.communityId;
             this.ownerNickname = row.ownerNickname;
             this.Id = row.id;
+            this.riseId = row.riseId;
+            this.disabledFlag = this.riseId ? true:false;
           },
           handleEditPop(){
-            if (!this.imageUrl || !this.popInfoId || !this.ownerNickname) {
+            if (!this.imageUrl || !this.popInfoId || !this.riseId) {
               this.$message.error('请完善信息');
             }else {
                this.completeSend()
@@ -327,7 +330,7 @@
           /*提交完善信息*/
           completeSend(){
             let self= this;
-            let param = {id:this.Id,ownerNickname:this.ownerNickname,ownerCode:this.imageUrl,communityId:this.popInfoId};
+            let param = {id:this.Id,riseId:this.riseId,ownerCode:this.imageUrl,communityId:this.popInfoId};
             apiDataFilter.request({
               apiPath:'weChat.community.groupList.revise',
               method:'post',

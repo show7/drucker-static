@@ -96,7 +96,7 @@
                   <img v-if="imageUrl" :src="imageUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <span class="size">备注：图片尺寸100*100</span>
+                <span class="size">备注：图片尺寸建议500*500</span>
               </el-col>
             </el-row>
             <el-row>
@@ -113,9 +113,9 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群主riseId<span>*</span></p></el-col>
+              <el-col :span="4"><p>群组负责人riseId<span>*</span></p></el-col>
               <el-col :span="20">
-                <el-input class="riseId" v-model="riseId"  placeholder="请输入群主riseId"></el-input>
+                <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入负责人riseId"></el-input>
               </el-col>
             </el-row>
             <el-row>
@@ -155,6 +155,8 @@
               groupName:'',//群组名称
               groupDesc:'',//群组描述
               id:null,//编辑的条目id
+              riseId:'',
+              disabledFlag:false
             }
         },
         methods: {
@@ -197,7 +199,10 @@
             this.groupDesc= '';
             this.radio = '0';
             this.id= null;
+            this.riseId='';
+            this.disabledFlag = false
           },
+          /*编辑*/
           handleEdit(index,row){
             this.title = '编辑群组';
             this.dialogVisible = true;
@@ -206,10 +211,12 @@
             this.groupDesc= row.description;
             this.radio = row.publish ? '1' :'0';
             this.id= row.id;
+            this.riseId= row.riseId;
+            this.disabledFlag = this.riseId ? true:false;
           },
           /*确定新增和编辑*/
           handleConfor(){
-            if (!this.groupName || !this.groupDesc || !this.imageUrl) {
+            if (!this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId) {
               this.$message.error('请把信息填写完整');
             }else {
               this.sendAddData();

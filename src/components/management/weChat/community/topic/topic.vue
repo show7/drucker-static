@@ -337,7 +337,7 @@
           // 编辑
           handleEdit(index,row,flag){
             this.dialogVisible = true;
-            this.topicName = row.name;
+            this.topicName = row.originName;
             this.title=flag === 1 ? '编辑' : '详情';
             this.popCommunityId = row.communityId;
             this.popCommunityList.forEach((item,index)=> {
