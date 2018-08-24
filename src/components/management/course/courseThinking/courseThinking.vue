@@ -19,8 +19,9 @@
        </el-col>
      </el-row>
    </div>
-
-   <el-button type="primary" @click="handleNewAdd">新增</el-button>
+   <div class="add-box">
+        <el-button type="primary" @click="handleNewAdd">新增</el-button>
+   </div>
    <div class="thinking-content">
      <el-table
        :data="courseList"

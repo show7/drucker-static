@@ -140,7 +140,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4"><p>选择板块<span>*</span></p></el-col>
+            <el-col :span="4"><p>选择群组<span>*</span></p></el-col>
             <el-col :span="20">
               <el-select v-model="popInfoId" placeholder="请选择群组">
                 <el-option

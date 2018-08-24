@@ -47,7 +47,9 @@
        </el-row>
      </div>
      <div class="topic-content">
-       <el-button type="primary" @click="handleAddNew">新增</el-button>
+       <div class="add-box">
+         <el-button type="primary" @click="handleAddNew">新增</el-button>
+       </div>
        <!--table表格-->
        <el-table
          :data="topicList"
