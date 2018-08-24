@@ -137,7 +137,7 @@
          <el-row>
            <el-col :span="4"><p>所属微信群</p></el-col>
            <el-col :span="20">
-             <el-select v-model="popGroupId" :disabled="disabledFlag" placeholder="请选择群组">
+             <el-select v-model="popGroupId" :disabled="disabledFlag" placeholder="请选择微信群">
              <el-option
                v-for="item in popGroupList"
                :key="item.id"

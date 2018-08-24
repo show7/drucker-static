@@ -113,6 +113,12 @@
               </el-col>
             </el-row>
             <el-row>
+              <el-col :span="4"><p>群主riseId<span>*</span></p></el-col>
+              <el-col :span="20">
+                <el-input class="riseId" v-model="riseId"  placeholder="请输入群主riseId"></el-input>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="4"><p>群组状态<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-radio v-model="radio" label='1'>上架</el-radio>
