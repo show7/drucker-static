@@ -13,6 +13,7 @@ import './style/theme/index.css'
 import App from './App'
 import router from './router'
 import apiDataFilter from "./libraries/apiDataFilter";
+import { initSentry } from './libraries/sentry'
 
 router.beforeEach((to, from, next) => {
   let param = {uri: to.path};
@@ -43,6 +44,7 @@ vue插件使用
 
 Vue.use(VueResource)
 Vue.use(ElementUI)
+initSentry(Vue)
 
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 关闭生产模式下给出的提示
