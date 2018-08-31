@@ -1,6 +1,7 @@
 import weChat from './weChat'
 import manage from './manage'
 import steve from './steve'
+import course from './course'
 
 export default {
   'timeout': 60 * 1000, //超时请求时间，单位：毫秒
@@ -16,21 +17,7 @@ export default {
       'simple': 'pc/asst/problem/simple' ,// 获取小课标题
       'permission':'pc/permission/check',//权限
     },
-    'project': {
-      'course': { // 课程导入
-        'courseIntroduction': { //课程介绍
-          'catalog': 'pc/operation/problem/catalog/load', // 获取小课主及次类别
-          'sendData': 'pc/asst/problem/load', // 发送选择的标题名称
-          'uploadAudio': 'pc/upload/audio/revise', //上传和修改语音文案接口
-          'save': 'pc/operation/problem/save' //更新小课导入数据
-        },
-        'courseThinking':{
-          'load':'pc/operation/preview/load',//课前思考列表
-          'update':'pc/operation/preview/update',//新增和编辑
-          'audioDb':'pc/upload/audio/db',//上传语音返回id
-        }
-      }
-    },
+    'course': course,
     'manage': manage,
     'weChat': weChat,
     'steve': steve

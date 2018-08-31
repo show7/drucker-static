@@ -239,7 +239,7 @@
 <script>
 import Editor from '../../../common/editor/editor'
 import ApiDataFilter from '@/libraries/apiDataFilter'
-import _ from 'lodash'
+import {removeHtmlTags} from '@/libraries/commonMethod'
 
 export default {
   name: 'courseIntroduce',
@@ -296,7 +296,7 @@ export default {
       });
       // 获取小课主次类别
       ApiDataFilter.request({
-        apiPath: 'project.course.courseIntroduction.catalog',
+        apiPath: 'course.courseIntroduction.catalog',
         successCallback (res) {
           self.catalogMain = res.msg
         }
@@ -307,7 +307,7 @@ export default {
       let self = this;
       this.authorPic = [];
       ApiDataFilter.request({
-        apiPath: 'project.course.courseIntroduction.sendData',
+        apiPath: 'course.courseIntroduction.sendData',
         method: 'get',
         pathParams: [value],
         successCallback (res) {
@@ -333,10 +333,10 @@ export default {
     },
     /*发送所有修改数据*/
     handleSendAll () {
-      if (!this.problem || !this.abbreviation || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
+    /*  if (!this.problem || !this.abbreviation || !this.who || !this.catalogsValue || !this.subCatalogsValue) {
         this.$message.error('请将所有信息填写完毕');
         return
-      }
+      }*/
       let self = this;
       let bodyData = {
         abbreviation: this.abbreviation,
@@ -355,7 +355,7 @@ export default {
         changeLog: this.changeLog
       };
       ApiDataFilter.request({
-        apiPath: 'project.course.courseIntroduction.save',
+        apiPath: 'course.courseIntroduction.save',
         method: 'post',
         data: bodyData,
         successCallback (res) {
@@ -374,7 +374,7 @@ export default {
         referenceId: this.courseTitleValueId
       };
       ApiDataFilter.request({
-        apiPath: 'project.course.courseIntroduction.uploadAudio',
+        apiPath: 'course.courseIntroduction.uploadAudio',
         method: 'post',
         data: dataBody,
         successCallback (res) {
@@ -465,7 +465,7 @@ export default {
     },
     /*判断音频格式*/
     beforeAvatarUpload (file) {
-      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mpeg');
+      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mp3');
       if (!isM4AMP3) {
         this.$message.error('上传音频只能是 m4a或mp3 格式!');
       }
@@ -494,20 +494,11 @@ export default {
     handleDelete (index, row) {
       console.log(index, row);
     },
-    removeHtmlTags (str) {
-      let newStr = _.trim(str)
-      // 去除 html 标签
-      newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-      newStr = newStr.replace(/<\/?[^>]*>/g, '')
-      // 去除实体字符
-      newStr = newStr.replace(/&[^;]+;/g, '')
-      return newStr
-    },
     /* 处理语音list文案*/
     handleChangeData (tableData) {
       if (tableData.length === 0) return
       tableData.map((item, index) => {
-        tableData[index].wordsString = this.removeHtmlTags(item.words)
+        tableData[index].wordsString = removeHtmlTags(item.words)
       });
       return tableData
     }

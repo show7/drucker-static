@@ -188,7 +188,7 @@ export default {
     getList(problemId){
       let self = this;
       ApiDataFilter.request({
-        apiPath: 'project.course.courseThinking.load',
+        apiPath: 'course.courseThinking.load',
         pathParams:[problemId],
         successCallback (res) {
           self.courseList = res.msg || [];
@@ -205,7 +205,7 @@ export default {
       let self = this;
       let param = {audioId:this.audioId,ftpFileName:name,name:'',words:'',referenceId:this.searchCourseTitleValueId};
       ApiDataFilter.request({
-        apiPath:'project.course.courseThinking.audioDb',
+        apiPath:'course.courseThinking.audioDb',
         method:'post',
         data:param,
         successCallback(res){
@@ -221,7 +221,7 @@ export default {
       let param = {chapter: this.chapter, section: this.section, description:this.editorValue};
       audioId ? Object.assign(param,{audioId:audioId}):'';
       ApiDataFilter.request({
-        apiPath:'project.course.courseThinking.update',
+        apiPath:'course.courseThinking.update',
         method:'post',
         pathParams:[courseTitleValueId],
         data:param,
