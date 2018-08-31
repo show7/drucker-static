@@ -19,7 +19,11 @@
             <el-menu-item-group>
               <el-menu-item index="/management/course/courseintroduce">小课导入</el-menu-item>
               <el-menu-item index="/management/course/coursethinking">课前思考导入</el-menu-item>
-             <!-- <el-menu-item index="/management/course/courseextended">拓展学习</el-menu-item>-->
+              <el-menu-item index="/management/course/courseknowledge">小课知识导入</el-menu-item>
+              <el-menu-item index="/management/course/exercisechoice">选择题管理</el-menu-item>
+              <el-menu-item index="/management/course/exerciseapplication">应用题管理</el-menu-item>
+              <el-menu-item index="/management/course/courseextended">拓展学习</el-menu-item>
+              <el-menu-item index="/management/course/knowledgecard">知识卡片管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
