@@ -302,7 +302,7 @@ export default {
       this.title = '编辑';
       this.chapter = row.chapter;
       this.section = row.section;
-      this.courseTitleValueId= row.problemId;
+      this.courseTitleValueId= this.searchCourseTitleValueId;
       this.disabledFlag = true;
       this.fileAudioUrl = row.audioUrl;
       setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.description) }, 200)
