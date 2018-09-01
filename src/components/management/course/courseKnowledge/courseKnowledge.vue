@@ -372,7 +372,7 @@ export default {
           this.$message.error('请选择语音');
         }
       } else {
-        if (this.fileList[0].audioUrl !== this.fileAudioUrl) {
+        if (this.fileList[0].url !== this.fileAudioUrl) {
           if (this.audioName && this.audioWords) {
             this.loadingInstance = Loading.service();
             this.$refs.upload.submit();
@@ -481,6 +481,8 @@ export default {
       this.fileList[0] = rowL;
       this.videoPicUrl = row.videoPicUrl;
       this.mediaResourceId = row.mediaResourceId;
+      this.audioId = row.audioId;
+      this.videoId = row.videoId;
     },
     /*获取语音原始信息*/
     handleChange (file, fileList) {
