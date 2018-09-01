@@ -277,7 +277,7 @@ export default {
     },
     /*判断音频格式*/
     beforeAvatarUpload (file) {
-      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mpeg');
+      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mp3');
       if (!isM4AMP3) {
         this.$message.error('上传音频只能是 m4a或mp3 格式!');
       }
