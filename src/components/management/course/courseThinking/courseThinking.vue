@@ -204,6 +204,7 @@ export default {
     handleSendAdio(name){
       let self = this;
       let param = {audioId:this.audioId,ftpFileName:name,name:'',words:'',referenceId:this.searchCourseTitleValueId};
+   /*   this.audioId ? Object.assign(param,{audioId:this.audioId}):Object.assign(param,{audioId:this.audioId})*/
       ApiDataFilter.request({
         apiPath:'course.courseThinking.audioDb',
         method:'post',
@@ -263,7 +264,8 @@ export default {
       this.title = '新增';
       this.disabledFlag = false;
       this.courseTitleValueId = '';
-      setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200)
+      setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200);
+      this.audioId = 0;
     },
     /*语音上传成功*/
     handleAudioSuccess (response, file, fileList) {
@@ -315,7 +317,7 @@ export default {
         };
         this.fileList[0] = rowL;
       }
-
+      this.audioId = row.audioId;
     },
     removeHtmlTags (str) {
       let newStr = _.trim(str)
