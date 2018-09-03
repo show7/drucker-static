@@ -230,9 +230,9 @@ export default {
           self.loadingInstance.close();
           self.$message.success('提交成功');
           self.dialogVisible = false;
-          if (self.title === '编辑'){
-            self.getList(self.searchCourseTitleValueId)
-          }
+         /* if (self.title === '编辑'){*/
+          self.getList(self.searchCourseTitleValueId)
+          /*}*/
         },
         errorCallback(res){
           self.fileList = [];
