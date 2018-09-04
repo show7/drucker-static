@@ -170,6 +170,7 @@
           width="40%"
           :title="titleMedia"
           :visible.sync="innerVisible"
+          :close-on-click-modal="false"
           append-to-body>
           <div class="editor-audio">
             <el-row>
