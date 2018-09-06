@@ -156,8 +156,8 @@
          <el-row v-if="!disabledFlag">
            <el-col :span="4"><p>操作 <span>*</span></p></el-col>
            <el-col :span="20">
-             <el-radio :disabled="disabledFlag" v-model="publishRadio" label="2">上架</el-radio>
-             <el-radio :disabled="disabledFlag" v-model="publishRadio" label="1">保存</el-radio>
+             <el-radio :disabled="disabledFlag" v-model="publishRadio" label="2">发布</el-radio>
+             <el-radio :disabled="disabledFlag" v-model="publishRadio" label="1">未发布</el-radio>
            </el-col>
          </el-row>
        </div>

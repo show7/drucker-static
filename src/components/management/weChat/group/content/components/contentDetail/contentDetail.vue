@@ -151,8 +151,8 @@
         <el-row>
           <el-col :span="24">
             <h4><span>*</span>操作</h4>
-            <el-radio v-model="publish" label="1">上架</el-radio>
-            <el-radio v-model="publish" label="0">保存</el-radio>
+            <el-radio v-model="publish" label="1">发布</el-radio>
+            <el-radio v-model="publish" label="0">暂不发布</el-radio>
           </el-col>
         </el-row>
         <el-dialog :visible.sync="dialogVisiblePic">

@@ -115,8 +115,8 @@
             <el-row>
               <el-col :span="4"><p>群组状态<span>*</span></p></el-col>
               <el-col :span="20">
-                <el-radio v-model="radio" label='1'>上架</el-radio>
-                <el-radio v-model="radio" label='0'>保存</el-radio>
+                <el-radio v-model="radio" label='1'>发布</el-radio>
+                <el-radio v-model="radio" label='0'>未发布</el-radio>
               </el-col>
             </el-row>
           </div>

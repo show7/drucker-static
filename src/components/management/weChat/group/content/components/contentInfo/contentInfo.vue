@@ -45,7 +45,7 @@
         <el-row>
           <el-col :span="12">
             <h4>操作</h4>
-            <p>{{publish == 1 ? '上架':'保存'}}</p>
+            <p>{{publish == 1 ? '发布':'未发布'}}</p>
           </el-col>
         </el-row>
 
