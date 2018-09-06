@@ -46,7 +46,7 @@
           </el-table-column>
           <el-table-column
             width="200"
-            label="微信群">
+            label="查看微信群">
             <template slot-scope="scope">
               <p class="go-group-list" @click="checkGroupDetail(scope.row.id)">查看微信群</p>
             </template>
