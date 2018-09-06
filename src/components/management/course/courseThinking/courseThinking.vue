@@ -19,8 +19,9 @@
        </el-col>
      </el-row>
    </div>
-
-   <el-button type="primary" @click="handleNewAdd">新增</el-button>
+   <div class="add-box">
+        <el-button type="primary" @click="handleNewAdd">新增</el-button>
+   </div>
    <div class="thinking-content">
      <el-table
        :data="courseList"
@@ -187,7 +188,7 @@ export default {
     getList(problemId){
       let self = this;
       ApiDataFilter.request({
-        apiPath: 'project.course.courseThinking.load',
+        apiPath: 'course.courseThinking.load',
         pathParams:[problemId],
         successCallback (res) {
           self.courseList = res.msg || [];
@@ -203,8 +204,9 @@ export default {
     handleSendAdio(name){
       let self = this;
       let param = {audioId:this.audioId,ftpFileName:name,name:'',words:'',referenceId:this.searchCourseTitleValueId};
+   /*   this.audioId ? Object.assign(param,{audioId:this.audioId}):Object.assign(param,{audioId:this.audioId})*/
       ApiDataFilter.request({
-        apiPath:'project.course.courseThinking.audioDb',
+        apiPath:'course.courseThinking.audioDb',
         method:'post',
         data:param,
         successCallback(res){
@@ -220,7 +222,7 @@ export default {
       let param = {chapter: this.chapter, section: this.section, description:this.editorValue};
       audioId ? Object.assign(param,{audioId:audioId}):'';
       ApiDataFilter.request({
-        apiPath:'project.course.courseThinking.update',
+        apiPath:'course.courseThinking.update',
         method:'post',
         pathParams:[courseTitleValueId],
         data:param,
@@ -228,9 +230,9 @@ export default {
           self.loadingInstance.close();
           self.$message.success('提交成功');
           self.dialogVisible = false;
-          if (self.title === '编辑'){
-            self.getList(self.searchCourseTitleValueId)
-          }
+         /* if (self.title === '编辑'){*/
+          self.getList(self.searchCourseTitleValueId)
+          /*}*/
         },
         errorCallback(res){
           self.fileList = [];
@@ -262,7 +264,8 @@ export default {
       this.title = '新增';
       this.disabledFlag = false;
       this.courseTitleValueId = '';
-      setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200)
+      setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200);
+      this.audioId = 0;
     },
     /*语音上传成功*/
     handleAudioSuccess (response, file, fileList) {
@@ -276,7 +279,7 @@ export default {
     },
     /*判断音频格式*/
     beforeAvatarUpload (file) {
-      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mpeg');
+      const isM4AMP3 = (file.type === 'audio/x-m4a' || file.type === 'audio/mp3');
       if (!isM4AMP3) {
         this.$message.error('上传音频只能是 m4a或mp3 格式!');
       }
@@ -301,7 +304,7 @@ export default {
       this.title = '编辑';
       this.chapter = row.chapter;
       this.section = row.section;
-      this.courseTitleValueId= row.problemId;
+      this.courseTitleValueId= this.searchCourseTitleValueId;
       this.disabledFlag = true;
       this.fileAudioUrl = row.audioUrl;
       setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.description) }, 200)
@@ -314,7 +317,7 @@ export default {
         };
         this.fileList[0] = rowL;
       }
-
+      this.audioId = row.audioId;
     },
     removeHtmlTags (str) {
       let newStr = _.trim(str)

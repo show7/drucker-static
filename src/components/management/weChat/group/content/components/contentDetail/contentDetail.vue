@@ -46,7 +46,7 @@
         <el-row>
           <el-col :span="12">
             <h4><span>*</span>所属群组</h4>
-            <el-select v-model="popOutCommunityId" placeholder="请选择" :disabled="editorFlag"
+            <el-select v-model="popOutCommunityId" placeholder="请选择" :disabled="(riseId && popOutCommunityId) ? true:false"
                        @change="popOutCommunityChange">
               <el-option
                 v-for="item in communityList"
@@ -58,7 +58,7 @@
           </el-col>
           <el-col :span="12">
             <h4><span>*</span>所属微信群</h4>
-            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="editorFlag">
+            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="(riseId && popOutWechatGroupId) ? true:false">
               <el-option
                 v-for="item in wechatGroupList"
                 :key="item.id"
@@ -190,7 +190,7 @@
         popOutTopicId: null, //话题id
         publish : -1, //是否发布
         picGroupList : [], //图片列表
-        communityList : [], //社群列表
+        communityList : [], //群组列表
         wechatGroupList : [], //微信群列表
         topicLabels : [], //话题列表
         imgList : [], //图片列表

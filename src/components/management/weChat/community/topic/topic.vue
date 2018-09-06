@@ -14,8 +14,8 @@
            </el-select>
          </el-col>
          <el-col :span="6">
-           <h4>社群</h4>
-           <el-select v-model="communityId" placeholder="请选择社群" @change="handleSelectCommunity">
+           <h4>群组</h4>
+           <el-select v-model="communityId" placeholder="请选择群组" @change="handleSelectCommunity">
              <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
            </el-select>
          </el-col>
@@ -47,7 +47,9 @@
        </el-row>
      </div>
      <div class="topic-content">
-       <el-button type="primary" @click="handleAddNew">新增</el-button>
+       <div class="add-box">
+         <el-button type="primary" @click="handleAddNew">新增</el-button>
+       </div>
        <!--table表格-->
        <el-table
          :data="topicList"
@@ -58,7 +60,7 @@
          </el-table-column>
          <el-table-column
            prop="communityName"
-           label="所属社群">
+           label="所属群组">
          </el-table-column>
          <el-table-column
            prop="description"
@@ -137,7 +139,7 @@
          <el-row>
            <el-col :span="4"><p>所属微信群</p></el-col>
            <el-col :span="20">
-             <el-select v-model="popGroupId" :disabled="disabledFlag" placeholder="请选择群组">
+             <el-select v-model="popGroupId" :disabled="disabledFlag" placeholder="请选择微信群">
              <el-option
                v-for="item in popGroupList"
                :key="item.id"
@@ -184,8 +186,8 @@
               dialogVisible:false,
               topicName:'',//话题名称  编辑和新增
               topicNameSearch:'',//搜索框的值  话题名称
-              communityList:[],//社群list
-              communityId:0,//社群id
+              communityList:[],//群组list
+              communityId:0,//群组id
               groupList:[{id:0,name:'全部'}],//群list
               groupId:0,
               pageIndex:1,
@@ -200,8 +202,8 @@
               },
               pageCount:null,//总页数
               topicList:[],//话题列表
-              popCommunityList:[],//社群list
-              popCommunityId:null,//社群id
+              popCommunityList:[],//群组list
+              popCommunityId:null,//群组id
               popGroupList:[],//群list
               popGroupId:null,
               topicDetail:'',//话题详情
@@ -212,7 +214,7 @@
             }
         },
         methods: {
-          /*获取社群、微信群、*/
+          /*获取群组、微信群、*/
           getGroup(){
             let self = this;
             apiDataFilter.request({
@@ -270,7 +272,7 @@
           /*新增编辑接口*/
           handleSend(){
             let self = this;
-            let param = {communityId:this.popCommunityId,groupId:this.popGroupId,name:this.topicName,
+            let param = {communityId:this.popCommunityId,groupId:this.popGroupId,originName:this.topicName,
               description:this.description,publish:this.publishRadio == 1 ? false:true
             };
             this.selectId ? Object.assign(param,{id:this.selectId}):'';
@@ -293,7 +295,7 @@
               this.handleSend();
             }
           },
-          /*社群选择*/
+          /*群组选择*/
           handleSelectCommunity(val){
             this.communityList.forEach((item,index)=>{
               if (val === item.id){
@@ -305,7 +307,7 @@
               }
             })
           },
-          /*选择弹框社群*/
+          /*选择弹框群组*/
           handleSelectPopCommunity(val){
             this.popCommunityList.forEach((item,index)=>{
               if (val === item.id){
@@ -337,7 +339,7 @@
           // 编辑
           handleEdit(index,row,flag){
             this.dialogVisible = true;
-            this.topicName = row.name;
+            this.topicName = row.originName;
             this.title=flag === 1 ? '编辑' : '详情';
             this.popCommunityId = row.communityId;
             this.popCommunityList.forEach((item,index)=> {

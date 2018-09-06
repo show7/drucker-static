@@ -7,7 +7,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default {
   'common':{
-    'group':'pc/wxmini/data/owner/group', //获取社群微信群
+    'group':'pc/wxmini/data/owner/group', //获取群组微信群
   },
   'groupManage': { // 群内容管理
     'groupList': 'pc/wxmini/content/page', //获取list
@@ -16,15 +16,15 @@ export default {
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
     'groupPublish': 'pc/wxmini/content/publish'//发布接口
   },
-  'community':{  //社群管理
+  'community':{  //群组管理
     'communityList':{
-      'list':'pc/wxmini/community/list',//社群list
+      'list':'pc/wxmini/community/list',//群组list
       'revise':'pc/wxmini/community/revise',//编辑和新增
       'publish':'pc/wxmini/community/publish',//发布
     },
     'groupList':{
       'list':'pc/wxmini/group/list',//群list
-      'infoList':'pc/wxmini/community/info',//社群列表
+      'infoList':'pc/wxmini/community/info',//群组列表
       'validgroup':'pc/wxmini/validgroup/list',//
       'addgroups':'pc/wxmini/community/addgroups',//添加群
       'revise':'pc/wxmini/group/revise',//完善信息

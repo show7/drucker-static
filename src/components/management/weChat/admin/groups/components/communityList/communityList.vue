@@ -3,7 +3,7 @@
       <div class="community-list-top">
         <el-row>
           <el-col :span="12">
-            <el-input v-model="searchName" placeholder="请输入内容社群名称"></el-input>
+            <el-input v-model="searchName" placeholder="请输入内容群组名称"></el-input>
           </el-col>
           <el-col :span="12">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
@@ -21,7 +21,7 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            label="社群名称">
+            label="群组名称">
           </el-table-column>
           <el-table-column
             prop="groupCount"
@@ -96,7 +96,7 @@
                   <img v-if="imageUrl" :src="imageUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <span class="size">备注：图片尺寸100*100</span>
+                <span class="size">备注：图片尺寸建议500*500</span>
               </el-col>
             </el-row>
             <el-row>
@@ -110,6 +110,12 @@
               <el-col :span="20">
                 <el-input type="textarea" v-model="groupDesc" maxlength="40" placeholder="请输入群组描述"></el-input>
                 <span class="size">备注：描述40字及以内 （剩余{{40 - groupDesc.length}}字）</span>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="4"><p>群组负责人riseId<span>*</span></p></el-col>
+              <el-col :span="20">
+                <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入负责人riseId"></el-input>
               </el-col>
             </el-row>
             <el-row>
@@ -137,7 +143,7 @@
 
         data() {
             return {
-              searchName:'',//社群搜索
+              searchName:'',//群组搜索
               title:'添加群组',
               dialogVisible:false,
               dialogVisiblePic:false,
@@ -149,6 +155,9 @@
               groupName:'',//群组名称
               groupDesc:'',//群组描述
               id:null,//编辑的条目id
+              riseId:'',
+              disabledFlag:false,
+              nickName:'无'
             }
         },
         methods: {
@@ -191,7 +200,10 @@
             this.groupDesc= '';
             this.radio = '0';
             this.id= null;
+            this.riseId='';
+            this.disabledFlag = false;
           },
+          /*编辑*/
           handleEdit(index,row){
             this.title = '编辑群组';
             this.dialogVisible = true;
@@ -200,10 +212,12 @@
             this.groupDesc= row.description;
             this.radio = row.publish ? '1' :'0';
             this.id= row.id;
+            this.riseId= row.riseId;
+            this.disabledFlag = this.riseId ? true:false;
           },
           /*确定新增和编辑*/
           handleConfor(){
-            if (!this.groupName || !this.groupDesc || !this.imageUrl) {
+            if (!this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId) {
               this.$message.error('请把信息填写完整');
             }else {
               this.sendAddData();
@@ -212,7 +226,7 @@
           /*新增和编辑接口*/
           sendAddData(){
             let self = this;
-            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl};
+            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl,riseId:this.riseId};
              this.id ? Object.assign(param,{id:this.id}):'';
              apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
