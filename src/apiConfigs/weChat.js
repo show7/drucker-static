@@ -21,6 +21,7 @@ export default {
       'list':'pc/wxmini/community/list',//群组list
       'revise':'pc/wxmini/community/revise',//编辑和新增
       'publish':'pc/wxmini/community/publish',//发布
+      'statistic':'pc/wxmini/community/statistic',//统计数据
     },
     'groupList':{
       'list':'pc/wxmini/group/list',//群list
