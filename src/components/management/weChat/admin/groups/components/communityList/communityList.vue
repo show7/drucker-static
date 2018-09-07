@@ -196,11 +196,10 @@
           },
 
           getCommunityCount(){
-            let self = this;
             apiDataFilter.request({
               apiPath:'weChat.community.communityList.statistic',
-              successCallback(res){
-                 self.communityCountList = res.msg || [];
+              successCallback:(res)=>{
+                 this.communityCountList = res.msg || [];
               }
             })
           },

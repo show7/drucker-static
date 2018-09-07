@@ -48,7 +48,9 @@
         </el-col>
         <el-col :span="4">
           <div class="data-box">
-            <p class="name">日活跃度</p>
+            <p class="name" v-if="latesValue == 1">日活跃度</p>
+            <p class="name" v-if="latesValue == 2">周活跃度</p>
+            <p class="name" v-if="latesValue == 3">月活跃度</p>
             <p class="score">{{wordsNu.activeRate}}%</p>
           </div>
         </el-col>
