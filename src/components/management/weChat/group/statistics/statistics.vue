@@ -26,7 +26,7 @@
       <el-row>
         <el-col :span="4">
           <div class="data-box">
-            <p class="name">社群人数</p>
+            <p class="name">群组人数</p>
             <p class="score">{{wordsNu.communityMember}}</p>
           </div>
         </el-col>
