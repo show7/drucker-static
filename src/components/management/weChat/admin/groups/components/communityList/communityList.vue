@@ -14,13 +14,13 @@
       <el-row>
         <el-col :span="6">
           <div class="data-box">
-            <p class="name">已发布数</p>
+            <p class="name">已发布群组数</p>
             <p class="score">{{communityCountList[0]}}</p>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="data-box">
-            <p class="name">未发布数</p>
+            <p class="name">未发布群组数</p>
             <p class="score">{{communityCountList[1]}}</p>
           </div>
         </el-col>
