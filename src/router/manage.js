@@ -22,6 +22,8 @@ const autoReply = () => import(/* webpackChunkName: "manage" */ '@/components/ma
 const subscribe = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/subscribe/subscribe') //服务号关注回复
 const coupon = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon') //创建优惠券
 
+const employee = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/employee/employee') //hr
+
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -39,5 +41,6 @@ export default [
   { path: 'social', name: 'social', component: social},
   { path: 'autoreply', name: 'autoReply', component: autoReply},
   { path: 'subscribe', name: 'subscribe', component: subscribe},
-  { path: 'coupon', name: 'coupon', component: coupon}
+  { path: 'coupon', name: 'coupon', component: coupon},
+  { path: 'employee', name: 'employee', component: employee},
 ]

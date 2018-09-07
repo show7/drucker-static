@@ -77,5 +77,10 @@ export default {
   'coupon': {
     'couponAdd': 'pc/operation/add/coupon', //添加优惠券
     'loadType': 'pc/operation/load/couponConfig'//优惠券类型
+  },
+  'employee':{
+    'list':'pc/operation/employee/list',//员工list
+    'add':'pc/operation/employee/add',//添加新员工
+    'del':'pc/operation/employee/del',//删除
   }
 }

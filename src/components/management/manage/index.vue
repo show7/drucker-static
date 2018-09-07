@@ -36,6 +36,7 @@
               <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
               <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
               <el-menu-item index="/management/manage/coupon">创建优惠券</el-menu-item>
+              <el-menu-item index="/management/manage/employee">人事管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3">
