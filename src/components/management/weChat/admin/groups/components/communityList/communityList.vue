@@ -11,6 +11,21 @@
           </el-col>
         </el-row>
       </div>
+      <el-row>
+        <el-col :span="6">
+          <div class="data-box">
+            <p class="name">已发布群组数</p>
+            <p class="score">{{communityCountList[0]}}</p>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="data-box">
+            <p class="name">未发布群组数</p>
+            <p class="score">{{communityCountList[1]}}</p>
+          </div>
+        </el-col>
+      </el-row>
+
       <div class="community-list-content">
         <div class="button-box">
           <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -36,6 +51,9 @@
                 <p class="description">{{scope.row.description}}</p>
               </div>
             </template>
+          </el-table-column>
+          <el-table-column prop="communityMembers"
+                           label="群组人数">
           </el-table-column>
           <el-table-column
             prop="publish"
@@ -150,6 +168,7 @@
               imageUrl: '',
               radio:'0',
               communityList:[],//列表
+              communityCountList:[],//数量列表
               page:1,//页码
               pageCount:null,//总页码
               groupName:'',//群组名称
@@ -175,6 +194,16 @@
               }
             })
           },
+
+          getCommunityCount(){
+            apiDataFilter.request({
+              apiPath:'weChat.community.communityList.statistic',
+              successCallback:(res)=>{
+                 this.communityCountList = res.msg || [];
+              }
+            })
+          },
+
           /*搜索按钮*/
           handleSearch(){
             this.page=1;
@@ -275,6 +304,7 @@
         },
       created() {
         this.getCommunityList()
+        this.getCommunityCount()
       }
     }
 </script>
