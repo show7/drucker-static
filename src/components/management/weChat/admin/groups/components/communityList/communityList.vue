@@ -53,7 +53,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="communityMembers"
-                           label="社群人数">
+                           label="群组人数">
           </el-table-column>
           <el-table-column
             prop="publish"
