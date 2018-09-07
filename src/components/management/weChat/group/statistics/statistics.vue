@@ -32,13 +32,17 @@
         </el-col>
         <el-col :span="4">
           <div class="data-box">
-            <p class="name">日发言数</p>
+            <p class="name" v-if="latesValue == 1">日发言数</p>
+            <p class="name" v-if="latesValue == 2">周发言数</p>
+            <p class="name" v-if="latesValue == 3">月发言数</p>
             <p class="score">{{wordsNu.dailyChatCount}}</p>
           </div>
         </el-col>
         <el-col :span="4">
           <div class="data-box">
-            <p class="name">日活跃人数</p>
+            <p class="name" v-if="latesValue == 1">日活跃人数</p>
+            <p class="name" v-if="latesValue == 2">周活跃人数</p>
+            <p class="name" v-if="latesValue == 3">月活跃人数</p>
             <p class="score">{{wordsNu.dailyChatMember}}</p>
           </div>
         </el-col>
