@@ -5,6 +5,7 @@
      <div class="certificate-select">
        <el-row>
          <el-col :span="6">
+           <h4>证书年份</h4>
            <el-select v-model="certificateYear" placeholder="请选择证书年份">
              <el-option
                v-for="item in certificateYearList"
@@ -15,6 +16,7 @@
            </el-select>
          </el-col>
          <el-col :span="6">
+           <h4>证书月份</h4>
            <el-select v-model="certificateMonth" placeholder="请选择证书月份">
              <el-option
                v-for="item in certificateMonthList"
@@ -25,6 +27,7 @@
            </el-select>
          </el-col>
          <el-col :span="6">
+           <h4>学习项目</h4>
            <el-select v-model="certificateProject" placeholder="请选择生成学习项目">
              <el-option
                v-for="item in certificateProjectList"
@@ -35,6 +38,7 @@
            </el-select>
          </el-col>
          <el-col :span="6">
+           <h4>身份类型</h4>
            <el-select v-model="certificateIdentity" placeholder="请选择身份类型">
              <el-option
                v-for="item in certificateIdentityList"
@@ -45,15 +49,42 @@
            </el-select>
          </el-col>
        </el-row>
-       <div class="button-submit">
-         <el-input
-           type="textarea"
-           :autosize="{ minRows: 2, maxRows: 4}"
-           placeholder="请输入学号，换行区分"
-           v-model="textareaValue">
-         </el-input>
-         <el-button type="primary" plain  @click="dialogVisible = true">主要按钮</el-button>
-       </div>
+       <el-row>
+         <el-col :span="6">
+           <h4>选择小课</h4>
+           <el-select v-model="courseTitleValue" placeholder="请选择小课">
+             <el-option
+               v-for="item in courseTitleList"
+               :key="item.id"
+               :label="item.abbreviation"
+               :value="item.id">
+             </el-option>
+           </el-select>
+         </el-col>
+         <el-col :span="6">
+           <h4>选择学员查找方式</h4>
+           <el-select v-model="profileSearchTypeId" placeholder="请选择小课">
+             <el-option
+               v-for="item in ProfileSearchType"
+               :key="item.id"
+               :label="item.name"
+               :value="item.id">
+             </el-option>
+           </el-select>
+         </el-col>
+         <el-col :span="12">
+           <div class="button-submit">
+             <el-input
+               type="textarea"
+               :autosize="{ minRows: 2, maxRows: 4}"
+               :placeholder="profileSearchTypeId == 1 ? '请输入学号，换行区分':'请输入圈外 id，换行区分'"
+               v-model="textareaValue">
+             </el-input>
+             <el-button type="primary" plain  @click="dialogVisible = true">点击提交</el-button>
+           </div>
+         </el-col>
+       </el-row>
+
      </div>
 
      <el-dialog
@@ -92,10 +123,23 @@ export default {
         {id: 7, name: '优秀班委'}
       ],
       textareaValue: '',
-      dialogVisible: false
+      dialogVisible: false,
+      courseTitleList:[],
+      courseTitleValue:'',
+      ProfileSearchType:[{id:1,name:'学号'},{id:2,name:'圈外 id'}],
+      profileSearchTypeId:1,
     }
   },
   methods: {
+    // 获取小课名称列表
+    getData () {
+      ApiDataFilter.request({
+        apiPath: 'common.simple',
+        successCallback :(res)=> {
+          this.courseTitleList = res.msg;
+        }
+      });
+    },
     getYearList () {
       let date = new Date();
       let year = date.getFullYear() - 2;
@@ -111,15 +155,18 @@ export default {
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
-      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && this.textareaValue) {
-        let param = { year: this.certificateYear, month: this.certificateMonth, type: this.certificateIdentity, memberTypeId: this.certificateProject, memberIds: memberIds, problemId: -1 };
+      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && this.textareaValue && this.courseTitleValue) {
+        let param = { year: this.certificateYear, month: this.certificateMonth, type: this.certificateIdentity,
+          memberTypeId: this.certificateProject, problemId:this.courseTitleValue,
+          profileSearchType: this.profileSearchTypeId,};
+        this.profileSearchTypeId == 1 ? Object.assign(param,{memberIds: memberIds}):Object.assign(param,{riseIds: memberIds})
         ApiDataFilter.request({
           apiPath: 'manage.certificate',
           method: 'post',
           data: param,
           successCallback (res) {
             self.dialogVisible = false;
-            self.$message.success('恭喜你，这是一条成功消息');
+            self.$message.success('恭喜你，提交成功');
           }
         })
       } else {
@@ -129,6 +176,7 @@ export default {
   },
   created () {
     this.getYearList();
+    this.getData();
   }
 }
 </script>

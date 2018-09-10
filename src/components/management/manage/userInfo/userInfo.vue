@@ -35,6 +35,10 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  prop="riseId"
+                  label="riseId">
+                </el-table-column>
+                <el-table-column
                   prop="nickname"
                   label="昵称">
                 </el-table-column>

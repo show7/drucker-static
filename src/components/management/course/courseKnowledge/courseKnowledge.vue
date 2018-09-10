@@ -64,7 +64,7 @@
         <el-row>
           <el-col :span="12">
             <p>章节</p>
-            <el-select v-model="chapterId" placeholder="请选择小课标题" :disabled="disabledFlag" @change="handleChangeChapter">
+            <el-select v-model="chapterId" placeholder="请选择章节" :disabled="disabledFlag" @change="handleChangeChapter">
               <el-option
                 v-for="item in chapterInfos"
                 :key="item.chapter"
@@ -220,7 +220,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
        <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
-       <el-button type="primary" @click="handleComplet">完 成</el-button>
+       <el-button type="primary" @click="handleComplet">关 闭</el-button>
      </span>
     </el-dialog>
   </div>
