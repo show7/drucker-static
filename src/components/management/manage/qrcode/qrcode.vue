@@ -21,14 +21,18 @@
               <div class="nickname-url">
                 <p>预置变量：{nickname} 昵称,{url}跳转链接 例如：你好，{nickanme}即将跳转到: {url}</p>
                 <el-input class="required" placeholder="请输入关注文案" v-model="ruleList[index].content" clearable></el-input>
-                <el-input class="required" placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
               </div>
             </el-col>
             <el-col :span="12">
-              <div class="nickname-url" v-if="index != 0">
+              <div class="nickname-url">
+                <p>{url}跳转链接</p>
+                <el-input  placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
+              </div>
+
+             <!-- <div class="nickname-url" v-if="index != 0">
                 <p>3-核心能力，5-专项课，8-商业思维；例如：3,5</p>
                 <el-input placeholder="请输入会员类型Id,用英文逗号隔开" v-model="ruleList[index].memberTypeIds" clearable></el-input>
-              </div>
+              </div>-->
             </el-col>
           </el-row>
           <el-button v-if="index != 0" type="primary" icon="el-icon-delete" @click="handleDel(index)">删除</el-button>
@@ -63,7 +67,7 @@ export default {
     return {
       remark: '', //中文活动名称
       scene: '', //英文活动名称
-      ruleList: [{memberTypeIds: '', link: '', content: ''}],
+      ruleList: [{ link: '', content: ''}],
       qrCodeObj: {
         link: '',
         qrCode: ''
@@ -73,7 +77,7 @@ export default {
   },
   methods: {
     handleAdd () {
-      let ruleItem = {memberTypeIds: '', link: '', content: ''}
+      let ruleItem = { link: '', content: ''}
       this.ruleList.push(ruleItem)
     },
     handleDel (index) {
@@ -90,7 +94,7 @@ export default {
       }
       let ruleList = [];
       this.ruleList.forEach((item, index) => {
-        if (!item.link || !item.content) {
+        if (!item.content) {
           ruleList.push(item)
         }
       });
