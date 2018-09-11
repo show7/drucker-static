@@ -30,8 +30,7 @@ router.beforeEach((to, from, next) => {
           next({path: from.path})
         } else {
           alert('抱歉，当前页面无权访问');
-          window.location.href = '/403.jsp';
-          next()
+          next({path: '/'})
         }
       }
     }

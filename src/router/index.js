@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import management from '@/components/management/index'
+import welcome from '@/components/welcome/welcome'
 import courseRouter from './course'
 import managerRouter from './manage'
 import wechatRouter from './weChat'
 import steveRouter from './steve'
 
 /*课程路由*/
-const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index')
+const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index');
 
 /*运营路由*/
 const manage = () => import(/* webpackChunkName: "manage" */'@/components/management/manage/index');
@@ -54,9 +55,16 @@ export default new Router({
           name: 'steve',
           component: steve,
           children: steveRouter
+        },
+        {
+          path: '/',
+          name: 'welcome',
+          component: welcome,
         }
       ]
-    }
+    },
+    {path: '/', redirect: 'management'},
+    {path:'*',redirect: 'management'}
   ]
 })
 
