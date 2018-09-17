@@ -15,9 +15,15 @@
           </el-select>
         </el-col>
         <el-col :span="6">
+          <h4>标题</h4>
+          <el-input placeholder="请输入用户搜索标题" v-model="searchTitle" clearable></el-input>
+        </el-col>
+        <el-col :span="6">
           <h4>内容</h4>
           <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
         </el-col>
+      </el-row>
+      <el-row class="second-line">
         <el-col :span="6">
           <h4>群组（清除查询全部）</h4>
           <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
@@ -25,8 +31,6 @@
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-col>
-      </el-row>
-      <el-row class="second-line">
         <el-col :span="6">
           <h4>微信群（清除查询全部）</h4>
           <el-select v-model="wechatGroupId" placeholder="请选择微信群" :clearable="true" @clear="Clear(2)">
@@ -204,6 +208,7 @@
         showDetail : false,  //展示修改弹窗
         showInfo : false,  //展示详情弹窗
         queryAccount: null, //搜索的昵称
+        searchTitle: null, //搜索标题
         searchContent: null, // 搜索内容
         statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
         statusId: null, //状态id
@@ -269,6 +274,7 @@
           createEndTime: this.createTime != null ? this.createTime[ 1 ] : null,
           publishStartTime: this.publishTime != null ? this.publishTime[ 0 ] : null,
           publishEndTime: this.publishTime != null ? this.publishTime[ 1 ] : null,
+          searchTitle: this.searchTitle != null ? this.searchTitle : null,
           searchContent: this.searchContent ? this.searchContent : null,
           labelId: this.topicId ? this.topicId : this.shareId,
           page: { pageSize: 10, page: this.pageIndex }
@@ -336,6 +342,7 @@
         this.shareId = null;
         this.topicLabels = [];
         this.shareLabels = [];
+        this.searchTitle = null;
         this.searchContent = null;
         this.groupSearch();
       },
