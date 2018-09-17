@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://beta.confucius.mobi',
+        target: 'http://localhost:8091',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
