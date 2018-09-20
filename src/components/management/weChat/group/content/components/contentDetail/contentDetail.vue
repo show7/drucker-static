@@ -207,23 +207,9 @@
         categoryId : null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
-        categoryList : [
-          {
-            "id":1,
-            "name":"话题",
-          },
-          {
-            "id":2,
-            "name":"分享",
-          },
-          {
-            "id":3,
-            "name":"文章",
-          }
-        ]
       }
     },
-    props: ['editorFlag', 'detail'],
+    props: ['editorFlag', 'detail','categoryList'],
     methods: {
       /*新增状态下查询*/
       getAdd() {

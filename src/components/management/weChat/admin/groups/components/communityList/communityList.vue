@@ -52,8 +52,17 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="communityMembers"
-                           label="群组人数">
+          <el-table-column
+            prop="communityMembers"
+             label="群组人数">
+          </el-table-column>
+          <el-table-column
+            prop="joinMembers"
+            label="入群群人数">
+          </el-table-column>
+          <el-table-column
+            prop="subscribeMembers"
+            label="关注群人数">
           </el-table-column>
           <el-table-column
             prop="publish"
@@ -131,6 +140,20 @@
               </el-col>
             </el-row>
             <el-row>
+              <el-col :span="4"><p>入群文案<span>*</span></p></el-col>
+              <el-col :span="20">
+                <el-input type="textarea" v-model="joinTips" maxlength="30" placeholder="请输入入群文案"></el-input>
+                <span class="size">备注：描述30字及以内 （剩余{{30 - joinTips.length}}字）</span>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="4"><p>打卡文案<span>*</span></p></el-col>
+              <el-col :span="20">
+                <el-input type="textarea" v-model="tips" maxlength="18" placeholder="请输入群组tips"></el-input>
+                <span class="size">备注：描述18字及以内 （剩余{{18 - tips.length}}字）</span>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="4"><p>群组负责人riseId<span>*</span></p></el-col>
               <el-col :span="20">
                 <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入负责人riseId"></el-input>
@@ -176,7 +199,9 @@
               id:null,//编辑的条目id
               riseId:'',
               disabledFlag:false,
-              nickName:'无'
+              nickName:'无',
+              tips:'', //打卡文案
+              joinTips:'',//入群文案
             }
         },
         methods: {
@@ -230,6 +255,8 @@
             this.radio = '0';
             this.id= null;
             this.riseId='';
+            this.tips = '';
+            this.joinTips = '',
             this.disabledFlag = false;
           },
           /*编辑*/
@@ -242,11 +269,13 @@
             this.radio = row.publish ? '1' :'0';
             this.id= row.id;
             this.riseId= row.riseId;
+            this.tips = row.tips;
+            this.joinTips = row.joinTips || '';
             this.disabledFlag = this.riseId ? true:false;
           },
           /*确定新增和编辑*/
           handleConfor(){
-            if (!this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId) {
+            if (!this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId || !this.tips || !this.joinTips) {
               this.$message.error('请把信息填写完整');
             }else {
               this.sendAddData();
@@ -255,7 +284,8 @@
           /*新增和编辑接口*/
           sendAddData(){
             let self = this;
-            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),image:this.imageUrl,riseId:this.riseId};
+            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),
+              joinTips:this.joinTips,tips:this.tips, image:this.imageUrl,riseId:this.riseId};
              this.id ? Object.assign(param,{id:this.id}):'';
              apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
