@@ -14,7 +14,9 @@ export default {
     'groupSearch': 'pc/wxmini/content/list', //搜索接口
     'getMember': 'pc/wxmini/member', //获取用户信息
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
-    'groupPublish': 'pc/wxmini/content/publish'//发布接口
+    'groupPublish': 'pc/wxmini/content/publish',//发布接口
+    'category':'pc/wxmini/load/category',//加载分类
+    'recommend':'pc/wxmini/content/recommend',//更改推荐状态
   },
   'community':{  //群组管理
     'communityList':{
@@ -41,5 +43,6 @@ export default {
     'topicList':'pc/wxmini/topic/list',//话题list
     'modify':'pc/wxmini/topic/modify',//话题新增和编辑
     'publish':'pc/wxmini/data/publish/topic',//发布
+    'recommend':'pc/wxmini/data/recommend/topic',//推荐
   }
 }

@@ -46,8 +46,7 @@
         <el-row>
           <el-col :span="12">
             <h4><span>*</span>所属群组</h4>
-            <el-select v-model="popOutCommunityId" placeholder="请选择" :disabled="(riseId && popOutCommunityId) ? true:false"
-                       @change="popOutCommunityChange">
+            <el-select v-model="popOutCommunityId" placeholder="请选择" @change="popOutCommunityChange">
               <el-option
                 v-for="item in communityList"
                 :key="item.id"
@@ -58,7 +57,7 @@
           </el-col>
           <el-col :span="12">
             <h4><span>*</span>所属微信群</h4>
-            <el-select v-model="popOutWechatGroupId" placeholder="请选择" :disabled="(riseId && popOutWechatGroupId) ? true:false">
+            <el-select v-model="popOutWechatGroupId" placeholder="请选择">
               <el-option
                 v-for="item in wechatGroupList"
                 :key="item.id"
@@ -207,23 +206,9 @@
         categoryId : null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
-        categoryList : [
-          {
-            "id":1,
-            "name":"话题",
-          },
-          {
-            "id":2,
-            "name":"分享",
-          },
-          {
-            "id":3,
-            "name":"文章",
-          }
-        ]
       }
     },
-    props: ['editorFlag', 'detail'],
+    props: ['editorFlag', 'detail','categoryList'],
     methods: {
       /*新增状态下查询*/
       getAdd() {
@@ -327,6 +312,10 @@
         if(this.description && this.categoryId === 3){
           if(this.description.split('\n').length>2){
             this.$message.error('摘要不能超过2行');
+            return
+          }
+          if(this.description.length>36){
+            this.$message.error('摘要不能超过36字');
             return
           }
         }

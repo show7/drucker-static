@@ -97,6 +97,10 @@
                size="mini"
                @click="handlePublish(scope.row)">发布
              </el-button>
+             <el-button
+               size="mini"
+               @click="groupPriority(scope.row.publish,scope.row.id,scope.row.priority)">{{scope.row.priority ? '取消推荐':'推荐'}}
+             </el-button>
            </template>
          </el-table-column>
        </el-table>
@@ -370,7 +374,24 @@
             this.dataTimeValue = null;
             this.handleSelectCommunity(0);
             this.getTopicList();
-          }
+          },
+          /*推荐和取消推荐*/
+          groupPriority(publish,id,priority){
+            if (!publish){
+              this.$message.info('发布之后才能推荐哦！')
+              return;
+            }
+            let param = {topicId:id,status:!priority};
+            apiDataFilter.request({
+              apiPath:'weChat.topic.recommend',
+              method:'post',
+              data:param,
+              successCallback:(res)=>{
+                this.$message.success('操作成功');
+                this.getTopicList();
+              }
+            })
+          },
         },
         created() {
           this.getGroup();

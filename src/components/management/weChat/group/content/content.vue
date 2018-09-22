@@ -52,7 +52,18 @@
         </el-col>
       </el-row>
       <el-row class="second-line">
-        <el-col :span="9">
+        <el-col :span="4">
+          <h4>分类</h4>
+          <el-select v-model="categoryId" placeholder="请选择">
+            <el-option
+              v-for="item in categoryList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
           <h4>创建时间</h4>
           <el-date-picker
             v-model="createTime"
@@ -65,7 +76,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="8">
           <h4>发布时间</h4>
           <el-date-picker
             v-model="publishTime"
@@ -78,7 +89,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col :span="5" class="buttons">
+        <el-col :span="4" class="buttons">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
@@ -102,11 +113,8 @@
           label="用户昵称">
         </el-table-column>
         <el-table-column
-          prop="labelCategory"
+          prop="category"
           label="分类">
-          <template slot-scope="scope">
-            <p>{{findCategory(scope.row.labelCategory)}}</p>
-          </template>
         </el-table-column>
         <el-table-column
           prop="communityName"
@@ -149,7 +157,7 @@
               ? '已发布':scope.row.publishStatus == 0 ? '未修改':'已修改'}}</p>
           </template>
         </el-table-column>
-        <el-table-column width="300" fixed="right" label="操作">
+        <el-table-column width="350" fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -163,6 +171,10 @@
               v-if="scope.row.publishStatus != 1"
               size="mini"
               @click="groupPublish([scope.row.esChatId])">发布
+            </el-button>
+            <el-button
+              size="mini"
+              @click="groupPriority(scope.row.labelCategory,scope.row.publishStatus,scope.row.esChatId,scope.row.priority)">{{scope.row.priority ? '取消推荐':'推荐'}}
             </el-button>
           </template>
         </el-table-column>
@@ -178,7 +190,9 @@
         </el-pagination>
       </div>
     </div>
-    <ContentDetail v-if="showDetail" @closeDialog="handleGet" @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
+    <ContentDetail v-if="showDetail" @closeDialog="handleGet"
+                   :categoryList="categoryList"
+                   @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
     <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
   </div>
 </template>
@@ -189,6 +203,7 @@
   import ContentDetail from './components/contentDetail/contentDetail'
   import ContentInfo from './components/contentInfo/contentInfo'
   import _ from 'lodash'
+  import apiDataFilter from "../../../../../libraries/apiDataFilter";
 
   export default {
     name: 'group',
@@ -238,6 +253,8 @@
           }
         },
         detail: {}, // 内容详情
+        categoryList:[],//分类列表
+        categoryId:null
       }
     },
     methods: {
@@ -277,6 +294,7 @@
           searchTitle: this.searchTitle != null ? this.searchTitle : null,
           searchContent: this.searchContent ? this.searchContent : null,
           labelId: this.topicId ? this.topicId : this.shareId,
+          labelCategory:this.categoryId ? this.categoryId:null,
           page: { pageSize: 10, page: this.pageIndex }
         };
         this.groupList = [];
@@ -344,6 +362,7 @@
         this.shareLabels = [];
         this.searchTitle = null;
         this.searchContent = null;
+        this.categoryId = null;
         this.groupSearch();
       },
       /*得到当前页数*/
@@ -361,20 +380,6 @@
               this.checkbox.splice(index, 1)
             }
           })
-        }
-      },
-      /*转译分类*/
-      findCategory: function (categoryId) {
-        if(categoryId){
-          if(categoryId === 1){
-            return '话题'
-          }else if(categoryId === 2){
-            return '分享'
-          }else if(categoryId === 3){
-            return '文章'
-          }
-        }else{
-          return '无'
         }
       },
       /*发布*/
@@ -476,11 +481,43 @@
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
+        this.pageIndex = 1;
         this.getGroupList();
+      },
+      /*推荐和取消推荐*/
+      groupPriority(labelCategory, publishStatus, id, priority){
+        if (labelCategory == 1){
+          this.$message.info('话题观点暂不能推荐～')
+          return;
+        }
+        if (publishStatus != 1){
+          this.$message.info('发布之后才能推荐哦！')
+          return;
+        }
+        let param = {esId:id,status:!priority};
+        apiDataFilter.request({
+          apiPath:'weChat.groupManage.recommend',
+          method:'post',
+          data:param,
+          successCallback:(res)=>{
+            this.$message.success('操作成功');
+            this.groupSearch();
+          }
+        })
+      },
+       /*获取分类*/
+      getCategory(){
+       apiDataFilter.request({
+         apiPath:'weChat.groupManage.category',
+         successCallback:(res)=>{
+            this.categoryList = res.msg;
+         }
+       })
       }
     },
     created() {
-      this.getGroupList()
+      this.getGroupList();
+      this.getCategory();
     },
   }
 </script>
