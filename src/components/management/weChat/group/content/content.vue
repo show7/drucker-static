@@ -113,11 +113,8 @@
           label="用户昵称">
         </el-table-column>
         <el-table-column
-          prop="labelCategory"
+          prop="category"
           label="分类">
-          <template slot-scope="scope">
-            <p>{{findCategory(scope.row.labelCategory)}}</p>
-          </template>
         </el-table-column>
         <el-table-column
           prop="communityName"
@@ -383,20 +380,6 @@
               this.checkbox.splice(index, 1)
             }
           })
-        }
-      },
-      /*转译分类*/
-      findCategory: function (categoryId) {
-        if(categoryId){
-          if(categoryId === 1){
-            return '话题'
-          }else if(categoryId === 2){
-            return '分享'
-          }else if(categoryId === 3){
-            return '文章'
-          }
-        }else{
-          return '无'
         }
       },
       /*发布*/
