@@ -174,7 +174,7 @@
             </el-button>
             <el-button
               size="mini"
-              @click="groupPriority(scope.row.publishStatus,scope.row.esChatId,scope.row.priority)">{{scope.row.priority ? '取消推荐':'推荐'}}
+              @click="groupPriority(scope.row.labelCategory,scope.row.publishStatus,scope.row.esChatId,scope.row.priority)">{{scope.row.priority ? '取消推荐':'推荐'}}
             </el-button>
           </template>
         </el-table-column>
@@ -481,10 +481,15 @@
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
+        this.pageIndex = 1;
         this.getGroupList();
       },
       /*推荐和取消推荐*/
-      groupPriority(publishStatus,id,priority){
+      groupPriority(labelCategory, publishStatus, id, priority){
+        if (labelCategory == 1){
+          this.$message.info('话题观点暂不能推荐～')
+          return;
+        }
         if (publishStatus != 1){
           this.$message.info('发布之后才能推荐哦！')
           return;
