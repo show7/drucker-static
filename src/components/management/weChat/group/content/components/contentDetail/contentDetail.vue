@@ -314,6 +314,10 @@
             this.$message.error('摘要不能超过2行');
             return
           }
+          if(this.description.length>36){
+            this.$message.error('摘要不能超过36字');
+            return
+          }
         }
         if(!this.title && this.categoryId === 3) {
           this.$message.error('请输入文章标题');
