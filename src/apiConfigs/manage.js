@@ -82,5 +82,8 @@ export default {
     'list':'pc/operation/employee/list',//员工list
     'add':'pc/operation/employee/add',//添加新员工
     'del':'pc/operation/employee/del',//删除
+  },
+  'customerMessage':{
+    'send':'pc/operation/send/customer/msg', //发送客服消息
   }
 }
