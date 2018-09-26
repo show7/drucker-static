@@ -35,6 +35,7 @@
             <p class="name" v-if="latesValue == 1">日发言数</p>
             <p class="name" v-if="latesValue == 2">周发言数</p>
             <p class="name" v-if="latesValue == 3">月发言数</p>
+            <p class="name" v-if="latesValue == 4">昨日发言数</p>
             <p class="score">{{wordsNu.dailyChatCount}}</p>
           </div>
         </el-col>
@@ -43,6 +44,7 @@
             <p class="name" v-if="latesValue == 1">日活跃人数</p>
             <p class="name" v-if="latesValue == 2">周活跃人数</p>
             <p class="name" v-if="latesValue == 3">月活跃人数</p>
+            <p class="name" v-if="latesValue == 4">昨日活跃人数</p>
             <p class="score">{{wordsNu.dailyChatMember}}</p>
           </div>
         </el-col>
@@ -51,6 +53,7 @@
             <p class="name" v-if="latesValue == 1">日活跃度</p>
             <p class="name" v-if="latesValue == 2">周活跃度</p>
             <p class="name" v-if="latesValue == 3">月活跃度</p>
+            <p class="name" v-if="latesValue == 4">昨日活跃度</p>
             <p class="score">{{wordsNu.activeRate}}%</p>
           </div>
         </el-col>
@@ -146,7 +149,7 @@
     data() {
       return {
         dialogVisible:false,
-        latesList:[{id:1,name:'今日'},{id:2,name:'最近七日'},{id:3,name:'最近30日'}],
+        latesList:[{id:1,name:'今日'},{id:4,name:'昨日'},{id:2,name:'最近七日'},{id:3,name:'最近30日'}],
         latesValue: 1,//近期统计选取值
         communityList:[],//群组list
         communityId:0,//群组id
