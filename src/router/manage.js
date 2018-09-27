@@ -21,6 +21,7 @@ const social = () => import(/* webpackChunkName: "manage" */ '@/components/manag
 const autoReply = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/autoReply/autoReply') //服务号自动回复
 const subscribe = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/subscribe/subscribe') //服务号关注回复
 const coupon = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon') //创建优惠券
+const customerMessage = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/customerMessage/customerMessage') //客服消息
 
 const employee = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/employee/employee') //hr
 
@@ -43,4 +44,5 @@ export default [
   { path: 'subscribe', name: 'subscribe', component: subscribe},
   { path: 'coupon', name: 'coupon', component: coupon},
   { path: 'employee', name: 'employee', component: employee},
+  { path: 'customermessage', name: 'customerMessage', component: customerMessage},
 ]

@@ -20,6 +20,7 @@
               <el-menu-item index="/management/manage/certificate">添加证书</el-menu-item>
               <el-menu-item index="/management/manage/certificatesend">证书发送</el-menu-item>
               <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
+              <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
               <el-menu-item index="/management/manage/addvip">添加vip会员</el-menu-item>
               <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
               <el-menu-item index="/management/manage/application">申请审批</el-menu-item>
