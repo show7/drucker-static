@@ -191,8 +191,8 @@ export default {
           self.activitiesList = res.msg;
           if (res.msg.length > 0) {
             res.msg.forEach((item, index) => {
-              self.activitiesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
-              self.activitiesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
+              self.activitiesList[index].startTimeString = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
+              self.activitiesList[index].endTimeString = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
             })
           }
           self.currentChange(1)

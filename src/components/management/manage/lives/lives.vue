@@ -17,11 +17,11 @@
              label="主讲人">
            </el-table-column>
            <el-table-column
-             prop="startTime"
+             prop="startTimeString"
              label="开始时间">
            </el-table-column>
            <el-table-column
-             prop="endTime"
+             prop="endTimeString"
              label="结束时间">
            </el-table-column>
            <el-table-column
@@ -214,8 +214,8 @@ export default {
           self.livesList = res.msg;
           if (res.msg.length > 0) {
             res.msg.forEach((item, index) => {
-              self.livesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
-              self.livesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
+              self.livesList[index].startTimeString = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
+              self.livesList[index].endTimeString = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
             })
           }
           self.currentChange(1)
