@@ -4,6 +4,7 @@
     <div class="send-top">
       <el-row>
         <el-col :span="8">
+          <p>证书年份</p>
           <el-select v-model="certificateYear" placeholder="请选择证书年份">
             <el-option
               v-for="item in certificateYearList"
@@ -14,6 +15,7 @@
           </el-select>
         </el-col>
         <el-col :span="8">
+          <p>证书月份</p>
           <el-select v-model="certificateMonth" placeholder="请选择证书月份">
             <el-option
               v-for="item in certificateMonthList"
@@ -24,6 +26,7 @@
           </el-select>
         </el-col>
         <el-col :span="8">
+          <p>生成学习项目</p>
           <el-select v-model="certificateProject" placeholder="请选择生成学习项目">
             <el-option
               v-for="item in certificateProjectList"
@@ -36,7 +39,6 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-button type="primary" @click="handleShowtitle(0)">生成证书</el-button>
           <el-button type="primary" @click="handleShowtitle(1)">发送证书</el-button>
           <el-button type="primary" @click="handleShowtitle(2)">发送全勤奖</el-button>
          </el-col>
@@ -62,14 +64,14 @@ export default {
   name: 'certificateSend',
   data () {
     return {
-      certificateYear: '', // 请选择证书年份
+      certificateYear: 2018, // 请选择证书年份
       certificateYearList: [], //证书年份list
-      certificateMonth: '', // 请选择证书月份
+      certificateMonth: 1, // 请选择证书月份
       certificateMonthList: [], // 月份list
       certificateProject: '', //请选择生成学习项目
-      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 8, name: '商业思维项目'}, {id: 12, name: 'L1项目项目'}, {
+      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 8, name: '商业思维项目'}, {id: 12, name: 'L1项目'}, {
         id: 10,
-        name: 'L2项目项目'
+        name: 'L2项目'
       }], //项目list
       dialogVisible: false,
       title: '',
@@ -116,6 +118,10 @@ export default {
     },
     /*发送数据*/
     handleSendData () {
+      if (!this.certificateProject){
+        this.$message.error('请选择项目');
+        return
+      }
       if (this.index === 0) {
         this.certificate('manage.certificateSend.generateCertificate')
       } else if (this.index === 1) {

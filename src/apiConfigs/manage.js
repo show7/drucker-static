@@ -40,28 +40,28 @@ export default {
     'surveyConfig': 'pc/operation/survey/config' //修改新增问卷
   },
   'home': { // 首页banner变价
-    'bannersList': 'backend/flow/banners', //获取banner列表
-    'bannerInsert': 'backend/flow/banner/insert', //插入一条banner
-    'bannerUpdate': 'backend/flow/banner/update', //更新banner
-    'bannerDelete': 'backend/flow/delete/banner' //删除banner
+    'bannersList': 'pc/operation/flow/banners', //获取banner列表
+    'bannerInsert': 'pc/operation/flow/banner/insert', //插入一条banner
+    'bannerUpdate': 'pc/operation/flow/banner/update', //更新banner
+    'bannerDelete': 'pc/operation/flow/delete/banner' //删除banner
   },
   'lives': { //直播内容编辑
-    'livesList': 'backend/flow/lives', //直播内容list
-    'livesInsert': 'backend/flow/lives/insert', //插入
-    'livesUpdate': 'backend/flow/lives/update', //更新
-    'livesDelete': 'backend/flow/delete/lives' //删除
+    'livesList': 'pc/operation/flow/lives', //直播内容list
+    'livesInsert': 'pc/operation/flow/lives/insert', //插入
+    'livesUpdate': 'pc/operation/flow/lives/update', //更新
+    'livesDelete': 'pc/operation/flow/delete/lives' //删除
   },
   'activities': { //线下活动编辑
-    'activitiesList': 'backend/flow/activities', //线下活动list
-    'activitiesInsert': 'backend/flow/activities/insert', //插入
-    'activitiesUpdate': 'backend/flow/activities/update', //更新
-    'activitiesDelete': 'backend/flow/delete/activities' //删除
+    'activitiesList': 'pc/operation/flow/activities', //线下活动list
+    'activitiesInsert': 'pc/operation/flow/activities/insert', //插入
+    'activitiesUpdate': 'pc/operation/flow/activities/update', //更新
+    'activitiesDelete': 'pc/operation/flow/delete/activities' //删除
   },
   'articles': { //文章
-    'articlesList': 'backend/flow/articles', //线下活动list
-    'articlesInsert': 'backend/flow/articles/insert', //插入
-    'articlesUpdate': 'backend/flow/articles/update', //更新
-    'articlesDelete': 'backend/flow/delete/articles' //删除
+    'articlesList': 'pc/operation/flow/articles', //线下活动list
+    'articlesInsert': 'pc/operation/flow/article/insert', //插入
+    'articlesUpdate': 'pc/operation/flow/article/update', //更新
+    'articlesDelete': 'pc/operation/flow/delete/articles' //删除
   },
   'reply': { //服务号自动回复
     'loadList': 'pc/operation/message/reply/load/text', //自动回复列表

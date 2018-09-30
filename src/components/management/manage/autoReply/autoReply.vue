@@ -98,7 +98,7 @@ export default {
     },
     /*发送*/
     send () {
-      if (!this.itemData.exact || !this.itemData.isDefault || !this.itemData.keyword || !this.itemData.message) {
+      if (!this.itemData.keyword || !this.itemData.message) {
         this.$message.error('请填写完整')
         return
       }

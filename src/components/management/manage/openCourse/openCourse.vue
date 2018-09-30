@@ -4,6 +4,7 @@
     <div class="course-top">
       <el-row>
         <el-col :span="6">
+          <p>选择小课</p>
           <el-select v-model="problemId" placeholder="请选择小课">
             <el-option
               v-for="item in courseTitleList"
@@ -13,10 +14,8 @@
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="4">
-          <el-checkbox v-model="sendWelcomeMsg">是否发送模板消息</el-checkbox>
-        </el-col>
         <el-col :span="8">
+          <p>课程开始时间</p>
           <el-date-picker
             v-model="startDate"
             type="date"
@@ -25,6 +24,7 @@
           </el-date-picker>
         </el-col>
         <el-col :span="6">
+          <p>圈外Id,多人换行书写</p>
           <el-input
             type="textarea"
             :rows="2"
@@ -33,7 +33,15 @@
           </el-input>
         </el-col>
       </el-row>
-      <el-button type="primary" @click="sendData">提交</el-button>
+      <el-row>
+      <el-col :span="6">
+        <el-checkbox v-model="sendWelcomeMsg">是否发送模板消息</el-checkbox>
+      </el-col>
+        <el-col :span="6">
+          <el-button type="primary" @click="sendData">提交</el-button>
+        </el-col>
+      </el-row>
+
     </div>
   </div>
 </template>

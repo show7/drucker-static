@@ -3,10 +3,12 @@
       <h3>客服消息</h3>
       <div class="top">
         <div class="desc">
+          <p>消息用途（中文）</p>
           <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
         </div>
         <el-row>
           <el-col :span="12">
+            <p>输入内容(如果会用到xxx这种指代用户昵称的内容请替换为{username})</p>
             <el-input
               type="textarea"
               :autosize="{ minRows: 4}"
@@ -15,6 +17,7 @@
             </el-input>
           </el-col>
           <el-col :span="12">
+            <p>发送人员的openId（换行隔开）</p>
             <el-input
               type="textarea"
               :autosize="{ minRows: 4}"

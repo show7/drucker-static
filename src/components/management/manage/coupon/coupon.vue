@@ -18,8 +18,8 @@
             </el-select>
           </el-col>-->
           <el-col :span="8">
-            <h4>学员id(换行隔开)</h4>
-            <el-input  type="textarea"  placeholder="请输入学员id" :row="4" v-model="riseIdList" clearable></el-input>
+            <h4>学员的圈外id(换行隔开)</h4>
+            <el-input  type="textarea"  placeholder="请输入学员的圈外id" :row="4" v-model="riseIdList" clearable></el-input>
           </el-col>
         </el-row>
         <el-row>

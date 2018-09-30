@@ -35,8 +35,9 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          :current-page="pageIndex"
           @current-change="currentChange"
-          :total="articlesList.length">
+          :page-count="Math.ceil(articlesList.length/10)">
         </el-pagination>
       </div>
       <el-dialog
@@ -124,7 +125,8 @@ export default {
       dialogVisible: false,
       title: '新增',
       id: '',
-      way: 0
+      way: 0,
+      pageIndex:1
     }
   },
   methods: {
@@ -133,7 +135,7 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.articles.articlesList',
         successCallback (res) {
-          self.articlesList = res.msg;
+          self.articlesList = res.msg || [];
           self.currentChange(1)
         }
       })
@@ -142,7 +144,8 @@ export default {
     currentChange (pageIndex) {
       let start = (pageIndex - 1) * 10;
       let end = pageIndex * 10;
-      this.showArticlesList = this.articlesList.slice(start, end)
+      this.showArticlesList = this.articlesList.slice(start, end);
+      this.pageIndex = pageIndex
     },
     /*发送*/
     send () {

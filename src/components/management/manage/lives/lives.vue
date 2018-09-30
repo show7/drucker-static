@@ -43,8 +43,9 @@
            <el-pagination
              background
              layout="prev, pager, next"
+             :current-page="pageIndex"
              @current-change="currentChange"
-             :total="livesList.length">
+             :page-count="Math.ceil(livesList.length/10)">
            </el-pagination>
          </div>
          <el-dialog
@@ -87,7 +88,7 @@
                  <el-input
                    type="textarea"
                    :rows="4"
-                   placeholder="请输入主讲人描述"
+                   placeholder="请输入主讲人简介"
                    v-model="itemData.speakerIntro">
                  </el-input>
                </el-col>
@@ -202,7 +203,8 @@ export default {
       dialogVisible: false,
       title: '新增',
       id: '',
-      way: 0
+      way: 0,
+      pageIndex:1,
     }
   },
   methods: {
@@ -210,20 +212,26 @@ export default {
       let self = this;
       ApiDataFilter.request({
         apiPath: 'manage.lives.livesList',
-        successCallback (res) {
-          self.livesList = res.msg;
-          if (res.msg.length > 0) {
-            res.msg.forEach((item, index) => {
+        successCallback :(res)=> {
+          self.livesList = res.msg || [];
+          if (self.livesList.length > 0) {
+            self.livesList.forEach((item, index) => {
               self.livesList[index].startTimeString = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
               self.livesList[index].endTimeString = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
             })
           }
-          self.currentChange(1)
+          self.currentChange(1);
         }
       })
     },
-    /*处理时间显示方式*/
+    /*处理数据页码*/
     currentChange (pageIndex) {
+      let start = (pageIndex - 1) * 10;
+      let end = pageIndex * 10;
+      this.showLivesList = this.livesList.slice(start, end);
+      this.pageIndex = pageIndex;
+    },
+    pageData(pageIndex){
       let start = (pageIndex - 1) * 10;
       let end = pageIndex * 10;
       this.showLivesList = this.livesList.slice(start, end)

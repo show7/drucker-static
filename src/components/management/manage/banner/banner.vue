@@ -3,7 +3,7 @@
    <div class="banner-container">
      <h3>首页 Banner 编辑</h3>
      <div class="banner-top">
-       <el-button type="primary" @click="dialogVisible=true">新增BANNER</el-button>
+       <el-button type="primary" @click="addBanner">新增BANNER</el-button>
      </div>
      <div class="banner-content">
        <el-table
