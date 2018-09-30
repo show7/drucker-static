@@ -54,7 +54,7 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑
+                      @click="handleEdit(scope.$index, scope.row)">查看详情
                     </el-button>
                   </template>
                 </el-table-column>
@@ -101,6 +101,10 @@
                 </template>
               </el-table-column>
               <el-table-column
+                prop="riseId"
+                label="riseId">
+              </el-table-column>
+              <el-table-column
                 prop="nickname"
                 label="昵称">
               </el-table-column>
@@ -143,9 +147,9 @@
             <li><span>openid：</span>{{personData.openid}}</li>
             <li><span>学号：</span>{{personData.memberId}}</li>
             <li><span>真实姓名：</span>{{personData.realName}}</li>
-            <li><span>收件人：</span>{{personData.riseId}}</li>
+            <li><span>收件人：</span>{{personData.realName}}</li>
             <li><span>圈外id：</span>{{personData.riseId}}</li>
-            <li><span>微信号：</span>{{personData.riseId}}</li>
+            <li><span>微信号：</span>{{personData.weixinId}}</li>
             <li><span>联系方式：</span>{{personData.mobileNo}}</li>
           </ul>
         </div>
@@ -154,6 +158,7 @@
           <ul v-for="(item, index) in personData.memberInfoDtos" :key="index">
             <li><span>当前会员类型：</span>{{item.memberName}}</li>
             <li><span>入学日期：</span>{{item.openDate}}</li>
+            <li><span>过期日期：</span>{{item.expireDate}}</li>
             <li><span>班级：</span>{{item.className}}</li>
             <li><span>小组：</span>{{item.groupId}}</li>
           </ul>
@@ -257,7 +262,8 @@ export default {
       if (this.classValue) {
         this.GroupData.groupIds.forEach((item, index) => {
           if (item.className === this.classValue) {
-            this.groupIds.push(item.groupId)
+            this.groupIds.push(item.groupId);
+            this.groupValue='';
           }
         })
       }

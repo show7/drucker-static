@@ -7,6 +7,7 @@
       <h4>配置内容填写</h4>
       <el-row>
         <el-col :span="6">
+          <p>请选择模板消息类型</p>
           <el-select v-model="templateValue" placeholder="请选择模板消息类型">
             <el-option
               v-for="item in templateMsgs"
@@ -17,6 +18,7 @@
           </el-select>
         </el-col>
         <el-col :span="6">
+          <p>请选择是否强制推送</p>
           <el-select v-if="forcePush" v-model="forcePushValue" placeholder="请选择是否强制推送">
             <el-option
               v-for="item in forcePushList"
@@ -27,9 +29,11 @@
           </el-select>
         </el-col>
         <el-col :span="6">
+          <p>消息用途（中文）</p>
           <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
         </el-col>
         <el-col :span="6">
+          <p>消息用途英文（格式xx_xx）</p>
           <el-input v-model="source" placeholder="请输入消息用途英文（格式xx_xx）"></el-input>
         </el-col>
       </el-row>

@@ -92,8 +92,10 @@ export default {
         method: 'post',
         data: param,
         successCallback (res) {
-          self.subscribeList = res.msg;
-          self.$message.success('提交成功')
+           self.dialogVisible = false;
+          self.subscribeList = [res.msg];
+          self.$message.success('提交成功');
+          self.getList()
         }
       })
     }

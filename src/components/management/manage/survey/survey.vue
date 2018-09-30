@@ -44,6 +44,10 @@
          <el-input placeholder="请输入问卷名" v-model="name" clearable></el-input>
          <h4>问卷星链接</h4>
          <el-input placeholder="请输入问卷星链接" v-model="realHref" clearable></el-input>
+         <h4>移动端链接</h4>
+         <el-input  v-model="mobileHref" disabled></el-input>
+         <h4>pc端链接</h4>
+         <el-input  v-model="pcHref" disabled></el-input>
      </div>
      <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -63,7 +67,10 @@ export default {
       dialogVisible: false,
       activityId: '', //问卷Id
       name: '', //问卷名
-      realHref: ''//问卷星链接
+      realHref: '',//问卷星链接
+      id:'',
+      pcHref:'',
+      mobileHref:''
     }
   },
   methods: {
@@ -82,13 +89,19 @@ export default {
       this.activityId = '';
       this.name = '';
       this.realHref = '';
+      this.id = '';
+      this.mobileHref = '';
+      this.pcHref = '';
     },
     /*编辑数据*/
     handleEdit ($index, rowData) {
       this.dialogVisible = true;
       this.activityId = rowData.activity;
       this.name = rowData.name;
-      this.realHref = rowData.realHref
+      this.realHref = rowData.realHref;
+      this.id = rowData.id;
+      this.mobileHref = rowData.mobileHref;
+      this.pcHref = rowData.pcHref;
     },
     /*发送数据*/
     sendData () {
@@ -101,6 +114,7 @@ export default {
         return
       }
       let param = {activity: this.activityId, name: this.name, realHref: this.realHref}
+      this.id ? Object.assign(param,{id:this.id}):'';
       ApiDataFilter.request({
         apiPath: 'manage.survey.surveyConfig',
         method: 'post',

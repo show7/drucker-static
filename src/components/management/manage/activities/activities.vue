@@ -39,8 +39,9 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          :current-page="pageIndex"
           @current-change="currentChange"
-          :total="activitiesList.length">
+          :page-count="Math.ceil(activitiesList.length/10)">
         </el-pagination>
       </div>
       <el-dialog
@@ -100,7 +101,7 @@
               <el-date-picker
                 v-model="dateList"
                 type="datetimerange"
-                value-format="yyyy-MM-dd HH-mm-ss"
+                value-format="timestamp"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期">
@@ -179,7 +180,8 @@ export default {
       dialogVisible: false,
       title: '新增',
       id: '', //编辑时需要入参
-      way: 0 //
+      way: 0, //
+      pageIndex:1
     }
   },
   methods: {
@@ -188,11 +190,11 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.activities.activitiesList',
         successCallback (res) {
-          self.activitiesList = res.msg;
-          if (res.msg.length > 0) {
-            res.msg.forEach((item, index) => {
-              self.activitiesList[index].startTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
-              self.activitiesList[index].endTime = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
+          self.activitiesList = res.msg || [];
+          if (self.activitiesList.length > 0) {
+            self.activitiesList.forEach((item, index) => {
+              self.activitiesList[index].startTimeString = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
+              self.activitiesList[index].endTimeString = moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')
             })
           }
           self.currentChange(1)
@@ -203,7 +205,8 @@ export default {
     currentChange (pageIndex) {
       let start = (pageIndex - 1) * 10;
       let end = pageIndex * 10;
-      this.showactivitiesList = this.activitiesList.slice(start, end)
+      this.showactivitiesList = this.activitiesList.slice(start, end);
+      this.pageIndex =pageIndex
     },
     /*发送*/
     send () {
