@@ -11,7 +11,7 @@
           <p>会员有效期</p>
           <el-select v-model="month" placeholder="请选择会员有效期">
             <el-option
-              v-for="item in [1,6,12]"
+              v-for="item in [1,4,6,8,12]"
               :key="item"
               :label="item+'月'"
               :value="item">
