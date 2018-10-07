@@ -1,6 +1,6 @@
 <template>
     <div class="employee-container">
-        <h3>人事管理</h3>
+        <h3>员工管理</h3>
         <div class="employee-top">
             <h4>输入riseId</h4>
             <el-input v-model="riseId" placeholder="请输入riseId"></el-input>
@@ -166,7 +166,9 @@
             apiPath: "manage.employee.list",
             data: param,
             successCallback: (res) => {
-                this.getList()
+                let result = res.msg;
+                this.tableList = result.content;
+                this.pageCount = result.page.pageCount
             }
         })
       }

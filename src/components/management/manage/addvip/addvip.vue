@@ -1,6 +1,6 @@
 <template>
   <div class="add-vip">
-    <h3>添加vip会员</h3>
+    <h3>添加会员</h3>
     <div class="vip-top">
       <el-row>
         <el-col :span="6">

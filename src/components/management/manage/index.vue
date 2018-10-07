@@ -17,16 +17,23 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
-              <el-menu-item index="/management/manage/certificate">添加证书</el-menu-item>
-              <el-menu-item index="/management/manage/certificatesend">证书发送</el-menu-item>
-              <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
-              <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
-              <el-menu-item index="/management/manage/addvip">添加vip会员</el-menu-item>
+              <el-menu-item index="/management/manage/addvip">添加会员</el-menu-item>
               <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
-              <el-menu-item index="/management/manage/application">申请审批</el-menu-item>
+              <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
+              <el-submenu index="2">
+                <template slot="title">发送消息</template>
+                <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
+                <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
+              </el-submenu>
+              <el-submenu index="3">
+                <template slot="title">证书管理</template>
+                <el-menu-item index="/management/manage/certificate">添加证书</el-menu-item>
+                <el-menu-item index="/management/manage/certificatesend">证书发送</el-menu-item>
+              </el-submenu>
+              <el-menu-item index="/management/manage/application">商学院申请审批</el-menu-item>
               <el-menu-item index="/management/manage/qrcode">推广二维码</el-menu-item>
               <el-menu-item index="/management/manage/survey">问卷链接设置</el-menu-item>
-              <el-submenu index="2">
+              <el-submenu index="4">
                 <template slot="title">首页资源管理</template>
                 <el-menu-item index="/management/manage/banner">首页 Banner 编辑</el-menu-item>
                 <el-menu-item index="/management/manage/lives">直播内容编辑</el-menu-item>
@@ -36,19 +43,9 @@
               <el-menu-item index="/management/manage/social">群组信息导入</el-menu-item>
               <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
               <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
-              <el-menu-item index="/management/manage/coupon">创建优惠券</el-menu-item>
-              <el-menu-item index="/management/manage/employee">人事管理</el-menu-item>
+              <el-menu-item index="/management/manage/employee">员工管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-       <!--   <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-edit"></i>
-              <span>导流课管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/management/manage/coupon">导流课开课</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>-->
         </el-menu>
       </div>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="coupon-container">
-      <h3>创建优惠券</h3>
+      <h3>添加优惠券</h3>
       <div class="coupon-top">
         <el-row>
           <el-col :span="8">
