@@ -264,12 +264,12 @@
             this.title = '编辑群组';
             this.dialogVisible = true;
             this.imageUrl = row.image;
-            this.groupName = row.name;
-            this.groupDesc= row.description;
+            this.groupName = row.name || '';
+            this.groupDesc= row.description || '';
             this.radio = row.publish ? '1' :'0';
             this.id= row.id;
             this.riseId= row.riseId;
-            this.tips = row.tips;
+            this.tips = row.tips || '';
             this.joinTips = row.joinTips || '';
             this.disabledFlag = this.riseId ? true:false;
           },
