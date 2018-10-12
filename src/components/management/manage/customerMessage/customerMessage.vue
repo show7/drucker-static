@@ -67,18 +67,24 @@
         })
       },
       handleCheck(flag){
-        if (!this.comment || !this.message || !this.openids) {
-          this.$message.error('请完善信息');
-          return;
+        if (flag) {
+          if (!this.comment || !this.message) {
+            this.$message.error('请完善信息');
+            return;
+          }else {
+              this.isMine =  true ;
+              this.sendMsg();
+          }
         }else {
-          if (flag){
-            this.isMine =  true ;
-            this.sendMsg();
-          } else {
-            this.isMine =  false ;
-            this.conformSend();
+          if (!this.comment || !this.message || !this.openids) {
+            this.$message.error('请完善信息');
+            return;
+          }else {
+              this.isMine =  false ;
+              this.conformSend();
           }
         }
+
       },
       conformSend() {
         this.$confirm('已经和开发人员确认客服消息内容无误？', '提示', {

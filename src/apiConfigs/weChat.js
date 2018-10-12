@@ -16,7 +16,8 @@ export default {
     'contentSave': 'pc/wxmini/content/save', //新增和修改接口
     'groupPublish': 'pc/wxmini/content/publish',//发布接口
     'category':'pc/wxmini/load/category',//加载分类
-    'recommend':'pc/wxmini/content/recommend',//更改推荐状态
+    'recommend':'pc/wxmini/content/recommend',//更改推荐状态'
+    'unPublish':'pc/wxmini/content/batch/unPublish',//批量下架
   },
   'community':{  //群组管理
     'communityList':{
