@@ -276,7 +276,7 @@
             if(!autoSave){
               self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
               self.dialogDetailVisible = false;
-              self.handleSaveEmit();
+              /*self.handleSaveEmit();*/
             }
             self.esChatId = res.msg
           }

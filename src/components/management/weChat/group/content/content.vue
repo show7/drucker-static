@@ -97,7 +97,12 @@
     </div>
     <div class="content-box">
       <el-row>
-        <el-col :span="24">
+        <el-col :span="12">
+          <div class="grid-content-lift">
+            <el-button type="primary" @click="putDown" size="medium" >下架</el-button>
+          </div>
+        </el-col>
+        <el-col :span="12">
           <div class="grid-content-right">
             <el-button type="primary" size="medium" @click="newAdd">添加</el-button>
           </div>
@@ -106,7 +111,16 @@
       <!--table表格-->
       <el-table
         :data="groupList"
+        @selection-change="handleSelectionChange"
+        ref="multipleTable"
         style="width: 100%">
+        <el-table-column
+          type="selection"
+          width="100">
+       <!--   <template slot-scope="scope">
+            <el-checkbox :disabled="scope.row.publishStatus == 1 ? false:true" ></el-checkbox>
+          </template>-->
+        </el-table-column>
         <el-table-column
           prop="nickname"
           width="150"
@@ -153,8 +167,8 @@
           prop="publishStatus"
           label="发布状态">
           <template slot-scope="scope">
-            <p class="publishStatus" :class="scope.row.publishStatus == 1 ? 'primary':''">{{scope.row.publishStatus == 1
-              ? '已发布':scope.row.publishStatus == 0 ? '未修改':'已修改'}}</p>
+            <p class="publishStatus" :class="scope.row.publishStatus == 1 ? 'primary':''">
+              {{scope.row.publishStatus == 1 ? '已发布':scope.row.publishStatus == 0 ? '未修改':'已修改'}}</p>
           </template>
         </el-table-column>
         <el-table-column width="350" fixed="right" label="操作">
@@ -254,7 +268,8 @@
         },
         detail: {}, // 内容详情
         categoryList:[],//分类列表
-        categoryId:null
+        categoryId:null,
+        multipleSelection:[],
       }
     },
     methods: {
@@ -513,6 +528,34 @@
             this.categoryList = res.msg;
          }
        })
+      },
+      /*下架*/
+      putDown(){
+       let idList = [];
+       let statusList = [];
+        this.multipleSelection.forEach((item,index)=>{
+          if (item.publishStatus != 1){
+            statusList.push(item.esChatId)
+          } else {
+            idList.push(item.esChatId)
+          }
+        })
+        if (statusList.length>0){
+          this.$message.error('不能选择未发布的选项哦！');
+          return;
+        }
+        apiDataFilter.request({
+          apiPath:'weChat.groupManage.unPublish',
+          method:'post',
+          data:{esIds: idList},
+          successCallback:()=>{
+            this.$message.success('操作成功');
+            this.getGroupList();
+          }
+        })
+      },
+      handleSelectionChange(val) {
+       this.multipleSelection = val;
       }
     },
     created() {
