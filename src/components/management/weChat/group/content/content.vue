@@ -26,10 +26,19 @@
       <el-row class="second-line">
         <el-col :span="6">
           <h4>群组（清除查询全部）</h4>
-          <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
+          <el-autocomplete
+            class="inline-input"
+            :fetch-suggestions="querySearch"
+            value-key="name"
+            v-model="state1"
+            placeholder="请输入内容"
+            @select="handleSelect"
+          ></el-autocomplete>
+
+        <!--  <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
                      @clear="Clear(1)">
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          </el-select>-->
         </el-col>
         <el-col :span="6">
           <h4>微信群（清除查询全部）</h4>
@@ -290,7 +299,7 @@
         categoryList:[],//分类列表
         categoryId:null,
         multipleSelection:[],
-        fileList:[],
+        state1: '',
       }
     },
     methods: {
@@ -594,6 +603,24 @@
       /*上传成功*/
       handleUpSuccess(res, file){
         this.$message.success('上传成功')
+      },
+      /*模糊查询*/
+      querySearch(queryString, cb) {
+        let communityList = this.communityList;
+        let results = queryString ? communityList.filter(this.createFilter(queryString)) : communityList;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      },
+      /*匹配*/
+      createFilter(queryString) {
+        return (restaurant) => {
+          return (restaurant.name.indexOf(queryString) != -1);
+        };
+      },
+      /*选择*/
+      handleSelect(result){
+       this.communityIdChange(result.id);
+       this.communityId = result.id
       }
     },
     created() {

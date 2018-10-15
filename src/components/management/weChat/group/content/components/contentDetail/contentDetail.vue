@@ -145,18 +145,6 @@
               :on-remove="handleRemove">
               <i class="el-icon-plus"></i>
             </el-upload>
-       <!--     <el-upload
-              action="/file/image/multi/upload/1"
-              list-type="picture-card"
-              :limit="9"
-              multiple
-              :on-exceed="onExceed"
-              :file-list="picGroupList"
-              :on-success="sendPicSuccess"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove">
-              <i class="el-icon-plus"></i>
-            </el-upload>-->
 
           </el-col>
         </el-row>
