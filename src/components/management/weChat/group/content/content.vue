@@ -31,7 +31,7 @@
             :fetch-suggestions="querySearch"
             value-key="name"
             v-model="state1"
-            placeholder="请输入内容"
+            placeholder="请输入群组名"
             @select="handleSelect"
           ></el-autocomplete>
 
@@ -148,9 +148,23 @@
           label="微信群">
         </el-table-column>
         <el-table-column
-          prop="labelName"
-          width="200"
-          label="标签">
+          width="100"
+          label="上传评论">
+          <template slot-scope="scope">
+            <el-upload
+              class="upload-demo"
+              action="/pc/wxmini/content/upload/file"
+              :data="{contentId:scope.row.id}"
+              :limit="1"
+              :show-file-list="false"
+              :on-exceed="handleExceed"
+              :on-success="handleUpSuccess"
+              :before-upload="beforeUpload">
+              <p class="uploader-file">上传评论</p>
+              <!--<el-button size="small" type="primary">点击上传</el-button>-->
+            </el-upload>
+
+          </template>
         </el-table-column>
         <el-table-column
           prop="content"
@@ -172,25 +186,7 @@
           width="150"
           label="发布人">
         </el-table-column>
-        <el-table-column
-          width="100"
-          label="上传评论">
-          <template slot-scope="scope">
-            <el-upload
-              class="upload-demo"
-              action="/pc/wxmini/content/upload/file"
-              :data="{contentId:scope.row.id}"
-              :limit="1"
-              :show-file-list="false"
-              :on-exceed="handleExceed"
-              :on-success="handleUpSuccess"
-              :before-upload="beforeUpload">
-              <p class="uploader-file">上传评论</p>
-           <!--<el-button size="small" type="primary">点击上传</el-button>-->
-            </el-upload>
 
-          </template>
-        </el-table-column>
         <el-table-column
           prop="publishStatus"
           label="发布状态">
