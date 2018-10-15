@@ -517,7 +517,7 @@
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
-        this.pageIndex = 1;
+      /*  this.pageIndex = 1;*/
         this.getGroupList();
       },
       /*推荐和取消推荐*/
