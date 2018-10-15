@@ -164,6 +164,25 @@
           label="发布人">
         </el-table-column>
         <el-table-column
+          width="100"
+          label="上传评论">
+          <template slot-scope="scope">
+            <el-upload
+              class="upload-demo"
+              action="/pc/wxmini/content/upload/file"
+              :data="{contentId:scope.row.id}"
+              :limit="1"
+              :show-file-list="false"
+              :on-exceed="handleExceed"
+              :on-success="handleUpSuccess"
+              :before-upload="beforeUpload">
+              <p class="uploader-file">上传评论</p>
+           <!--<el-button size="small" type="primary">点击上传</el-button>-->
+            </el-upload>
+
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="publishStatus"
           label="发布状态">
           <template slot-scope="scope">
@@ -208,6 +227,7 @@
                    :categoryList="categoryList"
                    @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
     <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
+
   </div>
 </template>
 
@@ -270,6 +290,7 @@
         categoryList:[],//分类列表
         categoryId:null,
         multipleSelection:[],
+        fileList:[],
       }
     },
     methods: {
@@ -556,6 +577,23 @@
       },
       handleSelectionChange(val) {
        this.multipleSelection = val;
+      },
+      /*超出限制*/
+      handleExceed(files, fileList){
+        this.$message.warning('超出限制，只能上传一个文件')
+      },
+      /*判断上传的类型*/
+      beforeUpload(file) {
+        let typeName = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+        const isXLS = typeName === 'xls';
+        if (!isXLS) {
+          this.$message.error('只能上传.xls格式!');
+        }
+        return isXLS;
+      },
+      /*上传成功*/
+      handleUpSuccess(res, file){
+        this.$message.success('上传成功')
       }
     },
     created() {
