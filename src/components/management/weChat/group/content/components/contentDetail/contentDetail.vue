@@ -137,6 +137,7 @@
               action="/pc/upload/file"
               list-type="picture-card"
               :limit="9"
+              multiple
               :on-exceed="onExceed"
               :file-list="picGroupList"
               :on-success="sendPicSuccess"
@@ -276,7 +277,7 @@
             if(!autoSave){
               self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
               self.dialogDetailVisible = false;
-              /*self.handleSaveEmit();*/
+              self.handleSaveEmit();
             }
             self.esChatId = res.msg
           }
@@ -342,6 +343,7 @@
       },
       /*上传图片*/
       sendPicSuccess(res, file, fileList) {
+        console.log(res, file, fileList)
         this.imgList = this.handleAddReducePic(fileList);
       },
       /*上传图片*/

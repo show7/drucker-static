@@ -26,10 +26,19 @@
       <el-row class="second-line">
         <el-col :span="6">
           <h4>群组（清除查询全部）</h4>
-          <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
+          <el-autocomplete
+            class="inline-input"
+            :fetch-suggestions="querySearch"
+            value-key="name"
+            v-model="state1"
+            placeholder="请输入内容"
+            @select="handleSelect"
+          ></el-autocomplete>
+
+        <!--  <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
                      @clear="Clear(1)">
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          </el-select>-->
         </el-col>
         <el-col :span="6">
           <h4>微信群（清除查询全部）</h4>
@@ -164,6 +173,25 @@
           label="发布人">
         </el-table-column>
         <el-table-column
+          width="100"
+          label="上传评论">
+          <template slot-scope="scope">
+            <el-upload
+              class="upload-demo"
+              action="/pc/wxmini/content/upload/file"
+              :data="{contentId:scope.row.id}"
+              :limit="1"
+              :show-file-list="false"
+              :on-exceed="handleExceed"
+              :on-success="handleUpSuccess"
+              :before-upload="beforeUpload">
+              <p class="uploader-file">上传评论</p>
+           <!--<el-button size="small" type="primary">点击上传</el-button>-->
+            </el-upload>
+
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="publishStatus"
           label="发布状态">
           <template slot-scope="scope">
@@ -208,6 +236,7 @@
                    :categoryList="categoryList"
                    @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
     <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
+
   </div>
 </template>
 
@@ -270,6 +299,7 @@
         categoryList:[],//分类列表
         categoryId:null,
         multipleSelection:[],
+        state1: '',
       }
     },
     methods: {
@@ -496,7 +526,7 @@
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
-        this.pageIndex = 1;
+      /*  this.pageIndex = 1;*/
         this.getGroupList();
       },
       /*推荐和取消推荐*/
@@ -556,6 +586,41 @@
       },
       handleSelectionChange(val) {
        this.multipleSelection = val;
+      },
+      /*超出限制*/
+      handleExceed(files, fileList){
+        this.$message.warning('超出限制，只能上传一个文件')
+      },
+      /*判断上传的类型*/
+      beforeUpload(file) {
+        let typeName = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+        const isXLS = typeName === 'xls';
+        if (!isXLS) {
+          this.$message.error('只能上传.xls格式!');
+        }
+        return isXLS;
+      },
+      /*上传成功*/
+      handleUpSuccess(res, file){
+        this.$message.success('上传成功')
+      },
+      /*模糊查询*/
+      querySearch(queryString, cb) {
+        let communityList = this.communityList;
+        let results = queryString ? communityList.filter(this.createFilter(queryString)) : communityList;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      },
+      /*匹配*/
+      createFilter(queryString) {
+        return (restaurant) => {
+          return (restaurant.name.indexOf(queryString) != -1);
+        };
+      },
+      /*选择*/
+      handleSelect(result){
+       this.communityIdChange(result.id);
+       this.communityId = result.id
       }
     },
     created() {

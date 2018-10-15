@@ -71,6 +71,16 @@ module.exports = {
           }
         }
       },
+      '/file/*': {
+        target: 'http://beta.confucius.mobi',
+        secure: false,
+        changeOrigin: true,
+        bypass: function (req) {
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+          }
+        }
+      },
     },
 
     // Various Dev Server settings
