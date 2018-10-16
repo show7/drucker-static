@@ -229,16 +229,8 @@
         })
       },
 
-      autoSave(){
-        if(this.popOutTopicId || this.publish === 0 || this.imgList  ||
-          this.content || this.categoryId || this.headPic || this.description || this.title || this.editorName
-        ){
-          this.handleContentSave(true)
-        }
-      },
-
       /*新增和编辑接口*/
-      handleContentSave(autoSave = false) {
+      handleContentSave() {
         let self = this;
         let labelId = -1;
         // 只有话题状态才传labelId
@@ -274,11 +266,9 @@
           method: 'post',
           data: param,
           successCallback(res) {
-            if(!autoSave){
-              self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
-              self.dialogDetailVisible = false;
-              self.handleSaveEmit();
-            }
+            self.$message.success(self.publish == 1 ? '上架成功' : '保存成功');
+            self.dialogDetailVisible = false;
+            self.handleSaveEmit();
             self.esChatId = res.msg
           }
         })
@@ -455,13 +445,6 @@
       if(this.detail.headPic){
         this.headPicList.push({id:1, url:this.detail.headPic});
       }
-
-      let self = this;
-      this.interval = setInterval(() => {
-        if(self.publish != 1 && self.postProfileId && this.popOutWechatGroupId){
-          self.autoSave()
-        }
-      }, 10000)
     },
     beforeDestroy(){
       clearInterval(this.interval)
