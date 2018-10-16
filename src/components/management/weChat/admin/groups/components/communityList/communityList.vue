@@ -112,8 +112,8 @@
            width="40%">
           <div class="popout-box">
             <el-row>
-              <el-col :span="4"><p>群组版图<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>群组版图<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-upload
                   class="avatar-uploader-box"
                   action="/pc/upload/file"
@@ -127,41 +127,57 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群组名称<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>群组名称<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-input v-model="groupName" placeholder="请输入群组名称"></el-input>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>群组描述<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>群组描述<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-input type="textarea" v-model="groupDesc" maxlength="40" placeholder="请输入群组描述"></el-input>
                 <span class="size">备注：描述40字及以内 （剩余{{40 - groupDesc.length}}字）</span>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>入群文案<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>入群文案<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-input type="textarea" v-model="joinTips" maxlength="30" placeholder="请输入入群文案"></el-input>
                 <span class="size">备注：描述30字及以内 （剩余{{30 - joinTips.length}}字）</span>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="4"><p>打卡文案<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>打卡文案<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-input type="textarea" v-model="tips" maxlength="18" placeholder="请输入群组tips"></el-input>
                 <span class="size">备注：描述18字及以内 （剩余{{18 - tips.length}}字）</span>
               </el-col>
             </el-row>
+
             <el-row>
-              <el-col :span="4"><p>群组负责人riseId<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>群组负责人riseId<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-input class="riseId" v-model="riseId" :disabled="disabledFlag" placeholder="请输入负责人riseId"></el-input>
               </el-col>
             </el-row>
+
             <el-row>
-              <el-col :span="4"><p>群组状态<span>*</span></p></el-col>
-              <el-col :span="20">
+              <el-col :span="5"><p>每日打卡栏目名称<span>*</span></p></el-col>
+              <el-col :span="19">
+                <el-input v-model="tabName1" maxlength="4" placeholder="请输入每日打卡名称"></el-input>
+                <span class="size">4个字及以内</span>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="5"><p>精选内容栏目名称<span>*</span></p></el-col>
+              <el-col :span="19">
+                <el-input v-model="tabName2" maxlength="4" placeholder="请输入精选内容"></el-input>
+                <span class="size">4个字及以内</span>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="5"><p>群组状态<span>*</span></p></el-col>
+              <el-col :span="19">
                 <el-radio v-model="radio" label='1'>发布</el-radio>
                 <el-radio v-model="radio" label='0'>暂不发布</el-radio>
               </el-col>
@@ -184,24 +200,26 @@
 
         data() {
             return {
-              searchName:'',//群组搜索
-              title:'添加群组',
-              dialogVisible:false,
-              dialogVisiblePic:false,
+              searchName: '',//群组搜索
+              title: '添加群组',
+              dialogVisible: false,
+              dialogVisiblePic: false,
               imageUrl: '',
-              radio:'0',
-              communityList:[],//列表
-              communityCountList:[],//数量列表
-              page:1,//页码
-              pageCount:null,//总页码
-              groupName:'',//群组名称
-              groupDesc:'',//群组描述
-              id:null,//编辑的条目id
-              riseId:'',
-              disabledFlag:false,
-              nickName:'无',
-              tips:'', //打卡文案
-              joinTips:'',//入群文案
+              radio: '0',
+              communityList: [],//列表
+              communityCountList: [],//数量列表
+              page: 1,//页码
+              pageCount: null,//总页码
+              groupName: '',//群组名称
+              groupDesc: '',//群组描述
+              id: null,//编辑的条目id
+              riseId: '',
+              disabledFlag: false,
+              nickName: '无',
+              tips: '', //打卡文案
+              joinTips: '',//入群文案
+              tabName1: '',//每日打卡栏目名称
+              tabName2: '',//精选内容栏目名称
             }
         },
         methods: {
@@ -258,6 +276,8 @@
             this.tips = '';
             this.joinTips = '',
             this.disabledFlag = false;
+            this.tabName1 = '';
+            this.tabName2 = '';
           },
           /*编辑*/
           handleEdit(index,row){
@@ -271,12 +291,18 @@
             this.riseId= row.riseId;
             this.tips = row.tips || '';
             this.joinTips = row.joinTips || '';
+            this.tabName1 = row.tabName1;
+            this.tabName2 = row.tabName2;
             this.disabledFlag = this.riseId ? true:false;
           },
           /*确定新增和编辑*/
           handleConfor(){
-            if (!this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId || !this.tips || !this.joinTips) {
+            if (!this.tabName2 ||!this.tabName1 || !this.groupName || !this.groupDesc || !this.imageUrl || !this.riseId || !this.tips || !this.joinTips) {
               this.$message.error('请把信息填写完整');
+              return
+            }else if (this.tabName2 == this.tabName1 ) {
+              this.$message.error('每日打卡和精华内容名称不能一样哦！');
+              return
             }else {
               this.sendAddData();
             }
@@ -284,8 +310,8 @@
           /*新增和编辑接口*/
           sendAddData(){
             let self = this;
-            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),
-              joinTips:this.joinTips,tips:this.tips, image:this.imageUrl,riseId:this.riseId};
+            let param ={name:this.groupName,description:this.groupDesc,publish:parseInt(this.radio),tabName1:this.tabName1,
+              tabName2:this.tabName2,joinTips:this.joinTips,tips:this.tips, image:this.imageUrl,riseId:this.riseId};
              this.id ? Object.assign(param,{id:this.id}):'';
              apiDataFilter.request({
               apiPath:'weChat.community.communityList.revise',
