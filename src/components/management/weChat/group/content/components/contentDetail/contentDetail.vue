@@ -137,7 +137,7 @@
               action="/pc/upload/file"
               list-type="picture-card"
               :limit="9"
-              multiple
+               multiple
               :on-exceed="onExceed"
               :file-list="picGroupList"
               :on-success="sendPicSuccess"
@@ -294,6 +294,20 @@
           if(!this.content && (this.imgList.length == 0 || this.imgList == null)) {
             this.$message.error('内容和图片至少填写一项')
             return
+          }
+
+        }
+        if(this.categoryId !=3){
+          if (this.imgList && this.imgList.length > 0){
+            let noList=[];
+            noList = this.imgList.filter((item)=>{
+              return item.indexOf('blob') != -1
+            });
+            console.log('noList',noList)
+            if (noList.length > 0){
+              this.$message.info('请等待图片上传完毕')
+              return
+            }
           }
         }
         // 话题必须选择某个话题
