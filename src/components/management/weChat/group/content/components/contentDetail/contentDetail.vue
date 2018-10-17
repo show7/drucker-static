@@ -55,17 +55,6 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="12">
-            <h4><span>*</span>所属微信群</h4>
-            <el-select v-model="popOutWechatGroupId" placeholder="请选择">
-              <el-option
-                v-for="item in wechatGroupList"
-                :key="item.id"
-                :label="item.groupName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
         </el-row>
         <el-row v-if="categoryId === 3">
           <el-col :span="12">
@@ -186,12 +175,10 @@
         headimgurl: '', //头像
         postProfileId: 0, //提交人
         popOutCommunityId: null, //群组id
-        popOutWechatGroupId: null, //微信群id
         popOutTopicId: null, //话题id
         publish : -1, //是否发布
         picGroupList : [], //图片列表
         communityList : [], //群组列表
-        wechatGroupList : [], //微信群列表
         topicLabels : [], //话题列表
         imgList : [], //图片列表
         headPic: '', // 头图
@@ -248,12 +235,11 @@
           picGroup: this.imgList,
           publish: this.publish,
           postProfileId: this.postProfileId,
-          groupId: this.popOutWechatGroupId,
+          communityId: this.popOutCommunityId,
           content: this.content,
           labelCategory: this.categoryId,
           esChatId: this.esChatId ? this.esChatId : null,
         };
-        console.log(param)
         // 文章
         if(this.categoryId === 3){
           param.headPic = this.headPic;
@@ -275,7 +261,7 @@
       },
       /*验证填写的数据*/
       checkSaveData() {
-        if(!this.postProfileId || !this.popOutWechatGroupId) {
+        if(!this.postProfileId || !this.popOutCommunityId) {
           this.$message.error('请完善信息')
           return
         }
@@ -338,12 +324,10 @@
       popOutCommunityChange(val) {
         this.communityList.forEach((item, index) => {
           if(item.id == val) {
-            this.wechatGroupList = item.wechatGroupList;
             this.topicLabels = item.topicLabels;
           }
         })
         this.popOutTopicId = null;
-        this.popOutWechatGroupId = null;
       },
       /*上传图片*/
       sendPicSuccess(res, file, fileList) {
@@ -443,13 +427,11 @@
       this.esChatId = this.detail.esChatId;
       this.postProfileId = this.detail.postProfileId;
       this.popOutCommunityId = this.detail.popOutCommunityId;
-      this.popOutWechatGroupId = this.detail.popOutWechatGroupId;
       this.popOutTopicId = this.detail.popOutTopicId;
       this.content = this.detail.content;
       this.publish = this.detail.publish;
       this.picGroupList = this.detail.picGroupList;
       this.communityList = this.detail.communityList;
-      this.wechatGroupList = this.detail.wechatGroupList;
       this.topicLabels = this.detail.topicLabels;
       this.title = this.detail.title;
       this.description = this.detail.description;
