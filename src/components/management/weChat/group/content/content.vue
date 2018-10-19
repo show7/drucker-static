@@ -157,6 +157,7 @@
               :data="{contentId:scope.row.id}"
               :limit="1"
               :show-file-list="false"
+              :file-list="fileList"
               :on-exceed="handleExceed"
               :on-success="handleUpSuccess"
               :before-upload="beforeUpload">
@@ -296,6 +297,7 @@
         categoryId:null,
         multipleSelection:[],
         state1: '',
+        fileList:[],
       }
     },
     methods: {
@@ -598,6 +600,7 @@
       },
       /*上传成功*/
       handleUpSuccess(res, file){
+        this.fileList=[]
         this.$message.success('上传成功')
       },
       /*模糊查询*/
