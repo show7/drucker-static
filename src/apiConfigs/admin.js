@@ -5,5 +5,10 @@
 4. 备注：
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default {
-
+  'projectConfig':{
+    'config':'pc/admin/config',//加载数据
+    'update':'pc/admin/config/update',//修改数据
+    'add':'pc/admin/config/add',//新增数据
+    'delete':'pc/admin/config/delete',//删除
+  }
 }

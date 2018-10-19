@@ -18,6 +18,9 @@
           <el-menu-item-group>
             <el-menu-item index="/management/admin/role">身份管理</el-menu-item>
           </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/management/admin/projectconfig">项目配置</el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </div>
