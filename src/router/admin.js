@@ -1,4 +1,4 @@
-const role = () => import(/* webpackChunkName: "wechat" */ '@/components/management/admin/role/role')
+const role = () => import(/* webpackChunkName: "admin" */ '@/components/management/admin/role/role')
 
 export default [
   { path: 'role', name: 'role', component: role },
