@@ -91,8 +91,7 @@ export default {
       })
     })
     if(this.value){
-      this.editor.
-      setValue(this.value)
+      this.editor.setValue(this.value)
     }
   },
   methods: {

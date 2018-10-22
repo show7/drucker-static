@@ -10,5 +10,9 @@ export default {
     'update':'pc/admin/config/update',//修改数据
     'add':'pc/admin/config/add',//新增数据
     'delete':'pc/admin/config/delete',//删除
+  },
+  'richText':{
+    'all':'pc/operation/richtext/load/all',//加载列表
+    'save':'pc/operation/richtext/save',//编辑和新增
   }
 }
