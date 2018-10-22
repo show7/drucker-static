@@ -19,5 +19,6 @@ export default {
     'all':'pc/admin/userroles',//加载所有数据
     'del':'pc/admin/userrole/del',//删除
     'modify':'pc/admin/userrole/modify',//新增和编辑
+    'roles':'pc/admin/roles',//职位
   }
 }
