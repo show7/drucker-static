@@ -14,5 +14,10 @@ export default {
   'richText':{
     'all':'pc/operation/richtext/load/all',//加载列表
     'save':'pc/operation/richtext/save',//编辑和新增
+  },
+  'role':{
+    'all':'pc/admin/userroles',//加载所有数据
+    'del':'pc/admin/userrole/del',//删除
+    'modify':'pc/admin/userrole/modify',//新增和编辑
   }
 }

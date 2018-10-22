@@ -1,7 +1,6 @@
 
 let $ = require('jquery')
 let SimpleModule = require('simple-module')
-
   let Uploader, uploader,
     extend = function (child, parent) {
       for (let key in parent) {
@@ -360,4 +359,4 @@ let SimpleModule = require('simple-module')
     return new Uploader(opts)
   }
 
-export default  uploader
+  export default uploader

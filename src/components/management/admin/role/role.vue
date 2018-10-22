@@ -1,17 +1,11 @@
 <template>
-  <div class="role">
+  <div class="role-container">
     <h3>身份管理</h3>
+
     <div class="content-box">
-      <el-row>
-        <!--<el-col :span="5" class="grid-content-left">-->
-        <!--<el-button type="primary" @click="handleSearch">搜索</el-button>-->
-        <!--</el-col>-->
-        <el-col :span="12">
-          <div class="grid-content-right">
-            <el-button type="primary" size="medium" @click="addUserRole">添加</el-button>
-          </div>
-        </el-col>
-      </el-row>
+      <div class="add-box">
+        <el-button type="primary" size="medium" @click="addUserRole">添加</el-button>
+      </div>
       <!--table表格-->
       <el-table
         :data="userRoleList"
@@ -49,6 +43,7 @@
 
 <script>
   import ApiDataFilter from '@/libraries/apiDataFilter'
+  import apiDataFilter from "../../../../libraries/apiDataFilter";
 
   export default {
     name: 'role',
@@ -58,6 +53,14 @@
       }
     },
     methods: {
+      getRoleList(){
+      apiDataFilter.request({
+        apiPath:'admin.role.all',
+        successCallback:(res)=>{
+          this.userRoleList = res.msg
+        }
+      })
+      },
       addUserRole() {
         console.log('添加用户身份');
       },
@@ -70,6 +73,7 @@
 
     },
     created() {
+      this.getRoleList();
     }
   }
 </script>
