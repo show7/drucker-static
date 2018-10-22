@@ -41,13 +41,6 @@
           </el-select>-->
         </el-col>
         <el-col :span="6">
-          <h4>微信群（清除查询全部）</h4>
-          <el-select v-model="wechatGroupId" placeholder="请选择微信群" :clearable="true" @clear="Clear(2)">
-            <el-option v-for="item in wechatGroupList " :key="item.id" :label="item.groupName"
-                       :value="item.id"></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6">
           <h4>话题（清除查询分享）</h4>
           <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
             <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -270,8 +263,6 @@
         communityList: [], //群组
         communityId: null, //群组选择的ID
         communityName: '', //所属群组name
-        wechatGroupList: [], //微信群list,
-        wechatGroupId: null, //微信群id
         groupName: '', //所属群名
         createTime: null, //创建时间list
         createStartTime: null, //创建开始时间
@@ -367,7 +358,6 @@
       communityIdChange(val) {
         this.communityList.forEach((item, index) => {
           if(item.id == val) {
-            this.wechatGroupList = item.wechatGroupList;
             this.topicLabels = item.topicLabels;
             this.shareLabels = item.shareLabels;
           }
@@ -381,7 +371,6 @@
         } else if(index == 1) {
           this.communityId = null;
           this.wechatGroupId = null;
-          this.wechatGroupList = [];
           this.topicId = null;
           this.shareId = null;
           this.topicLabels = [];
@@ -398,7 +387,6 @@
         this.wechatGroupId = null;
         this.createTime = null;
         this.publishTime = null;
-        this.wechatGroupList = [];
         this.topicId = null;
         this.shareId = null;
         this.topicLabels = [];
@@ -451,7 +439,6 @@
         this.dialogVisibleDesc = false;
         this.showDetail = true;
         this.detail.communityList = this.communityList;
-        this.detail.wechatGroupList = this.wechatGroupList;
         this.detail.topicLabels = this.topicLabels;
       },
       /*编辑弹框*/
@@ -467,7 +454,6 @@
         this.detail.popOutTopicId = row.topicId;
         this.detail.publish = row.publish.toString();
         this.detail.communityList = this.communityList;
-        this.detail.wechatGroupList = this.wechatGroupList;
         this.detail.topicLabels = this.topicLabels;
         let picGroup = [];
         if(row.picGroup != null && row.picGroup.length > 0) {
@@ -502,7 +488,6 @@
         this.detail.picGroupList = picGroup;
         this.detail.imgList = row.picGroup;
         this.detail.communityList = this.communityList;
-        this.detail.wechatGroupList = this.wechatGroupList;
         this.detail.groupName = row.groupName;
         this.detail.communityName = row.communityName;
         this.detail.topicLabels = this.topicLabels;
@@ -600,7 +585,7 @@
       },
       /*上传成功*/
       handleUpSuccess(res, file){
-        this.fileList = [];
+        this.fileList=[]
         this.$message.success('上传成功')
       },
       /*模糊查询*/
