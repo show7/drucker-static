@@ -288,7 +288,7 @@
         categoryId:null,
         multipleSelection:[],
         state1: '',
-        fileList:[],
+        fileList:[]
       }
     },
     methods: {

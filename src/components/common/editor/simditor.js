@@ -1,7 +1,8 @@
 let $ = require('jquery')
 let SimpleModule = require('simple-module')
 let simpleHotkeys = require('simple-hotkeys')
-let simpleUploader = require('simple-uploader')
+/*let simpleUploader = require('./uploader')*/
+import simpleUploader from './uploader'
 
 var AlignmentButton, BlockquoteButton, BoldButton, Button, Clipboard, CodeButton, CodePopover, ColorButton, FontScaleButton, Formatter, HrButton, ImageButton, ImagePopover, IndentButton, Indentation, InputManager, ItalicButton, Keystroke, LinkButton, LinkPopover, ListButton, OrderListButton, OutdentButton, Popover, Selection, Simditor, StrikethroughButton, TableButton, TitleButton, Toolbar, UnderlineButton, UndoManager, UnorderListButton, Util,
   extend = function (child, parent) {
