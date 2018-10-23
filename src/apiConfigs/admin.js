@@ -14,6 +14,7 @@ export default {
   'richText':{
     'all':'pc/operation/richtext/load/all',//加载列表
     'save':'pc/operation/richtext/save',//编辑和新增
+    'load':'pc/operation/richtext/load',//加载详情
   },
   'role':{
     'all':'pc/admin/userroles',//加载所有数据

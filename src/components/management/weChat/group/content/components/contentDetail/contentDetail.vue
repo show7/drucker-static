@@ -270,8 +270,10 @@
           if(!this.content && (this.imgList.length == 0 || this.imgList == null)) {
             this.$message.error('内容和图片至少填写一项')
             return
+          }else if (this.content.indexOf("https://static.iqycamp.com/images/imgLoading.png?imageslim") != -1){
+            this.$message.error('请等待文本编辑的图片上传完成')
+            return
           }
-
         }
         if(this.categoryId !=3){
           if (this.imgList && this.imgList.length > 0){

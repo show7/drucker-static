@@ -21,17 +21,6 @@
           prop="title"
           label="title">
         </el-table-column>
-        <el-table-column
-          prop="contentString"
-          label="内容">
-          <template slot-scope="scope">
-            <div class="question-box">
-              <p class="content">
-                {{scope.row.contentString}}
-              </p>
-            </div>
-          </template>
-        </el-table-column>
 
         <el-table-column width="200" fixed="right" label="操作">
           <template slot-scope="scope">
@@ -42,6 +31,17 @@
           </template>
         </el-table-column>
       </el-table>
+    </div>
+
+    <!--分页-->
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :current-page="pageIndex"
+        @current-change="currentChange"
+        :page-count="pageCount">
+      </el-pagination>
     </div>
 
     <el-dialog
@@ -83,21 +83,26 @@
         titleName:'新增',
         title:'',
         editorValue:'',
-        uuid:null
+        uuid:null,
+        pageIndex:1,
+        pageCount:null
       }
     },
     methods:{
+      /*加载数据*/
       getList(){
+        let param = {page:this.pageIndex}
         apiDataFilter.request({
           apiPath:'admin.richText.all',
+          data:param,
           successCallback:(res)=>{
-            this.resultList = res.msg;
-            this.resultList.forEach((item,index)=>{
-              item.contentString= this.removeHtmlTags(item.content)
-            })
+            let result = res.msg;
+            this.resultList = result.list;
+            this.pageCount = result.page.pageCount
           }
         })
       },
+      /*提交修改*/
       submitValue(){
         let param = {title:this.title, content: this.editorValue, uuid:this.uuid ? this.uuid:null,}
         apiDataFilter.request({
@@ -115,9 +120,21 @@
       handleEdit(index,row){
         this.dialogVisible = true;
         this.titleName = '编辑';
-        this.title = row.title;
         this.uuid = row.uuid;
-        setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.content) }, 200);
+        this.loadDetail();
+
+      },
+      /*记载详情*/
+      loadDetail(){
+        apiDataFilter.request({
+          apiPath:'admin.richText.load',
+          pathParams:[this.uuid],
+          successCallback:(res)=>{
+            let result = res.msg;
+            this.title = result.title;
+            setTimeout(() => { this.$refs.oneEditor.editor.setValue(result.content) }, 200);
+          }
+        })
       },
       /*新增*/
       handleAdd(){
@@ -139,14 +156,10 @@
            this.submitValue();
         }
       },
-      removeHtmlTags (str) {
-        let newStr = _.trim(str)
-        // 去除 html 标签
-        newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-        newStr = newStr.replace(/<\/?[^>]*>/g, '')
-        // 去除实体字符
-        newStr = newStr.replace(/&[^;]+;/g, '')
-        return newStr
+      /*得到当前页数*/
+      currentChange(pageIndex) {
+        this.pageIndex = pageIndex;
+        this.getList();
       },
     },
     created(){
