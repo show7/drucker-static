@@ -114,7 +114,8 @@
         dialogVisible:false,
         fee:'',
         expired:false,
-        expiredList:[{value:true,name:'保留会员'},{value:false,name:'关闭会员'}]
+        expiredList:[{value:true,name:'保留会员'},{value:false,name:'关闭会员'}],
+        memberTypeName:''
       }
     },
     methods:{
@@ -137,6 +138,7 @@
          this.dialogVisible = true;
          this.expired = true;
          this.fee = '';
+         this.memberTypeName = row.memberTypeName;
       },
       refund(){
         let param = {fee:this.fee, orderId:this.orderId, expired:this.expired} ;
@@ -160,7 +162,7 @@
            this.$message.error('请填写退款金额');
            return
          }
-        this.$confirm('此操作将退款给用户, 是否继续?', '提示', {
+        this.$confirm(`此操作将退款${this.memberTypeName}的「${this.fee}」元给用户, 是否继续?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
