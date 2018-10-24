@@ -119,6 +119,7 @@
       }
     },
     methods:{
+      /*搜索接口*/
        handleGetInfo(){
          if (!this.userInfo) {
            this.$message.error('请输入riseId或学号');
@@ -133,6 +134,7 @@
            }
          })
        },
+      /*点击退款*/
       handleRefund(index,row){
          this.orderId = row.orderId;
          this.dialogVisible = true;
@@ -140,6 +142,7 @@
          this.fee = '';
          this.memberTypeName = row.memberTypeName;
       },
+      /*退款接口*/
       refund(){
         let param = {fee:this.fee, orderId:this.orderId, expired:this.expired} ;
         apiDataFilter.request({
@@ -157,6 +160,7 @@
           }
         })
       },
+      /*退款确认*/
       handleConf() {
          if (!this.fee){
            this.$message.error('请填写退款金额');
