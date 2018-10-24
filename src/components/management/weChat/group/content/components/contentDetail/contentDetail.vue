@@ -126,7 +126,7 @@
               action="/pc/upload/file"
               list-type="picture-card"
               :limit="9"
-               multiple
+              multiple
               :on-exceed="onExceed"
               :file-list="picGroupList"
               :on-success="sendPicSuccess"
@@ -161,9 +161,10 @@
   import Editor from '../../../../../../common/editor/editor'
   import moment from 'moment'
   import _ from 'lodash'
+
   export default {
     name: 'contentDetail',
-    components: { Editor },
+    components: {Editor},
     data() {
       return {
         interval: null, //定时任务
@@ -176,11 +177,11 @@
         postProfileId: 0, //提交人
         popOutCommunityId: null, //群组id
         popOutTopicId: null, //话题id
-        publish : -1, //是否发布
-        picGroupList : [], //图片列表
-        communityList : [], //群组列表
-        topicLabels : [], //话题列表
-        imgList : [], //图片列表
+        publish: -1, //是否发布
+        picGroupList: [], //图片列表
+        communityList: [], //群组列表
+        topicLabels: [], //话题列表
+        imgList: [], //图片列表
         headPic: '', // 头图
         communityName: '', //所属群组name
         groupName: '', //所属群名
@@ -188,19 +189,19 @@
         headPicList: [], //头图
         title: '', //文章标题
         description: '', //描述
-        editorName:'',//作者名称
-        toolbarNormal: [ 'bold' ],
-        toolbarArticle: [ 'bold', 'ol', 'ul', 'image', 'hr' ],
-        categoryId : null,
+        editorName: '',//作者名称
+        toolbarNormal: ['bold'],
+        toolbarArticle: ['bold', 'ol', 'ul', 'image', 'hr'],
+        categoryId: null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
       }
     },
-    props: ['editorFlag', 'detail','categoryList'],
+    props: ['editorFlag', 'detail', 'categoryList'],
     methods: {
       /*新增状态下查询*/
       getAdd() {
-        if(!this.riseId) {
+        if (!this.riseId) {
           this.$message.error('请填写riseId')
           return
         }
@@ -221,13 +222,13 @@
         let self = this;
         let labelId = -1;
         // 只有话题状态才传labelId
-        if(this.categoryId === 1){
-          if(this.popOutTopicId){
+        if (this.categoryId === 1) {
+          if (this.popOutTopicId) {
             labelId = this.popOutTopicId;
           }
         }
         // publish为空时，设置为0
-        if(!this.publish){
+        if (!this.publish) {
           this.publish = 0;
         }
         let param = {
@@ -241,7 +242,7 @@
           esChatId: this.esChatId ? this.esChatId : null,
         };
         // 文章
-        if(this.categoryId === 3){
+        if (this.categoryId === 3) {
           param.headPic = this.headPic;
           param.description = this.description;
           param.title = this.title;
@@ -261,62 +262,62 @@
       },
       /*验证填写的数据*/
       checkSaveData() {
-        if(!this.postProfileId || !this.popOutCommunityId) {
+        if (!this.postProfileId || !this.popOutCommunityId) {
           this.$message.error('请完善信息')
           return
         }
         // 分享和话题必须上传内容或者图片
-        if(this.categoryId === 1 || this.categoryId === 2){
-          if(!this.content && (this.imgList.length == 0 || this.imgList == null)) {
+        if (this.categoryId === 1 || this.categoryId === 2) {
+          if (!this.content && (this.imgList.length == 0 || this.imgList == null)) {
             this.$message.error('内容和图片至少填写一项')
             return
-          }else if (this.content.indexOf("https://static.iqycamp.com/images/imgLoading.png?imageslim") != -1){
+          } else if (this.content.indexOf("https://static.iqycamp.com/images/imgLoading.png?imageslim") != -1) {
             this.$message.error('请等待文本编辑的图片上传完成')
             return
           }
         }
-        if(this.categoryId !=3){
-          if (this.imgList && this.imgList.length > 0){
-            let noList=[];
-            noList = this.imgList.filter((item)=>{
+        if (this.categoryId != 3) {
+          if (this.imgList && this.imgList.length > 0) {
+            let noList = [];
+            noList = this.imgList.filter((item) => {
               return item.indexOf('blob') != -1
             });
-            console.log('noList',noList)
-            if (noList.length > 0){
+            console.log('noList', noList)
+            if (noList.length > 0) {
               this.$message.info('请等待图片上传完毕')
               return
             }
           }
         }
         // 话题必须选择某个话题
-        if(!this.popOutTopicId && this.categoryId === 1) {
+        if (!this.popOutTopicId && this.categoryId === 1) {
           this.$message.error('至少选一个话题');
           return
         }
-        if(this.headPic == null  && this.categoryId === 3) {
+        if (this.headPic == null && this.categoryId === 3) {
           this.$message.error('请上传文章头图');
           return
         }
-        if(!this.description && this.categoryId === 3) {
+        if (!this.description && this.categoryId === 3) {
           this.$message.error('请输入文章摘要');
           return
         }
 
-        if(this.description && this.categoryId === 3){
-          if(this.description.split('\n').length>2){
+        if (this.description && this.categoryId === 3) {
+          if (this.description.split('\n').length > 2) {
             this.$message.error('摘要不能超过2行');
             return
           }
-          if(this.description.length>36){
+          if (this.description.length > 36) {
             this.$message.error('摘要不能超过36字');
             return
           }
         }
-        if(!this.title && this.categoryId === 3) {
+        if (!this.title && this.categoryId === 3) {
           this.$message.error('请输入文章标题');
           return
         }
-        if(!this.publish || this.publish === -1) {
+        if (!this.publish || this.publish === -1) {
           this.$message.error('请输入发布状态');
           return
         }
@@ -325,7 +326,7 @@
       /*弹框群组选择change事件*/
       popOutCommunityChange(val) {
         this.communityList.forEach((item, index) => {
-          if(item.id == val) {
+          if (item.id == val) {
             this.topicLabels = item.topicLabels;
           }
         })
@@ -344,9 +345,9 @@
       /*图片数据列表形式*/
       handleAddReducePic(fileList) {
         let imgList = [];
-        if(fileList.length > 0) {
+        if (fileList.length > 0) {
           fileList.forEach((item, index) => {
-            if('response' in item) {
+            if ('response' in item) {
               imgList.push(item.response.msg)
             } else {
               imgList.push(item.url)
@@ -387,12 +388,12 @@
         this.headimgurl = null;
         this.nickname = null;
       },
-      handleCancelEmit(){
-        this.show =false;
+      handleCancelEmit() {
+        this.show = false;
         this.$emit('closeDialog')
       },
-      handleSaveEmit(){
-        this.show =false;
+      handleSaveEmit() {
+        this.show = false;
         this.$emit('reloadList')
       },
       /*去除标签*/
@@ -408,20 +409,20 @@
     },
     computed: {
       findCategory: function () {
-        if(this.categoryId){
-          if(this.categoryId === 1){
+        if (this.categoryId) {
+          if (this.categoryId === 1) {
             return '话题'
-          }else if(this.categoryId === 2){
+          } else if (this.categoryId === 2) {
             return '分享'
-          }else if(this.categoryId === 3){
+          } else if (this.categoryId === 3) {
             return '文章'
           }
-        }else{
+        } else {
           return '无'
         }
       }
     },
-    mounted(){
+    mounted() {
       this.categoryId = this.detail.labelCategory;
       this.headimgurl = this.detail.headimgurl;
       this.nickname = this.detail.nickname;
@@ -440,11 +441,11 @@
       this.headPic = this.detail.headPic;
       this.imgList = this.detail.imgList;
       this.editorName = this.detail.nickname;
-      if(this.detail.headPic){
-        this.headPicList.push({id:1, url:this.detail.headPic});
+      if (this.detail.headPic) {
+        this.headPicList.push({id: 1, url: this.detail.headPic});
       }
     },
-    beforeDestroy(){
+    beforeDestroy() {
       clearInterval(this.interval)
     }
   }

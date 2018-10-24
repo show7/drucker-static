@@ -27,7 +27,9 @@ export default {
         { name: '课程相关', path: '/management/course' },
         { name: '运营功能相关', path: '/management/manage' },
         { name: '数据运营', path: '/management/steve' },
-        { name: '管理员功能', path: '/management/admin' }],
+        { name: '管理员功能', path: '/management/admin' },
+        { name: '高级功能', path: '/management/advance' },
+        ],
       activeIndex: '/management/wechat'
     }
   },
