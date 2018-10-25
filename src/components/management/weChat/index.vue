@@ -10,19 +10,10 @@
         text-color="#fff"
         active-text-color="#7DBE00"
         router>
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-edit"></i>
-            <span>管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/management/wechat/group/content">群内容管理</el-menu-item>
-            <el-menu-item index="/management/wechat/admin/groups">群管理</el-menu-item>
-            <el-menu-item index="/management/wechat/group/statistics">群组数据</el-menu-item>
-            <el-menu-item index="/management/wechat/community/topic">话题管理</el-menu-item>
-
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="/management/wechat/group/content">群内容管理</el-menu-item>
+        <el-menu-item index="/management/wechat/admin/groups">群管理</el-menu-item>
+        <el-menu-item index="/management/wechat/group/statistics">群组数据</el-menu-item>
+        <el-menu-item index="/management/wechat/community/topic">话题管理</el-menu-item>
       </el-menu>
     </div>
 

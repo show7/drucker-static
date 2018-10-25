@@ -10,15 +10,7 @@
         text-color="#fff"
         active-text-color="#7DBE00"
         router>
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-edit"></i>
-            <span>管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/management/advance/refund">退款</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="/management/advance/refund">退款</el-menu-item>
       </el-menu>
     </div>
 
