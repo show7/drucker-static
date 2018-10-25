@@ -7,6 +7,7 @@ import managerRouter from './manage'
 import wechatRouter from './weChat'
 import steveRouter from './steve'
 import adminRouter from './admin'
+import advanceRouter from './advance'
 
 /*课程路由*/
 const course = () => import(/* webpackChunkName: "course" */ '@/components/management/course/index');
@@ -22,6 +23,9 @@ const steve = () => import(/* webpackChunkName: "steve" */ '@/components/managem
 
 /*管理员功能*/
 const admin = () => import(/* webpackChunkName: "admin" */ '@/components/management/admin/index');
+
+/*高级功能*/
+const advance = ()=> import(/* webpackChunkName: "advance" */ '@/components/management/advance/index');
 
 Vue.use(Router)
 
@@ -65,6 +69,11 @@ export default new Router({
           name: 'admin',
           component: admin,
           children: adminRouter
+        }, {
+          path: 'advance',
+          name: 'advance',
+          component: advance,
+          children: advanceRouter
         },
         {
           path: '/',

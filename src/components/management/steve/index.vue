@@ -10,16 +10,8 @@
         text-color="#fff"
         active-text-color="#7DBE00"
         router>
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-edit"></i>
-            <span>数据化运营</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/management/steve/job">定时任务</el-menu-item>
-            <el-menu-item index="/management/steve/query">数据查询</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="/management/steve/job">定时任务</el-menu-item>
+        <el-menu-item index="/management/steve/query">数据查询</el-menu-item>
       </el-menu>
     </div>
 
