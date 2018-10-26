@@ -510,7 +510,7 @@
         this.showInfo = false;
         this.showDetail = false;
       /*  this.pageIndex = 1;*/
-        this.getGroupList();
+        this.groupSearch();
       },
       /*推荐和取消推荐*/
       groupPriority(labelCategory, publishStatus, id, priority){
