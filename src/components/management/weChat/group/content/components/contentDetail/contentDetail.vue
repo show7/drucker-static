@@ -110,17 +110,6 @@
         </el-row>
         <el-row v-if="categoryId !== 3">
           <el-col :span="24">
-            <h4>发布内容</h4>
-            <!--富文本-->
-            <Editor id="contentEditor"
-                    ref="contentEditor"
-                    :value="content"
-                    :toolbar="toolbarNormal"
-                    @change="oneEditorChange"></Editor>
-          </el-col>
-        </el-row>
-        <el-row v-if="categoryId !== 3">
-          <el-col :span="24">
             <h4>上传图片</h4>
             <el-upload
               action="/pc/upload/file"
@@ -142,6 +131,18 @@
             <h4><span>*</span>操作</h4>
             <el-radio v-model="publish" label="1">发布</el-radio>
             <el-radio v-model="publish" label="0">暂不发布</el-radio>
+          </el-col>
+        </el-row>
+        <el-row v-if="publish == 1">
+          <el-col :span="24">
+            <h4>发布时间</h4>
+            <el-date-picker
+                    v-model="publishTime"
+                    type="datetime"
+                    value-format="timestamp"
+                    :default-time="defaultTime"
+                    placeholder="选择定时发布时间（默认为提交时间）">
+            </el-date-picker>
           </el-col>
         </el-row>
         <el-dialog :visible.sync="dialogVisiblePic">
@@ -195,6 +196,8 @@
         categoryId: null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
+        publishTime: null, // 发布时间
+        defaultTime: [ '00:00:00', '23:59:59' ],
       }
     },
     props: ['editorFlag', 'detail', 'categoryList'],
@@ -239,6 +242,7 @@
           communityId: this.popOutCommunityId,
           content: this.content,
           labelCategory: this.categoryId,
+          publishTime: this.publishTime ? this.publishTime : null,
           esChatId: this.esChatId ? this.esChatId : null,
         };
         // 文章

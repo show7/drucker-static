@@ -4,21 +4,15 @@
     <!--头部内容-->
     <div class="group-top">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="8">
           <h4>账户，用户昵称</h4>
           <el-input placeholder="请输入用户账户或用户昵称" v-model="queryAccount" clearable></el-input>
         </el-col>
-        <el-col :span="6">
-          <h4>发表状态（清除查询全部）</h4>
-          <el-select v-model="statusId" placeholder="请选择状态" :clearable="true" @clear="Clear(0)">
-            <el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <h4>标题</h4>
           <el-input placeholder="请输入用户搜索标题" v-model="searchTitle" clearable></el-input>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <h4>内容</h4>
           <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
         </el-col>
@@ -34,11 +28,6 @@
             placeholder="请输入群组名"
             @select="handleSelect"
           ></el-autocomplete>
-
-        <!--  <el-select v-model="communityId" placeholder="请选择群组" :clearable="true" @change="communityIdChange"
-                     @clear="Clear(1)">
-            <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>-->
         </el-col>
         <el-col :span="6">
           <h4>话题（清除查询分享）</h4>
@@ -52,46 +41,20 @@
             <el-option v-for="item in shareLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-col>
-      </el-row>
-      <el-row class="second-line">
-        <el-col :span="4">
+        <el-col :span="6">
           <h4>分类</h4>
           <el-select v-model="categoryId" placeholder="请选择">
             <el-option
-              v-for="item in categoryList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
+                    v-for="item in categoryList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="8">
-          <h4>创建时间</h4>
-          <el-date-picker
-            v-model="createTime"
-            type="daterange"
-            :default-time="defaultTime"
-            :picker-options="pickerOptions"
-            value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-col>
-        <el-col :span="8">
-          <h4>发布时间</h4>
-          <el-date-picker
-            v-model="publishTime"
-            type="daterange"
-            :picker-options="pickerOptions"
-            :default-time="defaultTime"
-            value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-col>
-        <el-col :span="4" class="buttons">
+      </el-row>
+      <el-row class="second-line">
+        <el-col :span="24" class="buttons">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
