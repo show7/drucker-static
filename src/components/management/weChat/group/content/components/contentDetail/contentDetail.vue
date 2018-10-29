@@ -110,6 +110,17 @@
         </el-row>
         <el-row v-if="categoryId !== 3">
           <el-col :span="24">
+            <h4>发布内容</h4>
+            <!--富文本-->
+            <Editor id="contentEditor"
+                    ref="contentEditor"
+                    :value="content"
+                    :toolbar="toolbarNormal"
+                    @change="oneEditorChange"></Editor>
+          </el-col>
+        </el-row>
+        <el-row v-if="categoryId !== 3">
+          <el-col :span="24">
             <h4>上传图片</h4>
             <el-upload
               action="/pc/upload/file"
@@ -133,14 +144,13 @@
             <el-radio v-model="publish" label="0">暂不发布</el-radio>
           </el-col>
         </el-row>
-        <el-row v-if="publish == 1">
+        <el-row v-if="publish == 1 && esChatId == null">
           <el-col :span="24">
             <h4>发布时间</h4>
             <el-date-picker
                     v-model="publishTime"
                     type="datetime"
                     value-format="timestamp"
-                    :default-time="defaultTime"
                     placeholder="选择定时发布时间（默认为提交时间）">
             </el-date-picker>
           </el-col>
@@ -272,7 +282,7 @@
         }
         // 分享和话题必须上传内容或者图片
         if (this.categoryId === 1 || this.categoryId === 2) {
-          if (!this.content && (this.imgList.length == 0 || this.imgList == null)) {
+          if (!this.content && (this.imgList == null || this.imgList.length == 0 )) {
             this.$message.error('内容和图片至少填写一项')
             return
           } else if (this.content.indexOf("https://static.iqycamp.com/images/imgLoading.png?imageslim") != -1) {
