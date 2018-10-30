@@ -114,7 +114,7 @@
         dialogVisible:false,
         fee:'',
         expired:false,
-        expiredList:[{value:true,name:'保留会员'},{value:false,name:'关闭会员'}],
+        expiredList:[{value:false,name:'保留会员'},{value:true,name:'关闭会员'}],
         memberTypeName:''
       }
     },
