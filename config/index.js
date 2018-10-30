@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://dingzj.confucius.mobi',
+        target: 'http://beta.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
