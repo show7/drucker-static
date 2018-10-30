@@ -144,6 +144,17 @@
             <el-radio v-model="publish" label="0">暂不发布</el-radio>
           </el-col>
         </el-row>
+        <el-row v-if="publish == 1 && esChatId == null">
+          <el-col :span="24">
+            <h4>发布时间</h4>
+            <el-date-picker
+                    v-model="publishTime"
+                    type="datetime"
+                    value-format="timestamp"
+                    placeholder="选择定时发布时间（默认为提交时间）">
+            </el-date-picker>
+          </el-col>
+        </el-row>
         <el-dialog :visible.sync="dialogVisiblePic">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
@@ -195,6 +206,8 @@
         categoryId: null,
         dialogVisiblePic: false,
         dialogImageUrl: '',
+        publishTime: null, // 发布时间
+        defaultTime: [ '00:00:00', '23:59:59' ],
       }
     },
     props: ['editorFlag', 'detail', 'categoryList'],
@@ -239,6 +252,7 @@
           communityId: this.popOutCommunityId,
           content: this.content,
           labelCategory: this.categoryId,
+          publishTime: this.publishTime ? this.publishTime : null,
           esChatId: this.esChatId ? this.esChatId : null,
         };
         // 文章
@@ -268,7 +282,7 @@
         }
         // 分享和话题必须上传内容或者图片
         if (this.categoryId === 1 || this.categoryId === 2) {
-          if (!this.content && (this.imgList.length == 0 || this.imgList == null)) {
+          if (!this.content && (this.imgList == null || this.imgList.length == 0 )) {
             this.$message.error('内容和图片至少填写一项')
             return
           } else if (this.content.indexOf("https://static.iqycamp.com/images/imgLoading.png?imageslim") != -1) {
