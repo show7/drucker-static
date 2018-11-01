@@ -4,20 +4,18 @@
     <!--头部内容-->
     <div class="group-top">
       <el-row>
-        <el-col :span="8">
+        <el-col :span="6">
           <h4>账户，用户昵称</h4>
           <el-input placeholder="请输入用户账户或用户昵称" v-model="queryAccount" clearable></el-input>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <h4>标题</h4>
           <el-input placeholder="请输入用户搜索标题" v-model="searchTitle" clearable></el-input>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <h4>内容</h4>
           <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
         </el-col>
-      </el-row>
-      <el-row class="second-line">
         <el-col :span="6">
           <h4>群组（清除查询全部）</h4>
           <el-autocomplete
@@ -29,6 +27,8 @@
             @select="handleSelect"
           ></el-autocomplete>
         </el-col>
+      </el-row>
+      <el-row class="second-line">
         <el-col :span="6">
           <h4>话题（清除查询分享）</h4>
           <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
@@ -240,12 +240,6 @@
         publish: '1', //操作
         editorFlag: false,
         pageIndex: 1,
-        defaultTime: [ '00:00:00', '23:59:59' ], //设置时间段 日期截止时间
-        pickerOptions: {
-          disabledDate: (time) => {
-            return time.getTime() > Date.now() - 8.64e6
-          }
-        },
         detail: {}, // 内容详情
         categoryList:[],//分类列表
         categoryId:null,

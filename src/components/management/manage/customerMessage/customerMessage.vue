@@ -11,7 +11,7 @@
             <p>输入内容(如果会用到xxx这种指代用户昵称的内容请替换为{username})</p>
             <el-input
               type="textarea"
-              :autosize="{ minRows: 4}"
+              :autosize="{ minRows: 4,maxRows: 6}"
               placeholder="请输入内容(如果会用到xxx这种指代用户昵称的内容请替换为{username})"
               v-model="message">
             </el-input>
@@ -20,7 +20,7 @@
             <p>发送人员的openId（换行隔开）</p>
             <el-input
               type="textarea"
-              :autosize="{ minRows: 4}"
+              :autosize="{ minRows: 4,maxRows: 6}"
               placeholder="请输入发送人员的openId（换行隔开）"
               v-model="openids">
             </el-input>
