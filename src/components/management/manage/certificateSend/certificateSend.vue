@@ -69,10 +69,8 @@ export default {
       certificateMonth: 1, // 请选择证书月份
       certificateMonthList: [], // 月份list
       certificateProject: '', //请选择生成学习项目
-      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 8, name: '商业思维项目'}, {id: 12, name: 'L1项目'}, {
-        id: 10,
-        name: 'L2项目'
-      }], //项目list
+      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 12, name: 'L1项目'}, {
+        id: 10, name: 'L2项目' }, {id: 8, name: 'L3项目'}], //项目list
       dialogVisible: false,
       title: '',
       index: null

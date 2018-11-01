@@ -111,7 +111,7 @@ export default {
       certificateMonth: '', // 请选择证书月份
       certificateMonthList: [], // 月份list
       certificateProject: '', //请选择生成学习项目
-      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 8, name: '商业思维项目'}, {id: 12, name: 'L1项目'}, {id: 10, name: 'L2项目'}], //项目list
+      certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 12, name: 'L1项目'}, {id: 10, name: 'L2项目'}, {id: 8, name: 'L3项目'}], //项目list
       certificateIdentity: '', //请选择身份类型
       certificateIdentityList: [
         {id: 1, name: '优秀班长'},
@@ -120,7 +120,8 @@ export default {
         {id: 4, name: '优秀团队'},
         {id: 5, name: '优秀结课'},
         {id: 6, name: '优秀教练'},
-        {id: 7, name: '优秀班委'}
+        {id: 7, name: '优秀班委'},
+        {id: 8, name: '毕业证书'},
       ],
       textareaValue: '',
       dialogVisible: false,
