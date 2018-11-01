@@ -4,19 +4,19 @@
     <!--头部内容-->
     <div class="group-top">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="4">
           <h4>账户，用户昵称</h4>
           <el-input placeholder="请输入用户账户或用户昵称" v-model="queryAccount" clearable></el-input>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="4">
           <h4>标题</h4>
           <el-input placeholder="请输入用户搜索标题" v-model="searchTitle" clearable></el-input>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="4">
           <h4>内容</h4>
           <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="4">
           <h4>群组（清除查询全部）</h4>
           <el-autocomplete
             class="inline-input"
@@ -52,9 +52,7 @@
             </el-option>
           </el-select>
         </el-col>
-      </el-row>
-      <el-row class="second-line">
-        <el-col :span="24" class="buttons">
+        <el-col :span="6" class="buttons">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button type="primary" @click="clearSearch">清除查询</el-button>
         </el-col>
@@ -69,7 +67,7 @@
         </el-col>
         <el-col :span="12">
           <div class="grid-content-right">
-            <el-button type="primary" size="medium" @click="newAdd">添加</el-button>
+            <el-button type="danger" size="medium" @click="newAdd">添加群内容</el-button>
           </div>
         </el-col>
       </el-row>
