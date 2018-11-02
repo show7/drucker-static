@@ -59,8 +59,8 @@
           </el-select>
         </el-col>
         <el-col :span="6" class="buttons">
-          <el-button type="primary" @click="handleSearch">搜索</el-button>
-          <el-button type="primary" @click="clearSearch">清除查询</el-button>
+          <el-button type="info" size="small" @click="handleSearch">搜索</el-button>
+          <el-button type="info" plain  size="small" @click="clearSearch">清除查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -68,12 +68,12 @@
       <el-row>
         <el-col :span="12">
           <div class="grid-content-lift">
-            <el-button type="primary" @click="putDown" size="medium" >下架</el-button>
+            <el-button type="info"  @click="putDown" size="small" >下架</el-button>
           </div>
         </el-col>
         <el-col :span="12">
           <div class="grid-content-right">
-            <el-button type="danger" size="medium" @click="newAdd">添加群内容</el-button>
+            <el-button type="success" size="medium" @click="newAdd">添加群内容</el-button>
           </div>
         </el-col>
       </el-row>
