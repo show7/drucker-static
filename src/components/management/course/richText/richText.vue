@@ -1,6 +1,6 @@
 <template>
   <div class="rich-text-container">
-    <h3>富文本上传</h3>
+    <h3>文章上传</h3>
     <div class="add-box">
       <el-button type="primary" @click="handleAdd">新增</el-button>
     </div>

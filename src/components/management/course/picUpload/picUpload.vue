@@ -2,7 +2,7 @@
 
 <template>
    <div class="pic-upload-container">
-     <h3>图片上传</h3>
+     <h3>文件上传</h3>
      <div class="pic-upload-top">
        <el-upload
          action="/pc/upload/file"
