@@ -27,6 +27,12 @@
             @select="handleSelect"
           ></el-autocomplete>
         </el-col>
+        <el-col :span="4">
+          <h4>栏目（清除查询全部）</h4>
+          <el-select v-model="labelCategory" placeholder="请选择栏目" :clearable="true" @change="topicIdChange">
+            <el-option v-for="item in categories" :key="item.labelCategory" :label="item.name" :value="item.labelCategory"></el-option>
+          </el-select>
+        </el-col>
       </el-row>
       <el-row class="second-line">
         <el-col :span="6">
@@ -79,14 +85,10 @@
         style="width: 100%">
         <el-table-column
           type="selection"
-          width="100">
-       <!--   <template slot-scope="scope">
-            <el-checkbox :disabled="scope.row.publishStatus == 1 ? false:true" ></el-checkbox>
-          </template>-->
+          width="50">
         </el-table-column>
         <el-table-column
           prop="nickname"
-          width="150"
           label="用户昵称">
         </el-table-column>
         <el-table-column
@@ -105,7 +107,7 @@
           width="100"
           label="上传评论">
           <template slot-scope="scope">
-            <el-upload
+      <!--      <el-upload
               class="upload-demo"
               action="/pc/wxmini/content/upload/file"
               :data="{contentId:scope.row.id}"
@@ -116,8 +118,9 @@
               :on-success="handleUpSuccess"
               :before-upload="beforeUpload">
               <p class="uploader-file">上传评论</p>
-              <!--<el-button size="small" type="primary">点击上传</el-button>-->
-            </el-upload>
+              &lt;!&ndash;<el-button size="small" type="primary">点击上传</el-button>&ndash;&gt;
+            </el-upload>-->
+            <p class="uploader-file" @click="handleEditComment(scope.$index,scope.row)">上传评论</p>
 
           </template>
         </el-table-column>
@@ -138,7 +141,6 @@
         </el-table-column>
         <el-table-column
           prop="publishPerson"
-          width="150"
           label="发布人">
         </el-table-column>
 
@@ -188,6 +190,69 @@
                    @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
     <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
 
+    <!--上传评论-->
+    <el-dialog
+      title="评论"
+      :visible.sync="dialogVisibleComment"
+      :show-close="false"
+      :close-on-click-modal="false"
+       width="40%">
+      <div class="pop-out-comment">
+        <div class="comment-list">
+          <el-table
+            :data="commentList"
+            @selection-change="handleSelectionChange"
+            ref="multipleTable"
+            style="width: 100%">
+            <el-table-column
+              prop="nickName"
+              width="150"
+              label="用户昵称">
+            </el-table-column>
+            <el-table-column
+              prop="comment"
+              width="300"
+              label="发表内容">
+              <template slot-scope="scope">
+                <div class="content-box">
+                  <p class="content">{{scope.row.comment}}</p>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="statusString"
+              label="状态">
+            </el-table-column>
+            <el-table-column width="100" fixed="right" label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  @click="handleChangeStatus(scope.$index, scope.row)"> {{scope.row.status === 0 ? '发布':'隐藏'}}
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="input-comment">
+          <el-row>
+            <el-col :span="19">
+              <el-input
+                type="textarea"
+                :rows="4"
+                placeholder="请输入评论"
+                v-model="commentValue">
+              </el-input>
+            </el-col>
+            <el-col :span="4">
+              <el-button type="primary" @click="sendComment">提交评论</el-button>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+         <el-button @click="dialogVisibleComment = false">关 闭</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -243,7 +308,13 @@
         categoryId:null,
         multipleSelection:[],
         state1: '',
-        fileList:[]
+        fileList:[],
+        dialogVisibleComment:false,
+        commentValue:'',
+        categories:[],//栏目
+        labelCategory:null,//栏目id
+        contentId:null,
+        commentList:[],//评论列表
       }
     },
     methods: {
@@ -315,9 +386,11 @@
           if(item.id == val) {
             this.topicLabels = item.topicLabels;
             this.shareLabels = item.shareLabels;
+            this.categories = item.categories;
           }
         })
         this.wechatGroupId = null;
+        this.labelCategory = null
       },
       /*清除部分查询条件*/
       Clear(index) {
@@ -525,24 +598,6 @@
       handleSelectionChange(val) {
        this.multipleSelection = val;
       },
-      /*超出限制*/
-      handleExceed(files, fileList){
-        this.$message.warning('超出限制，只能上传一个文件')
-      },
-      /*判断上传的类型*/
-      beforeUpload(file) {
-        let typeName = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-        const isXLS = typeName === 'xls';
-        if (!isXLS) {
-          this.$message.error('只能上传.xls格式!');
-        }
-        return isXLS;
-      },
-      /*上传成功*/
-      handleUpSuccess(res, file){
-        this.fileList=[]
-        this.$message.success('上传成功')
-      },
       /*模糊查询*/
       querySearch(queryString, cb) {
         let communityList = this.communityList;
@@ -560,11 +615,78 @@
       handleSelect(result){
        this.communityIdChange(result.id);
        this.communityId = result.id
+      },
+      handleEditComment(index,row){
+        this.contentId = row.id;
+        this.commentValue = '';
+        if ( this.contentId) {
+          this.dialogVisibleComment = true;
+          this.getCommentList();
+        }else {
+          this.$message.info('评论前必须要发布哦！')
+        }
+      },
+      getCommentList(){
+        let param = {contentId:this.contentId}
+        apiDataFilter.request({
+          apiPath:'weChat.groupManage.commentList',
+          data:param,
+          successCallback:(res)=>{
+            this.commentList = res.msg;
+          }
+        })
+      },
+      /*确认改变状态*/
+      handleChangeStatus(index,row){
+        let text =  row.status == 0?  '是否继续发布?':'是否继续隐藏?';
+        this.$confirm(text, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+           this.conformChange(row.status,row.commentId)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      /*改变评论状态*/
+      conformChange(status,commentId){
+        let apiPath =  status == 0 ? 'weChat.groupManage.show':'weChat.groupManage.hidden';
+        let param = {commentId:commentId}
+        apiDataFilter.request({
+          apiPath:apiPath,
+          data:param,
+          successCallback:(res)=>{
+            this.$message({
+              type: 'success',
+              message: '操作成功!'
+            });
+            this.getCommentList()
+          }
+        })
+      },
+      /*提交评论*/
+      sendComment(){
+        if (!this.commentValue) {this.$message.error('请填写评论'); return};
+        let param = {comment:this.commentValue, contentId: this.contentId}
+        apiDataFilter.request({
+          apiPath:'weChat.groupManage.comment',
+          data:param,
+          method:'post',
+          successCallback:()=>{
+            this.$message.success('提交成功');
+            this.getCommentList();
+          }
+        })
       }
     },
     created() {
       this.getGroupList();
       this.getCategory();
+
     },
   }
 </script>

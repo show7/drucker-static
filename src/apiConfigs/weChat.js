@@ -18,6 +18,10 @@ export default {
     'category':'pc/wxmini/load/category',//加载分类
     'recommend':'pc/wxmini/content/recommend',//更改推荐状态'
     'unPublish':'pc/wxmini/content/batch/unPublish',//批量下架
+    'commentList':'pc/wxmini/comment/list',//评论列表
+    'hidden':'pc/wxmini/comment/hidden',//隐藏评论
+    'show':'pc/wxmini/comment/show',//显示评论
+    'comment':'pc/wxmini/comment',//提交评论
   },
   'community':{  //群组管理
     'communityList':{
