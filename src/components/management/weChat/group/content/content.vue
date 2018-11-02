@@ -107,19 +107,6 @@
           width="100"
           label="上传评论">
           <template slot-scope="scope">
-      <!--      <el-upload
-              class="upload-demo"
-              action="/pc/wxmini/content/upload/file"
-              :data="{contentId:scope.row.id}"
-              :limit="1"
-              :show-file-list="false"
-              :file-list="fileList"
-              :on-exceed="handleExceed"
-              :on-success="handleUpSuccess"
-              :before-upload="beforeUpload">
-              <p class="uploader-file">上传评论</p>
-              &lt;!&ndash;<el-button size="small" type="primary">点击上传</el-button>&ndash;&gt;
-            </el-upload>-->
             <p class="uploader-file" @click="handleEditComment(scope.$index,scope.row)">上传评论</p>
 
           </template>
@@ -354,7 +341,8 @@
           searchTitle: this.searchTitle != null ? this.searchTitle : null,
           searchContent: this.searchContent ? this.searchContent : null,
           labelId: this.topicId ? this.topicId : this.shareId,
-          labelCategory:this.categoryId ? this.categoryId:null,
+          labelCategory: this.categoryId ? this.categoryId:null,
+          tabId: this.labelCategory ? this.labelCategory:null,
           page: { pageSize: 10, page: this.pageIndex }
         };
         this.groupList = [];
@@ -386,11 +374,9 @@
           if(item.id == val) {
             this.topicLabels = item.topicLabels;
             this.shareLabels = item.shareLabels;
-            this.categories = item.categories;
           }
         })
         this.wechatGroupId = null;
-        this.labelCategory = null
       },
       /*清除部分查询条件*/
       Clear(index) {
@@ -422,6 +408,8 @@
         this.searchTitle = null;
         this.searchContent = null;
         this.categoryId = null;
+        this.labelCategory = null;
+        this.state1 = '';
         this.groupSearch();
       },
       /*得到当前页数*/
@@ -614,9 +602,18 @@
       /*选择*/
       handleSelect(result){
        this.communityIdChange(result.id);
-       this.communityId = result.id
+       this.communityId = result.id;
+       this.handleCategory(result.id);
       },
-      handleEditComment(index,row){
+      handleCategory(id){
+        this.communityList.forEach((item, index) => {
+          if(item.id == id) {
+            this.categories = item.categories;
+          }
+        })
+        this.labelCategory = null
+      },
+        handleEditComment(index,row){
         this.contentId = row.id;
         this.commentValue = '';
         if ( this.contentId) {
@@ -638,19 +635,7 @@
       },
       /*确认改变状态*/
       handleChangeStatus(index,row){
-        let text =  row.status == 0?  '是否继续发布?':'是否继续隐藏?';
-        this.$confirm(text, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-           this.conformChange(row.status,row.commentId)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消'
-          });
-        });
+        this.conformChange(row.status,row.commentId)
       },
       /*改变评论状态*/
       conformChange(status,commentId){
