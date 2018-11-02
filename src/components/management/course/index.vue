@@ -18,6 +18,8 @@
           <el-menu-item index="/management/course/exerciseapplication">应用题管理</el-menu-item>
           <el-menu-item index="/management/course/courseextended">拓展学习</el-menu-item>
           <el-menu-item index="/management/course/knowledgecard">知识卡片管理</el-menu-item>
+          <el-menu-item index="/management/course/richtext">文章上传</el-menu-item>
+          <el-menu-item index="/management/course/fileupload">文件上传</el-menu-item>
         </el-menu>
       </div>
 

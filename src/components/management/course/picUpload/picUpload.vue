@@ -31,7 +31,7 @@
          <p>{{picUrl}}</p>
        </div>
        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="handleConfor">确 定</el-button>
+          <el-button type="primary" @click="handleConfirm">确 定</el-button>
         </span>
      </el-dialog>
    </div>
@@ -54,7 +54,6 @@
         this.$message.error(`图片最多上传1张`)
       },
       sendPicSuccess(res, file, fileList){
-        console.log(res, file, fileList)
         this.dialogVisiblePop = true;
         this.picUrl = res.msg;
       },
@@ -67,7 +66,7 @@
       handleBeforeUpload(file){
         /*this.picList = []*/
       },
-      handleConfor(){
+      handleConfirm(){
         this.dialogVisiblePop = false;
         this.picList = []
       }

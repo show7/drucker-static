@@ -49,7 +49,7 @@
       :visible.sync="dialogVisible"
       :close-on-click-modal = 'false'
       :show-close="false"
-      width="40%">
+      width="80%">
       <div class="pop-box">
           <div class="title-name">
             <h4>文章标题</h4>
@@ -110,7 +110,7 @@
           method:'post',
           data:param,
           successCallback:(res)=>{
-            this.$message.success('提交成功');
+            this.$message.success(res.msg);
             this.getList();
             this.dialogVisible = false;
           }

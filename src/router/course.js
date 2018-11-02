@@ -12,6 +12,8 @@ const courseExtended = () => import(/* webpackChunkName: "course" */ '@/componen
 const exerciseChoice = () => import(/* webpackChunkName: "course" */ '@/components/management/course/exerciseChoice/exerciseChoice') // 选择题管理
 const exerciseApplication = () => import(/* webpackChunkName: "course" */ '@/components/management/course/exerciseApplication/exerciseApplication') // 应用题管理
 const knowledgeCard = () => import(/* webpackChunkName: "course" */ '@/components/management/course/knowledgeCard/knowledgeCard') // 卡片管理
+const fileupload = () => import(/* webpackChunkName: "admin" */ '@/components/management/course/picUpload/picUpload')//文件上传
+const richText = () => import(/* webpackChunkName: "admin" */ '@/components/management/course/richText/richText')//富文本上传
 
 export default [
   { path: 'courseintroduce', name: 'courseIntroduce', component: courseIntroduce },
@@ -21,5 +23,7 @@ export default [
   { path: 'exercisechoice', name: 'exerciseChoice', component: exerciseChoice },
   { path: 'exerciseapplication', name: 'exerciseApplication', component: exerciseApplication },
   { path: 'knowledgecard', name: 'knowledgeCard', component: knowledgeCard },
+  { path: 'fileupload', name: 'fileupload', component: fileupload },
+  { path: 'richtext', name: 'richText', component: richText },
 
 ]
