@@ -9,13 +9,26 @@
              <el-input v-model="remark" placeholder="请输入图片说明"></el-input>
            </div>
          </el-col>
+         <el-col :span="8">
+           <div class="select-option">
+             <h4>选择微信公众号</h4>
+             <el-select v-model="serviceId" placeholder="请选择微信公众号">
+               <el-option
+                 v-for="item in serviceList"
+                 :key="item.serviceId"
+                 :label="item.name"
+                 :value="item.serviceId">
+               </el-option>
+             </el-select>
+           </div>
+         </el-col>
        </el-row>
        <el-row>
          <el-col :span="4">
            <div>
              <el-upload
                class="upload-demo"
-               :action='shortUrl+remark'
+               :action='shortUrl+remark+"&serviceId="+serviceId'
                :limit="1"
                :on-success="sendShortPicSuccess"
                :on-exceed="handleExceed"
@@ -28,7 +41,7 @@
            <div>
              <el-upload
                class="upload-demo"
-               :action='langUrl+remark'
+               :action='langUrl+remark+"&serviceId="+serviceId'
                :limit="1"
                :on-success="sendLongPicSuccess"
                :on-exceed="handleExceed"
@@ -51,7 +64,9 @@
         shortFileList:[],
         longFileList:[],
         shortUrl:'/wx/file/upload/image/?tmp=1&remark=',
-        langUrl:'/wx/file/upload/image/?tmp=0&remark='
+        langUrl:'/wx/file/upload/image/?tmp=0&remark=',
+        serviceId:1,
+        serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
       }
     },
     methods:{

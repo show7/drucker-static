@@ -85,5 +85,11 @@ export default {
   },
   'customerMessage':{
     'send':'pc/operation/send/customer/msg', //发送客服消息
+  },
+  'statusFreeze':{
+    'freeze':'pc/operation/freeze/member',//冻结学籍
+  },
+  'changeWeChat':{
+    'change':'pc/operation/change/wechat',//交换微信号
   }
 }

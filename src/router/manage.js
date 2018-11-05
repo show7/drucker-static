@@ -25,6 +25,9 @@ const customerMessage = () => import(/* webpackChunkName: "manage" */ '@/compone
 
 const employee = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/employee/employee') //hr
 
+const statusFreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusFreeze/statusFreeze') //学籍冻结
+const changeWeChat = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/changeWeChat/changeWeChat') //交换微信号
+
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -45,4 +48,6 @@ export default [
   { path: 'coupon', name: 'coupon', component: coupon},
   { path: 'employee', name: 'employee', component: employee},
   { path: 'customermessage', name: 'customerMessage', component: customerMessage},
+  { path: 'statusfreeze', name: 'statusFreeze', component: statusFreeze},
+  { path: 'changewechat', name: 'changeWeChat', component: changeWeChat},
 ]
