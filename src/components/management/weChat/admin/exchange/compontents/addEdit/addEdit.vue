@@ -29,7 +29,8 @@
             </div>
             <div class="grid-content-down">
               <span>*</span> 礼金定价：
-              <el-input :disabled="disabled" v-model="productionItem.coinPrice" placeholder="请输入礼金定价"></el-input> 礼金
+              <el-input :disabled="disabled" v-model="productionItem.coinPrice" placeholder="请输入礼金定价"></el-input>
+              礼金
             </div>
             <div class="grid-content grid-content-down">
               <span>*</span>排列顺序：
@@ -54,8 +55,11 @@
           </el-col>
           <el-col :span="14">
             <div class="grid-content">
-              商品标签：<el-input class="tag"  maxlength="4" v-model="productionItem.productTags[0]" placeholder="请输入标签"></el-input>
-              <el-input class="tag"    maxlength="4" v-model="productionItem.productTags[1]" placeholder="请输入标签"></el-input>
+              商品标签：
+              <el-input class="tag" maxlength="4" v-model="productionItem.productTags[0]"
+                        placeholder="请输入标签"></el-input>
+              <el-input class="tag" maxlength="4" v-model="productionItem.productTags[1]"
+                        placeholder="请输入标签"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -77,7 +81,7 @@
           <el-col :span="12">
             <div class="grid-content ">
               <span>*</span>商品分类：
-              <el-select :disabled="disabled" v-model="productionItem.productionTypeId" placeholder="请选择分类" >
+              <el-select :disabled="disabled" v-model="productionItem.productionTypeId" placeholder="请选择分类">
                 <el-option
                   v-for="item in productionItem.productionType"
                   :key="item.id"
@@ -96,13 +100,13 @@
                 :on-success="handleFileSuccess"
                 :before-upload="beforeFileUpload"
                 :file-list="fileItemText">
-                <el-button  size="small" type="primary">点击上传</el-button>
+                <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">为正常使用，只能上传txt文件</div>
               </el-upload>
             </div>
           </el-col>
         </el-row>
-        <el-row >
+        <el-row>
           <el-col :span="24">
             <div class="grid-content ">
               <span>*</span>客服消息推送文案：
@@ -112,7 +116,7 @@
           </el-col>
         </el-row>
 
-        <div class="message-content" >
+        <div class="message-content">
           <div class="message-box" v-for="(item, index) in productionItem.messageList" :key="index">
             <div class="item">
               <el-input v-if="item.type == 1" v-model="item.text" placeholder="请输入内容"></el-input>
@@ -177,19 +181,20 @@
 
 <script>
   import Editor from '../../../../../../common/editor/editor'
+
   export default {
     name: "addEdit",
     props: {
-      dialogVisibleF:Boolean,
-      productItem:Object
+      dialogVisibleF: Boolean,
+      productItem: Object
     },
     components: {Editor},
     data() {
       return {
-        fileItemText:[],//text文件
-        picTextIndex:null,//点击确定图片的位置
-        toolbarNormal: ['bold','image'],
-        disabled:false,
+        fileItemText: [],//text文件
+        picTextIndex: null,//点击确定图片的位置
+        toolbarNormal: ['bold', 'image'],
+        disabled: false,
         productionItem: {
           productImg: '',//商品图片
           productionName: '',//商品名称
@@ -202,11 +207,11 @@
           fileItemText: '',//上传text兑换码文件
           productTags: [],//标签
           productDetail: '',//详情
-          messageList: [{ type:1, text: '文本'},{type:2, text:null},],//模板消息
-          publishStatus:'1',//发布状态
-          order:'',//排序
-          keyWords:'',//关键字
-          timedTask:'',//定时下架
+          messageList: [{type: 1, text: '文本'}, {type: 2, text: null},],//模板消息
+          publishStatus: '1',//发布状态
+          order: '',//排序
+          keyWords: '',//关键字
+          timedTask: '',//定时下架
           title: '新增'
         }
       }
@@ -226,87 +231,88 @@
 
       },
       /*隐藏弹框*/
-      hidePopOut(){
-        this.$emit('callBackPop',false)
+      hidePopOut() {
+        this.$emit('callBackPop', false)
       },
       /*文本编辑*/
-      oneEditorChange(val){
+      oneEditorChange(val) {
         this.productionItem.productDetail = val
       },
       /*上传text文本*/
-      handleFileSuccess(res, file){
-        this.productionItem.fileItemText=res.msg;
+      handleFileSuccess(res, file) {
+        this.productionItem.fileItemText = res.msg;
       },
       /*校验上传text文本*/
-      beforeFileUpload(file){
+      beforeFileUpload(file) {
         let typeFlag = 'text/plain' == file.type;
-        if (this.disabled){
+        if (this.disabled) {
           this.$message.info('不可编辑');
           return !this.disabled
         }
-        if (!typeFlag){
+        if (!typeFlag) {
           this.$message.error('只能上传txt文件');
           return typeFlag
         }
 
       },
       /*客服消息图片上传成功*/
-      handleTextSuccess(res, file){
-        this.productionItem.messageList.forEach((item,index)=>{
+      handleTextSuccess(res, file) {
+        this.productionItem.messageList.forEach((item, index) => {
           if (this.picTextIndex == index) {
             this.productionItem.messageList[index].text = res.msg
           }
         })
       },
       /*确定点击图片在数组的位置*/
-      handlePicTextIndex(index){
+      handlePicTextIndex(index) {
         this.picTextIndex = index;
       },
       /*删除客服消息*/
-      handleDel(index){
-        this.productionItem.messageList.splice(index,1);
+      handleDel(index) {
+        this.productionItem.messageList.splice(index, 1);
       },
       /*添加图文消息*/
-      handleAddMessage(flag){
+      handleAddMessage(flag) {
         let length = this.productionItem.messageList.length;
-        if (length == 5){
+        if (length == 5) {
           this.$message.info('只能添加5条图文消息哦！');
           return
         }
-        let messageText = { type:1, text: ''};
-        let messagePic = {type:2, text: ''};
-        if (flag == 1){
+        let messageText = {type: 1, text: ''};
+        let messagePic = {type: 2, text: ''};
+        if (flag == 1) {
           this.productionItem.messageList.push(messageText)
         } else {
           this.productionItem.messageList.push(messagePic)
         }
       },
       /*检验数据*/
-      handleCheckData(){
-        const {productImg, productionName, coinPrice, order, keyWords,productionTypeId,fileItemText,timedTask} = this.productionItem;
-        if (!productImg || !productionName || !coinPrice || !order){
-           this.$message.error('请完善必填信息');
+      handleCheckData() {
+        const {productImg, productionName, coinPrice, order, keyWords, productionTypeId, fileItemText, timedTask} = this.productionItem;
+        if (!productImg || !productionName || !coinPrice || !order) {
+          this.$message.error('请完善必填信息');
           return;
-        }if (!this.checkMessageList()){
+        }
+        if (!this.checkMessageList()) {
           this.$message.error('图文消息内容不能为空');
           return;
         }
-        if (productionTypeId == 2 && !this.disabled){
-          if (!fileItemText){
+        if (productionTypeId == 2 && !this.disabled) {
+          if (!fileItemText) {
             this.$message.error('请上传兑换码文本');
             return;
           }
-        }else if (productionTypeId == 3){
-           if (!keyWords){
+        } else if (productionTypeId == 3) {
+          if (!keyWords) {
             this.$message.error('关键字不能为空');
             return;
-          } else if (!timedTask){
-             this.$message.error('时间不能为空');
-             return;
-           }
+          } else if (!timedTask) {
+            this.$message.error('时间不能为空');
+            return;
+          }
         }
 
-        this.$emit('callbackSubmit',this.productionItem)
+        this.$emit('callbackSubmit', this.productionItem)
       },
       /*检验推文消息*/
       checkMessageList() {
@@ -327,21 +333,6 @@
     },
     mounted() {
       this.productionItem = this.productItem;
-    /*  this.productionItem.communityList = this.productItem.communityList;
-      this.productionItem.productImg = this.productItem.productImg;
-      this.productionItem.productionName = this.productItem.productionName;
-      this.productionItem.productionType = this.productItem.productionType;
-      this.productionItem.productionTypeId = this.productItem.productionTypeId;
-      this.productionItem.coinPrice = this.productItem.coinPrice;
-      this.productionItem.communityId = this.productItem.communityId;
-      this.productionItem.productNum = this.productItem.productNum;
-      this.productionItem.fileItemText = this.productItem.fileItemText;
-      this.productionItem.productTags = this.productItem.productTags;
-      this.productionItem.productDetail = this.productItem.productDetail;
-      this.productionItem.messageList = this.productItem.messageList;
-      this.productionItem.title = this.productItem.title;
-      this.productionItem.keyWords = this.productItem.keyWords;
-      this.productionItem.timedTask = this.productItem.timedTask;*/
       if (this.productItem.title == '编辑') {
         this.productionItem['id'] = this.productItem.id;
         this.disabled = true;
