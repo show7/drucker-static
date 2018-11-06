@@ -46,6 +46,7 @@
                   v-for="item in productionItem.communityList"
                   :key="item.id"
                   :label="item.name"
+                  :disabled="item.id ==0 ? true:false"
                   :value="item.id">
                 </el-option>
               </el-select>
@@ -222,10 +223,7 @@
       },
       /*图片上传之前*/
       beforeAvatarUpload() {
-        if (this.disabled){
-          this.$message.info('不可编辑')
-        }
-        return !this.disabled
+
       },
       /*隐藏弹框*/
       hidePopOut(){

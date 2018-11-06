@@ -159,7 +159,7 @@
     mounted() {
       this.productionItem = this.productItem;
       this.productionItem.communityList.forEach((item,index)=>{
-        if (item.communityId ==  this.productionItem.communityId){
+        if (item.id == this.productionItem.communityId){
           this.communityName = item.name
         }
       })
