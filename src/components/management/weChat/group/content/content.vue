@@ -4,63 +4,83 @@
     <!--头部内容-->
     <div class="group-top">
       <el-row>
-        <el-col :span="4">
-          <h4>账户，用户昵称</h4>
-          <el-input placeholder="请输入用户账户或用户昵称" v-model="queryAccount" clearable></el-input>
+        <el-col :span="6">
+          <div class="grid-content">
+            账户或昵称：
+            <el-input placeholder="请输入用户账户或用户昵称" v-model="queryAccount" clearable></el-input>
+          </div>
         </el-col>
-        <el-col :span="4">
-          <h4>标题</h4>
+        <el-col :span="6">
+          <div class="grid-content">
+            标题：
           <el-input placeholder="请输入用户搜索标题" v-model="searchTitle" clearable></el-input>
+          </div>
         </el-col>
-        <el-col :span="4">
-          <h4>内容</h4>
+        <el-col :span="6">
+          <div class="grid-content">
+            内容：
           <el-input placeholder="请输入用户搜索内容" v-model="searchContent" clearable></el-input>
+          </div>
         </el-col>
-        <el-col :span="4">
-          <h4>群组（清除查询全部）</h4>
-          <el-autocomplete
-            class="inline-input"
-            :fetch-suggestions="querySearch"
-            value-key="name"
-            v-model="state1"
-            placeholder="请输入群组名"
-            @select="handleSelect"
-          ></el-autocomplete>
-        </el-col>
-        <el-col :span="4">
-          <h4>栏目（清除查询全部）</h4>
-          <el-select v-model="labelCategory" placeholder="请选择栏目" :clearable="true" @change="topicIdChange">
-            <el-option v-for="item in categories" :key="item.labelCategory" :label="item.name" :value="item.labelCategory"></el-option>
+        <el-col :span="6">
+          <div class="grid-content">
+            话题(清除查询分享)：
+          <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
+            <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+          </div>
         </el-col>
       </el-row>
       <el-row class="second-line">
         <el-col :span="6">
-          <h4>话题（清除查询分享）</h4>
-          <el-select v-model="topicId" placeholder="请选择话题" :clearable="true" @change="topicIdChange">
-            <el-option v-for="item in topicLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          <div class="grid-content">
+            群组(清除查询全部)：
+            <el-autocomplete
+              class="inline-input"
+              :fetch-suggestions="querySearch"
+              value-key="name"
+              v-model="state1"
+              placeholder="请输入群组名"
+              @select="handleSelect"
+            ></el-autocomplete>
+          </div>
         </el-col>
         <el-col :span="6">
-          <h4>分享（清除查询话题）</h4>
+          <div class="grid-content">
+            栏目(清除查询全部)：
+            <el-select v-model="labelCategory" placeholder="请选择栏目" :clearable="true" @change="topicIdChange">
+              <el-option v-for="item in categories" :key="item.labelCategory" :label="item.name"
+                         :value="item.labelCategory"></el-option>
+            </el-select>
+          </div>
+        </el-col>
+
+        <el-col :span="6">
+          <div class="grid-content">
+            分享(清除查询话题)：
           <el-select v-model="shareId" placeholder="请选择分享" :clearable="true" @change="shareIdChange">
             <el-option v-for="item in shareLabels" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+          </div>
         </el-col>
         <el-col :span="6">
-          <h4>分类</h4>
+          <div class="grid-content">
+            分类：
           <el-select v-model="categoryId" placeholder="请选择">
             <el-option
-                    v-for="item in categoryList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id">
+              v-for="item in categoryList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
             </el-option>
           </el-select>
+          </div>
         </el-col>
-        <el-col :span="6" class="buttons">
+      </el-row>
+      <el-row>
+        <el-col :span="24" class="buttons">
           <el-button type="info" size="small" @click="handleSearch">搜索</el-button>
-          <el-button type="info" plain  size="small" @click="clearSearch">清除查询</el-button>
+          <el-button type="info" plain size="small" @click="clearSearch">清除查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -68,7 +88,7 @@
       <el-row>
         <el-col :span="12">
           <div class="grid-content-lift">
-            <el-button type="info"  @click="putDown" size="small" >下架</el-button>
+            <el-button type="info" @click="putDown" size="small">下架</el-button>
           </div>
         </el-col>
         <el-col :span="12">
@@ -156,7 +176,8 @@
             </el-button>
             <el-button
               size="mini"
-              @click="groupPriority(scope.row.labelCategory,scope.row.publishStatus,scope.row.esChatId,scope.row.priority)">{{scope.row.priority ? '取消推荐':'推荐'}}
+              @click="groupPriority(scope.row.labelCategory,scope.row.publishStatus,scope.row.esChatId,scope.row.priority)">
+              {{scope.row.priority ? '取消推荐':'推荐'}}
             </el-button>
           </template>
         </el-table-column>
@@ -175,7 +196,7 @@
     <ContentDetail v-if="showDetail" @closeDialog="handleGet"
                    :categoryList="categoryList"
                    @reloadList="handleSave" :detail="detail" :editorFlag="editorFlag"/>
-    <ContentInfo v-if="showInfo" @closeDialog="handleGet"  :detail="detail" />
+    <ContentInfo v-if="showInfo" @closeDialog="handleGet" :detail="detail"/>
 
     <!--上传评论-->
     <el-dialog
@@ -183,7 +204,7 @@
       :visible.sync="dialogVisibleComment"
       :show-close="false"
       :close-on-click-modal="false"
-       width="40%">
+      width="40%">
       <div class="pop-out-comment">
         <div class="comment-list">
           <el-table
@@ -253,25 +274,25 @@
 
   export default {
     name: 'group',
-    components: { ContentDetail, ContentInfo },
+    components: {ContentDetail, ContentInfo},
     data() {
       return {
         topicLabels: [],//话题列表
         shareLabels: [],//分享列表
         topicId: null,
         shareId: null,
-        topicName:null,
-        shareName:null,
+        topicName: null,
+        shareName: null,
         groupList: [],
         dialogVisible: false, //编辑弹框
         dialogVisibleDesc: false, //查看详情弹框
         imageUrl: '',
-        showDetail : false,  //展示修改弹窗
-        showInfo : false,  //展示详情弹窗
+        showDetail: false,  //展示修改弹窗
+        showInfo: false,  //展示详情弹窗
         queryAccount: null, //搜索的昵称
         searchTitle: null, //搜索标题
         searchContent: null, // 搜索内容
-        statusList: [ { id: 0, name: '未修改' }, { id: 1, name: '已发布' }, { id: 2, name: '已修改' } ],
+        statusList: [{id: 0, name: '未修改'}, {id: 1, name: '已发布'}, {id: 2, name: '已修改'}],
         statusId: null, //状态id
         communityList: [], //群组
         communityId: null, //群组选择的ID
@@ -291,17 +312,17 @@
         editorFlag: false,
         pageIndex: 1,
         detail: {}, // 内容详情
-        categoryList:[],//分类列表
-        categoryId:null,
-        multipleSelection:[],
+        categoryList: [],//分类列表
+        categoryId: null,
+        multipleSelection: [],
         state1: '',
-        fileList:[],
-        dialogVisibleComment:false,
-        commentValue:'',
-        categories:[],//栏目
-        labelCategory:null,//栏目id
-        contentId:null,
-        commentList:[],//评论列表
+        fileList: [],
+        dialogVisibleComment: false,
+        commentValue: '',
+        categories: [],//栏目
+        labelCategory: null,//栏目id
+        contentId: null,
+        commentList: [],//评论列表
       }
     },
     methods: {
@@ -312,9 +333,9 @@
           successCallback(res) {
             self.groupList = res.msg.content.content;
             self.communityList = res.msg.communityList;
-            if(self.groupList.length > 0) {
+            if (self.groupList.length > 0) {
               self.groupList.forEach((item, index) => {
-                self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
+                self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
               })
             }
             self.pageCount = res.msg.content.page.pageCount;
@@ -334,16 +355,16 @@
           status: this.statusId,
           communityId: this.communityId,
           wechatGroupId: this.wechatGroupId,
-          createStartTime: this.createTime != null ? this.createTime[ 0 ] : null,
-          createEndTime: this.createTime != null ? this.createTime[ 1 ] : null,
-          publishStartTime: this.publishTime != null ? this.publishTime[ 0 ] : null,
-          publishEndTime: this.publishTime != null ? this.publishTime[ 1 ] : null,
+          createStartTime: this.createTime != null ? this.createTime[0] : null,
+          createEndTime: this.createTime != null ? this.createTime[1] : null,
+          publishStartTime: this.publishTime != null ? this.publishTime[0] : null,
+          publishEndTime: this.publishTime != null ? this.publishTime[1] : null,
           searchTitle: this.searchTitle != null ? this.searchTitle : null,
           searchContent: this.searchContent ? this.searchContent : null,
           labelId: this.topicId ? this.topicId : this.shareId,
-          labelCategory: this.categoryId ? this.categoryId:null,
-          tabId: this.labelCategory ? this.labelCategory:null,
-          page: { pageSize: 10, page: this.pageIndex }
+          labelCategory: this.categoryId ? this.categoryId : null,
+          tabId: this.labelCategory ? this.labelCategory : null,
+          page: {pageSize: 10, page: this.pageIndex}
         };
         this.groupList = [];
         ApiDataFilter.request({
@@ -352,9 +373,9 @@
           data: param,
           successCallback(res) {
             self.groupList = res.msg.content;
-            if(self.groupList.length > 0) {
+            if (self.groupList.length > 0) {
               self.groupList.forEach((item, index) => {
-                self.groupList[ index ].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
+                self.groupList[index].postTime = moment(item.postTime).format('YYYY-MM-DD HH:mm:ss');
               })
             }
             self.pageCount = res.msg.page.pageCount;
@@ -371,7 +392,7 @@
       /*群组选择change事件*/
       communityIdChange(val) {
         this.communityList.forEach((item, index) => {
-          if(item.id == val) {
+          if (item.id == val) {
             this.topicLabels = item.topicLabels;
             this.shareLabels = item.shareLabels;
           }
@@ -380,9 +401,9 @@
       },
       /*清除部分查询条件*/
       Clear(index) {
-        if(index == 0) {
+        if (index == 0) {
           this.statusId = null
-        } else if(index == 1) {
+        } else if (index == 1) {
           this.communityId = null;
           this.wechatGroupId = null;
           this.topicId = null;
@@ -419,11 +440,11 @@
       },
       /*选择框发生改变*/
       checkboxChange(id, val) {
-        if(val) {
+        if (val) {
           this.checkbox.push(id)
         } else {
           this.checkbox.forEach((item, index) => {
-            if(item == id) {
+            if (item == id) {
               this.checkbox.splice(index, 1)
             }
           })
@@ -431,7 +452,7 @@
       },
       /*发布*/
       groupPublish(checkbox) {
-        if(checkbox.length == 0) {
+        if (checkbox.length == 0) {
           this.$message.error('请先选择需要发布的选项');
           return
         }
@@ -439,7 +460,7 @@
         ApiDataFilter.request({
           apiPath: 'weChat.groupManage.groupPublish',
           method: 'post',
-          data: { esIds: checkbox },
+          data: {esIds: checkbox},
           successCallback(res) {
             self.$message.success('发布成功');
             self.groupSearch();
@@ -472,9 +493,9 @@
         this.detail.communityList = this.communityList;
         this.detail.topicLabels = this.topicLabels;
         let picGroup = [];
-        if(row.picGroup != null && row.picGroup.length > 0) {
+        if (row.picGroup != null && row.picGroup.length > 0) {
           row.picGroup.forEach((item, index) => {
-            picGroup.push({ id: index, url: item })
+            picGroup.push({id: index, url: item})
           });
         }
         this.detail.picGroupList = picGroup;
@@ -482,7 +503,7 @@
         this.editorFlag = true;
         this.dialogVisibleDesc = false;
         this.dialogVisible = true;
-        this.showDetail =true;
+        this.showDetail = true;
         this.editorName = row.nickname;
       },
       /*查看详情*/
@@ -496,9 +517,9 @@
         this.detail.popOutTopicId = row.topicId;
         this.detail.publish = row.publish.toString();
         let picGroup = [];
-        if(row.picGroup != null && row.picGroup.length > 0) {
+        if (row.picGroup != null && row.picGroup.length > 0) {
           row.picGroup.forEach((item, index) => {
-            picGroup.push({ id: index, url: item })
+            picGroup.push({id: index, url: item})
           });
         }
         this.detail.picGroupList = picGroup;
@@ -510,81 +531,81 @@
         this.dialogVisibleDesc = true;
         this.dialogVisible = false;
         this.editorFlag = false;
-        this.showInfo =true;
+        this.showInfo = true;
       },
-      handleGet(){
+      handleGet() {
         this.dialogVisibleDesc = false;
         this.dialogVisible = false;
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
       },
-      handleSave(){
+      handleSave() {
         this.dialogVisibleDesc = false;
         this.dialogVisible = false;
         this.editorFlag = false;
         this.showInfo = false;
         this.showDetail = false;
-      /*  this.pageIndex = 1;*/
+        /*  this.pageIndex = 1;*/
         this.groupSearch();
       },
       /*推荐和取消推荐*/
-      groupPriority(labelCategory, publishStatus, id, priority){
-        if (labelCategory == 1){
+      groupPriority(labelCategory, publishStatus, id, priority) {
+        if (labelCategory == 1) {
           this.$message.info('话题观点暂不能推荐～')
           return;
         }
-        if (publishStatus != 1){
+        if (publishStatus != 1) {
           this.$message.info('发布之后才能推荐哦！')
           return;
         }
-        let param = {esId:id,status:!priority};
+        let param = {esId: id, status: !priority};
         apiDataFilter.request({
-          apiPath:'weChat.groupManage.recommend',
-          method:'post',
-          data:param,
-          successCallback:(res)=>{
+          apiPath: 'weChat.groupManage.recommend',
+          method: 'post',
+          data: param,
+          successCallback: (res) => {
             this.$message.success('操作成功');
             this.groupSearch();
           }
         })
       },
-       /*获取分类*/
-      getCategory(){
-       apiDataFilter.request({
-         apiPath:'weChat.groupManage.category',
-         successCallback:(res)=>{
+      /*获取分类*/
+      getCategory() {
+        apiDataFilter.request({
+          apiPath: 'weChat.groupManage.category',
+          successCallback: (res) => {
             this.categoryList = res.msg;
-         }
-       })
+          }
+        })
       },
       /*下架*/
-      putDown(){
-       let idList = [];
-       let statusList = [];
-        this.multipleSelection.forEach((item,index)=>{
-          if (item.publishStatus != 1){
+      putDown() {
+        let idList = [];
+        let statusList = [];
+        this.multipleSelection.forEach((item, index) => {
+          if (item.publishStatus != 1) {
             statusList.push(item.esChatId)
           } else {
             idList.push(item.esChatId)
           }
         })
-        if (statusList.length>0){
+        if (statusList.length > 0) {
           this.$message.error('不能选择未发布的选项哦！');
           return;
         }
         apiDataFilter.request({
-          apiPath:'weChat.groupManage.unPublish',
-          method:'post',
-          data:{esIds: idList},
-          successCallback:()=>{
+          apiPath: 'weChat.groupManage.unPublish',
+          method: 'post',
+          data: {esIds: idList},
+          successCallback: () => {
             this.$message.success('操作成功');
             this.getGroupList();
           }
         })
       },
       handleSelectionChange(val) {
-       this.multipleSelection = val;
+        this.multipleSelection = val;
       },
       /*模糊查询*/
       querySearch(queryString, cb) {
@@ -600,51 +621,51 @@
         };
       },
       /*选择*/
-      handleSelect(result){
-       this.communityIdChange(result.id);
-       this.communityId = result.id;
-       this.handleCategory(result.id);
+      handleSelect(result) {
+        this.communityIdChange(result.id);
+        this.communityId = result.id;
+        this.handleCategory(result.id);
       },
-      handleCategory(id){
+      handleCategory(id) {
         this.communityList.forEach((item, index) => {
-          if(item.id == id) {
+          if (item.id == id) {
             this.categories = item.categories;
           }
         })
         this.labelCategory = null
       },
-        handleEditComment(index,row){
+      handleEditComment(index, row) {
         this.contentId = row.id;
         this.commentValue = '';
-        if ( this.contentId) {
+        if (this.contentId) {
           this.dialogVisibleComment = true;
           this.getCommentList();
-        }else {
+        } else {
           this.$message.info('评论前必须要发布哦！')
         }
       },
-      getCommentList(){
-        let param = {contentId:this.contentId}
+      getCommentList() {
+        let param = {contentId: this.contentId}
         apiDataFilter.request({
-          apiPath:'weChat.groupManage.commentList',
-          data:param,
-          successCallback:(res)=>{
+          apiPath: 'weChat.groupManage.commentList',
+          data: param,
+          successCallback: (res) => {
             this.commentList = res.msg;
           }
         })
       },
       /*确认改变状态*/
-      handleChangeStatus(index,row){
-        this.conformChange(row.status,row.commentId)
+      handleChangeStatus(index, row) {
+        this.conformChange(row.status, row.commentId)
       },
       /*改变评论状态*/
-      conformChange(status,commentId){
-        let apiPath =  status == 0 ? 'weChat.groupManage.show':'weChat.groupManage.hidden';
-        let param = {commentId:commentId}
+      conformChange(status, commentId) {
+        let apiPath = status == 0 ? 'weChat.groupManage.show' : 'weChat.groupManage.hidden';
+        let param = {commentId: commentId}
         apiDataFilter.request({
-          apiPath:apiPath,
-          data:param,
-          successCallback:(res)=>{
+          apiPath: apiPath,
+          data: param,
+          successCallback: (res) => {
             this.$message({
               type: 'success',
               message: '操作成功!'
@@ -654,14 +675,18 @@
         })
       },
       /*提交评论*/
-      sendComment(){
-        if (!this.commentValue) {this.$message.error('请填写评论'); return};
-        let param = {comment:this.commentValue, contentId: this.contentId}
+      sendComment() {
+        if (!this.commentValue) {
+          this.$message.error('请填写评论');
+          return
+        }
+        ;
+        let param = {comment: this.commentValue, contentId: this.contentId}
         apiDataFilter.request({
-          apiPath:'weChat.groupManage.comment',
-          data:param,
-          method:'post',
-          successCallback:()=>{
+          apiPath: 'weChat.groupManage.comment',
+          data: param,
+          method: 'post',
+          successCallback: () => {
             this.$message.success('提交成功');
             this.getCommentList();
           }

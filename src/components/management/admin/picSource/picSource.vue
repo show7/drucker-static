@@ -52,6 +52,18 @@
          </el-col>
        </el-row>
      </div>
+     <el-dialog
+       title="提示"
+       :visible.sync="dialogVisible"
+       :show-close="false"
+       :close-on-click-modal="false"
+       width="30%">
+       <span>{{info}}</span>
+       <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+       </span>
+     </el-dialog>
    </div>
 </template>
 
@@ -66,7 +78,8 @@
         shortUrl:'/wx/file/upload/image/?tmp=1&remark=',
         langUrl:'/wx/file/upload/image/?tmp=0&remark=',
         serviceId:1,
-        serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
+        serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}],
+        info:''
       }
     },
     methods:{
@@ -78,10 +91,14 @@
         this.shortFileList = []
         this.$message.success('上传临时素材成功')
        /* this.picUrl = res.msg;*/
+        this.info =res.msg ;
+        this.dialogVisible = true
       },
       sendLongPicSuccess(res, file, fileList){
-        this.$message.success('上传永久素材成功')
-        this.longFileList = []
+        this.$message.success('上传永久素材成功');
+        this.longFileList = [];
+        this.info =res.msg ;
+        this.dialogVisible = true
       }
 
     }
