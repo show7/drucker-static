@@ -149,7 +149,7 @@
           productImg: row ? row.productImg : '',//商品图片
           productionName: row ? row.productionName : '', //商品名称
           productionType: [{id: 2, name: '兑换码商品'}, {id: 3, name: "链接回复类商品"}],//商品兑换类型
-          productionTypeId: 2,//兑换类型id
+          productionTypeId: row ? row.productionType :2,//兑换类型id
           coinPrice: row ? row.coinPrice : null,//兑换礼金
           communityList: this.communityList,//群组数据
           communityId:row? row.communityId:null,//群组id

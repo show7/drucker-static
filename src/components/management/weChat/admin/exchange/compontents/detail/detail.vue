@@ -40,8 +40,8 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ">
-              商品详情：<p  v-html='productionItem.productDetail'></p>
+            <div class="grid ">
+              商品详情：<div  v-html='productionItem.productDetail'></div>
             </div>
           </el-col>
         </el-row>

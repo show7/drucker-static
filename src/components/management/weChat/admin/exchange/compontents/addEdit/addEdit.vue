@@ -29,7 +29,7 @@
             </div>
             <div class="grid-content-down">
               <span>*</span> 礼金定价：
-              <el-input :disabled="disabled" v-model="productionItem.coinPrice" placeholder="请输入礼金定价"></el-input>
+              <el-input :disabled="disabled" v-model="productionItem.coinPrice" type="number" placeholder="请输入礼金定价"></el-input>
               礼金
             </div>
             <div class="grid-content grid-content-down">
