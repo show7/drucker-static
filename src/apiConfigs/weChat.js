@@ -49,5 +49,9 @@ export default {
     'modify':'pc/wxmini/topic/modify',//话题新增和编辑
     'publish':'pc/wxmini/data/publish/topic',//发布
     'recommend':'pc/wxmini/data/recommend/topic',//推荐
+  },
+  'exchange':{
+    'list':'pc/wxmini/reward/list',//获取列表
+    'edit':'pc/wxmini/reward/edit',//新增和编辑
   }
 }
