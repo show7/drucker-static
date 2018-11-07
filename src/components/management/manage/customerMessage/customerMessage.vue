@@ -3,8 +3,23 @@
       <h3>客服消息</h3>
       <div class="top">
         <div class="desc">
-          <p>消息用途（中文）</p>
-          <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
+          <el-row>
+          <el-col :span="12">
+            <p>消息用途（中文）</p>
+            <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
+          </el-col>
+          <el-col :span="12">
+            <h4>选择微信公众号</h4>
+            <el-select v-model="serviceId" placeholder="请选择微信公众号">
+              <el-option
+                v-for="item in serviceList"
+                :key="item.serviceId"
+                :label="item.name"
+                :value="item.serviceId">
+              </el-option>
+            </el-select>
+          </el-col>
+          </el-row>
         </div>
         <el-row>
           <el-col :span="12">
@@ -49,11 +64,13 @@
         message:'',//
         openids:'',//
         isMine:true,
+        serviceId:1,
+        serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
       }
     },
     methods:{
       sendMsg(){
-        let param = { message:this.message, comment:this.comment, openids:this.openids, isMine: this.isMine};
+        let param = { message:this.message, comment:this.comment, openids:this.openids, isMine: this.isMine,serviceId:this.serviceId};
         apiDataFilter.request({
           apiPath:'manage.customerMessage.send',
           method:'post',

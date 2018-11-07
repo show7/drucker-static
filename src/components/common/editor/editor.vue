@@ -43,7 +43,6 @@ export default {
       this.valueChange(e, src)
     })
     this.editor.on('pasting', (e, $content) => {
-      console.log('$content',$content)
       // 图片处理
       let images = $content.find('img')
       images.each((key, item) => {
