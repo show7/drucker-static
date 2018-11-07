@@ -3,13 +3,24 @@
     <h3>推广二维码</h3>
     <div class="qrcode-top">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="8">
           <h4>英文活动名和编号（格式例如：subscribe_push_1）</h4>
           <el-input v-model="scene" placeholder="请输入英文活动名和编号"></el-input>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <h4>中文活动名称</h4>
           <el-input v-model="remark" placeholder="请输入中文活动名称"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <h4>选择微信公众号</h4>
+          <el-select v-model="serviceId" placeholder="请选择微信公众号">
+            <el-option
+              v-for="item in serviceList"
+              :key="item.serviceId"
+              :label="item.name"
+              :value="item.serviceId">
+            </el-option>
+          </el-select>
         </el-col>
       </el-row>
     </div>
@@ -72,7 +83,9 @@ export default {
         link: '',
         qrCode: ''
       },
-      dialogVisible: false
+      dialogVisible: false,
+      serviceId:1,
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
     }
   },
   methods: {
@@ -106,7 +119,7 @@ export default {
     },
     sendData () {
       let self = this;
-      let param = {remark: this.remark, scene: this.scene, ruleList: this.ruleList}
+      let param = {remark: this.remark, scene: this.scene, ruleList: this.ruleList,serviceId:this.serviceId}
       ApiDataFilter.request({
         apiPath: 'manage.qrCode',
         method: 'post',
