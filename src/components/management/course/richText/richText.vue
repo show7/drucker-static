@@ -110,9 +110,15 @@
           method:'post',
           data:param,
           successCallback:(res)=>{
-            this.$message.success(res.msg);
+            this.$message.success('提交成功');
             this.getList();
             this.dialogVisible = false;
+            this.$alert(res.msg, '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
+
+              }
+            });
           }
         })
       },
