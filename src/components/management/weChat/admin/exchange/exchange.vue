@@ -203,6 +203,7 @@
         this.productionName = '';
         this.statusId = 0;
         this.communityId = 0;
+        this.pageIndex = 1;
         this.getList();
       },
       /*编辑*/
