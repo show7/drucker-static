@@ -53,5 +53,12 @@ export default {
   'exchange':{
     'list':'pc/wxmini/reward/list',//获取列表
     'edit':'pc/wxmini/reward/edit',//新增和编辑
+  },
+  'activity':{
+    'activityList':'pc/wxmini/load/guess/activity',//加载
+    'activitySubmit':'pc/wxmini/submit/guess/activity',//提交
+    'publish':'pc/wxmini/guess/publish',//发布
+    'packet':'pc/wxmini/open/packet',//开奖
+    'cancelActive':'pc/wxmini/guess/cancel/active',//下架变为历史状态
   }
 }

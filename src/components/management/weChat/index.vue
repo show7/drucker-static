@@ -15,6 +15,7 @@
         <el-menu-item index="/management/wechat/group/statistics">群组数据</el-menu-item>
         <el-menu-item index="/management/wechat/community/topic">话题管理</el-menu-item>
         <el-menu-item index="/management/wechat/admin/exchange">兑换管理</el-menu-item>
+        <el-menu-item index="/management/wechat/admin/guessing">竞猜管理</el-menu-item>
       </el-menu>
     </div>
 

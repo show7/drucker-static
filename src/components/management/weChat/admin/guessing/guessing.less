@@ -1,0 +1,49 @@
+@import "../../../../../style/mixins.less";
+.guessing-container{
+  padding: 20px;
+  h3{
+    margin-bottom: 10px;
+  }
+  .guessing-top{
+    .top-bac();
+    .grid-content{
+      display: flex;
+      align-items: center;
+      .el-input{
+        width: 60%;
+      }
+    }
+  }
+  .guessing-content{
+    .new-add{
+      text-align: right;
+    }
+    .pagination{
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+  .pop-out{
+    .el-row{
+      margin-bottom: 10px;
+    }
+    .grid-content{
+      display: flex;
+      align-items: center;
+      .title{
+        width: 30%;
+      }
+      span{
+        color: red;
+      }
+      .el-input{
+        width: 60%;
+      }
+    }
+  }
+  .pop-out-end{
+    div{
+      margin-bottom: 20px;
+    }
+  }
+}

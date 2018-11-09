@@ -103,7 +103,7 @@
 
     <!--上传讲师介绍图片和版本迭代-->
     <el-row class="">
-      <el-col :span="10">
+      <el-col :span="8">
         <p class="upload-pic">上传讲师介绍图片</p>
         <el-upload
           action="/pc/upload/file"
@@ -119,7 +119,20 @@
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
       </el-col>
-      <el-col :span="14">
+
+      <el-col :span="6">
+        <p class="upload-pic">上传课程表</p>
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleScheduleSuccess"
+          :before-upload="beforeScheduleUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-col>
+      <el-col :span="10">
         <p class="upload-pic">版本迭代</p>
         <el-date-picker
           class="date-time"
@@ -281,7 +294,8 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       dateTimeValue: '', //时间选择
-      changeLog: '' //版本迭代说明
+      changeLog: '', //版本迭代说明
+      imageUrl:'',//课程表图片链接
     }
   },
   methods: {
@@ -320,6 +334,7 @@ export default {
           self.dateTimeValue = res.msg.lastModifiedTime;
           self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
+          self.imageUrl = res.msg.studyPlanUrl;
           /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
           /* self.toolPicResult = res.msg.tool;*/
           self.authorPic.push({url: res.msg.authorPic});
@@ -352,7 +367,8 @@ export default {
         caseIntroduction: this.fourEditorVal,
         authorPic: this.authorPicResult,
         lastModifiedTime: this.dateTimeValue,
-        changeLog: this.changeLog
+        changeLog: this.changeLog,
+        studyPlanUrl:this.imageUrl,
       };
       ApiDataFilter.request({
         apiPath: 'course.courseIntroduction.save',
@@ -501,6 +517,13 @@ export default {
         tableData[index].wordsString = removeHtmlTags(item.words)
       });
       return tableData
+    },
+    /*课程表图片上传*/
+    handleScheduleSuccess(res, file){
+      this.imageUrl = res.msg;
+    },
+    beforeScheduleUpload(){
+
     }
   },
   created () {
