@@ -122,19 +122,6 @@
 
       <el-col :span="6">
         <p class="upload-pic">上传课程表</p>
-       <!-- <el-upload
-          action="/pc/upload/file"
-          list-type="picture-card"
-          :limit="1"
-          :file-list="authorPic"
-          :on-success="sendAuthorPicSuccess"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>-->
         <el-upload
           class="avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
