@@ -140,9 +140,6 @@
         dialogVisibleD:false
       }
     },
-    computed:{
-
-    },
     methods:{
       initProductItem(row){
         return{
