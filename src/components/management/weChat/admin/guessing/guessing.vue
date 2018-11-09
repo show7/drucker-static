@@ -102,7 +102,7 @@
         </el-pagination>
       </div>
     </div>
-
+    <!--新增活动-->
     <el-dialog
       title="新增"
       :visible.sync="dialogVisible"
@@ -158,7 +158,7 @@
           <el-button type="primary" @click="handleCheckData">确 定</el-button>
       </span>
     </el-dialog>
-
+     <!--开奖弹框-->
     <el-dialog
       title="开奖"
       :visible.sync="dialogVisiblePublish"
