@@ -313,7 +313,7 @@
       /*开奖*/
       handleEndActivity(index,row){
         this.dialogVisiblePublish = true;
-        this.choicesId = row.choiceId;
+        this.choicesId = row.rightChoiceId;
         this.choices= row.choices;
         this.joinNum = row.joinNum;
         this.activityName = row.activityName;
