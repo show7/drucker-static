@@ -347,6 +347,7 @@ export default {
           self.dateTimeValue = res.msg.lastModifiedTime;
           self.changeLog = res.msg.changeLog;
           self.who = res.msg.who;
+          self.imageUrl = res.msg.studyPlanUrl;
           /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
           /* self.toolPicResult = res.msg.tool;*/
           self.authorPic.push({url: res.msg.authorPic});
