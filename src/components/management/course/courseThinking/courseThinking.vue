@@ -144,7 +144,7 @@
 <script>
   import ApiDataFilter from '../../../../libraries/apiDataFilter'
   import Editor from '../../../common/editor/editor'
-  import _ from 'lodash'
+  import {removeHtmlTags} from '../../../../libraries/commonMethod'
   import { Loading } from 'element-ui';
 export default {
   name: 'courseThinking',
@@ -195,7 +195,7 @@ export default {
           self.courseList = res.msg || [];
           if (self.courseList.length > 0) {
             self.courseList.forEach((item,index)=>{
-              self.courseList[index]['descriptionString'] = self.removeHtmlTags(item.description)
+              self.courseList[index]['descriptionString'] = removeHtmlTags(item.description)
             })
           }
         }
@@ -205,7 +205,6 @@ export default {
     handleSendAdio(name){
       let self = this;
       let param = {audioId:this.audioId,ftpFileName:name,name:'',words:'',referenceId:this.searchCourseTitleValueId};
-   /*   this.audioId ? Object.assign(param,{audioId:this.audioId}):Object.assign(param,{audioId:this.audioId})*/
       ApiDataFilter.request({
         apiPath:'course.courseThinking.audioDb',
         method:'post',
@@ -319,15 +318,6 @@ export default {
         this.fileList[0] = rowL;
       }
       this.audioId = row.audioId;
-    },
-    removeHtmlTags (str) {
-      let newStr = _.trim(str)
-      // 去除 html 标签
-      newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-      newStr = newStr.replace(/<\/?[^>]*>/g, '')
-      // 去除实体字符
-      newStr = newStr.replace(/&[^;]+;/g, '')
-      return newStr
     },
   },
   created () {
