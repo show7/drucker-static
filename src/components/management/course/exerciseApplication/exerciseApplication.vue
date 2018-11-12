@@ -75,6 +75,7 @@
                 <h4>题干</h4>
                 <Editor id="oneEditor"
                         ref="oneEditor"
+                        :value="description"
                         @change="oneEditorChange"></Editor>
               </div>
             </el-col>
@@ -180,9 +181,7 @@
         this.dialogVisible = true;
         this.title = '新增';
         this.sequence = '';
-        setTimeout(() => {
-          this.$refs.oneEditor.editor.setValue('')
-        }, 200);
+        this.description = '';
         this.difficulty = '1';
         this.knowledgeId = '';
         this.disabledFlag = false;
@@ -195,7 +194,7 @@
         this.dialogVisible = true;
         this.title='编辑';
         this.sequence = row.sequence;
-        setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.description) }, 200);
+        this.description = row.description;
         this.difficulty = row.difficulty.toString();
         this.knowledgeId = row.knowledgeId;
         this.disabledFlag = true;

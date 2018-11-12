@@ -138,6 +138,7 @@
               <Editor id="oneEditor"
                       :toolbar="['bold','image']"
                       ref="oneEditor"
+                      :value="groupDesc"
                       @change="oneEditorChange"/>
 
             </el-col>
@@ -205,6 +206,7 @@
 <script>
   import apiDataFilter from "../../../../../../../libraries/apiDataFilter";
   import Editor from '../../../../../../common/editor/editor'
+  import {removeHtmlTags} from '../../../../../../../libraries/commonMethod'
 
   export default {
     name: "communityList",
@@ -246,7 +248,7 @@
           successCallback:(res)=> {
             self.communityList = res.msg.data || [];
             this.communityList.forEach((item,index)=>{
-              this.communityList[index].descriptionString =  this.removeHtmlTags(item.description);
+              this.communityList[index].descriptionString =  removeHtmlTags(item.description);
             })
             self.pageCount = res.msg.page.pageCount;
           }
@@ -294,7 +296,7 @@
         this.tabName1 = '';
         this.tabName2 = '';
         this.tabName3 = '';
-        setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200);
+        this.groupDesc = '';
       },
       /*编辑*/
       handleEdit(index, row) {
@@ -311,7 +313,7 @@
         this.tabName2 = row.tabName2;
         this.tabName3 = row.tabName3;
         this.disabledFlag = this.riseId ? true : false;
-        setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.description) }, 200);
+        this.groupDesc = row.description;
       },
       /*确定新增和编辑*/
       handleConfor() {
@@ -382,18 +384,9 @@
         let result = val.replace(/<font>/g,'<span>');
         this.groupDesc = result.replace(/<\/font>/g ,'</span>')
       },
-      removeHtmlTags (str) {
-        let newStr = _.trim(str)
-        // 去除 html 标签
-        newStr = newStr.replace(/(&lt;)(&#47;)?[^(&gt;)]*(&gt;)/g, '')
-        newStr = newStr.replace(/<\/?[^>]*>/g, '')
-        // 去除实体字符
-        newStr = newStr.replace(/&[^;]+;/g, '')
-        return newStr
-      },
     },
     created() {
-      this.getCommunityList()
+      this.getCommunityList();
       this.getCommunityCount()
     }
   }

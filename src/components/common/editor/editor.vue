@@ -90,9 +90,10 @@ export default {
         }
       })
     })
-    if(this.value){
-      this.editor.setValue(this.value)
-    }
+  /*  if(this.value){
+
+    }*/
+    this.editor.setValue(this.value)
   },
   methods: {
     valueChange (e, val) {

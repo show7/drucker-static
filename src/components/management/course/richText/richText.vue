@@ -58,6 +58,7 @@
         <div class="content">
           <Editor id="oneEditor"
                   ref="oneEditor"
+                  :value="editorValue"
                   @change="oneEditorChange"/>
         </div>
       </div>
@@ -138,7 +139,7 @@
           successCallback:(res)=>{
             let result = res.msg;
             this.title = result.title;
-            setTimeout(() => { this.$refs.oneEditor.editor.setValue(result.content) }, 200);
+            this.editorValue = result.content;
           }
         })
       },
@@ -148,7 +149,7 @@
         this.titleName = '新增';
         this.title = '';
         this.uuid = null;
-        setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200);
+        this.editorValue = '';
       },
       /*文本编辑*/
       oneEditorChange(val){

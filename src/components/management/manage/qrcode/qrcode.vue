@@ -30,14 +30,14 @@
           <el-row>
             <el-col :span="12">
               <div class="nickname-url">
-                <p>预置变量：{nickname} 昵称,{url}跳转链接 例如：你好，{nickanme}即将跳转到: {url}</p>
-                <el-input class="required" placeholder="请输入关注文案" v-model="ruleList[index].content" clearable></el-input>
+                <p>预置变量：{nickname} 昵称,{url}跳转链接 例如：你好，{nickname}即将跳转到: {url}</p>
+                <el-input type="textarea" class="required" placeholder="请输入关注文案" v-model="ruleList[index].content" clearable></el-input>
               </div>
             </el-col>
             <el-col :span="12">
               <div class="nickname-url">
                 <p>{url}跳转链接</p>
-                <el-input  placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
+                <el-input  type="textarea" placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
               </div>
 
              <!-- <div class="nickname-url" v-if="index != 0">
@@ -59,7 +59,7 @@
     <el-dialog
       title="右击图片进行保存"
       :visible.sync="dialogVisible"
-      width="30%">
+      width="60%">
       <span>活动链接地址：{{qrCodeObj.link}}</span>
       <img :src="qrCodeObj.qrCode" alt="二维码">
       <span slot="footer" class="dialog-footer">
