@@ -58,7 +58,7 @@
        :show-close="false"
        :close-on-click-modal="false"
        width="30%">
-       <span>{{info}}</span>
+       <span class="info">{{info}}</span>
        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -79,7 +79,8 @@
         langUrl:'/wx/file/upload/image/?tmp=0&remark=',
         serviceId:1,
         serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}],
-        info:''
+        info:'',
+        dialogVisible:false
       }
     },
     methods:{

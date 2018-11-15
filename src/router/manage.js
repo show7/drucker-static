@@ -23,7 +23,7 @@ const subscribe = () => import(/* webpackChunkName: "manage" */ '@/components/ma
 const coupon = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon') //创建优惠券
 const customerMessage = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/customerMessage/customerMessage') //客服消息
 
-const employee = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/employee/employee') //hr
+
 
 const statusFreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusFreeze/statusFreeze') //学籍冻结
 const changeWeChat = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/changeWeChat/changeWeChat') //交换微信号
@@ -46,7 +46,6 @@ export default [
   { path: 'autoreply', name: 'autoReply', component: autoReply},
   { path: 'subscribe', name: 'subscribe', component: subscribe},
   { path: 'coupon', name: 'coupon', component: coupon},
-  { path: 'employee', name: 'employee', component: employee},
   { path: 'customermessage', name: 'customerMessage', component: customerMessage},
   { path: 'statusfreeze', name: 'statusFreeze', component: statusFreeze},
   { path: 'changewechat', name: 'changeWeChat', component: changeWeChat},
