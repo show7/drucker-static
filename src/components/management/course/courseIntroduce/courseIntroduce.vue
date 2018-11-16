@@ -196,7 +196,6 @@
         <!--富文本-->
         <Editor id="threeEditor"
                 ref="threeEditor"
-                :value="audioWords"
                 @change="changeAudio"></Editor>
         <!--音频选择-->
         <div class="chose-audio">
@@ -226,28 +225,24 @@
       <h3>课程介绍</h3>
       <Editor id="oneEditor"
               ref="oneEditor"
-              :value="oneEditorVal"
               @change="oneEditorChange"></Editor>
     </div>
     <div class="project-introduce">
       <h3>课程资料</h3>
       <Editor id="twoEditor"
               ref="twoEditor"
-              :value="twoEditorVal"
               @change="twoEditorChange"></Editor>
     </div>
     <div class="project-introduce">
       <h3>案例分析</h3>
       <Editor id="fourEditor"
               ref="fourEditor"
-              :value="fourEditorVal"
               @change="fourEditorChange"></Editor>
     </div>
     <div class="project-introduce">
       <h3>上传工具</h3>
       <Editor id="fiveEditor"
               ref="fiveEditor"
-              :value="toolResult"
               @change="fiveEditorChange"></Editor>
     </div>
     <el-button size="medium" type="primary" @click="handleSendAll">更新数据</el-button>
@@ -323,28 +318,31 @@ export default {
     },
     /* 发送选择小课名称接口*/
     sendData (value) {
+      let self = this;
       this.authorPic = [];
       ApiDataFilter.request({
         apiPath: 'course.courseIntroduction.sendData',
         method: 'get',
         pathParams: [value],
-        successCallback: (res) =>{
-          let courseChangeData = res.msg;
-          this.abbreviation = courseChangeData.abbreviation;
-          this.catalogsValue = courseChangeData.catalogId;
-          this.subCatalogsValue = courseChangeData.subCatalogId;
-          this.problem = courseChangeData.problem;
-          this.tableData = this.handleChangeData(courseChangeData.audioList);
-          this.dateTimeValue = courseChangeData.lastModifiedTime;
-          this.changeLog = courseChangeData.changeLog;
-          this.who = courseChangeData.who;
-          this.imageUrl = courseChangeData.studyPlanUrl;
-          this.authorPic.push({url: courseChangeData.authorPic});
-          this.authorPicResult = courseChangeData.authorPic;
-          this.oneEditorVal = courseChangeData.introduction;
-          this.twoEditorVal = courseChangeData.courseMaterial
-          this.fourEditorVal = courseChangeData.caseIntroduction;
-          this.toolResult = courseChangeData.tool;
+        successCallback (res) {
+          self.courseChangeData = res.msg;
+          self.abbreviation = res.msg.abbreviation;
+          self.catalogsValue = res.msg.catalogId;
+          self.subCatalogsValue = res.msg.subCatalogId;
+          self.problem = res.msg.problem;
+          self.tableData = self.handleChangeData(res.msg.audioList);
+          self.dateTimeValue = res.msg.lastModifiedTime;
+          self.changeLog = res.msg.changeLog;
+          self.who = res.msg.who;
+          self.imageUrl = res.msg.studyPlanUrl;
+          /* res.msg.tool ? self.toolPic.push({url: res.msg.tool}) : '';*/
+          /* self.toolPicResult = res.msg.tool;*/
+          self.authorPic.push({url: res.msg.authorPic});
+          self.authorPicResult = res.msg.authorPic;
+          self.$refs.oneEditor.editor.setValue(res.msg.introduction);
+          self.$refs.twoEditor.editor.setValue(res.msg.courseMaterial);
+          self.$refs.fourEditor.editor.setValue(res.msg.caseIntroduction);
+          self.$refs.fiveEditor.editor.setValue(res.msg.tool);
         }
       })
     },
@@ -440,7 +438,7 @@ export default {
       this.popName = '上传语音';
       this.audioName = '';
       this.audioId = 0;
-      this.audioWords = '';
+      setTimeout(() => { this.$refs.threeEditor.editor.setValue('') }, 200)
     },
     /*语音编辑和上传*/
     submitUpload () {
@@ -497,7 +495,7 @@ export default {
       this.audioName = row.name;
       this.audioId = row.id;
       this.fileAudioUrl = row.url;
-      this.audioWords = row.words;
+      setTimeout(() => { this.$refs.threeEditor.editor.setValue(row.words) }, 200)
       this.fileList = [];
       let rowL = {
         name: row.name,

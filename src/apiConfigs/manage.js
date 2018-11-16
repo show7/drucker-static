@@ -86,5 +86,9 @@ export default {
   },
   'changeWeChat':{
     'change':'pc/operation/change/wechat',//交换微信号
+  },
+  'statusUnfreeze':{
+    'unfreeze':'pc/operation/unfreeze/member',//解冻
+    'classname':'pc/asst/load/classname/group',//班级
   }
 }

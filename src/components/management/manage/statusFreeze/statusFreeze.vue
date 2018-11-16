@@ -1,6 +1,6 @@
 <template>
   <div class="status-freeze-container">
-    <h3>冻结项目</h3>
+    <h3>冻结学籍</h3>
     <div class="status-freeze-content">
       <el-row>
         <el-col :span="12">

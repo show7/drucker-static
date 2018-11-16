@@ -26,6 +26,7 @@ const customerMessage = () => import(/* webpackChunkName: "manage" */ '@/compone
 
 
 const statusFreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusFreeze/statusFreeze') //学籍冻结
+const statusunfreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusUnfreeze/statusUnfreeze')//学籍解冻
 const changeWeChat = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/changeWeChat/changeWeChat') //交换微信号
 
 export default [
@@ -49,4 +50,5 @@ export default [
   { path: 'customermessage', name: 'customerMessage', component: customerMessage},
   { path: 'statusfreeze', name: 'statusFreeze', component: statusFreeze},
   { path: 'changewechat', name: 'changeWeChat', component: changeWeChat},
+  { path: 'statusunfreeze', name: 'statusunfreeze', component: statusunfreeze},
 ]
