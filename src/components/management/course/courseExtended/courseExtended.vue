@@ -106,7 +106,6 @@
             <el-col :span="24">
               <Editor id="oneEditor"
                       ref="oneEditor"
-                      :value="content"
                       @change="oneEditorChange"></Editor>
             </el-col>
           </el-row>
@@ -198,7 +197,7 @@
               this.outLink = result.outLink
             }else {
               this.outRadio = '1';
-              this.content = result.content;
+              setTimeout(() => { this.$refs.oneEditor.editor.setValue(result.content);}, 200)
             }
           }
         })
@@ -243,7 +242,7 @@
         if (this.outRadio == '2'){
           this.outLink = '';
         }else {
-          this.content = '';
+          setTimeout(() => { this.$refs.oneEditor.editor.setValue('');}, 200)
         }
       },
       /*文本编辑*/

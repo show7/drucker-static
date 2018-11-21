@@ -186,7 +186,6 @@
             <!--富文本-->
             <Editor id="oneEditor"
                     ref="oneEditor"
-                    :value="audioWords"
                     @change="changeAudio"></Editor>
             <!--音频和封面选择-->
             <div class="sudio-poster">
@@ -352,7 +351,7 @@ export default {
       this.titleMedia = '新增语音';
       this.innerVisible = true;
       this.audioName = '';
-      this.audioWords = '';
+      setTimeout(() => {this.$refs.oneEditor.editor.setValue('');},200);
       this.videoFileId ='';
       this.fileList = [];
       this.audioId = '';
@@ -471,7 +470,7 @@ export default {
       this.titleMedia = '编辑语音';
       this.innerVisible = true;
       this.audioName = row.audioName;
-      this.audioWords = row.audioWords;
+      setTimeout(() => {this.$refs.oneEditor.editor.setValue(row.audioWords);},200);
       this.videoFileId = row.videoFileId;
       this.fileAudioUrl = row.audioUrl;
       this.fileList = [];

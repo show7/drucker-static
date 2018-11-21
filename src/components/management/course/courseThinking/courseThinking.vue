@@ -131,7 +131,6 @@
         <h3>课前思考内容</h3>
         <Editor id="oneEditor"
                 ref="oneEditor"
-                :value="editorValue"
                 @change="oneEditorChange"></Editor>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -267,7 +266,7 @@
         this.title = '新增';
         this.disabledFlag = false;
         this.courseTitleValueId = '';
-        this.editorValue = '';
+        setTimeout(() => { this.$refs.oneEditor.editor.setValue('') }, 200);
         this.audioId = 0;
       },
       /*语音上传成功*/
@@ -308,7 +307,7 @@
         this.courseTitleValueId = this.searchCourseTitleValueId;
         this.disabledFlag = true;
         this.fileAudioUrl = row.audioUrl;
-        this.editorValue = row.description;
+        setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.description) }, 200)
         this.fileList = [];
         let rowL = null;
         if (row.audioUrl) {
