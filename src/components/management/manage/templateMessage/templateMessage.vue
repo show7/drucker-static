@@ -7,6 +7,17 @@
       <h4>配置内容填写</h4>
       <el-row>
         <el-col :span="6">
+          <p>选择微信公众号</p>
+          <el-select v-model="serviceId" placeholder="请选择微信公众号">
+            <el-option
+              v-for="item in serviceList"
+              :key="item.serviceId"
+              :label="item.name"
+              :value="item.serviceId">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6">
           <p>请选择模板消息类型</p>
           <el-select v-model="templateValue" placeholder="请选择模板消息类型">
             <el-option
@@ -32,6 +43,8 @@
           <p>消息用途（中文）</p>
           <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
         </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="6">
           <p>消息用途英文（格式xx_xx）</p>
           <el-input v-model="source" placeholder="请输入消息用途英文（格式xx_xx）"></el-input>
@@ -171,7 +184,8 @@ export default {
       remark: '',
       url: '',
       openIds: '',
-      excludeOpenIds: ''
+      excludeOpenIds: '',
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
     }
   },
   methods: {

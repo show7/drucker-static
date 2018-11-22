@@ -90,7 +90,7 @@
         <h4>小课内容：</h4>
         <el-row>
           <el-col :span="12">
-            <div class="grid-content">新增点评数： <el-input :disabled="disabled" v-model="detailData.reviewNumber" placeholder=""></el-input></div>
+            <div class="grid-content">新增点评数： <el-input :disabled="disabled" v-model="detailData.reviewedNumber" placeholder=""></el-input></div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content">新增求点评的回答数: <el-input :disabled="disabled" v-model="detailData.requestReviewNumber" placeholder=""></el-input></div>
@@ -101,7 +101,7 @@
             <div class="grid-content">新增有效的点评数： <el-input :disabled="disabled" v-model="detailData.validReviewNumber" placeholder=""></el-input></div>
           </el-col>
           <el-col :span="12">
-            <div class="grid-content">新增优质回答数: <el-input :disabled="disabled" v-model="detailData.highQualityAnswer" placeholder=""></el-input></div>
+            <div class="grid-content">新增优质回答数: <el-input :disabled="disabled" v-model="detailData.highAnswer" placeholder=""></el-input></div>
           </el-col>
         </el-row>
         <h4>线下工作坊：</h4>
@@ -199,11 +199,11 @@
         dialogVisible:false,
         disabled:false,
         detailData:{
-          reviewNumber:'',
+          reviewedNumber:'',
           requestReviewNumber:'',
           validReviewNumber:'',
           validReviewRate:'',
-          highQualityAnswer:'',
+          highAnswer:'',
           hostNumber:'',
           hostScore:'',
           mainPointNumber:'',
@@ -219,7 +219,8 @@
           fosterNew:'',
           companyTrainScore:'',
           companyTrainNumber:'',
-          upGrade:''
+          upGrade:'',
+          id:''
         }
       }
     },
@@ -266,8 +267,9 @@
         this.dialogVisible = true;
       },
       update(){
-        if ( !this.disabled){
+        if (!this.disabled){
           let param = this.detailData;
+          Object.assign(param,{reviewNumber: this.detailData.reviewedNumber,highQualityAnswer:this.detailData.highAnswer})
           apiDataFilter.request({
             apiPath:'course.execution.update',
             data:param,
