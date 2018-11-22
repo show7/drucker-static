@@ -75,7 +75,6 @@
                 <h4>题干</h4>
                 <Editor id="oneEditor"
                         ref="oneEditor"
-                        :value="question"
                         @change="oneEditorChange"></Editor>
               </div>
             </el-col>
@@ -84,7 +83,6 @@
                 <h4>解析</h4>
                 <Editor id="twoEditor"
                         ref="twoEditor"
-                        :value="analysis"
                         @change="twoEditorChange"></Editor>
               </div>
             </el-col>
@@ -225,8 +223,12 @@
           this.dialogVisible = true;
           this.title = '新增';
           this.sequence = '';
-          this.question = '';
-          this.analysis = '';
+          setTimeout(() => {
+            this.$refs.oneEditor.editor.setValue('')
+          }, 200);
+          setTimeout(() => {
+            this.$refs.twoEditor.editor.setValue('')
+          }, 200);
           this.addChoiceItem = [{sequence: 1, isRight:false, subject: ''}];
           this.singleSelect = '1';
           this.difficulty = '1';
@@ -239,8 +241,8 @@
         this.dialogVisible = true;
         this.title='编辑';
         this.sequence = row.sequence;
-        this.question = row.question;
-        this.analysis = row.analysis;
+        setTimeout(() => { this.$refs.oneEditor.editor.setValue(row.question) }, 200);
+        setTimeout(() => { this.$refs.twoEditor.editor.setValue(row.analysis) }, 200);
         this.singleSelect = row.type.toString();
         this.difficulty = row.difficulty.toString();
         this.knowledgeId = row.knowledgeId;
