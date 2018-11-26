@@ -555,10 +555,10 @@ export default {
       if (flag === 1) {
         this.handleCheck();
         apiPath = 'manage.application.approveBusinessApplication'
-        data = {id: this.rowData.id, coupon: this.coupon, interviewDto: param}
+        data = {id: this.rowData.id, coupon: this.coupon, interviewVO: param}
       } else {
         apiPath = 'manage.application.rejectBusinessApplication';
-        data = {id: this.rowData.id, interviewDto: param}
+        data = {id: this.rowData.id, interviewVO: param}
       }
       ApiDataFilter.request({
         apiPath: apiPath,
