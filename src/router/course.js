@@ -12,8 +12,11 @@ const courseExtended = () => import(/* webpackChunkName: "course" */ '@/componen
 const exerciseChoice = () => import(/* webpackChunkName: "course" */ '@/components/management/course/exerciseChoice/exerciseChoice') // 选择题管理
 const exerciseApplication = () => import(/* webpackChunkName: "course" */ '@/components/management/course/exerciseApplication/exerciseApplication') // 应用题管理
 const knowledgeCard = () => import(/* webpackChunkName: "course" */ '@/components/management/course/knowledgeCard/knowledgeCard') // 卡片管理
-const fileupload = () => import(/* webpackChunkName: "admin" */ '@/components/management/course/picUpload/picUpload')//文件上传
-const richText = () => import(/* webpackChunkName: "admin" */ '@/components/management/course/richText/richText')//富文本上传
+const fileupload = () => import(/* webpackChunkName: "course" */ '@/components/management/course/picUpload/picUpload')//文件上传
+const richText = () => import(/* webpackChunkName: "course" */ '@/components/management/course/richText/richText')//富文本上传
+const assistStandard = ()=> import(/* webpackChunkName: "course" */ '@/components/management/course/assistStandard/assistStandard')//助教测评标准
+const assistExecution = ()=> import(/* webpackChunkName: "course" */ '@/components/management/course/assistExecution/assistExecution')//助教完成情况
+const assistUpgrade = ()=>import(/* webpackChunkName: "course" */ '@/components/management/course/assistUpgrade/assistUpgrade')//助教升降级
 
 export default [
   { path: 'courseintroduce', name: 'courseIntroduce', component: courseIntroduce },
@@ -25,5 +28,8 @@ export default [
   { path: 'knowledgecard', name: 'knowledgeCard', component: knowledgeCard },
   { path: 'fileupload', name: 'fileupload', component: fileupload },
   { path: 'richtext', name: 'richText', component: richText },
+  { path: 'assiststandard', name: 'assistStandard', component: assistStandard },
+  { path: 'assistexecution', name: 'assistExecution', component: assistExecution },
+  { path: 'assistupgrade', name: 'assistUpgrade', component: assistUpgrade },
 
 ]

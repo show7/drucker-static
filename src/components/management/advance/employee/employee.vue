@@ -98,7 +98,7 @@
       getList(){
         let param = { page: this.pageIndex };
         apiDataFilter.request({
-          apiPath: "manage.employee.list",
+          apiPath: "advance.employee.list",
           data: param,
           successCallback: (res) => {
             let result = res.msg;
@@ -110,7 +110,7 @@
       delEmployee(){
         let param = { id: this.id };
         apiDataFilter.request({
-          apiPath: 'manage.employee.del',
+          apiPath: 'advance.employee.del',
           data: param,
           method: 'post',
           successCallback: (res) => {
@@ -141,7 +141,7 @@
         }
         let param = { riseId: this.riseId, nickName: this.nickName };
         apiDataFilter.request({
-          apiPath: 'manage.employee.add',
+          apiPath: 'advance.employee.add',
           method: 'post',
           data: param,
           successCallback: (res) => {
@@ -163,7 +163,7 @@
       handleSearch(){
         let param = { page: this.pageIndex, riseId : this.riseId };
         apiDataFilter.request({
-            apiPath: "manage.employee.list",
+            apiPath: "advance.employee.list",
             data: param,
             successCallback: (res) => {
                 let result = res.msg;

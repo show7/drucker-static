@@ -5,22 +5,28 @@
     <div class="statistics-top">
       <el-row>
         <el-col :span="8">
-          <h4>请选择近期统计</h4>
-          <el-select v-model="latesValue" placeholder="请选择近期统计" @change="handleSelectLates">
-            <el-option v-for="item in latesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          <div class="grid-content">
+            请选择近期统计：
+            <el-select v-model="latesValue" placeholder="请选择近期统计" @change="handleSelectLates">
+              <el-option v-for="item in latesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </div>
         </el-col>
         <el-col :span="8" v-if="isCommunityOwner">
-          <h4>群组</h4>
+          <div class="grid-content">
+            群组：
           <el-select v-model="communityId" placeholder="请选择群组" @change="handleSelectCommunity">
             <el-option v-for="item in communityList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+          </div>
         </el-col>
         <el-col :span="8">
-          <h4>微信群</h4>
+          <div class="grid-content">
+            微信群：
           <el-select v-model="groupId" placeholder="请选择微信群" @change="handleSelectGroup">
             <el-option v-for="item in groupList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+          </div>
         </el-col>
       </el-row>
       <el-row>
@@ -77,8 +83,8 @@
           <el-col :span="12"><p class="name">用户礼金值</p></el-col>
           <el-col :span="12" class="select">
             <el-select v-model="orderValue" placeholder="请选择排序" @change="handleSelectOrder">
-            <el-option v-for="item in orderList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+              <el-option v-for="item in orderList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
           </el-col>
         </el-row>
         <!--table表格-->
@@ -128,9 +134,15 @@
       :close-on-click-modal="false">
       <div class="popOut-box">
         <el-row v-for="(item,index) in detailList" :key="item.id">
-          <el-col :span="8"><div class="data-score">{{item.dateString}}</div></el-col>
-          <el-col :span="8"><div class="data-score">{{item.tradeName}}</div></el-col>
-          <el-col :span="8"><div class="data-score">{{item.coin > 0 ? '+':''}} {{item.coin}} 礼金</div></el-col>
+          <el-col :span="8">
+            <div class="data-score">{{item.dateString}}</div>
+          </el-col>
+          <el-col :span="8">
+            <div class="data-score">{{item.tradeName}}</div>
+          </el-col>
+          <el-col :span="8">
+            <div class="data-score">{{item.coin > 0 ? '+':''}} {{item.coin}} 礼金</div>
+          </el-col>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -148,42 +160,42 @@
     name: "statistics",
     data() {
       return {
-        dialogVisible:false,
-        latesList:[{id:1,name:'今日'},{id:4,name:'昨日'},{id:2,name:'最近七日'},{id:3,name:'最近30日'}],
+        dialogVisible: false,
+        latesList: [{id: 1, name: '今日'}, {id: 4, name: '昨日'}, {id: 2, name: '最近七日'}, {id: 3, name: '最近30日'}],
         latesValue: 1,//近期统计选取值
-        communityList:[],//群组list
-        communityId:0,//群组id
-        isCommunityOwner:false,//是否有群组选项标识
-        groupList:[{id:0,name:'全部'}],//群list
-        groupId:0,
-        wordsNu:{
+        communityList: [],//群组list
+        communityId: 0,//群组id
+        isCommunityOwner: false,//是否有群组选项标识
+        groupList: [{id: 0, name: '全部'}],//群list
+        groupId: 0,
+        wordsNu: {
           dailyChatCount: 0,
           dailyChatMember: 0,
           dailyTopicCount: 0,
           dailyTopicMember: 0
         },
-        orderValue:1,//排序值
-        orderList:[{id:1,name:'正序'},{id:-1,name:'倒序'}],
-        pageIndex:1,
-        pageCount:null,//总页数
-        coinList:[],
-        detailList:[],//详情list
+        orderValue: 1,//排序值
+        orderList: [{id: 1, name: '正序'}, {id: -1, name: '倒序'}],
+        pageIndex: 1,
+        pageCount: null,//总页数
+        coinList: [],
+        detailList: [],//详情list
       }
     },
     methods: {
       /*获取群组、微信群、*/
-      getGroup(){
+      getGroup() {
         let self = this;
         apiDataFilter.request({
-          apiPath:'weChat.common.group',
-          successCallback(res){
+          apiPath: 'weChat.common.group',
+          successCallback(res) {
             let result = res.msg.communityList || [];
-            result.unshift({id:0,name:'全部',groupList:[]});
+            result.unshift({id: 0, name: '全部', groupList: []});
             self.communityList = result;
             self.isCommunityOwner = res.msg.isCommunityOwner;
-            if (!self.isCommunityOwner ) {
+            if (!self.isCommunityOwner) {
               let groupList = lodash.cloneDeep(res.msg.groupList);
-              groupList.unshift({id:0,name:'全部'});
+              groupList.unshift({id: 0, name: '全部'});
               self.groupList = groupList;
             }
             self.getCoinList();
@@ -193,32 +205,32 @@
       },
 
       /*获取发言信息*/
-      getLatesList(){
+      getLatesList() {
         let self = this;
-        let param = {dateRange:this.latesValue,groupId:this.groupId};
+        let param = {dateRange: this.latesValue, groupId: this.groupId};
         if (this.isCommunityOwner) {
-          Object.assign(param,{communityId:this.communityId})
+          Object.assign(param, {communityId: this.communityId})
         }
         apiDataFilter.request({
-          apiPath:'weChat.statistics.words',
-          data:param,
-          successCallback(res){
-           self.wordsNu=res.msg;
+          apiPath: 'weChat.statistics.words',
+          data: param,
+          successCallback(res) {
+            self.wordsNu = res.msg;
           }
         })
       },
 
       /*获取list*/
-      getCoinList(){
+      getCoinList() {
         let self = this;
-        let param = {groupId:this.groupId,order:this.orderValue,page:this.pageIndex};
-        if (this.isCommunityOwner){
-           Object.assign(param,{communityId:this.communityId})
+        let param = {groupId: this.groupId, order: this.orderValue, page: this.pageIndex};
+        if (this.isCommunityOwner) {
+          Object.assign(param, {communityId: this.communityId})
         }
         apiDataFilter.request({
-          apiPath:'weChat.statistics.coinList',
-          data:param,
-          successCallback(res){
+          apiPath: 'weChat.statistics.coinList',
+          data: param,
+          successCallback(res) {
             let page = res.msg.page;
             let content = res.msg.content;
             self.pageCount = page.pageCount;
@@ -227,44 +239,44 @@
         })
       },
       /*获取详情*/
-      handleDetail(index,row){
-        let self =this;
+      handleDetail(index, row) {
+        let self = this;
         apiDataFilter.request({
-          apiPath:'weChat.statistics.records',
-          data:{profileId:row.profileId},
-          successCallback(res){
+          apiPath: 'weChat.statistics.records',
+          data: {profileId: row.profileId},
+          successCallback(res) {
             self.dialogVisible = true;
             self.detailList = res.msg;
           }
         })
       },
       /*群组选择*/
-      handleSelectCommunity(val){
-         this.communityList.forEach((item,index)=>{
-           if (val === item.id){
-             let groupList = lodash.cloneDeep(item.groupList);
-             groupList.unshift({id:0,name:'全部'});
-             this.groupList = groupList;
-             this.groupId = 0;
-             this.pageIndex = 1;
-             this.getCoinList();
-             this.getLatesList();
-           }
-         })
+      handleSelectCommunity(val) {
+        this.communityList.forEach((item, index) => {
+          if (val === item.id) {
+            let groupList = lodash.cloneDeep(item.groupList);
+            groupList.unshift({id: 0, name: '全部'});
+            this.groupList = groupList;
+            this.groupId = 0;
+            this.pageIndex = 1;
+            this.getCoinList();
+            this.getLatesList();
+          }
+        })
       },
       /*群选择*/
-      handleSelectGroup(){
-        this.pageIndex =1
+      handleSelectGroup() {
+        this.pageIndex = 1
         this.getCoinList();
         this.getLatesList();
       },
       /*日期范围选择*/
-      handleSelectLates(){
+      handleSelectLates() {
         this.getLatesList();
       },
       /*排序选择*/
-      handleSelectOrder(){
-        this.pageIndex =1
+      handleSelectOrder() {
+        this.pageIndex = 1
         this.getCoinList();
       },
       /*得到当前页数*/
@@ -274,7 +286,7 @@
       },
     },
     created() {
-     this.getGroup();
+      this.getGroup();
     }
   }
 </script>

@@ -37,7 +37,9 @@
           <el-menu-item index="/management/manage/social">群组信息导入</el-menu-item>
           <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
           <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
-          <el-menu-item index="/management/manage/employee">员工管理</el-menu-item>
+          <el-menu-item index="/management/manage/statusfreeze">冻结学籍</el-menu-item>
+          <el-menu-item index="/management/manage/statusunfreeze">解冻学籍</el-menu-item>
+          <el-menu-item index="/management/manage/changewechat">交换微信号</el-menu-item>
         </el-menu>
       </div>
 
