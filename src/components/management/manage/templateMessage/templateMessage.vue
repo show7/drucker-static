@@ -8,7 +8,7 @@
       <el-row>
         <el-col :span="6">
           <p>选择微信公众号</p>
-          <el-select v-model="serviceId" placeholder="请选择微信公众号">
+          <el-select v-model="serviceId" @change="handleChangeWeChat" placeholder="请选择微信公众号">
             <el-option
               v-for="item in serviceList"
               :key="item.serviceId"
@@ -185,18 +185,19 @@ export default {
       url: '',
       openIds: '',
       excludeOpenIds: '',
-      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}],
+      serviceId:1,
     }
   },
   methods: {
     getTemplate () {
-      let self = this;
+      let param ={serviceId:this.serviceId};
       ApiDataFilter.request({
         apiPath: 'manage.templates.loadTemplates',
         method: 'get',
-        successCallback (res) {
-          self.templateMsgs = res.msg.templateMsgs;
-          self.forcePush = res.msg.showForcePush
+        successCallback: (res) =>{
+          this.templateMsgs = res.msg.templateMsgs;
+          this.forcePush = res.msg.showForcePush
         }
       })
     },
@@ -242,6 +243,11 @@ export default {
           self.$message.success(res.msg)
         }
       })
+    },
+    /*切换公众号*/
+    handleChangeWeChat(){
+      this.templateValue = '';
+      this.getTemplate();
     }
   },
   created () {
