@@ -181,6 +181,7 @@
               class="avatar-uploader"
               action="/pc/upload/file"
               :show-file-list="false"
+              :before-upload="beforeAvatarUpload"
               :on-success="handleAvatarSuccess">
               <img v-if="headImg" :src="headImg" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -426,8 +427,12 @@
       },
       /*图片上传成功*/
       handleAvatarSuccess(res, file) {
+        console.log(file)
         this.headImg = res.msg;
       },
+      beforeAvatarUpload(file){
+        console.log(file)
+      }
     },
     created() {
       this.getGroup();

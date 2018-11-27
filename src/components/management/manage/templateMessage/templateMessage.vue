@@ -195,6 +195,7 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.templates.loadTemplates',
         method: 'get',
+        data:param,
         successCallback: (res) =>{
           this.templateMsgs = res.msg.templateMsgs;
           this.forcePush = res.msg.showForcePush
@@ -232,7 +233,8 @@ export default {
         openIds: this.openIds,
         source: this.source,
         forcePush: this.forcePushValue,
-        isMime: index === 0
+        isMime: index === 0,
+        serviceId:this.serviceId,
       };
       index === 1 ? Object.assign(param, { excludeOpenIds: this.excludeOpenIds}) : '';
       ApiDataFilter.request({

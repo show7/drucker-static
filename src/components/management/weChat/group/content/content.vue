@@ -551,10 +551,10 @@
       },
       /*推荐和取消推荐*/
       groupPriority(labelCategory, publishStatus, id, priority) {
-        if (labelCategory == 1) {
+      /*  if (labelCategory == 1) {
           this.$message.info('话题观点暂不能推荐～')
           return;
-        }
+        }*/
         if (publishStatus != 1) {
           this.$message.info('发布之后才能推荐哦！')
           return;
