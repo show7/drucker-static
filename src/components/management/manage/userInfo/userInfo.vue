@@ -155,7 +155,7 @@
         </div>
         <div class="dialog-user">
           <h3>会员信息</h3>
-          <ul v-for="(item, index) in personData.memberInfoDtos" :key="index">
+          <ul v-for="(item, index) in personData.memberInfoVOs" :key="index">
             <li><span>当前会员类型：</span>{{item.memberName}}</li>
             <li><span>入学日期：</span>{{item.openDate}}</li>
             <li><span>过期日期：</span>{{item.expireDate}}</li>
