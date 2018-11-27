@@ -388,7 +388,8 @@
         this.publishRadio = row.publish ? '2' : '1';
         this.disabledFlag = flag === 1 ? false : true;
         this.selectId = row.id;
-        this.description = row.description
+        this.description = row.description;
+        this.headImg =row.thumbnail;
       },
       /*搜索*/
       handleSearch() {
