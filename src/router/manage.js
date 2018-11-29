@@ -28,6 +28,7 @@ const customerMessage = () => import(/* webpackChunkName: "manage" */ '@/compone
 const statusFreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusFreeze/statusFreeze') //学籍冻结
 const statusunfreeze = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusUnfreeze/statusUnfreeze')//学籍解冻
 const changeWeChat = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/changeWeChat/changeWeChat') //交换微信号
+const classAdviser = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classAdviser/classAdviser') //班主任管理
 
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
@@ -51,4 +52,5 @@ export default [
   { path: 'statusfreeze', name: 'statusFreeze', component: statusFreeze},
   { path: 'changewechat', name: 'changeWeChat', component: changeWeChat},
   { path: 'statusunfreeze', name: 'statusunfreeze', component: statusunfreeze},
+  { path: 'classadviser', name: 'classAdviser', component: classAdviser},
 ]
