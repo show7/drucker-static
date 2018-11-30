@@ -5,8 +5,16 @@
 </template>
 
 <script>
+import apiDataFilter from "./libraries/apiDataFilter";
+
 export default {
-  name: 'App'
+  name: 'App',
+  methods:{
+
+  },
+  created(){
+
+  }
 }
 </script>
 

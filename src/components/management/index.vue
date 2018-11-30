@@ -1,12 +1,35 @@
 <template>
   <div class="content-main">
-    <div class="header">
-      <el-menu :default-active="activeIndex"
-               active-text-color="#7DBE00"
-               class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
-        <el-menu-item v-for="(item, index) in itemList" :index="item.path" :key="index">{{item.name}}</el-menu-item>
-      </el-menu>
-    </div>
+    <el-container>
+      <el-header height="80">
+        <el-row>
+          <el-col :span="20">
+            <div class="header">
+              <el-menu :default-active="activeIndex"
+                       active-text-color="#7DBE00"
+                       class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
+                <el-menu-item v-for="(item, index) in itemList" :index="item.path" :key="index">{{item.name}}
+                </el-menu-item>
+              </el-menu>
+            </div>
+          </el-col>
+          <el-col :span="4" v-if="userName && headImgUrl">
+            <div class="grid-content">
+              <el-dropdown  @command="handleCommand">
+                <div class="head-box el-dropdown-link">
+                  <img class="head-pic"  :src='headImgUrl'/> {{userName}}
+                </div>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="1" >上次学到</el-dropdown-item>
+                  <el-dropdown-item command="2">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+          </el-col>
+        </el-row>
+
+      </el-header>
+    </el-container>
     <div class="content">
       <transition name="fade" mode="out-in">
          <router-view/>
@@ -30,7 +53,9 @@ export default {
         { name: '管理员功能', path: '/management/admin' },
         { name: '高级功能', path: '/management/advance' },
         ],
-      activeIndex: '/management/wechat'
+      activeIndex: '/management/wechat',
+      userName:'',
+      headImgUrl:''
     }
   },
   computed: {
@@ -62,9 +87,35 @@ export default {
       }
       this.activeIndex = this.$route.matched[ 1 ].path;
     },
+    handleCommand(command){
+       if (command == 1){
+         this.lastTime();
+       } else if (command == 2){
+         this.handleClickLoginOut();
+       }
+    },
     handleSelect (key, keyPath) {
       console.log(key, keyPath);
     },
+    handleClickLoginOut() {
+      console.log('dasdasdad')
+      window.location.href = '/logout'
+    },
+    lastTime(){
+      window.location.href='/redirect/latest/application'
+    },
+    getCustomer(){
+      apiDataFilter.request({
+        apiPath:'common.info',
+        successCallback:(res)=>{
+          this.userName = res.msg.nickname;
+          this.headImgUrl = res.msg.headimgurl;
+        }
+      })
+    }
+  },
+  created(){
+    this.getCustomer();
   }
 }
 </script>

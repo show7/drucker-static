@@ -156,8 +156,8 @@
         </el-col>
       </el-row>
     </div>
-    <el-button type="primary" @click="sendData(0)">发送给自己</el-button>
-    <el-button type="primary" @click="sendData(1)">发送模板消息</el-button>
+    <el-button type="primary" @click="conform(0)">发送给自己</el-button>
+    <el-button type="primary" @click="conform(1)">发送模板消息</el-button>
   </div>
 </template>
 
@@ -245,6 +245,26 @@ export default {
           self.$message.success(res.msg)
         }
       })
+    },
+    conform(index){
+      let  string = ''
+      if (index == 0){
+        string = '给自己'
+      } else if (index == 1 ) {
+        string = '给指定用户'
+      }
+      this.$confirm(`此操作将发送模板消息${string}, 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+      this.sendData(index)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
     },
     /*切换公众号*/
     handleChangeWeChat(){

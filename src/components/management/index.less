@@ -1,15 +1,22 @@
 
 .content-main{
+  .el-header{
+    border-bottom: 1px solid #efefef;
+    position: relative;
+    z-index: 23;
+    background-color: #ffffff;
+  }
   .header{
-    position: fixed;
+   /* position: fixed;
     width: 100%;
     left: 0;
     right: 0;
     top: 0;
-    z-index: 1000;
+    z-index: 1000;*/
     height: 80px;
     >ul{
       height: 100%;
+      border-bottom: none;
       >li{
         line-height: 80px;
         height: 80px;
@@ -57,4 +64,12 @@
 .fade-leave-active{
   opacity:0;
   transition:opacity .5s;
+}
+.grid-content{
+  line-height: 80px;
+}
+.head-pic{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

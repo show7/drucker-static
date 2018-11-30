@@ -18,6 +18,8 @@ export default {
     'common': { // 公共接口
       'simple': 'pc/asst/problem/simple' ,// 获取小课标题
       'permission':'pc/permission/check',//权限
+      'auth':'wx/oauth/pc/auth',//登录
+      'info':'rise/customer/info'
     },
     'course': course,
     'manage': manage,

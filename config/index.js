@@ -82,7 +82,7 @@ module.exports = {
         }
       },
       '/wx/*': {
-        target: 'http://beta.confucius.mobi',
+        target: 'http://www.confucius.mobi',
         secure: false,
         changeOrigin: true,
         bypass: function (req) {

@@ -42,7 +42,7 @@
       width="40%">
       <div class="popout-box">
         <h4>回复内容</h4>
-        <el-input placeholder="请输入回复内容" v-model="message" clearable></el-input>
+        <el-input type="textarea" placeholder="请输入回复内容" v-model="message" clearable></el-input>
 
         <el-checkbox v-model="useing">使用中</el-checkbox>
       </div>

@@ -101,17 +101,26 @@
             </el-col>
             <el-col :span="18">
               <div class="grid-content">
-                <el-date-picker
+                <div class="start">
+                  开始时间:
+                  <el-date-picker
                   v-model="startTime"
                   type="date"
                   :disabled="disabled"
+                  value-format="yyyy-MM-dd"
                   placeholder="选择开始日期">
                 </el-date-picker>
-                <el-date-picker
-                  v-model="endTime"
-                  type="date"
-                  placeholder="选择结束日期">
-                </el-date-picker>
+                </div>
+                <div class="end">
+                  结束时间:
+                  <el-date-picker
+                    v-model="endTime"
+                    type="date"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择结束日期">
+                  </el-date-picker>
+                </div>
+
               </div>
             </el-col>
           </el-row>
