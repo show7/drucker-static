@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login/login'
+import servercode from '@/components/servercode/servercode'
 import management from '@/components/management/index'
 import welcome from '@/components/welcome/welcome'
 import courseRouter from './course'
@@ -41,6 +42,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login,
+    },
+    {
+      path: '/servercode',
+      name: 'servercode',
+      component: servercode,
     },
     {
       path: '/management',
