@@ -156,7 +156,7 @@ export default {
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
-      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && this.textareaValue && this.courseTitleValue) {
+      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && (this.textareaValue.length > 0) && this.courseTitleValue) {
         let param = { year: this.certificateYear, month: this.certificateMonth, type: this.certificateIdentity,
           memberTypeId: this.certificateProject, problemId:this.courseTitleValue,
           profileSearchType: this.profileSearchTypeId,};
