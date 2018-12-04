@@ -16,7 +16,7 @@
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
-             礼金明细:
+            礼金明细:
             <el-input
               placeholder="请输入内容"
               v-model="coinDesc">
@@ -49,29 +49,30 @@
     name: "coin",
     data() {
       return {
-        riseIds:'',
-        coinDesc:'',
-        coin:''
+        riseIds: '',
+        coinDesc: '',
+        coin: ''
       }
     },
     methods: {
-       submit(){
-         if (!this.riseIds || !this.coinDesc ||!this.coin){
-           this.$message.error('请填写完整信息')
-         }
-         let param = {riseIds:this.riseIds.split('\n'),comment:this.coinDesc,coin:this.coin};
-         apiDataFilter.request({
-           apiPath:'manage.coin.rppoint',
-           data:param,
-           method:'post',
-           successCallback:()=>{
-             this.$message.success('提交成功');
-             this.riseIds = '';
-             this.coinDesc = '';
-             this.coin = '';
-           }
-         })
-       }
+      submit() {
+        if (!this.riseIds || !this.coinDesc || !this.coin) {
+          this.$message.error('请填写完整信息');
+          return
+        }
+        let param = {riseIds: this.riseIds.split('\n'), comment: this.coinDesc, coin: this.coin};
+        apiDataFilter.request({
+          apiPath: 'manage.coin.rppoint',
+          data: param,
+          method: 'post',
+          successCallback: () => {
+            this.$message.success('提交成功');
+            this.riseIds = '';
+            this.coinDesc = '';
+            this.coin = '';
+          }
+        })
+      }
     },
   }
 </script>
