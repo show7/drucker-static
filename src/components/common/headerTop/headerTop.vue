@@ -33,6 +33,7 @@
 
 <script>
    import apiDataFilter  from '../../../libraries/apiDataFilter'
+   import cookie from 'js-cookie'
   export default {
     name: "headerTop",
     data() {
@@ -65,7 +66,10 @@
       }
     },
     created(){
-      this.getCustomer()
+     let act =  cookie.get('_act') || null;
+     if (act) {
+        this.getCustomer()
+     }
     }
   }
 </script>

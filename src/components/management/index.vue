@@ -113,6 +113,7 @@ export default {
     }
   },
   created(){
+    console.log('dasdas','index')
     this.getCustomer();
   }
 }
