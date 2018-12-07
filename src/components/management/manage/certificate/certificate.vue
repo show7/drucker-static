@@ -51,7 +51,7 @@
        </el-row>
        <el-row>
          <el-col :span="6" v-if="certificateIdentity == 4 ">
-           <h4>输入小组号如1,2</h4>
+           <h4>输入小组号例如 2</h4>
            <el-input type="text" placeholder="学组号" v-model="groupNo"></el-input>
          </el-col>
          <el-col :span="6">
@@ -88,7 +88,6 @@
            </div>
          </el-col>
        </el-row>
-
      </div>
 
      <el-dialog
@@ -161,7 +160,7 @@ export default {
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
-      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && this.courseTitleValue) {
+      if (this.certificateYear && this.certificateMonth && this.certificateProject &&  (this.textareaValue.length > 0) && this.certificateIdentity && this.courseTitleValue) {
         if (this.certificateIdentity == 4 && !this.groupNo){
           this.$message.error('请填写组号');
           return
