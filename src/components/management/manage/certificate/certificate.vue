@@ -50,6 +50,10 @@
          </el-col>
        </el-row>
        <el-row>
+         <el-col :span="6" v-if="certificateIdentity == 4 ">
+           <h4>输入小组号如1,2</h4>
+           <el-input type="text" placeholder="学组号" v-model="groupNo"></el-input>
+         </el-col>
          <el-col :span="6">
            <h4>选择小课</h4>
            <el-select v-model="courseTitleValue" placeholder="请选择小课">
@@ -72,7 +76,7 @@
              </el-option>
            </el-select>
          </el-col>
-         <el-col :span="12">
+         <el-col :span="6">
            <div class="button-submit">
              <el-input
                type="textarea"
@@ -129,6 +133,7 @@ export default {
       courseTitleValue:'',
       ProfileSearchType:[{id:1,name:'学号'},{id:2,name:'圈外 id'}],
       profileSearchTypeId:1,
+      groupNo:''
     }
   },
   methods: {
@@ -156,11 +161,16 @@ export default {
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
-      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && (this.textareaValue.length > 0) && this.courseTitleValue) {
+      if (this.certificateYear && this.certificateMonth && this.certificateProject && this.certificateIdentity && this.courseTitleValue) {
+        if (this.certificateIdentity == 4 && !this.groupNo){
+          this.$message.error('请填写组号');
+          return
+        }
         let param = { year: this.certificateYear, month: this.certificateMonth, type: this.certificateIdentity,
           memberTypeId: this.certificateProject, problemId:this.courseTitleValue,
           profileSearchType: this.profileSearchTypeId,};
         this.profileSearchTypeId == 1 ? Object.assign(param,{memberIds: memberIds}):Object.assign(param,{riseIds: memberIds})
+        this.certificateIdentity == 4 ?  Object.assign(param,{groupNo: this.groupNo}):''
         ApiDataFilter.request({
           apiPath: 'manage.certificate',
           method: 'post',
