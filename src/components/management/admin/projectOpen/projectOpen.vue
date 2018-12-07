@@ -168,6 +168,7 @@
       }
     },
     methods:{
+      /*项目*/
       loadRiseMember () {
         apiDataFilter.request({
           apiPath: 'manage.addVip.loadRiseMember',
@@ -210,18 +211,21 @@
         this.sellingYear = '';
         this.id=''
       },
+      /*处理月份*/
       handleDealMonth(){
         this.sellingMonthList = [];
         for (let i = 1 ;i < 13;i++ ){
           this.sellingMonthList.push(i)
         }
       },
+      /*处理你那份*/
       handleDealYear(){
         this.sellingYearList = [];
         for (let i = 2018;i < 2025; i++ ){
           this.sellingYearList.push(i)
         }
       },
+      /*数据完整性*/
       handleCheck(){
         if (!this.memberTypeId || !this.openDate || !this.closeDate || !this.expiredDate || ! this.activeDate || ! this.sellingMonth || !this.sellingYear) {
           this.$message.error('请完善信息')
@@ -229,6 +233,7 @@
           this.handleSubmit();
         }
       },
+      /*提交*/
       handleSubmit(){
         let param = {
           memberTypeId:this.memberTypeId,expiredDate:this.expiredDate,activeDate:this.activeDate,
