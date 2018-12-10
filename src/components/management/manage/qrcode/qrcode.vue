@@ -39,11 +39,6 @@
                 <p>{url}跳转链接</p>
                 <el-input  type="textarea" placeholder="请输入跳转链接" v-model="ruleList[index].link" clearable></el-input>
               </div>
-
-             <!-- <div class="nickname-url" v-if="index != 0">
-                <p>3-核心能力，5-专项课，8-商业思维；例如：3,5</p>
-                <el-input placeholder="请输入会员类型Id,用英文逗号隔开" v-model="ruleList[index].memberTypeIds" clearable></el-input>
-              </div>-->
             </el-col>
           </el-row>
           <el-button v-if="index != 0" type="primary" icon="el-icon-delete" @click="handleDel(index)">删除</el-button>
@@ -85,7 +80,7 @@ export default {
       },
       dialogVisible: false,
       serviceId:1,
-      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}]
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外职场学园'},{serviceId:10,name:'又更新了'}]
     }
   },
   methods: {
