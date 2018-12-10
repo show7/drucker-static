@@ -1,6 +1,6 @@
 <template>
   <div class="class-adviser-container">
-    <h3>班主任管理</h3>
+    <h3>项目添加班主任</h3>
     <div class="class-adviser-content">
       <!--table表格-->
       <el-table
