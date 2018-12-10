@@ -98,5 +98,10 @@ export default {
   },
   'coin':{
     'rppoint':'pc/wxmini/submit/rppoint',//礼金提交
+  },
+  'classAdviserManage':{
+    'loadList':'pc/operation/teacher/load/list',//加载list
+    'loadUser':'pc/operation/teacher/load',//查询人
+    'add':'pc/operation/teacher/add',//添加
   }
 }
