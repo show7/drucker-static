@@ -88,6 +88,7 @@
       }
     },
     methods:{
+      /*拿到list*/
       getList(){
         apiDataFilter.request({
           apiPath:'manage.classAdviserManage.loadList',
@@ -96,14 +97,13 @@
           }
         })
       },
+      /*新增*/
       handleAdd(){
         this.dialogVisible = true;
         this.riseId = '';
         this.info = ''
       },
-      handleEdit(index,row){
-
-      },
+      /*根据riseid拿信息*/
       loadUser(){
         if (!this.riseId){
           this.$message.error('请填写riseId');
@@ -118,6 +118,7 @@
           }
         })
       },
+      /*添加*/
       handleCheck(){
         if (this.info.nickname && this.riseId && this.imageUrl){
           let param = {riseId:this.riseId,avatar:this.imageUrl};
@@ -138,8 +139,17 @@
       handleScheduleSuccess(res, file){
         this.imageUrl = res.msg;
       },
-      beforeScheduleUpload(){
-
+      /*校验图片*/
+      beforeScheduleUpload(file){
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     },
     created(){
