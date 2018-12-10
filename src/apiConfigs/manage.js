@@ -90,5 +90,13 @@ export default {
   'statusUnfreeze':{
     'unfreeze':'pc/operation/unfreeze/member',//解冻
     'classname':'pc/asst/load/classname/group',//班级
+  },
+  'classAdviser':{
+    'rotates':'pc/operation/load/project/rotates',//加载班主任项目
+    'targetRotates':'pc/operation/load/target/rotates',//加载班主任
+    'update':'pc/operation/update/rotate',//提交
+  },
+  'coin':{
+    'rppoint':'pc/wxmini/submit/rppoint',//礼金提交
   }
 }

@@ -131,10 +131,8 @@
       /*加载需要更新的教练*/
       assistUpgrade() {
         this.riseId = '';
-        let param = {page: this.pageIndex};
         apiDataFilter.request({
           apiPath: 'course.assistUpgrade.load',
-          data: param,
           successCallback: (res) => {
             this.assistList = res.msg;
           }

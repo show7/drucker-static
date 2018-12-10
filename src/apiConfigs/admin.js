@@ -21,5 +21,9 @@ export default {
     'del':'pc/admin/userrole/del',//删除
     'modify':'pc/admin/userrole/modify',//新增和编辑
     'roles':'pc/admin/roles',//职位
+  },
+  'projectOpen':{
+    'configs':'pc/admin/load/month/configs',//load项目
+    'upconfig':'pc/admin/update/month/config',//新增和编辑
   }
 }

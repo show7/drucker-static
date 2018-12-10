@@ -1,0 +1,71 @@
+.qrContainer {
+  margin: 50px auto 130px;
+  .qrImg {
+    margin:0 auto;
+    display: block;
+    width: 220px;
+    height: 220px;
+    line-height:220px;
+    text-align: center;
+  }
+  .loginTip {
+    margin-top: 50px;
+    color: #333333;
+    font-size: 16px;
+    text-align: center;
+  }
+}
+.el-header{
+  box-shadow: 0 1px 10px #ccc;
+  height: 80px;
+  line-height: 80px;
+  .el-row{
+    height: 80px;
+    line-height: 80px;
+  }
+  .logo{
+    padding-left: 60px;
+    display: flex;
+    align-items: center;
+    .logo-img{
+      img{
+        width: 60px;
+        height: 60px;
+      }
+    }
+    .logo-name{
+      color: rgba(0,0,0,.6);
+      margin-left: 10px;
+      font-size: 30px;
+    }
+  }
+  .entry-list{
+    text-align: right;
+    padding-right: 10%;
+    >ul{
+      >li{
+        display: inline-block;
+        margin-right: 50px;
+        color: #333;
+        vertical-align: middle;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 600;
+        .head-pic{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+        &.head-img{
+          position: relative;
+          &:hover{
+            .hover-fex{
+              display: block;
+              width: 200px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

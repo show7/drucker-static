@@ -99,7 +99,7 @@ export default {
     },
     addRiseMember () {
       let self = this;
-      let param = {riseId: this.riseId, memo: this.memo, month: this.month,startDate:this.startDate,
+      let param = {riseId: this.riseId.split('\n'), memo: this.memo, month: this.month,startDate:this.startDate,
         vip:this.vipMemberValue, memberTypeId: this.memberTypeId};
       ApiDataFilter.request({
         apiPath: 'manage.addVip.addRiseMember',

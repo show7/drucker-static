@@ -40,6 +40,9 @@
           <el-menu-item index="/management/manage/statusfreeze">冻结学籍</el-menu-item>
           <el-menu-item index="/management/manage/statusunfreeze">解冻学籍</el-menu-item>
           <el-menu-item index="/management/manage/changewechat">交换微信号</el-menu-item>
+          <el-menu-item index="/management/manage/classadviser">班主任管理</el-menu-item>
+          <el-menu-item index="/management/manage/coin">礼金管理</el-menu-item>
+
         </el-menu>
       </div>
 

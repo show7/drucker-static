@@ -7,6 +7,17 @@
       <h4>配置内容填写</h4>
       <el-row>
         <el-col :span="6">
+          <p>选择微信公众号</p>
+          <el-select v-model="serviceId" @change="handleChangeWeChat" placeholder="请选择微信公众号">
+            <el-option
+              v-for="item in serviceList"
+              :key="item.serviceId"
+              :label="item.name"
+              :value="item.serviceId">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6">
           <p>请选择模板消息类型</p>
           <el-select v-model="templateValue" placeholder="请选择模板消息类型">
             <el-option
@@ -32,6 +43,8 @@
           <p>消息用途（中文）</p>
           <el-input v-model="comment" placeholder="请输入消息用途（中文）"></el-input>
         </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="6">
           <p>消息用途英文（格式xx_xx）</p>
           <el-input v-model="source" placeholder="请输入消息用途英文（格式xx_xx）"></el-input>
@@ -143,8 +156,8 @@
         </el-col>
       </el-row>
     </div>
-    <el-button type="primary" @click="sendData(0)">发送给自己</el-button>
-    <el-button type="primary" @click="sendData(1)">发送模板消息</el-button>
+    <el-button type="primary" @click="conform(0)">发送给自己</el-button>
+    <el-button type="primary" @click="conform(1)">发送模板消息</el-button>
   </div>
 </template>
 
@@ -171,18 +184,21 @@ export default {
       remark: '',
       url: '',
       openIds: '',
-      excludeOpenIds: ''
+      excludeOpenIds: '',
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外同学招生办'}],
+      serviceId:1,
     }
   },
   methods: {
     getTemplate () {
-      let self = this;
+      let param ={serviceId:this.serviceId};
       ApiDataFilter.request({
         apiPath: 'manage.templates.loadTemplates',
         method: 'get',
-        successCallback (res) {
-          self.templateMsgs = res.msg.templateMsgs;
-          self.forcePush = res.msg.showForcePush
+        data:param,
+        successCallback: (res) =>{
+          this.templateMsgs = res.msg.templateMsgs;
+          this.forcePush = res.msg.showForcePush
         }
       })
     },
@@ -217,7 +233,8 @@ export default {
         openIds: this.openIds,
         source: this.source,
         forcePush: this.forcePushValue,
-        isMime: index === 0
+        isMime: index === 0,
+        serviceId:this.serviceId,
       };
       index === 1 ? Object.assign(param, { excludeOpenIds: this.excludeOpenIds}) : '';
       ApiDataFilter.request({
@@ -228,6 +245,31 @@ export default {
           self.$message.success(res.msg)
         }
       })
+    },
+    conform(index){
+      let  string = ''
+      if (index == 0){
+        string = '给自己'
+      } else if (index == 1 ) {
+        string = '给指定用户'
+      }
+      this.$confirm(`此操作将发送模板消息${string}, 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+      this.sendData(index)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
+    },
+    /*切换公众号*/
+    handleChangeWeChat(){
+      this.templateValue = '';
+      this.getTemplate();
     }
   },
   created () {

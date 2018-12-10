@@ -174,6 +174,20 @@
                       v-model=" disabledFlag ? topicDetail:description"></el-input>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="4"><p> 话题头图<span>*</span></p></el-col>
+          <el-col :span="20">
+            <el-upload
+              class="avatar-uploader"
+              action="/pc/upload/file"
+              :show-file-list="false"
+              :before-upload="beforeAvatarUpload"
+              :on-success="handleAvatarSuccess">
+              <img v-if="headImg" :src="headImg" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-col>
+        </el-row>
         <el-row v-if="!disabledFlag">
           <el-col :span="4"><p>操作 <span>*</span></p></el-col>
           <el-col :span="20">
@@ -230,6 +244,7 @@
         disabledFlag: false,
         selectId: null, //需要编辑的id
         description: '',//话题详情
+        headImg:''
       }
     },
     methods: {
@@ -294,7 +309,7 @@
         let self = this;
         let param = {
           communityId: this.popCommunityId, groupId: this.popGroupId, originName: this.topicName,
-          description: this.description, publish: this.publishRadio == 1 ? false : true
+          description: this.description, publish: this.publishRadio == 1 ? false : true,thumbnail:this.headImg
         };
         this.selectId ? Object.assign(param, {id: this.selectId}) : '';
         apiDataFilter.request({
@@ -310,7 +325,7 @@
       },
       /*校验必填项提交*/
       handleCheckData() {
-        if (!this.topicName || !this.popCommunityId || !this.description) {
+        if (!this.topicName || !this.popCommunityId || !this.description ||!this.headImg) {
           this.$message.error('请填写必填项目');
         } else {
           this.handleSend();
@@ -374,7 +389,8 @@
         this.publishRadio = row.publish ? '2' : '1';
         this.disabledFlag = flag === 1 ? false : true;
         this.selectId = row.id;
-        this.description = row.description
+        this.description = row.description;
+        this.headImg =row.thumbnail;
       },
       /*搜索*/
       handleSearch() {
@@ -409,6 +425,14 @@
           }
         })
       },
+      /*图片上传成功*/
+      handleAvatarSuccess(res, file) {
+        console.log(file)
+        this.headImg = res.msg;
+      },
+      beforeAvatarUpload(file){
+        console.log(file)
+      }
     },
     created() {
       this.getGroup();
