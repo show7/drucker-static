@@ -31,6 +31,7 @@ const changeWeChat = ()=>import(/* webpackChunkName: "manage" */ '@/components/m
 const classAdviser = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classAdviser/classAdviser') //添加班主任
 const classAdviserManage = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classAdviserManage/classAdviserManage') //班主任管理
 const  coin = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/coin/coin')//礼金
+const invest = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/invest/invest')//投资圈外
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -56,4 +57,5 @@ export default [
   { path: 'classadviser', name: 'classAdviser', component: classAdviser},
   { path: 'classadvisermanage', name: 'classAdviserManage', component: classAdviserManage},
   { path: 'coin', name: 'coin', component: coin},
+  { path: 'invest', name: 'invest', component: invest},
 ]

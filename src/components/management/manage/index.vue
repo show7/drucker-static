@@ -43,6 +43,7 @@
           <el-menu-item index="/management/manage/classadviser">项目添加班主任</el-menu-item>
           <el-menu-item index="/management/manage/classadvisermanage">班主任管理</el-menu-item>
           <el-menu-item index="/management/manage/coin">礼金管理</el-menu-item>
+          <el-menu-item index="/management/manage/invest">投资圈外</el-menu-item>
 
         </el-menu>
       </div>

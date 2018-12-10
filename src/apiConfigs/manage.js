@@ -103,5 +103,9 @@ export default {
     'loadList':'pc/operation/teacher/load/list',//加载list
     'loadUser':'pc/operation/teacher/load',//查询人
     'add':'pc/operation/teacher/add',//添加
+  },
+  'invest':{
+    'investTask':'pc/operation/load/invest/task',//投资圈外列表
+    'record':'pc/operation/submit/invest/record',//提交投资
   }
 }
