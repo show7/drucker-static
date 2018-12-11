@@ -49,6 +49,11 @@
                 prop="memberTypes"
                 label="会员类型">
               </el-table-column>
+              <el-table-column
+                prop="couponSum"
+                label="优惠券总金额">
+              </el-table-column>
+
               <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
                   <el-button
@@ -114,6 +119,10 @@
             <el-table-column
               prop="memberTypes"
               label="会员类型">
+            </el-table-column>
+            <el-table-column
+              prop="couponSum"
+              label="优惠券总金额">
             </el-table-column>
             <el-table-column fixed="right" label="操作">
               <template slot-scope="scope">

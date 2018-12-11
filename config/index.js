@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-
+const targetUrl = 'http://beta.confucius.mobi'
 module.exports = {
   dev: {
 
@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/steve/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -22,7 +22,7 @@ module.exports = {
         }
       },
       '/pc/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -32,7 +32,7 @@ module.exports = {
         }
       },
       '/rise/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -42,7 +42,7 @@ module.exports = {
         },
       },
       '/subscribe/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -52,7 +52,7 @@ module.exports = {
         }
       },
       '/cache/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -62,7 +62,7 @@ module.exports = {
         }
       },
       '/backend/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -72,7 +72,7 @@ module.exports = {
         }
       },
       '/file/*': {
-        target: 'http://beta.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
@@ -82,7 +82,7 @@ module.exports = {
         }
       },
       '/wx/*': {
-        target: 'http://www.confucius.mobi',
+        target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
