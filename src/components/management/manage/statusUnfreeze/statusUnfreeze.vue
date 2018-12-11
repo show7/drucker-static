@@ -25,7 +25,7 @@
         </el-col>
         <el-col :span="8">
           <h4>请选择班级</h4>
-          <el-select v-model="classNameId" placeholder="请选择课程">
+          <el-select v-model="classNameId" placeholder="请选择班级">
             <el-option
               v-for="item in classNameList"
               :key="item"
