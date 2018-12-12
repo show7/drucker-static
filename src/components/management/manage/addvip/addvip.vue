@@ -120,7 +120,7 @@ export default {
     },
     addRiseMember () {
       let self = this;
-      let param = {riseId: this.riseId.split('\n'), memo: this.memo, month: this.month,startDate:this.startDate,
+      let param = {riseIds: this.riseId.split('\n'), memo: this.memo, month: this.month,startDate:this.startDate,
         vip:this.vipMemberValue, memberTypeId: this.memberTypeId};
       this.classNameId ? Object.assign(param,{className:this.classNameId}):'';
       ApiDataFilter.request({
