@@ -112,7 +112,7 @@ export default {
       })
     },
     handleData(){
-      if (!this.riseId || !this.memo ||  !this.month || !this.startDate || !this.memberTypeId) {
+      if (!this.riseId  ||  !this.month || !this.startDate || !this.memberTypeId) {
         this.$message.error('请完善信息');
         return
       }
