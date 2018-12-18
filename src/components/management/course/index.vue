@@ -21,7 +21,7 @@
           <el-menu-item index="/management/course/richtext">文章上传</el-menu-item>
           <el-menu-item index="/management/course/fileupload">文件上传</el-menu-item>
           <el-submenu index="1">
-            <template slot="title">课程管理</template>
+            <template slot="title">助教管理</template>
             <el-menu-item index="/management/course/assiststandard">助教测评标准</el-menu-item>
             <el-menu-item index="/management/course/assistexecution">助教完成情况</el-menu-item>
             <el-menu-item index="/management/course/assistupgrade">助教升降级</el-menu-item>
