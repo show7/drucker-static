@@ -30,6 +30,9 @@
     </div>
 
     <el-dialog title="班主任列表" :visible.sync="dialogTableVisible" :close-on-click-modal="false">
+      <div class="add-box">
+        <el-button type="primary" @click="handleAdd">新增班主任</el-button>
+      </div>
       <el-table :data="adviserList">
         <el-table-column property="nickName" label="昵称" width="150"></el-table-column>
         <el-table-column property="avatar" label="头像" width="200">
@@ -52,12 +55,12 @@
 
       <el-dialog
         width="40%"
-        title="编辑"
+        :title="title"
         :close-on-click-modal="false"
         :visible.sync="innerVisible"
         append-to-body>
         <div class="adviser-detail">
-          <el-row>
+          <el-row v-if="disabled">
             <el-col :span="6">
               <div class="grid-content">
                 昵称：
@@ -69,18 +72,50 @@
               </div>
             </el-col>
           </el-row>
-          <el-row>
-          <el-col :span="6">
-            <div class="grid-content">
-              头像：
-            </div>
-          </el-col>
-          <el-col :span="18">
-            <div class="grid-content">
-              <img class="avatar-pic" :src="avatarUrl" alt="">
-            </div>
-          </el-col>
-        </el-row>
+          <el-row v-if="disabled">
+            <el-col :span="6">
+              <div class="grid-content">
+                头像：
+              </div>
+            </el-col>
+            <el-col :span="18">
+              <div class="grid-content">
+                <img class="avatar-pic" :src="avatarUrl" alt="">
+              </div>
+            </el-col>
+          </el-row>
+          <el-row v-if="!disabled">
+            <el-col :span="6">
+              <div class="grid-content">
+                选择班主任：
+              </div>
+            </el-col>
+            <el-col :span="18">
+              <div class="grid-content">
+                <el-select v-model="headTeachersId" placeholder="请选择">
+                  <el-option
+                    v-for="item in headTeachersList"
+                    :key="item.id"
+                    :label="item.nickName"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row v-if="!disabled">
+            <el-col :span="6">
+              <div class="grid-content">
+                是否立即生效：
+              </div>
+            </el-col>
+            <el-col :span="18">
+              <div class="grid-content">
+                <el-radio v-model="del" :label="true">是</el-radio>
+                <el-radio v-model="del" :label="false">否</el-radio>
+              </div>
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="6">
               <div class="grid-content">
@@ -126,7 +161,8 @@
           </el-row>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="submit">确 定</el-button>
+           <el-button type="primary" v-if="!disabled" @click="handleCheck">确 定</el-button>
+          <el-button type="primary" v-if="disabled" @click="submit">确 定</el-button>
         </span>
       </el-dialog>
     </el-dialog>
@@ -141,6 +177,7 @@
     name: "classAdviser",
     data() {
       return {
+        title:'新增',
         projectList:[],
         adviserList:[],
         dialogTableVisible:false,
@@ -156,7 +193,10 @@
           status:'',
           memberTypeId:'',
           channel:''
-        }
+        },
+        headTeachersList:[],
+        headTeachersId:'',
+        del:true
       }
     },
     methods:{
@@ -166,6 +206,16 @@
         this.adviserData.memberTypeId = row.memberTypeId;
         this.adviserData.channel = row.channel;
         this.getClassAdviser(row);
+      },
+      /*加载需要添加的班主任*/
+      headTeachers(){
+        apiDataFilter.request({
+          apiPath:'manage.classAdviser.teachers',
+          successCallback:(res)=>{
+            this.headTeachersList = res.msg;
+            this.innerVisible = true;
+          }
+        })
       },
       /*加载项目*/
       getClassMember(){
@@ -188,8 +238,43 @@
           }
         })
       },
+      /*新增测验数据*/
+      handleCheck(){
+        if (!this.headTeachersId || !this.sequence || !this.startTime || !this.endTime){
+           this.$message.error('请完善数据');
+           return;
+        }
+        this.handleAddSubmit();
+      },
+      handleAddSubmit(){
+        let param = {headTeacherId:this.headTeachersId,isActive:this.del,sequence:this.sequence,activeDateStr:this.startTime,expiredDateStr:this.endTime}
+        Object.assign(param,this.adviserData)
+        apiDataFilter.request({
+          apiPath:'manage.classAdviser.add',
+          method:'post',
+          data:param,
+          successCallback:(res)=>{
+            this.$message.success('新增成功');
+            this.innerVisible = false;
+            this.getClassAdviser(this.adviserData);
+          }
+        })
+      },
+      handleAdd(){
+        this.nickName = '';
+        this.avatarUrl = '';
+        this.startTime = '';
+        this.endTime = '';
+        this.sequence = '';
+        this.disabled  = false;
+        this.rotateId = '';
+        this.title = '新增';
+        this.headTeachersId = '';
+        this.headTeachers();
+      },
       /*编辑*/
       handleEdited(index,row){
+        this.title = '编辑';
         this.innerVisible = true;
         this.nickName = row.nickName;
         this.avatarUrl = row.avatar;
