@@ -184,7 +184,7 @@
         innerVisible:false,
         nickName:'',
         avatarUrl:'',
-        sequence:'',
+        sequence:null,
         endTime:'',
         startTime:'',
         disabled:false,
@@ -247,8 +247,8 @@
         this.handleAddSubmit();
       },
       handleAddSubmit(){
-        let param = {headTeacherId:this.headTeachersId,isActive:this.del,sequence:this.sequence,activeDateStr:this.startTime,expiredDateStr:this.endTime}
-        Object.assign(param,this.adviserData)
+        let param = {headTeacherId:this.headTeachersId,isActive:this.del,sequence:Number(this.sequence),activeDateStr:this.startTime,expiredDateStr:this.endTime}
+        Object.assign(param,this.adviserData);
         apiDataFilter.request({
           apiPath:'manage.classAdviser.add',
           method:'post',
