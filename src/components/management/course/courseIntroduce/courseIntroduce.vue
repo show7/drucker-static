@@ -250,13 +250,13 @@
 </template>
 
 <script>
-import Editor from '../../../common/editor/editor'
+import editor from '../../../common/editor/editor'
 import ApiDataFilter from '@/libraries/apiDataFilter'
 import {removeHtmlTags} from '@/libraries/commonMethod'
 
 export default {
   name: 'courseIntroduce',
-  components: {Editor},
+  components: {Editor:editor},
   data () {
     return {
       courseTitleList: [], // 小课标题list
