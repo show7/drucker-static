@@ -59,5 +59,9 @@ export default {
     'catalog':'pc/operation/assist/load/catalog',//加载教练类别
     'add':'pc/operation/assist/add',//新增
     'update':'pc/operation/assist/update',//
+  },
+  'audio':{
+    'loadAll':'pc/promotion/audio/loadAll',
+    'save':'pc/promotion/audio/save',//保存音频
   }
 }

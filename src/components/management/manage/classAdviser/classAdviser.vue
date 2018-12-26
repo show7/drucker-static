@@ -103,7 +103,7 @@
               </div>
             </el-col>
           </el-row>
-          <el-row v-if="!disabled">
+          <el-row>
             <el-col :span="6">
               <div class="grid-content">
                 是否立即生效：
@@ -290,7 +290,7 @@
            this.$message.error('请完善信息');
            return
         }
-        let param = {sequence:this.sequence,expireDate:this.endTime,rotateId: this.rotateId};
+        let param = {sequence:this.sequence,expireDate:this.endTime,rotateId: this.rotateId,isActive:this.del};
         apiDataFilter.request({
           apiPath:'manage.classAdviser.update',
           data:param,

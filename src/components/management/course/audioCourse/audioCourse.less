@@ -8,4 +8,29 @@
      text-align: right;
    }
   }
+  .question-box{
+    width: 100%;
+    max-height: 64px;
+    .content{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box !important;
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      display: inline-block;
+    }
+  }
+
+  .editor-audio {
+    > p {
+      margin-bottom: 20px;
+      > .el-input {
+        width: 32%;
+      }
+    }
+    .chose-audio{
+      margin-top: 10px;
+    }
+  }
 }
