@@ -109,5 +109,9 @@ export default {
   'invest':{
     'investTask':'pc/operation/load/invest/task',//投资圈外列表
     'record':'pc/operation/submit/invest/record',//提交投资
+  },
+  'couponClear':{
+    'load':'pc/operation/load/coupons',//获取列表
+    'delete':'pc/operation/delete/coupon',//删除优惠券
   }
 }

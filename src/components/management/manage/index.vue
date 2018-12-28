@@ -13,7 +13,11 @@
           <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
           <el-menu-item index="/management/manage/addvip">添加会员</el-menu-item>
           <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
-          <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">优惠券</template>
+            <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
+            <el-menu-item index="/management/manage/couponclear">消除优惠卷</el-menu-item>
+          </el-submenu>
           <el-submenu index="2">
             <template slot="title">发送消息</template>
             <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
