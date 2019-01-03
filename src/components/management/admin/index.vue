@@ -14,6 +14,7 @@
         <el-menu-item index="/management/admin/projectconfig">项目配置</el-menu-item>
         <el-menu-item index="/management/admin/picsource">微信图片素材</el-menu-item>
         <el-menu-item index="/management/admin/projectopen">项目开课时间</el-menu-item>
+        <el-menu-item index="/management/admin/wechatmenu">公众号菜单管理</el-menu-item>
       </el-menu>
     </div>
 

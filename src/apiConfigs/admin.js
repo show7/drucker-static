@@ -25,5 +25,9 @@ export default {
   'projectOpen':{
     'configs':'pc/admin/load/month/configs',//load项目
     'upconfig':'pc/admin/update/month/config',//新增和编辑
+  },
+  'weChatMenu':{
+    'menu':'pc/operation/wx/get/menu',//获取菜单
+    'update':'pc/operation/wx/update/menu',//提交更改
   }
 }
