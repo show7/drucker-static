@@ -153,7 +153,7 @@
         <el-button type="primary" @click="handleSaveChildren">保存</el-button>
       </div>
     </el-dialog>
-    {{JSON.stringify(buttonList)}}
+    <!--{{JSON.stringify(buttonList)}}-->
   </div>
 </template>
 
