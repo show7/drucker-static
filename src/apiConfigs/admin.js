@@ -29,5 +29,9 @@ export default {
   'weChatMenu':{
     'menu':'pc/operation/wx/get/menu',//获取菜单
     'update':'pc/operation/wx/update/menu',//提交更改
+  },
+  'articleSend':{
+    'message':'pc/operation/wx/mass/message',//群发
+    'preview':' pc/operation/wx/preview/mass/message',//发送前预览
   }
 }
