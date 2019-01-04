@@ -5,6 +5,7 @@ const projectConfig = () => import(/* webpackChunkName: "admin" */ '@/components
 const picSource = () => import(/* webpackChunkName: "admin" */ '@/components/management/admin/picSource/picSource')//微信图片素材上传
 const projectOpen = ()=>import(/* webpackChunkName: "admin" */ '@/components/management/admin/projectOpen/projectOpen')//项目开课时间
 const weChatMenu = ()=>import(/* webpackChunkName: "admin" */ '@/components/management/admin/weChatMenu/weChatMenu')//公众号菜单 管理
+const articleSend = ()=>import(/* webpackChunkName: "admin" */ '@/components/management/admin/articleSend/articleSend')//文章定向发送 管理
 
 export default [
   { path: 'role', name: 'role', component: role },
@@ -12,4 +13,5 @@ export default [
   { path: 'picsource', name: 'picSource', component: picSource },
   { path: 'projectopen', name: 'projectOpen', component: projectOpen },
   { path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu },
+  { path: 'articlesend', name: 'articleSend', component: articleSend },
 ]
