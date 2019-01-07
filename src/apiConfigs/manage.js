@@ -113,5 +113,9 @@ export default {
   'couponClear':{
     'load':'pc/operation/load/coupons',//获取列表
     'delete':'pc/operation/delete/coupon',//删除优惠券
-  }
+  },
+  'projectOpen':{
+    'configs':'pc/admin/load/month/configs',//load项目
+    'upconfig':'pc/admin/update/month/config',//新增和编辑
+  },
 }

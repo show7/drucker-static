@@ -22,16 +22,13 @@ export default {
     'modify':'pc/admin/userrole/modify',//新增和编辑
     'roles':'pc/admin/roles',//职位
   },
-  'projectOpen':{
-    'configs':'pc/admin/load/month/configs',//load项目
-    'upconfig':'pc/admin/update/month/config',//新增和编辑
-  },
   'weChatMenu':{
     'menu':'pc/operation/wx/get/menu',//获取菜单
     'update':'pc/operation/wx/update/menu',//提交更改
   },
   'articleSend':{
-    'message':'pc/operation/wx/mass/message',//群发
-    'preview':' pc/operation/wx/preview/mass/message',//发送前预览
+    'message':'pc/operation/wx/preview/mass/message',// 发送前预览
+    'preview':'pc/operation/wx/mass/message',//群发
+    'material':'pc/operation/wx/news/upload/material',//
   }
 }

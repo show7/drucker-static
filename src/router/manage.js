@@ -33,6 +33,7 @@ const classAdviserManage = ()=>import(/* webpackChunkName: "manage" */ '@/compon
 const  coin = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/coin/coin')//礼金
 const invest = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/invest/invest')//投资圈外
 const couponClear = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/couponClear/couponClear')//消除优惠券
+const projectOpen = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/projectOpen/projectOpen')//项目开课时间
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -60,4 +61,5 @@ export default [
   { path: 'coin', name: 'coin', component: coin},
   { path: 'invest', name: 'invest', component: invest},
   { path: 'couponclear', name: 'couponClear', component: couponClear},
+  { path: 'projectopen', name: 'projectOpen', component: projectOpen },
 ]
