@@ -112,7 +112,7 @@
             </div>
           </el-col>
           <el-col :span="4">
-            <el-button type="danger" icon="el-icon-delete" circle @click="handleDeleteSingleChildren(item.index)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleDeleteSingleChildren(index)"></el-button>
           </el-col>
         </el-row>
         <el-row>
@@ -153,7 +153,7 @@
         <el-button type="primary" @click="handleSaveChildren">保存</el-button>
       </div>
     </el-dialog>
-    <!--{{JSON.stringify(buttonList)}}-->
+    {{JSON.stringify(buttonList)}}
   </div>
 </template>
 
