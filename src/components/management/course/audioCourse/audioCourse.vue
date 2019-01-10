@@ -208,7 +208,6 @@
           promotionActivityId:this.promotionActivityId,
           id:this.id
         };
-
         apiDataFilter.request({
           apiPath: 'course.audio.save',
           method: 'post',
