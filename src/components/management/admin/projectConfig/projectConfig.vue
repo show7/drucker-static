@@ -125,7 +125,7 @@
           {value: 'job', name: 'JOB'},
           {value: 'arch', name: '架构'},
           {value: 'front', name: '前端资源'},
-          {value: 'template', name: '模板消息'},
+          {value: 'kotler', name: '营销平台'},
         ],
         projectValue: 'rise',
         resultList: [],
