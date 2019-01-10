@@ -39,7 +39,6 @@
                 {{scope.row.value}}
               </p>
             </div>
-
           </template>
         </el-table-column>
         <el-table-column
