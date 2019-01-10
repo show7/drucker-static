@@ -6,7 +6,6 @@ const path = require('path')
 const targetUrl = 'http://beta.confucius.mobi'
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

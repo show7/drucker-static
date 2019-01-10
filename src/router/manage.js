@@ -17,7 +17,7 @@ const banner = () => import(/* webpackChunkName: "manage" */ '@/components/manag
 const lives = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/lives/lives') //首页直播
 const activities = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/activities/activities') //线下活动编辑
 const articles = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/articles/articles') //文章编辑
-const social = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/social/social') //群组信息导入
+
 const autoReply = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/autoReply/autoReply') //服务号自动回复
 const subscribe = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/subscribe/subscribe') //服务号关注回复
 const coupon = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon') //创建优惠券
@@ -32,6 +32,11 @@ const classAdviser = ()=>import(/* webpackChunkName: "manage" */ '@/components/m
 const classAdviserManage = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classAdviserManage/classAdviserManage') //班主任管理
 const  coin = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/coin/coin')//礼金
 const invest = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/invest/invest')//投资圈外
+const couponClear = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/couponClear/couponClear')//消除优惠券
+const projectOpen = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/projectOpen/projectOpen')//项目开课时间
+const picSource = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/picSource/picSource')//微信图片素材上传
+const weChatMenu = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/weChatMenu/weChatMenu')//公众号菜单 管理
+const articleSend = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/articleSend/articleSend')//文章定向发送 管理
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -46,7 +51,6 @@ export default [
   { path: 'lives', name: 'lives', component: lives},
   { path: 'activities', name: 'activities', component: activities},
   { path: 'articles', name: 'articles', component: articles},
-  { path: 'social', name: 'social', component: social},
   { path: 'autoreply', name: 'autoReply', component: autoReply},
   { path: 'subscribe', name: 'subscribe', component: subscribe},
   { path: 'coupon', name: 'coupon', component: coupon},
@@ -58,4 +62,9 @@ export default [
   { path: 'classadvisermanage', name: 'classAdviserManage', component: classAdviserManage},
   { path: 'coin', name: 'coin', component: coin},
   { path: 'invest', name: 'invest', component: invest},
+  { path: 'couponclear', name: 'couponClear', component: couponClear},
+  { path: 'projectopen', name: 'projectOpen', component: projectOpen },
+  { path: 'picsource', name: 'picSource', component: picSource },
+  { path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu },
+  { path: 'articlesend', name: 'articleSend', component: articleSend },
 ]

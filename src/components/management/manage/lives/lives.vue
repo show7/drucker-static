@@ -238,6 +238,11 @@ export default {
     },
     /*发送*/
     send () {
+      if (this.dateList.length < 1 || !this.itemData.linkUrl || !this.itemData.liveDesc || !this.itemData.name || !this.itemData.password
+      || !this.itemData.sequence || !this.itemData.speaker || !this.itemData.speakerDesc || !this.itemData.speakerIntro || !this.itemData.thumbnail) {
+        this.$message.error('请完善信息');
+        return
+      }
       this.handleInsertUpdate(this.way)
     },
     /*新增和更新数据*/

@@ -260,6 +260,7 @@
       },
       currentChange(val){
         this.pageIndex = val;
+        this.getLoadExecution();
       },
       handleEdit(index,row){
         this.detailData = row;

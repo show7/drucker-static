@@ -106,10 +106,10 @@ export default {
           ruleList.push(item)
         }
       });
-      if (ruleList.length > 0) {
+    /*  if (ruleList.length > 0) {
         this.$message.error('请填写完整必要信息');
         return
-      }
+      }*/
       this.sendData();
     },
     sendData () {

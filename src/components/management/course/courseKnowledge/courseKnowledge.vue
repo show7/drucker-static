@@ -366,10 +366,18 @@ export default {
             this.loadingInstance = Loading.service();
             this.$refs.upload.submit();
           } else {
-            this.$message.error('请完善信息');
+            if (this.videoFileId){
+              this.handleSendMedia('')
+            } else {
+              this.$message.error('请完善信息');
+            }
           }
         } else {
-          this.$message.error('请选择语音');
+          if (this.videoFileId){
+            this.handleSendMedia('')
+          } else {
+            this.$message.error('请选择语音');
+          }
         }
       } else {
         if (this.fileList[0].url !== this.fileAudioUrl) {
@@ -377,13 +385,21 @@ export default {
             this.loadingInstance = Loading.service();
             this.$refs.upload.submit();
           } else {
-            this.$message.error('请完善信息');
+            if (this.videoFileId){
+              this.handleSendMedia('')
+            } else {
+              this.$message.error('请完善信息');
+            }
           }
         } else {
           if (this.audioName && this.audioWords) {
             this.handleSendMedia('')
           } else {
-            this.$message.error('请完善信息');
+            if (this.videoFileId){
+              this.handleSendMedia('')
+            } else {
+              this.$message.error('请完善信息');
+            }
           }
         }
       }
