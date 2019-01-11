@@ -136,6 +136,7 @@
         this.centerDialogVisible = true;
         this.audioName = row.name;
         this.audioId = row.id;
+        this.id = row.id;
         this.fileAudioUrl = row.url;
         this.promotionActivityId = row.promotionActivityId;
         setTimeout(() => { this.$refs.threeEditor.editor.setValue(row.words) }, 200)
@@ -201,7 +202,6 @@
       /*发送添加和编辑的语音*/
       handleSendAudio (ftpFileName) {
         let dataBody = {
-          audioId: this.audioId,
           ftpFileName: ftpFileName,
           name: this.audioName,
           words: this.audioWords,
