@@ -115,7 +115,7 @@ export default {
     'delete':'pc/operation/delete/coupon',//删除优惠券
   },
   'projectOpen':{
-    'configs':'pc/admin/load/month/configs',//load项目
-    'upconfig':'pc/admin/update/month/config',//新增和编辑
+    'configs':'pc/operation/load/month/configs',//load项目
+    'upconfig':'pc/operation/update/month/config',//新增和编辑
   },
 }
