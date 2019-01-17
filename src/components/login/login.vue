@@ -25,7 +25,11 @@
     },
     methods:{
       auth(){
-        let param = {callbackUrl: this.$route.query.callbackUrl ? encodeURI(this.$route.query.callbackUrl):`https://${window.location.host}/fragment/rise`}
+        let param = {
+          callbackUrl: this.$route.query.callbackUrl ? encodeURI(this.$route.query.callbackUrl) :
+            `https://${window.location.host}/fragment/rise` ,
+          serviceId: this.$route.query.serviceId
+        }
         apiDataFilter.request({
           apiPath:'common.auth',
           data:param,
