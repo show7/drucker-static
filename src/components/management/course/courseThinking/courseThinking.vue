@@ -236,7 +236,7 @@
             this.dialogVisible = false;
             this.getList(this.searchCourseTitleValueId)
           },
-          errorCallback(res) {
+          errorCallback: (res) => {
             this.fileList = [];
             this.loadingInstance.close();
             this.$message.error(res.msg);
@@ -250,6 +250,7 @@
           this.$message.error('请完善信息')
         } else {
           this.loadingInstance = Loading.service();
+
           if (this.fileList.length > 0 && this.fileAudioUrl != this.fileList[0].url) {
             this.$refs.upload.submit();
           } else {
