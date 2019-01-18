@@ -18,6 +18,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="riseId" label="riseId"></el-table-column>
+          <el-table-column prop="weixinId" label="weixinId"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -30,13 +31,19 @@
       width="60%">
       <div class="pop-box">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <div class="grid-content">
               <span>riseId:</span>
               <el-input type="text" v-model="riseId" placeholder="请输入riseId"/>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
+            <div class="grid-content">
+              <span>weixinId: </span>
+              <el-input type="text" v-model="weixinId" placeholder="请输入weixinId"/>
+            </div>
+          </el-col>
+          <el-col :span="8">
             <div class="grid-content">
               <el-button type="success" @click="loadUser">查询</el-button>
             </div>
@@ -83,6 +90,7 @@
         title:'',
         dialogVisible:false,
         riseId:'',
+        weixinId: '',
         info:{},
         imageUrl:''
       }
@@ -109,7 +117,9 @@
           this.$message.error('请填写riseId');
           return;
         }
-        let param = {riseId: this.riseId};
+        let param = {
+          riseId: this.riseId
+        };
         apiDataFilter.request({
           apiPath:'manage.classAdviserManage.loadUser',
           data:param,
@@ -120,8 +130,12 @@
       },
       /*添加*/
       handleCheck(){
-        if (this.info.nickname && this.riseId && this.imageUrl){
-          let param = {riseId:this.riseId,avatar:this.imageUrl};
+        if (this.info.nickname && this.riseId && this.imageUrl && this.weixinId){
+          let param = {
+            riseId: this.riseId,
+            avatar:this.imageUrl,
+            weixinId: this.weixinId
+          };
           apiDataFilter.request({
             apiPath:'manage.classAdviserManage.add',
             method:'post',
