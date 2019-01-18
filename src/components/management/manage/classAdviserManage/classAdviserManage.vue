@@ -131,7 +131,11 @@
       /*添加*/
       handleCheck(){
         if (this.info.nickname && this.riseId && this.imageUrl && this.weixinId){
-          let param = {riseId:this.riseId,avatar:this.imageUrl};
+          let param = {
+            riseId: this.riseId,
+            avatar:this.imageUrl,
+            weixinId: this.weixinId
+          };
           apiDataFilter.request({
             apiPath:'manage.classAdviserManage.add',
             method:'post',
