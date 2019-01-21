@@ -7,7 +7,6 @@
 const userInfo = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/userInfo/userInfo') //用户信息
 const certificate = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/certificate/certificate') //添加证书
 const certificateSend = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/certificateSend/certificateSend') // 发送证书
-const templateMessage = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/templateMessage/templateMessage') //模板消息
 const addvip = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/addvip/addvip') // 添加vip
 const openCourse = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/openCourse/openCourse') //新开/解锁课程
 const application = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/application/application') //申请审批
@@ -41,7 +40,6 @@ export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
   { path: 'certificatesend', name: 'certificateSend', component: certificateSend},
-  { path: 'templatemessage', name: 'templateMessage', component: templateMessage},
   { path: 'addvip', name: 'addvip', component: addvip},
   { path: 'opencourse', name: 'openCourse', component: openCourse},
   { path: 'application', name: 'application', component: application},
