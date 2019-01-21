@@ -20,7 +20,6 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">发送消息</template>
-            <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
             <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
           </el-submenu>
           <el-submenu index="3">

@@ -12,6 +12,7 @@
         router>
         <el-menu-item index="/management/advance/refund">退款</el-menu-item>
         <el-menu-item index="/management/advance/employee">员工管理</el-menu-item>
+        <el-menu-item index="/management/advance/templatemessage">模板消息</el-menu-item>
       </el-menu>
     </div>
 
