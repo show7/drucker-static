@@ -118,4 +118,9 @@ export default {
     'configs':'pc/operation/load/month/configs',//load项目
     'upconfig':'pc/operation/update/month/config',//新增和编辑
   },
+  'task': {
+    'load': 'pc/promotion/config/loadAll', // 获取任务列表
+    'update': 'pc/promotion/config/save', // 更新任务
+    'test': 'pc/promotion/config/test' // 测试消息
+  }
 }

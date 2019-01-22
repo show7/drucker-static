@@ -11,10 +11,10 @@
         <template slot="current">
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="人数">
-              <el-input-number :min="0" v-model="formData.FirstReachNumber"></el-input-number>
+              <el-input-number :min="0" v-model="formData.firstReachNumber"></el-input-number>
             </el-form-item>
             <el-form-item label="类名">
-              <el-select v-model="formData.FirstReachHandleClassName">
+              <el-select v-model="formData.firstReachHandleClassName">
                 <el-option label="送优惠券" value="couponTemplateMessageActivityHandleServiceImpl"/>
                 <el-option label="发送模板消息" value="templateMessageActivityHandleServiceImpl"/>
                 <el-option label="音频课开课" value="openAudioClassActivityHandleServiceImpl"/>
@@ -23,7 +23,7 @@
             <el-form-item label="消息">
               <el-input
                 class="textarea"
-                v-model="formData.FirstReachMessage"
+                v-model="formData.firstReachMessage"
                 placeholder="请输入内容"
               ></el-input>
             </el-form-item>
@@ -36,7 +36,7 @@
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="消息">
               <el-input
-                v-model="formData.FirstRangeMessage"
+                v-model="formData.FirstRangeMessafe"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -51,10 +51,10 @@
         <template slot="current">
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="人数">
-              <el-input-number :min="0" v-model="formData.SecondReachNumber"></el-input-number>
+              <el-input-number :min="0" v-model="formData.secondReachNumber"></el-input-number>
             </el-form-item>
             <el-form-item label="类名">
-              <el-select v-model="formData.SecondReachHandleClassName">
+              <el-select v-model="formData.secondReachHandleClassName">
                 <el-option label="送优惠券" value="couponTemplateMessageActivityHandleServiceImpl"/>
                 <el-option label="发送模板消息" value="templateMessageActivityHandleServiceImpl"/>
                 <el-option label="音频课开课" value="openAudioClassActivityHandleServiceImpl"/>
@@ -62,7 +62,7 @@
             </el-form-item>
             <el-form-item label="消息">
               <el-input
-                v-model="formData.SecondReachMessage"
+                v-model="formData.secondReachMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -76,7 +76,7 @@
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="消息">
               <el-input
-                v-model="formData.SecondRangeMessage"
+                v-model="formData.secondRangeMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -91,10 +91,10 @@
         <template slot="current">
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="人数">
-              <el-input-number :min="0" v-model="formData.ThirdReachNumber"></el-input-number>
+              <el-input-number :min="0" v-model="formData.thirdReachNumber"></el-input-number>
             </el-form-item>
             <el-form-item label="类名">
-              <el-select v-model="formData.ThirdReachHandleClassName">
+              <el-select v-model="formData.thirdReachHandleClassName">
                 <el-option label="送优惠券" value="couponTemplateMessageActivityHandleServiceImpl"/>
                 <el-option label="发送模板消息" value="templateMessageActivityHandleServiceImpl"/>
                 <el-option label="音频课开课" value="openAudioClassActivityHandleServiceImpl"/>
@@ -102,7 +102,7 @@
             </el-form-item>
             <el-form-item label="消息">
               <el-input
-                v-model="formData.ThirdReachMessage"
+                v-model="formData.thirdReachMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -116,7 +116,7 @@
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="消息">
               <el-input
-                v-model="formData.ThirdRangeMessage"
+                v-model="formData.thirdRangeMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -131,10 +131,10 @@
         <template slot="current">
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="人数">
-              <el-input-number :min="0" v-model="formData.FourthReachNumber"></el-input-number>
+              <el-input-number :min="0" v-model="formData.fourthReachNumber"></el-input-number>
             </el-form-item>
             <el-form-item label="类名">
-              <el-select v-model="formData.FourthReachHandleClassName">
+              <el-select v-model="formData.fourthReachHandleClassName">
                 <el-option label="送优惠券" value="couponTemplateMessageActivityHandleServiceImpl"/>
                 <el-option label="发送模板消息" value="templateMessageActivityHandleServiceImpl"/>
                 <el-option label="音频课开课" value="openAudioClassActivityHandleServiceImpl"/>
@@ -142,7 +142,7 @@
             </el-form-item>
             <el-form-item label="消息">
               <el-input
-                v-model="formData.FourthReachMessage"
+                v-model="formData.fourthReachMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -182,21 +182,21 @@ export default {
       required: false,
       default() {
         return {
-          FirstReachMessage: "",
-          FirstReachNumber: 0,
-          FirstReachHandleClassName: "",
-          FirstRangeMessage: "",
-          SecondReachMessage: "",
-          SecondReachNumber: 0,
-          SecondReachHandleClassName: "",
-          SecondRangeMessage: "",
-          ThirdReachMessage: "",
-          ThirdReachNumber: 0,
-          ThirdReachHandleClassName: "",
-          ThirdRangeMessage: "",
-          FourthReachMessage: "",
-          FourthReachNumber: 0,
-          FourthReachHandleClassName: ""
+          firstReachMessage: "",
+          firstReachNumber: 0,
+          firstReachHandleClassName: "",
+          FirstRangeMessafe: "",
+          secondReachMessage: "",
+          secondReachNumber: 0,
+          secondReachHandleClassName: "",
+          secondRangeMessage: "",
+          thirdReachMessage: "",
+          thirdReachNumber: 0,
+          thirdReachHandleClassName: "",
+          thirdRangeMessage: "",
+          fourthReachMessage: "",
+          fourthReachNumber: 0,
+          fourthReachHandleClassName: ""
         };
       }
     }
@@ -205,21 +205,21 @@ export default {
   data() {
     return {
       formData: {
-        FirstReachMessage: "",
-        FirstReachNumber: 0,
-        FirstReachHandleClassName: "",
-        FirstRangeMessage: "",
-        SecondReachMessage: "",
-        SecondReachNumber: 0,
-        SecondReachHandleClassName: "",
-        SecondRangeMessage: "",
-        ThirdReachMessage: "",
-        ThirdReachNumber: 0,
-        ThirdReachHandleClassName: "",
-        ThirdRangeMessage: "",
-        FourthReachMessage: "",
-        FourthReachNumber: 0,
-        FourthReachHandleClassName: ""
+        firstReachMessage: "",
+        firstReachNumber: 0,
+        firstReachHandleClassName: "",
+        firstRangeMessage: "",
+        secondReachMessage: "",
+        secondReachNumber: 0,
+        secondReachHandleClassName: "",
+        secondRangeMessage: "",
+        thirdReachMessage: "",
+        thirdReachNumber: 0,
+        thirdReachHandleClassName: "",
+        thirdRangeMessage: "",
+        fourthReachMessage: "",
+        fourthReachNumber: 0,
+        fourthReachHandleClassName: ""
       }
     };
   },
@@ -231,18 +231,18 @@ export default {
     handleSave() {
       // 判断输入的人数是否合法
       const {
-        FirstReachNumber,
-        SecondReachNumber,
-        ThirdReachNumber,
-        FourthReachNumber
+        firstReachNumber,
+        secondReachNumber,
+        thirdReachNumber,
+        fourthReachNumber
       } = this.formData
-      if (FirstReachNumber >= SecondReachNumber || FirstReachNumber >= ThirdReachNumber || FirstReachNumber >= FourthReachNumber) {
+      if (firstReachNumber >= secondReachNumber || firstReachNumber >= thirdReachNumber || firstReachNumber >= fourthReachNumber) {
         return this.$message.error('第一次条件的人数不合法')
       }
-      if (SecondReachNumber >= ThirdReachNumber || SecondReachNumber >= FourthReachNumber) {
+      if (secondReachNumber >= thirdReachNumber || secondReachNumber >= fourthReachNumber) {
         return this.$message.error('第二次条件的人数不合法')
       }
-      if (ThirdReachNumber >= FourthReachNumber) {
+      if (thirdReachNumber >= fourthReachNumber) {
         return this.$message.error('第三次条件的人数不合法');
       }
       this.$emit("save", this.formData);
@@ -264,21 +264,21 @@ export default {
     handleClose() {
       // 还原数据
       this.formData = {
-        FirstReachMessage: "",
-        FirstReachNumber: 0,
-        FirstReachHandleClassName: "",
-        FirstRangeMessage: "",
-        SecondReachMessage: "",
-        SecondReachNumber: 0,
-        SecondReachHandleClassName: "",
-        SecondRangeMessage: "",
-        ThirdReachMessage: "",
-        ThirdReachNumber: 0,
-        ThirdReachHandleClassName: "",
-        ThirdRangeMessage: "",
-        FourthReachMessage: "",
-        FourthReachNumber: 0,
-        FourthReachHandleClassName: ""
+        firstReachMessage: "",
+        firstReachNumber: 0,
+        firstReachHandleClassName: "",
+        FirstRangeMessafe: "",
+        secondReachMessage: "",
+        secondReachNumber: 0,
+        secondReachHandleClassName: "",
+        secondRangeMessage: "",
+        thirdReachMessage: "",
+        thirdReachNumber: 0,
+        thirdReachHandleClassName: "",
+        thirdRangeMessage: "",
+        fourthReachMessage: "",
+        fourthReachNumber: 0,
+        fourthReachHandleClassName: ""
       }
     },
 
