@@ -3,7 +3,7 @@
     @open="handleOpen"
     @close="handleClose"
     title="编辑任务"
-    :visible="dialogVisible"
+    :visible.sync="dialogVisible"
     width="80%"
   >
     <Steps>
