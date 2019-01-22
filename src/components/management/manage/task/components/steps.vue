@@ -14,6 +14,24 @@ export default {
       required: false,
       default: 0
     }
+  },
+
+  mounted () {
+    this.$nextTick(() => {
+      this.initSlot()
+    })
+  },
+
+  methods: {
+    initSlot () {
+      const len = this.$children.length
+      this.$children.forEach((slot, index) => {
+        slot.index = index + 1
+        if (index + 1 === len) {
+          slot.last = true
+        }
+      })
+    }
   }
 }
 </script>
