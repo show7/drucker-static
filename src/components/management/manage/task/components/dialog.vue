@@ -317,7 +317,9 @@ export default {
         })
       } else {
         this.$emit('test', {
-          templateMsg
+          templateMsg,
+          previousCount: 0,
+          nextCount: 0
         })
       }
     }
