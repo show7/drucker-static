@@ -2,14 +2,16 @@
 <section class="wrapper">
   <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="ActivityChineseName" label="推广活动名"></el-table-column>
-    <el-table-column label="编辑">
+    <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button @click="handleEdit(scope.row)">编辑</el-button>
+        <el-button @click="handleEdit(scope.row)" type="success">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
   <Dialog
     :dialogVisible="dialogVisible"
+    @test="handleTest"
+    @save="handleSave"
   />
 </section>
 </template>
@@ -26,7 +28,7 @@ export default {
   data() {
     return {
       tableData: [],
-      dialogVisible: true
+      dialogVisible: false
     };
   },
 
@@ -35,6 +37,18 @@ export default {
      * 编辑按钮点击
      */
     handleEdit (row) {
+    },
+
+    /**
+     * 监听测试事件
+     */
+    handleTest () {
+    },
+
+    /**
+     * 监听保存事件
+     */
+    handleSave () {
     }
   }
 };
