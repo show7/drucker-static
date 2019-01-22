@@ -1,5 +1,9 @@
 <template>
 <el-dialog title="编辑任务" :visible="dialogVisible">
+  <Steps>
+    <Step></Step>
+    <Step></Step>
+  </Steps>
   <div slot="footer" class="dialog-footer">
     <el-button type="primary" @click="handleSave">保 存</el-button>
   </div>
@@ -8,11 +12,13 @@
 
 <script>
 import Steps from './steps'
+import Step from './step'
 
 export default {
 
   components: {
-    Steps
+    Steps,
+    Step
   },
   
   props: {
