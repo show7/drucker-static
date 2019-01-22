@@ -28,7 +28,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.firstReachMessage)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -42,7 +45,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.FirstRangeMessafe, formData.firstReachNumber, formData.secondReachNumber)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -68,7 +74,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.secondReachMessage)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -82,7 +91,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.secondRangeMessage, formData.secondReachNumber, formData.thirdReachNumber)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -108,7 +120,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.thirdReachMessage)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -122,7 +137,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.thirdRangeMessage, formData.thirdReachNumber, formData.fourthReachNumber)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -148,13 +166,17 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleTest">测试</el-button>
+              <el-button
+                type="primary"
+                @click="handleTest(formData.fourthReachMessage)"
+              >测试</el-button>
             </el-form-item>
           </el-form>
         </template>
       </Step>
     </Steps>
     <div slot="footer" class="dialog-footer">
+      <el-button @click="$emit('close')">取 消</el-button>
       <el-button type="primary" @click="handleSave">保 存</el-button>
     </div>
   </el-dialog>
@@ -182,6 +204,7 @@ export default {
       required: false,
       default() {
         return {
+          id: '',
           firstReachMessage: "",
           firstReachNumber: 0,
           firstReachHandleClassName: "",
@@ -205,6 +228,7 @@ export default {
   data() {
     return {
       formData: {
+        id: '',
         firstReachMessage: "",
         firstReachNumber: 0,
         firstReachHandleClassName: "",
@@ -236,14 +260,12 @@ export default {
         thirdReachNumber,
         fourthReachNumber
       } = this.formData
-      if (firstReachNumber >= secondReachNumber || firstReachNumber >= thirdReachNumber || firstReachNumber >= fourthReachNumber) {
-        return this.$message.error('第一次条件的人数不合法')
-      }
-      if (secondReachNumber >= thirdReachNumber || secondReachNumber >= fourthReachNumber) {
-        return this.$message.error('第二次条件的人数不合法')
-      }
-      if (thirdReachNumber >= fourthReachNumber) {
-        return this.$message.error('第三次条件的人数不合法');
+      if (
+        (firstReachNumber >= secondReachNumber || firstReachNumber >= thirdReachNumber || firstReachNumber >= fourthReachNumber) ||
+        (secondReachNumber >= thirdReachNumber || secondReachNumber >= fourthReachNumber) ||
+        (thirdReachNumber >= fourthReachNumber)
+      ) {
+        return this.$message.error('人数设置错误')
       }
       this.$emit("save", this.formData);
     },
@@ -264,6 +286,7 @@ export default {
     handleClose() {
       // 还原数据
       this.formData = {
+        id: '',
         firstReachMessage: "",
         firstReachNumber: 0,
         firstReachHandleClassName: "",
@@ -285,7 +308,18 @@ export default {
     /**
      * 测试
      */
-    handleTest () {
+    handleTest (templateMsg, previousCount, nextCount) {
+      if (nextCount !== undefined && previousCount !== undefined) {
+        this.$emit('test', {
+          templateMsg,
+          previousCount,
+          nextCount
+        })
+      } else {
+        this.$emit('test', {
+          templateMsg
+        })
+      }
     }
   }
 };

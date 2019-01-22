@@ -59,6 +59,7 @@ export default {
      */
     handleEdit (row) {
       const {
+        id,
         firstReachMessage,
         firstReachNumber,
         firstReachHandleClassName,
@@ -76,6 +77,7 @@ export default {
         fourthReachHandleClassName
       } = row
       this.editData = {
+        id,
         firstReachMessage,
         firstReachNumber,
         firstReachHandleClassName,
@@ -98,13 +100,33 @@ export default {
     /**
      * 监听测试事件
      */
-    handleTest () {
+    handleTest (data) {
+      apiDataFilter.request({
+        apiPath: 'manage.task.test',
+        method: 'post',
+        data,
+        successCallback: (res) => {
+          this.$message({
+            message: '测试消息发送成功',
+            type: 'success'
+          }) 
+        }
+      })
     },
 
     /**
      * 监听保存事件
      */
-    handleSave () {
+    handleSave (data) {
+      apiDataFilter.request({
+        apiPath: 'manage.task.update',
+        method: 'post',
+        data,
+        successCallback: (res) => {
+          this.dialogVisible = false
+          this.getTaskList()
+        }
+      })
     }
   }
 };
