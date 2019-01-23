@@ -137,7 +137,8 @@ export default {
   },
 
   mounted () {
-    this.getLearnList()
+    // 接口暂时没有
+    // this.getLearnList()
   },
 
   methods: {
