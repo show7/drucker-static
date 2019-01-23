@@ -76,6 +76,19 @@
              </el-option>
            </el-select>
          </el-col>
+          <el-col :span="6">
+            <h4>模版</h4>
+            <el-select v-model="masterplateId" placeholder="请选择模版">
+              <el-option
+                v-for="item in templateList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+       <el-row>
          <el-col :span="6">
            <div class="button-submit">
              <el-input
@@ -116,6 +129,7 @@ export default {
       certificateProject: '', //请选择生成学习项目
       certificateProjectList: [{id: 3, name: '核心能力项目'}, {id: 12, name: 'L1项目'}, {id: 10, name: 'L2项目'}, {id: 8, name: 'L3项目'}], //项目list
       certificateIdentity: '', //请选择身份类型
+      masterplateId: '', // 模版类型
       certificateIdentityList: [
         {id: 1, name: '优秀班长'},
         {id: 2, name: '优秀组长'},
@@ -134,12 +148,15 @@ export default {
       profileSearchTypeId:1,
       groupNo:'',
       // 学习项目的列表
-      learnList: []
+      learnList: [],
+      // 模版列表
+      templateList: []
     }
   },
 
   mounted () {
     this.getLearnList()
+    this.getTemplateList()
   },
 
   methods: {
@@ -178,6 +195,19 @@ export default {
       });
     },
 
+    /**
+     * 获取模版列表
+     */
+    getTemplateList () {
+      ApiDataFilter.request({
+        apiPath: 'manage.certificateSend.templateList',
+        successCallback :(res)=> {
+          const { msg } = res
+          this.templateList = msg
+        }
+      });
+    },
+
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
@@ -188,7 +218,8 @@ export default {
         }
         let param = { year: this.certificateYear, month: this.certificateMonth, type: this.certificateIdentity,
           memberTypeId: this.certificateProject, problemId:this.courseTitleValue,
-          profileSearchType: this.profileSearchTypeId,};
+          profileSearchType: this.profileSearchTypeId,
+          masterplateId: this.masterplateId};
         this.profileSearchTypeId == 1 ? Object.assign(param,{memberIds: memberIds}):Object.assign(param,{riseIds: memberIds})
         this.certificateIdentity == 4 ?  Object.assign(param,{groupNo: this.groupNo}):''
         ApiDataFilter.request({

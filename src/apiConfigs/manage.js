@@ -13,7 +13,8 @@ export default {
     'generateCertificate': 'rise/operation/backend/generate/certificate', // 证书正在生成中
     'sendCertificate': 'rise/operation/backend/send/certificate', //证书正在发送中
     'Attendance': 'rise/operation/backend/generate/fullattendance', //发送全勤奖,
-    'learnList': 'pc/operation/memberType/load/list' // 学习项目列表
+    'learnList': 'pc/operation/memberType/load/list', // 学习项目列表
+    'templateList': 'pc/operation/memberType/load/masterplate'
   },
   'templates': { //模板消息
     'loadTemplates': 'pc/operation/load/templates', // 得到模板消息类型
