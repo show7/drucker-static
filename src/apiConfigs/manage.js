@@ -12,7 +12,9 @@ export default {
   'certificateSend': { //发送证书
     'generateCertificate': 'rise/operation/backend/generate/certificate', // 证书正在生成中
     'sendCertificate': 'rise/operation/backend/send/certificate', //证书正在发送中
-    'Attendance': 'rise/operation/backend/generate/fullattendance' //发送全勤奖
+    'Attendance': 'rise/operation/backend/generate/fullattendance', //发送全勤奖,
+    'learnList': 'pc/operation/memberType/load/list', // 学习项目列表
+    'templateList': 'pc/operation/memberType/load/masterplate'
   },
   'templates': { //模板消息
     'loadTemplates': 'pc/operation/load/templates', // 得到模板消息类型
@@ -118,4 +120,9 @@ export default {
     'configs':'pc/operation/load/month/configs',//load项目
     'upconfig':'pc/operation/update/month/config',//新增和编辑
   },
+  'task': {
+    'load': 'pc/promotion/config/loadAll', // 获取任务列表
+    'update': 'pc/promotion/config/save', // 更新任务
+    'test': 'pc/promotion/config/test' // 测试消息
+  }
 }

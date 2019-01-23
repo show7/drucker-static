@@ -36,6 +36,7 @@ const projectOpen = ()=>import(/* webpackChunkName: "manage" */ '@/components/ma
 const picSource = () => import(/* webpackChunkName: "manage" */ '@/components/management/manage/picSource/picSource')//微信图片素材上传
 const weChatMenu = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/weChatMenu/weChatMenu')//公众号菜单 管理
 const articleSend = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/articleSend/articleSend')//文章定向发送 管理
+const task = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/task/task')//任务保后台
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -65,4 +66,5 @@ export default [
   { path: 'picsource', name: 'picSource', component: picSource },
   { path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu },
   { path: 'articlesend', name: 'articleSend', component: articleSend },
+  { path: 'task', name: 'task', component: task }
 ]
