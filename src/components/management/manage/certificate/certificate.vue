@@ -135,6 +135,11 @@ export default {
       groupNo:''
     }
   },
+
+  mounted () {
+    this.getLearnList()
+  },
+
   methods: {
     // 获取小课名称列表
     getData () {
@@ -157,6 +162,19 @@ export default {
         this.certificateMonthList.push(month);
       }
     },
+
+    /**
+     * 获取学习项目的列表
+     */
+    getLearnList () {
+      ApiDataFilter.request({
+        apiPath: 'manage.certificateSend.learnList',
+        successCallback :(res)=> {
+          console.log(res)
+        }
+      });
+    },
+
     handleSendData () {
       let memberIds = this.textareaValue.split('\n');
       let self = this;
