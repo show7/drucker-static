@@ -30,7 +30,7 @@
            <h4>学习项目</h4>
            <el-select v-model="certificateProject" placeholder="请选择生成学习项目">
              <el-option
-               v-for="item in certificateProjectList"
+               v-for="item in learnList"
                :key="item.id"
                :label="item.name"
                :value="item.id">
@@ -132,13 +132,14 @@ export default {
       courseTitleValue:'',
       ProfileSearchType:[{id:1,name:'学号'},{id:2,name:'圈外 id'}],
       profileSearchTypeId:1,
-      groupNo:''
+      groupNo:'',
+      // 学习项目的列表
+      learnList: []
     }
   },
 
   mounted () {
-    // 接口暂时没有
-    // this.getLearnList()
+    this.getLearnList()
   },
 
   methods: {
@@ -171,7 +172,8 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.certificateSend.learnList',
         successCallback :(res)=> {
-          console.log(res)
+          const { msg } = res
+          this.learnList = msg
         }
       });
     },
