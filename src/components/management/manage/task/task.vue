@@ -1,5 +1,6 @@
 <template>
 <section class="wrapper">
+  <el-button @click="handleAdd" type="primary">新增</el-button>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="activityChineseName" label="推广活动名"></el-table-column>
     <el-table-column label="操作">
@@ -98,6 +99,31 @@ export default {
     },
 
     /**
+     * 新增按钮点击
+     */
+    handleAdd () {
+      this.editData = {
+        id: '',
+        firstReachMessage: "",
+        firstReachNumber: 0,
+        firstReachHandleClassName: "",
+        FirstRangeMessafe: "",
+        secondReachMessage: "",
+        secondReachNumber: 0,
+        secondReachHandleClassName: "",
+        secondRangeMessage: "",
+        thirdReachMessage: "",
+        thirdReachNumber: 0,
+        thirdReachHandleClassName: "",
+        thirdRangeMessage: "",
+        fourthReachMessage: "",
+        fourthReachNumber: 0,
+        fourthReachHandleClassName: ""
+      }
+      this.dialogVisible = true
+    },
+
+    /**
      * 监听测试事件
      */
     handleTest (data) {
@@ -115,7 +141,7 @@ export default {
     },
 
     /**
-     * 监听保存事件
+     * 监听保存事件，如果id为空为新增，id不为空为编辑
      */
     handleSave (data) {
       apiDataFilter.request({

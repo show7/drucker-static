@@ -309,19 +309,16 @@ export default {
      * 测试
      */
     handleTest (templateMsg, previousCount, nextCount) {
-      if (nextCount !== undefined && previousCount !== undefined) {
-        this.$emit('test', {
-          templateMsg,
-          previousCount,
-          nextCount
-        })
-      } else {
-        this.$emit('test', {
-          templateMsg,
-          previousCount: 0,
-          nextCount: 0
-        })
+      if (!templateMsg) {
+        return this.$message.error('测试消息不能为空')
       }
+      nextCount = nextCount ? nextCount : 0
+      previousCount = previousCount ? previousCount : 0
+      this.$emit('test', {
+        templateMsg,
+        previousCount,
+        nextCount
+      })
     }
   }
 };
