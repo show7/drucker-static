@@ -139,6 +139,7 @@ export default {
         {id: 6, name: '优秀教练'},
         {id: 7, name: '优秀班委'},
         {id: 8, name: '毕业证书'},
+        {id: 9, name: '项目证书'}
       ],
       textareaValue: '',
       dialogVisible: false,
