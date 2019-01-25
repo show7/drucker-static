@@ -37,6 +37,7 @@ const picSource = () => import(/* webpackChunkName: "manage" */ '@/components/ma
 const weChatMenu = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/weChatMenu/weChatMenu')//公众号菜单 管理
 const articleSend = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/articleSend/articleSend')//文章定向发送 管理
 const task = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/task/task')//任务保后台
+const classGrouping = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classGrouping')//任务保后台
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -66,5 +67,6 @@ export default [
   { path: 'picsource', name: 'picSource', component: picSource },
   { path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu },
   { path: 'articlesend', name: 'articleSend', component: articleSend },
-  { path: 'task', name: 'task', component: task }
+  { path: 'task', name: 'task', component: task },
+  { path: 'classgrouping', name: 'classgrouping', component: classGrouping }
 ]

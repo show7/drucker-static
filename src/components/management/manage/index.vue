@@ -60,6 +60,7 @@
           <el-menu-item index="/management/manage/coin">礼金管理</el-menu-item>
           <el-menu-item index="/management/manage/invest">投资圈外</el-menu-item>
           <el-menu-item index="/management/manage/task">任务宝后台</el-menu-item>
+          <el-menu-item index="/management/manage/classgrouping">班级分组</el-menu-item>
         </el-menu>
       </div>
 
