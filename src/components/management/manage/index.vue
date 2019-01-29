@@ -43,6 +43,7 @@
           </el-submenu>
           <el-submenu index="7">
             <template slot="title">学籍管理</template>
+            <el-menu-item index="/management/manage/statuschange">修改学籍</el-menu-item>
             <el-menu-item index="/management/manage/statusfreeze">冻结学籍</el-menu-item>
             <el-menu-item index="/management/manage/statusunfreeze">解冻学籍</el-menu-item>
           </el-submenu>
