@@ -40,6 +40,9 @@
         <el-col :span="8">
           <el-input v-model="formData.offlineMessage" placeholder="下线消息"></el-input>
         </el-col>
+        <el-col :span="8">
+          <el-input v-model="formData.welcomeWord" placeholder="欢迎语"></el-input>
+        </el-col>
       </el-row>
     </div>
     <Steps>
@@ -260,7 +263,8 @@ export default {
           activity: "", // 活动英文名称
           promotionImg: "", // 海报链接
           posterTemplateType: "", // 海报模版类型
-          offlineMessage: "" // 下线消息
+          offlineMessage: "", // 下线消息
+          welcomeWord: "" // 欢迎语
         };
       }
     }
@@ -289,7 +293,8 @@ export default {
         activity: "",
         promotionImg: "",
         posterTemplateType: "",
-        offlineMessage: ""
+        offlineMessage: "",
+        welcomeWord: ""
       }
     };
   },
@@ -352,7 +357,8 @@ export default {
         activity: "",
         promotionImg: "",
         posterTemplateType: "",
-        offlineMessage: ""
+        offlineMessage: "",
+        welcomeWord: ""
       }
     },
 

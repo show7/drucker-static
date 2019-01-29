@@ -80,7 +80,8 @@ export default {
         activity,
         promotionImg,
         posterTemplateType,
-        offlineMessage
+        offlineMessage,
+        welcomeWord
       } = row
       this.editData = {
         id,
@@ -103,7 +104,8 @@ export default {
         activity,
         promotionImg,
         posterTemplateType,
-        offlineMessage
+        offlineMessage,
+        welcomeWord
       }
       this.dialogVisible = true
     },
@@ -133,7 +135,8 @@ export default {
         activity: "",
         promotionImg: "",
         posterTemplateType: "",
-        offlineMessage: ""
+        offlineMessage: "",
+        welcomeWord: ""
       }
       this.dialogVisible = true
     },
