@@ -75,7 +75,7 @@
           <el-form :inline="true" class="form__wrapper">
             <el-form-item label="消息">
               <el-input
-                v-model="formData.FirstRangeMessafe"
+                v-model="formData.firstRangeMessage"
                 class="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -83,7 +83,7 @@
             <el-form-item>
               <el-button
                 type="primary"
-                @click="handleTest(formData.FirstRangeMessafe, formData.firstReachNumber, formData.secondReachNumber)"
+                @click="handleTest(formData.firstRangeMessage, formData.firstReachNumber, formData.secondReachNumber)"
               >测试</el-button>
             </el-form-item>
           </el-form>
@@ -244,7 +244,7 @@ export default {
           firstReachMessage: "",
           firstReachNumber: 0,
           firstReachHandleClassName: "",
-          FirstRangeMessafe: "",
+          firstRangeMessage: "",
           secondReachMessage: "",
           secondReachNumber: 0,
           secondReachHandleClassName: "",
@@ -336,7 +336,7 @@ export default {
         firstReachMessage: "",
         firstReachNumber: 0,
         firstReachHandleClassName: "",
-        FirstRangeMessafe: "",
+        firstRangeMessage: "",
         secondReachMessage: "",
         secondReachNumber: 0,
         secondReachHandleClassName: "",
