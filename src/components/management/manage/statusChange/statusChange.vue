@@ -87,7 +87,9 @@ export default {
         riseId: '',
         nickName: '',
         className: '',
-        groupNo: ''
+        groupNo: '',
+        memberId: '',
+        memberTypeId: ''
       }
     }
   },
@@ -131,6 +133,7 @@ export default {
           if (msg.riseId) {
             msg = { ...msg, isEdit: false }
             this.statusList = [msg]
+            this.edit = { ...this.edit, ...data }
           }
         }
       })
@@ -146,6 +149,13 @@ export default {
         data: this.edit,
         successCallback: (res) => {
           this.handleFetchStatus()
+          this.edit = {
+            ...this.edit,
+            riseId: '',
+            nickName: '',
+            className: '',
+            groupNo: ''
+          }
         }
       })
     },
@@ -161,7 +171,7 @@ export default {
           return { ...status, isEdit: false }
         }
       })
-      this.edit = { ...row }
+      this.edit = { ...this.edit, ...row }
     }
   }
 }
