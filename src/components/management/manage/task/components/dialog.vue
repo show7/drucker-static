@@ -6,6 +6,42 @@
     :visible.sync="dialogVisible"
     width="80%"
   >
+    <div class="row">
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-input v-model="formData.activityChineseName" placeholder="活动名称"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <el-input v-model="formData.activity" placeholder="活动英文名"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <el-input v-model="formData.promotionImg" placeholder="海报链接"></el-input>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="row">
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-select v-model="formData.posterTemplateType" placeholder="海报类型(左中右)">
+            <el-option
+              label="左"
+              :value="1"
+            ></el-option>
+            <el-option
+              label="中"
+              :value="2"
+            ></el-option>
+            <el-option
+              label="右"
+              :value="3"
+            ></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <el-input v-model="formData.offlineMessage" placeholder="下线消息"></el-input>
+        </el-col>
+      </el-row>
+    </div>
     <Steps>
       <Step>
         <template slot="current">
@@ -219,7 +255,12 @@ export default {
           thirdRangeMessage: "",
           fourthReachMessage: "",
           fourthReachNumber: 0,
-          fourthReachHandleClassName: ""
+          fourthReachHandleClassName: "",
+          activityChineseName: "", // 活动中文名称
+          activity: "", // 活动英文名称
+          promotionImg: "", // 海报链接
+          posterTemplateType: "", // 海报模版类型
+          offlineMessage: "" // 下线消息
         };
       }
     }
@@ -243,7 +284,12 @@ export default {
         thirdRangeMessage: "",
         fourthReachMessage: "",
         fourthReachNumber: 0,
-        fourthReachHandleClassName: ""
+        fourthReachHandleClassName: "",
+        activityChineseName: "",
+        activity: "",
+        promotionImg: "",
+        posterTemplateType: "",
+        offlineMessage: ""
       }
     };
   },
@@ -267,7 +313,7 @@ export default {
       ) {
         return this.$message.error('人数设置错误')
       }
-      this.$emit("save", this.formData);
+      this.$emit("save", this.formData)
     },
 
     /**
@@ -301,7 +347,12 @@ export default {
         thirdRangeMessage: "",
         fourthReachMessage: "",
         fourthReachNumber: 0,
-        fourthReachHandleClassName: ""
+        fourthReachHandleClassName: "",
+        activityChineseName: "",
+        activity: "",
+        promotionImg: "",
+        posterTemplateType: "",
+        offlineMessage: ""
       }
     },
 

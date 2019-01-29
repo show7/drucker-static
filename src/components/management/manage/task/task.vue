@@ -75,7 +75,12 @@ export default {
         thirdRangeMessage,
         fourthReachMessage,
         fourthReachNumber,
-        fourthReachHandleClassName
+        fourthReachHandleClassName,
+        activityChineseName,
+        activity,
+        promotionImg,
+        posterTemplateType,
+        offlineMessage
       } = row
       this.editData = {
         id,
@@ -93,7 +98,12 @@ export default {
         thirdRangeMessage,
         fourthReachMessage,
         fourthReachNumber,
-        fourthReachHandleClassName
+        fourthReachHandleClassName,
+        activityChineseName,
+        activity,
+        promotionImg,
+        posterTemplateType,
+        offlineMessage
       }
       this.dialogVisible = true
     },
@@ -118,7 +128,12 @@ export default {
         thirdRangeMessage: "",
         fourthReachMessage: "",
         fourthReachNumber: 0,
-        fourthReachHandleClassName: ""
+        fourthReachHandleClassName: "",
+        activityChineseName: "",
+        activity: "",
+        promotionImg: "",
+        posterTemplateType: "",
+        offlineMessage: ""
       }
       this.dialogVisible = true
     },

@@ -38,6 +38,8 @@ const weChatMenu = ()=>import(/* webpackChunkName: "manage" */ '@/components/man
 const articleSend = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/articleSend/articleSend')//文章定向发送 管理
 const task = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/task/task')//任务保后台
 const classGrouping = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classGrouping')//任务保后台
+const statusChange = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusChange/statusChange')// 修改学籍
+
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'certificate', name: 'certificate', component: certificate},
@@ -68,5 +70,6 @@ export default [
   { path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu },
   { path: 'articlesend', name: 'articleSend', component: articleSend },
   { path: 'task', name: 'task', component: task },
-  { path: 'classgrouping', name: 'classgrouping', component: classGrouping }
+  { path: 'classgrouping', name: 'classgrouping', component: classGrouping },
+  { path: 'statuschange', name: 'statusChange', component: statusChange }
 ]
