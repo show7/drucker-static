@@ -83,6 +83,11 @@ export default {
   'customerMessage':{
     'send':'pc/operation/send/customer/msg', //发送客服消息
   },
+  'statuschange': {
+    options: 'pc/operation/load/member', // 类型列表
+    load: 'pc/operation/load/classinfo', // 学籍列表
+    update: 'pc/operation/update/classinfo' // 更新学籍信息
+  },
   'statusFreeze':{
     'freeze':'pc/operation/freeze/member',//冻结学籍
   },

@@ -38,7 +38,7 @@ const weChatMenu = ()=>import(/* webpackChunkName: "manage" */ '@/components/man
 const articleSend = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/articleSend/articleSend')//文章定向发送 管理
 const task = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/task/task')//任务保后台
 const classGrouping = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/classGrouping')//任务保后台
-const statusChange = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusChange')// 修改学籍
+const statusChange = ()=>import(/* webpackChunkName: "manage" */ '@/components/management/manage/statusChange/statusChange')// 修改学籍
 
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
