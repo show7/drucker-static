@@ -64,7 +64,7 @@ export default {
         firstReachMessage,
         firstReachNumber,
         firstReachHandleClassName,
-        FirstRangeMessafe,
+        firstRangeMessage,
         secondReachMessage,
         secondReachNumber,
         secondReachHandleClassName,
@@ -80,14 +80,15 @@ export default {
         activity,
         promotionImg,
         posterTemplateType,
-        offlineMessage
+        offlineMessage,
+        welcomeWord
       } = row
       this.editData = {
         id,
         firstReachMessage,
         firstReachNumber,
         firstReachHandleClassName,
-        FirstRangeMessafe,
+        firstRangeMessage,
         secondReachMessage,
         secondReachNumber,
         secondReachHandleClassName,
@@ -103,7 +104,8 @@ export default {
         activity,
         promotionImg,
         posterTemplateType,
-        offlineMessage
+        offlineMessage,
+        welcomeWord
       }
       this.dialogVisible = true
     },
@@ -117,7 +119,7 @@ export default {
         firstReachMessage: "",
         firstReachNumber: 0,
         firstReachHandleClassName: "",
-        FirstRangeMessafe: "",
+        firstRangeMessage: "",
         secondReachMessage: "",
         secondReachNumber: 0,
         secondReachHandleClassName: "",
@@ -133,7 +135,8 @@ export default {
         activity: "",
         promotionImg: "",
         posterTemplateType: "",
-        offlineMessage: ""
+        offlineMessage: "",
+        welcomeWord: ""
       }
       this.dialogVisible = true
     },
