@@ -34,10 +34,12 @@ export default {
     'insert': 'pc/operation/warmup/insert/practice',//提交添加的题目
     'knowledges': 'pc/operation/problem/get/knowledges',//获得知识点
     'submit': 'pc/operation/warmup/submit',//提交接口
+    'delete':'pc/operation/warmup/delete/warmup',//删除
   },
   'application': {
     'homework': 'pc/operation/homework',//获取应用题
     'submit': 'pc/operation/application/submit',//提交
+    'delete':'pc/operation/delete/applicationPractice',//删除
   },
   'card': {
     'load': 'pc/operation/essence/card/load',//知识卡list
@@ -59,5 +61,9 @@ export default {
     'catalog':'pc/operation/assist/load/catalog',//加载教练类别
     'add':'pc/operation/assist/add',//新增
     'update':'pc/operation/assist/update',//
+  },
+  'audio':{
+    'loadAll':'pc/promotion/audio/loadAll',
+    'save':'pc/promotion/audio/save',//保存音频
   }
 }

@@ -179,7 +179,7 @@
       },
       loadData(){
         apiDataFilter.request({
-          apiPath:'admin.projectOpen.configs',
+          apiPath:'manage.projectOpen.configs',
           successCallback:(res)=>{
             this.configsList = res.msg
           }
@@ -227,7 +227,7 @@
       },
       /*数据完整性*/
       handleCheck(){
-        if (!this.memberTypeId || !this.openDate || !this.closeDate || !this.expiredDate || ! this.activeDate || ! this.sellingMonth || !this.sellingYear) {
+        if (!this.memberTypeId || !this.openDate || !this.closeDate  || ! this.sellingMonth || !this.sellingYear) {
           this.$message.error('请完善信息')
         }else {
           this.handleSubmit();
@@ -241,7 +241,7 @@
         };
         this.id ? Object.assign(param,{id:this.id}):'';
         apiDataFilter.request({
-          apiPath:'admin.projectOpen.upconfig',
+          apiPath:'manage.projectOpen.upconfig',
           method:'post',
           data:param,
           successCallback:(res)=>{

@@ -57,6 +57,17 @@
           </el-date-picker>
         </el-col>
         <el-col :span="6">
+          <p>请选择班级</p>
+          <el-select v-model="classNameId" placeholder="请选择班级">
+            <el-option
+              v-for="item in classNameList"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6">
           <el-button type="primary" @click="handleData">提交</el-button>
         </el-col>
       </el-row>
@@ -77,10 +88,20 @@ export default {
       memo: '',//用户身份
       startDate:'',
       vipMember:[{id:0,value:true,name:'是'},{id:1,value:false,name:'否'}],
-      vipMemberValue:true
+      vipMemberValue:true,
+      classNameList:[],
+      classNameId:''
     }
   },
   methods: {
+    loadcClassname(){
+      ApiDataFilter.request({
+        apiPath:'manage.statusUnfreeze.classname',
+        successCallback:(res)=>{
+          this.classNameList = res.msg.className;
+        }
+      })
+    },
     loadRiseMember () {
       let self = this;
       ApiDataFilter.request({
@@ -91,7 +112,7 @@ export default {
       })
     },
     handleData(){
-      if (!this.riseId || !this.memo ||  !this.month || !this.startDate || !this.memberTypeId) {
+      if (!this.riseId  ||  !this.month || !this.startDate || !this.memberTypeId) {
         this.$message.error('请完善信息');
         return
       }
@@ -99,8 +120,9 @@ export default {
     },
     addRiseMember () {
       let self = this;
-      let param = {riseId: this.riseId.split('\n'), memo: this.memo, month: this.month,startDate:this.startDate,
+      let param = {riseIds: this.riseId.split('\n'), memo: this.memo, month: this.month,startDate:this.startDate,
         vip:this.vipMemberValue, memberTypeId: this.memberTypeId};
+      this.classNameId ? Object.assign(param,{className:this.classNameId}):'';
       ApiDataFilter.request({
         apiPath: 'manage.addVip.addRiseMember',
         method: 'post',
@@ -113,7 +135,8 @@ export default {
   },
 
   created () {
-    this.loadRiseMember()
+    this.loadRiseMember();
+    this.loadcClassname();
   }
 }
 </script>

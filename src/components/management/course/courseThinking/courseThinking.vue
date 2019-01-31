@@ -5,7 +5,7 @@
       <el-row>
         <el-col :span="12">
           <h4>课程</h4>
-          <el-select v-model="searchCourseTitleValueId" placeholder="请选择小课标题" @change="handleChangeSelect">
+          <el-select v-model="searchCourseTitleValueId" filterable placeholder="请选择小课标题" @change="handleChangeSelect">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -76,7 +76,7 @@
         <el-row>
           <el-col :span="12">
             <h4>课程</h4>
-            <el-select v-model="courseTitleValueId" :disabled="disabledFlag" placeholder="请选择小课标题">
+            <el-select v-model="courseTitleValueId" filterable :disabled="disabledFlag" placeholder="请选择小课标题">
               <el-option
                 v-for="item in courseTitleList"
                 :key="item.id"
@@ -236,7 +236,7 @@
             this.dialogVisible = false;
             this.getList(this.searchCourseTitleValueId)
           },
-          errorCallback(res) {
+          errorCallback: (res) => {
             this.fileList = [];
             this.loadingInstance.close();
             this.$message.error(res.msg);
@@ -250,6 +250,7 @@
           this.$message.error('请完善信息')
         } else {
           this.loadingInstance = Loading.service();
+
           if (this.fileList.length > 0 && this.fileAudioUrl != this.fileList[0].url) {
             this.$refs.upload.submit();
           } else {

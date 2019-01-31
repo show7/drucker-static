@@ -98,13 +98,9 @@ export default {
       this.way = 0
     },
     /*检测是否填写数据*/
-    checkData () {
-      if (!this.imageUrl) {
-        this.$message.error('请填写图片链接');
-        return
-      }
-      if (!this.linkUrl) {
-        this.$message.error('请输入内容点击链接');
+    checkData() {
+      if (!this.imageUrl || !this.linkUrl || !this.sequence) {
+        this.$message.error('请输入完善所有信息');
         return
       }
       this.bannerInsert(this.way);

@@ -18,14 +18,16 @@
           <el-menu-item index="/management/course/exerciseapplication">应用题管理</el-menu-item>
           <el-menu-item index="/management/course/courseextended">拓展学习</el-menu-item>
           <el-menu-item index="/management/course/knowledgecard">知识卡片管理</el-menu-item>
+          <el-menu-item index="/management/course/audiocourse">音频课管理</el-menu-item>
           <el-menu-item index="/management/course/richtext">文章上传</el-menu-item>
           <el-menu-item index="/management/course/fileupload">文件上传</el-menu-item>
-       <!--   <el-submenu index="1">
-            <template slot="title">课程管理</template>
+          <el-menu-item index="/management/course/social">群组信息导入</el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">助教管理</template>
             <el-menu-item index="/management/course/assiststandard">助教测评标准</el-menu-item>
             <el-menu-item index="/management/course/assistexecution">助教完成情况</el-menu-item>
             <el-menu-item index="/management/course/assistupgrade">助教升降级</el-menu-item>
-          </el-submenu>-->
+          </el-submenu>
         </el-menu>
       </div>
 

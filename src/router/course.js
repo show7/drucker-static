@@ -17,6 +17,8 @@ const richText = () => import(/* webpackChunkName: "course" */ '@/components/man
 const assistStandard = ()=> import(/* webpackChunkName: "course" */ '@/components/management/course/assistStandard/assistStandard')//助教测评标准
 const assistExecution = ()=> import(/* webpackChunkName: "course" */ '@/components/management/course/assistExecution/assistExecution')//助教完成情况
 const assistUpgrade = ()=>import(/* webpackChunkName: "course" */ '@/components/management/course/assistUpgrade/assistUpgrade')//助教升降级
+const audioCourse = ()=>import(/* webpackChunkName: "course" */ '@/components/management/course/audioCourse/audioCourse')//音频课管理
+const social = () => import(/* webpackChunkName: "course" */ '@/components/management/course/social/social') //群组信息导入
 
 export default [
   { path: 'courseintroduce', name: 'courseIntroduce', component: courseIntroduce },
@@ -31,5 +33,7 @@ export default [
   { path: 'assiststandard', name: 'assistStandard', component: assistStandard },
   { path: 'assistexecution', name: 'assistExecution', component: assistExecution },
   { path: 'assistupgrade', name: 'assistUpgrade', component: assistUpgrade },
+  { path: 'social', name: 'social', component: social},
+  { path: 'audiocourse', name: 'audioCourse', component: audioCourse },
 
 ]

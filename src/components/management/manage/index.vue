@@ -13,10 +13,13 @@
           <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
           <el-menu-item index="/management/manage/addvip">添加会员</el-menu-item>
           <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
-          <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">优惠券管理</template>
+            <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
+            <el-menu-item index="/management/manage/couponclear">消除优惠券</el-menu-item>
+          </el-submenu>
           <el-submenu index="2">
             <template slot="title">发送消息</template>
-            <el-menu-item index="/management/manage/templatemessage">模板消息</el-menu-item>
             <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
@@ -24,9 +27,26 @@
             <el-menu-item index="/management/manage/certificate">添加证书</el-menu-item>
             <el-menu-item index="/management/manage/certificatesend">证书发送</el-menu-item>
           </el-submenu>
-          <el-menu-item index="/management/manage/application">商学院申请审批</el-menu-item>
-          <el-menu-item index="/management/manage/qrcode">推广二维码</el-menu-item>
-          <el-menu-item index="/management/manage/survey">问卷链接设置</el-menu-item>
+          <el-submenu index="5">
+            <template slot="title">服务号管理</template>
+            <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
+            <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
+            <el-menu-item index="/management/manage/picsource">微信图片素材</el-menu-item>
+            <el-menu-item index="/management/manage/wechatmenu">公众号菜单管理</el-menu-item>
+            <el-menu-item index="/management/manage/articlesend">文章定向发送</el-menu-item>
+          </el-submenu>
+          <el-submenu index="6">
+            <template slot="title">课程项目管理</template>
+            <el-menu-item index="/management/manage/classadviser">项目添加班主任</el-menu-item>
+            <el-menu-item index="/management/manage/classadvisermanage">班主任管理</el-menu-item>
+            <el-menu-item index="/management/manage/projectopen">项目开课时间</el-menu-item>
+          </el-submenu>
+          <el-submenu index="7">
+            <template slot="title">学籍管理</template>
+            <el-menu-item index="/management/manage/statuschange">修改学籍</el-menu-item>
+            <el-menu-item index="/management/manage/statusfreeze">冻结学籍</el-menu-item>
+            <el-menu-item index="/management/manage/statusunfreeze">解冻学籍</el-menu-item>
+          </el-submenu>
           <el-submenu index="4">
             <template slot="title">首页资源管理</template>
             <el-menu-item index="/management/manage/banner">首页 Banner 编辑</el-menu-item>
@@ -34,15 +54,14 @@
             <el-menu-item index="/management/manage/activities">线下活动编辑</el-menu-item>
             <el-menu-item index="/management/manage/articles">圈圈文章编辑</el-menu-item>
           </el-submenu>
-          <el-menu-item index="/management/manage/social">群组信息导入</el-menu-item>
-          <el-menu-item index="/management/manage/autoreply">服务号自动回复</el-menu-item>
-          <el-menu-item index="/management/manage/subscribe">服务号关注回复</el-menu-item>
-          <el-menu-item index="/management/manage/statusfreeze">冻结学籍</el-menu-item>
-          <el-menu-item index="/management/manage/statusunfreeze">解冻学籍</el-menu-item>
+          <el-menu-item index="/management/manage/application">商学院申请审批</el-menu-item>
+          <el-menu-item index="/management/manage/qrcode">推广二维码</el-menu-item>
+          <el-menu-item index="/management/manage/survey">问卷链接设置</el-menu-item>
           <el-menu-item index="/management/manage/changewechat">交换微信号</el-menu-item>
-          <el-menu-item index="/management/manage/classadviser">班主任管理</el-menu-item>
           <el-menu-item index="/management/manage/coin">礼金管理</el-menu-item>
-
+          <el-menu-item index="/management/manage/invest">投资圈外</el-menu-item>
+          <el-menu-item index="/management/manage/task">任务宝后台</el-menu-item>
+          <el-menu-item index="/management/manage/classgrouping">班级分组</el-menu-item>
         </el-menu>
       </div>
 

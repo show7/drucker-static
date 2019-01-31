@@ -8,11 +8,12 @@
     top: 80px;
     left: 0;
     z-index: 1;
-    height: 88%;
+    height: calc(100% - 80px);
+  /*  height: 88%;*/
     overflow-y: scroll;
     &::-webkit-scrollbar {display:none}
   }
-  .router-class{
+  .router-class {
     display: inline-block;
     position: relative;
     width: 82%;
@@ -28,7 +29,7 @@
 .child-view {
   position:absolute;
   width:100%;
-  transition:all.8s cubic-bezier(.55,0,.1,1);
+  transition:all .8s cubic-bezier(.55,0,.1,1);
 }
 .slide-left-enter,.slide-right-leave-active {
   opacity:0;

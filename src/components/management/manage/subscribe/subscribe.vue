@@ -19,11 +19,15 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="del"
-          label="是否失效">
-          <template slot-scope="scope">
-            <p>{{scope.row.del == 1 ? '是':'否'}}</p>
-          </template>
+        prop="del"
+        label="是否失效">
+        <template slot-scope="scope">
+          <p>{{scope.row.del == 1 ? '是':'否'}}</p>
+        </template>
+      </el-table-column>
+        <el-table-column
+          prop="originName"
+          label="公众号">
         </el-table-column>
         <el-table-column width="200" fixed="right" label="操作">
           <template slot-scope="scope">

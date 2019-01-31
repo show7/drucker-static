@@ -1,0 +1,52 @@
+
+@import "../../../../style/mixins.less";
+
+.wechat-menu-container{
+  padding: 20px;
+  h3{
+    margin-bottom: 10px;
+  }
+  .wechat-menu-top{
+    .top-bac();
+  }
+  .parent-box,.children-box{
+    .el-row{
+      margin-bottom: 20px;
+    }
+    .grid-content{
+      display: flex;
+      align-items: center;
+      .el-input{
+        width: 60%;
+      }
+    }
+    .type-content{
+      .el-input{
+
+      }
+    }
+  }
+  .children-box{
+    .el-row{
+      margin-bottom: 20px;
+    }
+    .grid-content{
+      display: flex;
+      align-items: center;
+      .el-input,.el-select{
+        width: 60%;
+      }
+    }
+    .type-content{
+      .el-input{
+
+      }
+    }
+  }
+  .last-submit{
+    margin-top: 20px;
+  }
+  .add-box{
+    text-align: right;
+  }
+}

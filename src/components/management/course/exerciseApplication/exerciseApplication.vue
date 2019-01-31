@@ -39,6 +39,9 @@
             <el-button
               size="mini"
               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -224,6 +227,30 @@
             this.$message.success('提交成功');
             this.getExerciseChoice();
             this.dialogVisible = false;
+          }
+        })
+      },
+      handleDelete(index,row){
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.conformDelete(row.id)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      conformDelete(id){
+        ApiDataFilter.request({
+          apiPath:'course.application.delete',
+          pathParams:[id],
+          successCallback:()=>{
+            this.$message.success('删除成功');
+            this.getExerciseChoice()
           }
         })
       },

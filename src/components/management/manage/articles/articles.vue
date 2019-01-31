@@ -149,6 +149,10 @@ export default {
     },
     /*发送*/
     send () {
+      if (!this.itemData.title || !this.itemData.description || !this.itemData.tag || !this.itemData.thumbnail || !this.itemData.linkUrl){
+        this.$message.error('请完善信息')
+        return
+      }
       this.handleInsertUpdate(this.way)
     },
     /*新增和更新数据*/
