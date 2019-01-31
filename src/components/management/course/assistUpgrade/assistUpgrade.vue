@@ -199,11 +199,7 @@
         this.pageIndex = val
       },
       update() {
-         if (this.name){
-           this.handleAdd()
-         } else {
-           this.updateAssistCatalog()
-         }
+        this.updateAssistCatalog()
       }
     },
     created() {
