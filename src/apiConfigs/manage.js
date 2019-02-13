@@ -102,7 +102,7 @@ export default {
     'rotates':'pc/operation/load/project/rotates',//加载班主任项目
     'targetRotates':'pc/operation/load/target/rotates',//加载班主任
     'update':'pc/operation/update/rotate',//提交
-    'teachers':'pc/operation/load/head/teachers ',//加载选择班主任
+    'teachers':'pc/operation/load/head/teachers',//加载选择班主任
     'add':'pc/operation/add/rotate',//新增
   },
   'coin':{
