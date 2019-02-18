@@ -4,6 +4,20 @@
     <div class="qrcode-top">
       <el-row>
         <el-col :span="8">
+          <h4>渠道选择</h4>
+          <el-select @change="onChannelChange" v-model="channel" placeholder="请选择渠道" :clearable="true">
+            <el-option
+              v-for="item in channels"
+              :key="item.id"
+              :label="item.channelName"
+              :value="item"
+            ></el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-row>
+        <el-col :span="8">
           <h4>英文活动名和编号（格式例如：subscribe_push_1）</h4>
           <el-input v-model="scene" placeholder="请输入英文活动名和编号"></el-input>
         </el-col>
@@ -80,7 +94,9 @@ export default {
       },
       dialogVisible: false,
       serviceId:1,
-      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外职场学园'},{serviceId:10,name:'又更新了'}]
+      serviceList:[{serviceId:1,name:'圈外同学'},{serviceId:6,name:'圈外职场学园'},{serviceId:10,name:'又更新了'}],
+      channel: undefined,
+      channels: []
     }
   },
   methods: {
@@ -125,10 +141,28 @@ export default {
           self.qrCodeObj = res.msg;
         }
       })
+    },
+    onChannelChange(channel){
+      if(!!channel){
+        // 选择渠道
+        this.scene = channel.channel + '|';
+        this.remark = channel.channelName;
+      } else {
+        // 清空
+        this.scene = '';
+        this.remark = '';
+      }
     }
   },
-  created () {
-
+  created() {
+    ApiDataFilter.request({
+      apiPath: 'manage.channel.rules',
+      method: 'get',
+      successCallback: (res) => {
+        console.log(this, res.msg);
+        this.channels = res.msg;
+      }
+    })
   }
 }
 </script>
