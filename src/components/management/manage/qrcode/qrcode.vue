@@ -5,12 +5,12 @@
       <el-row>
         <el-col :span="8">
           <h4>渠道选择</h4>
-          <el-select @change="onChannelChange" v-model="channel" placeholder="请选择渠道" :clearable="true">
+          <el-select v-model="channelId" placeholder="请选择渠道" :clearable="true">
             <el-option
               v-for="item in channels"
               :key="item.id"
               :label="item.channelName"
-              :value="item"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-col>
@@ -108,7 +108,20 @@
         serviceId: 1,
         serviceList: [ { serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' } ],
         channel: undefined,
+        channelId: undefined,
         channels: []
+      }
+    },
+    watch: {
+      channelId: function (val, oldVal) {
+        let selectArr = this.channels.filter(item => item.id === val);
+        if(selectArr.length > 0) {
+          this.channel = selectArr[0];
+          this.onChannelChange(selectArr[ 0 ]);
+        } else {
+          this.channel = undefined;
+          this.onChannelChange();
+        }
       }
     },
     methods: {
