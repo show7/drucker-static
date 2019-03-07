@@ -37,6 +37,9 @@ export default {
     'sendCheckedApplication': 'pc/operation/notice/bs/application'//发送审核结果
   },
   'qrCode': 'subscribe/rule/tmp/qrCode', //推广二维码
+  'channel': {
+    'rules': 'subscribe/rule/channels'
+  },
   'survey': { // 调查问卷
     'surveyList': 'pc/operation/survey/config/list', //获取问卷list
     'surveyConfig': 'pc/operation/survey/config' //修改新增问卷
