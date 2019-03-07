@@ -111,8 +111,8 @@
             </el-col>
             <el-col :span="18">
               <div class="grid-content">
-                <el-radio v-model="del" :label="true">是</el-radio>
-                <el-radio v-model="del" :label="false">否</el-radio>
+                <el-radio v-model="del" :label="false">是</el-radio>
+                <el-radio v-model="del" :label="true">否</el-radio>
               </div>
             </el-col>
           </el-row>
