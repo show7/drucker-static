@@ -87,7 +87,7 @@ export default {
       memberTypeIdList: [],
       memo: '',//用户身份
       startDate:'',
-      vipMember:[{id:0,value:false,name:'是'},{id:1,value:true,name:'否'}],
+      vipMember:[{id:0,value:false,name:'否'}, {id:1,value:true,name:'是'}],
       vipMemberValue:true,
       classNameList:[],
       classNameId:''
