@@ -22,9 +22,9 @@
           <el-select v-model="templateValue" placeholder="请选择模板消息类型">
             <el-option
               v-for="item in templateMsgs"
-              :key="item.id"
+              :key="item.messageId"
               :label="item.remark"
-              :value="item.id">
+              :value="item.messageId">
             </el-option>
           </el-select>
         </el-col>
@@ -33,7 +33,7 @@
           <el-select v-if="forcePush" v-model="forcePushValue" placeholder="请选择是否强制推送">
             <el-option
               v-for="item in forcePushList"
-              :key="item.id"
+              :key="item.messageId"
               :label="item.name"
               :value="item.value">
             </el-option>
