@@ -8,10 +8,10 @@
             <h4>选择消息模式</h4>
             <el-select v-model="type"
                        placeholder="请选择消息模式">
-              <el-option v-for="item in messageMoudel"
-                         :key="item.serviceId"
+              <el-option v-for="item in messageModel"
+                         :key="item.type"
                          :label="item.name"
-                         :value="item.serviceId">
+                         :value="item.type">
               </el-option>
             </el-select>
           </el-col>
@@ -108,7 +108,7 @@ export default {
       isUpImage: true,
       shortUrl: '/wx/file/upload/image/?tmp=1',
       serviceList: [{ serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' }],
-      messageMoudel: [{ serviceId: 1, name: '文本模式' }, { serviceId: 2, name: '图片模式' }]
+      messageModel: [{ type: 1, name: '文字' }, { type: 2, name: '图片' }]
     }
   },
   computed: {
