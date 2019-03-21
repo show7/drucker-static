@@ -273,7 +273,7 @@ export default {
       this.handleAddSubmit();
     },
     handleAddSubmit () {
-      let param = { headTeacherId: this.headTeachersId, isActive: this.del, sequence: Number(this.sequence), activeDateStr: this.startTime, expiredDateStr: this.endTime }
+      let param = { headTeacherId: this.headTeachersId, isActive: this.effect, sequence: Number(this.sequence), activeDateStr: this.startTime, expiredDateStr: this.endTime }
       Object.assign(param, this.adviserData);
       apiDataFilter.request({
         apiPath: 'manage.classAdviser.add',
