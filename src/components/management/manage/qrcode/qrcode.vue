@@ -81,7 +81,8 @@
       title="右击图片进行保存"
       :visible.sync="dialogVisible"
       width="60%">
-      <span>活动链接地址：{{qrCodeObj.link}}</span>
+      <div>活动链接地址：{{qrCodeObj.link}}</div>
+      <div>二维码链接：{{qrCodeObj.qrCode}}</div>
       <img :src="qrCodeObj.qrCode" alt="二维码">
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
