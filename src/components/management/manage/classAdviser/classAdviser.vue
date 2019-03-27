@@ -123,9 +123,9 @@
             </el-col>
             <el-col :span="18">
               <div class="grid-content">
-                <el-radio v-model="effect"
+                <el-radio v-model="del"
                           :label="true">是</el-radio>
-                <el-radio v-model="effect"
+                <el-radio v-model="del"
                           :label="false">否</el-radio>
               </div>
             </el-col>
@@ -215,7 +215,7 @@ export default {
       },
       headTeachersList: [],
       headTeachersId: '',
-      effect: true
+      del: true
     }
   },
   methods: {
@@ -257,9 +257,9 @@ export default {
         successCallback: (res) => {
           console.log('加载班主任', res)
           const adviserList = res.msg
-          adviserList.forEach(teacher => {
-            teacher.effect = true
-          });
+          // adviserList.forEach(teacher => {
+          //   teacher.del = true
+          // });
           this.adviserList = adviserList;
         }
       })
@@ -273,7 +273,7 @@ export default {
       this.handleAddSubmit();
     },
     handleAddSubmit () {
-      let param = { headTeacherId: this.headTeachersId, isActive: this.effect, sequence: Number(this.sequence), activeDateStr: this.startTime, expiredDateStr: this.endTime }
+      let param = { headTeacherId: this.headTeachersId, isActive: this.del, sequence: Number(this.sequence), activeDateStr: this.startTime, expiredDateStr: this.endTime }
       Object.assign(param, this.adviserData);
       apiDataFilter.request({
         apiPath: 'manage.classAdviser.add',
@@ -300,17 +300,18 @@ export default {
     },
     /*编辑*/
     handleEdited (index, row) {
+      const { nickName, avatar, startTime, endTime, sequence, rotateId, del } = row
       console.log(index, row)
       this.title = '编辑';
       this.innerVisible = true;
-      this.nickName = row.nickName;
-      this.avatarUrl = row.avatar;
-      this.startTime = row.startTime;
-      this.endTime = row.endTime;
-      this.effect = row.effect
-      this.sequence = row.sequence;
+      this.nickName = nickName;
+      this.avatarUrl = avatar;
+      this.startTime = startTime;
+      this.endTime = endTime;
+      this.sequence = sequence;
       this.disabled = true;
-      this.rotateId = row.rotateId;
+      this.rotateId = rotateId;
+      this.del = del
     },
     /*提交*/
     submit () {
@@ -318,7 +319,7 @@ export default {
         this.$message.error('请完善信息');
         return
       }
-      let param = { sequence: this.sequence, expireDate: this.endTime, rotateId: this.rotateId, isActive: this.effect };
+      let param = { sequence: this.sequence, expireDate: this.endTime, rotateId: this.rotateId, isActive: this.del };
       apiDataFilter.request({
         apiPath: 'manage.classAdviser.update',
         data: param,
