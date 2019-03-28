@@ -120,6 +120,9 @@ export default {
     teachers: 'pc/operation/load/head/teachers', //加载选择班主任
     add: 'pc/operation/add/rotate' //新增
   },
+  classGroup: {
+    test: 'pc/operation/load/project/rotates'
+  },
   coin: {
     rppoint: 'pc/wxmini/submit/rppoint' //礼金提交
   },
