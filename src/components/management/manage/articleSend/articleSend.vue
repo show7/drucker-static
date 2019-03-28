@@ -182,10 +182,6 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
       this.mediaId = res.msg;
     },
-    handleMaterialSuccess (res, file, fileList) {
-      this.material.imageUrl = URL.createObjectURL(file.raw);
-      this.material.thumbMediaId = res.msg;
-    },
     handleSubmit (flag, param) {
       if (!this.canSend) return this.$message.success('请等待群发完成后再次操作');
       this.canSend = false
