@@ -256,11 +256,7 @@ export default {
         method: 'post',
         successCallback: (res) => {
           console.log('加载班主任', res)
-          const adviserList = res.msg
-          // adviserList.forEach(teacher => {
-          //   teacher.del = true
-          // });
-          this.adviserList = adviserList;
+          this.adviserList = res.msg
         }
       })
     },
