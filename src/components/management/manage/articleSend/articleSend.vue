@@ -173,6 +173,10 @@ export default {
       this.mediaId = val.mediaId;
     },
     handleGet (id) {
+      if (val == this.TYPEFLAG.TEXTPIC) {
+        this.pageIndex = 1
+        this.getList()
+      }
       this.serviceId = id;
     },
     handleExceed (file) {
