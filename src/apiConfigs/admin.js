@@ -29,6 +29,6 @@ export default {
   'articleSend':{
     'message':'pc/operation/wx/preview/mass/message',// 发送前预览
     'preview':'pc/operation/wx/mass/message',//群发
-    'material':'pc/operation/wx/news/upload/material',//
+    'material':'pc/operation/get/materials',//获取图文素材
   }
 }
