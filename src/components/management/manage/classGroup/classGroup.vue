@@ -69,7 +69,7 @@
           </el-form-item>
           <el-form-item label="班主任"
                         prop="teacher">
-            <el-select v-model="addCodeInfo.profileId"
+            <el-select v-model="addCodeInfo.teacher"
                        size="small"
                        placeholder="请选择您心仪的班主任">
               <el-option v-for="item in teacherList"
@@ -115,6 +115,9 @@ import apiDataFilter from '../../../../libraries/apiDataFilter';
 export default {
   name: 'classAdviser',
   data () {
+    const serialno = (rules, value, callback) => {
+      console.log(rules)
+    }
     return {
       semester: [],
       outerVisible: false,
@@ -123,7 +126,7 @@ export default {
       teacherList: [],
       sequence: '',
       addCodeInfo: {
-        profileId: '',
+        teacher: '',
         sequence: '',
         semester: [],
         qrCodeImageUrl: ''
@@ -131,16 +134,14 @@ export default {
       rules: {
         semester: [{ required: true, message: '请选择学期', trigger: 'change' }],
         sequence: [{ required: true, message: '顺序字段不能为空', trigger: 'blur' }, { type: 'number', message: '顺序必须为数字值', trigger: 'blur' }],
-        teacher: [{ validator: serialno, required: true, message: '请选择班主任', trigger: 'change' }]
+        teacher: [{ required: true, message: '请选择班主任', trigger: 'change' }]
       },
-      upFileDisabled: false,
-      viewTheBigQrCode: false
+      upFileDisabled: false
 
     }
   },
   mounted () {
     this.getclassGroup()
-    this.loadTeachers()
   },
   methods: {
     getclassGroup () {
@@ -216,17 +217,20 @@ export default {
       console.log(this.addCodeInfo)
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-        const { qrCodeImageUrl, profileId, sequence, semester } = this.addCodeInfo
+        const { qrCodeImageUrl: qrCode, teacher: profileId, sequence, semester } = this.addCodeInfo
         const [memberTypeId, openDate] = semester
-        const data = { qrCodeImageUrl, profileId, sequence, semester, memberTypeId, openDate }
+        const data = { qrCode, profileId, sequence, semester, memberTypeId, openDate }
         console.log(data)
+        if (!qrCode) return this.$notify.error({ title: '二维码未上传', message: '该醒醒了，你在想啥呢？' })
         apiDataFilter.request({
           apiPath: 'manage.classGroup.add',
           data,
+          method: 'post',
           successCallback: (res) => {
             console.log(res)
             this.teacherList = res.msg
-            this.outerVisible = true
+            this.loadQrCode(semester)
+            this.outerVisible = false
           }
         })
       });
