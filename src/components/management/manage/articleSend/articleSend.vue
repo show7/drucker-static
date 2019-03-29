@@ -173,11 +173,11 @@ export default {
       this.mediaId = val.mediaId;
     },
     handleGet (id) {
+      this.serviceId = id;
       if (this.type === '4') {
         this.pageIndex = 1
         this.getList()
       }
-      this.serviceId = id;
     },
     handleExceed (file) {
       this.$message.error(`图片最多上传1张`)
