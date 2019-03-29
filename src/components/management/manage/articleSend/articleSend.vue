@@ -173,7 +173,7 @@ export default {
       this.mediaId = val.mediaId;
     },
     handleGet (id) {
-      if (this.type === 'news') {
+      if (this.type === '4') {
         this.pageIndex = 1
         this.getList()
       }
