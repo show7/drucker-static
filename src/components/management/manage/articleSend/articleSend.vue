@@ -220,15 +220,22 @@ export default {
     /*检验数据*/
     checkData () {
       if (this.type == this.TYPEFLAG.TEXT) {
-        this.$message.error('请先输入消息')
-        return !this.remark
+        if(!this.remark){
+          this.$message.error('请先输入消息')
+          return !this.remark
+        }
       } else if (this.type == this.TYPEFLAG.PIC) {
-        this.$message.error('请先上传图片')
-        return !this.mediaId
+        if(!this.mediaId){
+          this.$message.error('请先上传图片')
+          return !this.mediaId
+        }
       } else if (this.type == this.TYPEFLAG.TEXTPIC) {
-        this.$message.error('请先选取素材')
-        return !this.mediaId
+        if(!this.mediaId){
+          this.$message.error('请先选取素材')
+          return !this.mediaId
+        }
       }
+      return false
     }
   }
 }
