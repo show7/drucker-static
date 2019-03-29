@@ -1,191 +1,111 @@
 <template>
-  <div class="class-adviser-container">
+  <div class="class-group-container">
     <h3>项目添加班主任</h3>
-    <div class="class-adviser-content">
-      <!--table表格-->
-      <el-table :data="projectList"
-                style="width: 100%">
-        <el-table-column prop="memberTypeName"
-                         width="300"
-                         label="项目课程">
-        </el-table-column>
-        <el-table-column prop="rotateCount"
-                         label="班主任数量">
-        </el-table-column>
-        <el-table-column prop="channelName"
-                         label="渠道">
-        </el-table-column>
-        <el-table-column prop="result"
-                         label="班主任列表">
-          <template slot-scope="scope">
-            <p class="adviser-list"
-               @click="handleGetAdviser(scope.row)">查看班主任</p>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    <br>
+    <el-card shadow="hover">
+      <el-row :gutter="24">
+        <el-col :span="18">
+          <span>请选择筛选条件</span>
+          <el-cascader :options="semester"
+                       v-model="selectedOptions"
+                       @change="loadQrCode">
+          </el-cascader>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="success"
+                     @click="loadTeachers"
+                     plain>新增群二维码</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+    <br>
+    <el-card shadow="hover">
+      <div class="class-adviser-content">
+        <!--table表格-->
+        <el-table :data="qrCodeList"
+                  style="width: 100%">
+          <el-table-column prop="teacherName"
+                           width="300"
+                           label="班主任">
+          </el-table-column>
+          <el-table-column prop="qrCode"
+                           label="二维码">
+            <template slot-scope="scope">
+              <img :src="scope.row.qrCode"
+                   alt=""
+                   class="group-weichat-code">
+            </template>
 
-    <el-dialog title="班主任列表"
-               :visible.sync="dialogTableVisible"
-               :close-on-click-modal="false">
-      <div class="add-box">
-        <el-button type="primary"
-                   @click="handleAdd">新增班主任</el-button>
+          </el-table-column>
+          <el-table-column prop="sequence"
+                           label="顺序">
+          </el-table-column>
+          <el-table-column prop=""
+                           label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini"
+                         type="danger"
+                         @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
-      <el-table :data="adviserList">
-        <el-table-column property="nickName"
-                         label="昵称"
-                         width="150"></el-table-column>
-        <el-table-column property="avatar"
-                         label="头像"
-                         width="200">
-          <template slot-scope="scope">
-            <img class="avatar-pic"
-                 :src="scope.row.avatar"
-                 alt="">
-          </template>
-        </el-table-column>
-        <el-table-column property="startTime"
-                         label="开始服役时间"></el-table-column>
-        <el-table-column property="endTime"
-                         label="退役时间"></el-table-column>
-        <el-table-column property="sequence"
-                         label="排序"></el-table-column>
-        <el-table-column width="200"
-                         fixed="right"
-                         label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini"
-                       @click="handleEdited(scope.$index, scope.row)">编辑
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+    </el-card>
 
-      <el-dialog width="40%"
-                 :title="title"
-                 :close-on-click-modal="false"
-                 :visible.sync="innerVisible"
-                 append-to-body>
-        <div class="adviser-detail">
-          <el-row v-if="disabled">
-            <el-col :span="6">
-              <div class="grid-content">
-                昵称：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <el-input v-model="nickName"
-                          :disabled="disabled"
-                          placeholder="请输入昵称"></el-input>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row v-if="disabled">
-            <el-col :span="6">
-              <div class="grid-content">
-                头像：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <img class="avatar-pic"
-                     :src="avatarUrl"
-                     alt="">
-              </div>
-            </el-col>
-          </el-row>
-          <el-row v-if="!disabled">
-            <el-col :span="6">
-              <div class="grid-content">
-                选择班主任：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <el-select v-model="headTeachersId"
-                           placeholder="请选择">
-                  <el-option v-for="item in headTeachersList"
-                             :key="item.id"
-                             :label="item.nickName"
-                             :value="item.id">
-                  </el-option>
-                </el-select>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div class="grid-content">
-                是否立即生效：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <el-radio v-model="del"
-                          :label="true">是</el-radio>
-                <el-radio v-model="del"
-                          :label="false">否</el-radio>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div class="grid-content">
-                顺序：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <el-input type="number"
-                          v-model="sequence"
-                          placeholder="请输入顺序"></el-input>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div class="grid-content">
-                服务时间：
-              </div>
-            </el-col>
-            <el-col :span="18">
-              <div class="grid-content">
-                <div class="start">
-                  开始时间:
-                  <el-date-picker v-model="startTime"
-                                  type="date"
-                                  :disabled="disabled"
-                                  value-format="yyyy-MM-dd"
-                                  placeholder="选择开始日期">
-                  </el-date-picker>
-                </div>
-                <div class="end">
-                  结束时间:
-                  <el-date-picker v-model="endTime"
-                                  type="date"
-                                  value-format="yyyy-MM-dd"
-                                  placeholder="选择结束日期">
-                  </el-date-picker>
-                </div>
+    <el-dialog title="新增群二维码"
+               :visible.sync="outerVisible">
+      <el-card shadow="hover">
+        <el-form ref="addCodeFrom"
+                 :model="addCodeInfo"
+                 label-width="80px"
+                 :rules="rules"
+                 size="small">
+          <el-form-item label="选择学期"
+                        prop="semester">
+            <el-cascader :options="semester"
+                         v-model="addCodeInfo.semester"
+                         @change="loadQrCode">
+            </el-cascader>
+          </el-form-item>
+          <el-form-item label="班主任"
+                        prop="teacher">
+            <el-select v-model="addCodeInfo.profileId"
+                       size="small"
+                       placeholder="请选择您心仪的班主任">
+              <el-option v-for="item in teacherList"
+                         :key="item.id"
+                         :label="item.nickName"
+                         :value="item.profileId">
+              </el-option>
+            </el-select>
+          </el-form-item>
 
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-        <span slot="footer"
-              class="dialog-footer">
-          <el-button type="primary"
-                     v-if="!disabled"
-                     @click="handleCheck">确 定</el-button>
-          <el-button type="primary"
-                     v-if="disabled"
-                     @click="submit">确 定</el-button>
-        </span>
-      </el-dialog>
+          <el-form-item label="顺序"
+                        size="small"
+                        prop="sequence">
+            <el-input type="sequence"
+                      v-model.number="addCodeInfo.sequence"></el-input>
+          </el-form-item>
+          <el-form-item label="群二维码">
+            <el-upload action="/pc/upload/file"
+                       list-type="picture-card"
+                       :limit="1"
+                       :multiple="false"
+                       :disabled="upFileDisabled"
+                       :on-success="upPicSuccess">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+
+          </el-form-item>
+        </el-form>
+      </el-card>
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="outerVisible = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="addClassQrCode('addCodeFrom')">确定</el-button>
+      </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -196,29 +116,126 @@ export default {
   name: 'classAdviser',
   data () {
     return {
-      title: '新增',
-      projectList: [],
-      adviserList: [],
-      dialogTableVisible: false,
-      innerVisible: false,
-      nickName: '',
-      avatarUrl: '',
-      sequence: null,
-      endTime: '',
-      startTime: '',
-      disabled: false,
-      rotateId: '',
-      adviserData: {
-        status: '',
-        memberTypeId: '',
-        channel: ''
+      semester: [],
+      outerVisible: false,
+      qrCodeList: [],
+      selectedOptions: [],
+      teacherList: [],
+      sequence: '',
+      addCodeInfo: {
+        profileId: '',
+        sequence: '',
+        semester: [],
+        qrCodeImageUrl: ''
       },
-      headTeachersList: [],
-      headTeachersId: '',
-      del: true
+      rules: {
+        semester: [{ required: true, message: '请选择学期', trigger: 'change' }],
+        sequence: [{ required: true, message: '顺序字段不能为空', trigger: 'blur' }, { type: 'number', message: '顺序必须为数字值', trigger: 'blur' }],
+        teacher: [{ validator: serialno, required: true, message: '请选择班主任', trigger: 'change' }]
+      },
+      upFileDisabled: false,
+      viewTheBigQrCode: false
+
     }
   },
+  mounted () {
+    this.getclassGroup()
+    this.loadTeachers()
+  },
   methods: {
+    getclassGroup () {
+      apiDataFilter.request({
+        apiPath: 'manage.classGroup.loadOpendate',
+        successCallback: (res) => {
+          // console.log(res)
+          const { code, msg } = res
+          if (code !== 200) return '加载筛选条件失败'
+          let semester = msg
+          semester.forEach(item => {
+            const { memberTypeName, memberTypeId, openDateList } = item
+            let children = openDateList.map(date => { return { label: date, value: date } })
+            item = Object.assign(item, { label: memberTypeName, value: memberTypeId, children })
+          });
+          this.semester = semester
+          // console.log(options)
+        }
+      })
+    },
+    loadQrCode (value) {
+      // console.log(value)
+      apiDataFilter.request({
+        apiPath: 'manage.classGroup.loadQrCode',
+        pathParams: value,
+        successCallback: (res) => {
+          this.qrCodeList = res.msg
+          console.log(res)
+        }
+      })
+    },
+    handleDelete (index, row) {
+      this.$confirm('此操作将删除本条信息, 是否继续?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const { id } = row
+        apiDataFilter.request({
+          apiPath: 'manage.classGroup.del',
+          data: { id },
+          method: 'post',
+          successCallback: (res) => {
+            console.log(res)
+            const { code, msg } = res
+            if (code !== 200) return this.$message.error(msg);
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.loadQrCode(this.selectedOptions)
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+      console.log(index, row)
+    },
+    loadTeachers () {
+      apiDataFilter.request({
+        apiPath: 'manage.classGroup.teachers',
+        successCallback: (res) => {
+          console.log(res)
+          this.teacherList = res.msg
+          this.outerVisible = true
+        }
+      })
+    },
+    addClassQrCode (formName) {
+      console.log(this.addCodeInfo)
+      this.$refs[formName].validate((valid) => {
+        if (!valid) return
+        const { qrCodeImageUrl, profileId, sequence, semester } = this.addCodeInfo
+        const [memberTypeId, openDate] = semester
+        const data = { qrCodeImageUrl, profileId, sequence, semester, memberTypeId, openDate }
+        console.log(data)
+        apiDataFilter.request({
+          apiPath: 'manage.classGroup.add',
+          data,
+          successCallback: (res) => {
+            console.log(res)
+            this.teacherList = res.msg
+            this.outerVisible = true
+          }
+        })
+      });
+    },
+    upPicSuccess (res, file, fileList) {
+      console.log(res, file, fileList)
+      let { msg } = res
+      this.addCodeInfo.qrCodeImageUrl = msg
+    },
     handleGetAdviser (row) {
       console.log(row)
       this.dialogTableVisible = true;
@@ -242,7 +259,7 @@ export default {
       apiDataFilter.request({
         apiPath: 'manage.classAdviser.rotates',
         successCallback: (res) => {
-          this.projectList = res.msg;
+          // this.projectList = res.msg;
         }
       })
     },
