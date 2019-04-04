@@ -61,10 +61,6 @@ const subscribe = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/subscribe/subscribe'
   ); //服务号关注回复
-const coupon = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/coupon/coupon'
-  ); //创建优惠券
 const customerMessage = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/customerMessage/customerMessage'
@@ -94,18 +90,6 @@ const classAdviserManage = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/classAdviserManage/classAdviserManage'
   ); //班主任管理
-const coin = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/coin/coin'
-  ); //礼金
-const invest = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/invest/invest'
-  ); //投资圈外
-const couponClear = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/couponClear/couponClear'
-  ); //消除优惠券
 const projectOpen = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/projectOpen/projectOpen'
@@ -154,7 +138,6 @@ export default [
   {path: 'articles', name: 'articles', component: articles},
   {path: 'autoreply', name: 'autoReply', component: autoReply},
   {path: 'subscribe', name: 'subscribe', component: subscribe},
-  {path: 'coupon', name: 'coupon', component: coupon},
   {
     path: 'customermessage',
     name: 'customerMessage',
@@ -169,9 +152,6 @@ export default [
     name: 'classAdviserManage',
     component: classAdviserManage,
   },
-  {path: 'coin', name: 'coin', component: coin},
-  {path: 'invest', name: 'invest', component: invest},
-  {path: 'couponclear', name: 'couponClear', component: couponClear},
   {path: 'projectopen', name: 'projectOpen', component: projectOpen},
   {path: 'picsource', name: 'picSource', component: picSource},
   {path: 'wechatmenu', name: 'weChatMenu', component: weChatMenu},
