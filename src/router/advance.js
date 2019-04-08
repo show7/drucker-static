@@ -19,7 +19,14 @@ const coupon = () =>
 import (
   /* webpackChunkName: "manage" */ '@/components/management/advance/coupon/coupon'
 ); //创建优惠券
-
+const addvip = () =>
+import (
+  /* webpackChunkName: "manage" */ '@/components/management/manage/addvip/addvip'
+); // 添加会员
+const openCourse = () =>
+import (
+  /* webpackChunkName: "manage" */ '@/components/management/manage/openCourse/openCourse'
+); //新开/解锁课程
 export default [
   { path: 'refund', name: 'refund', component: refund },
   { path: 'employee', name: 'employee', component: employee},
@@ -28,4 +35,6 @@ export default [
   { path: 'couponClear', name: 'couponClear', component: couponClear},
   { path: 'invest', name: 'invest', component: invest},
   { path: 'coupon', name: 'coupon', component: coupon},
+  { path: 'addvip', name: 'addvip', component: addvip},
+  { path: 'opencourse', name: 'openCourse', component: openCourse},
 ]

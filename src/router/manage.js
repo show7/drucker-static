@@ -16,14 +16,6 @@ const certificateSend = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/certificateSend/certificateSend'
   ); // 发送证书
-const addvip = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/addvip/addvip'
-  ); // 添加vip
-const openCourse = () =>
-  import (
-    /* webpackChunkName: "manage" */ '@/components/management/manage/openCourse/openCourse'
-  ); //新开/解锁课程
 const application = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/application/application'
@@ -127,8 +119,6 @@ export default [
     name: 'certificateSend',
     component: certificateSend,
   },
-  {path: 'addvip', name: 'addvip', component: addvip},
-  {path: 'opencourse', name: 'openCourse', component: openCourse},
   {path: 'application', name: 'application', component: application},
   {path: 'qrcode', name: 'qrcode', component: qrcode},
   {path: 'survey', name: 'survey', component: survey},

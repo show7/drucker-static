@@ -13,13 +13,15 @@
         <el-menu-item index="/management/advance/refund">退款</el-menu-item>
         <el-menu-item index="/management/advance/employee">员工管理</el-menu-item>
         <el-menu-item index="/management/advance/templatemessage">模板消息</el-menu-item>
-        <el-menu-item index="/management/advance/coin">礼金管理</el-menu-item>
-        <el-menu-item index="/management/advance/invest">投资圈外</el-menu-item>
+        <el-menu-item index="/management/advance/addvip">添加会员</el-menu-item>
+        <el-menu-item index="/management/advance/opencourse">新开/解锁课程</el-menu-item>
         <el-submenu index="1">
           <template slot="title">优惠券管理</template>
           <el-menu-item index="/management/advance/coupon">添加优惠券</el-menu-item>
           <el-menu-item index="/management/advance/couponclear">消除优惠券</el-menu-item>
         </el-submenu>
+        <el-menu-item index="/management/advance/coin">礼金管理</el-menu-item>
+        <el-menu-item index="/management/advance/invest">投资圈外</el-menu-item>
       </el-menu>
     </div>
 

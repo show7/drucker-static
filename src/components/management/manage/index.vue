@@ -10,8 +10,6 @@
                active-text-color="#7DBE00"
                router>
         <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
-        <el-menu-item index="/management/manage/addvip">添加会员</el-menu-item>
-        <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
         <el-submenu index="2">
           <template slot="title">发送消息</template>
           <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
