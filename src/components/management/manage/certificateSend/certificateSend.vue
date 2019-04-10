@@ -40,7 +40,6 @@
       <el-row>
         <el-col :span="24">
           <el-button type="primary" @click="handleShowtitle(1)">发送证书</el-button>
-          <el-button type="primary" @click="handleShowtitle(2)">发送全勤奖</el-button>
          </el-col>
       </el-row>
     </div>
@@ -64,7 +63,7 @@ export default {
   name: 'certificateSend',
   data () {
     return {
-      certificateYear: 2018, // 请选择证书年份
+      certificateYear: 2019, // 请选择证书年份
       certificateYearList: [], //证书年份list
       certificateMonth: 1, // 请选择证书月份
       certificateMonthList: [], // 月份list
@@ -110,8 +109,6 @@ export default {
         this.title = `点击生成${this.certificateYear} 年${this.certificateMonth} 月的证书`
       } else if (index === 1) {
         this.title = `点击发送${this.certificateYear} 年${this.certificateMonth} 月的证书（将会发送模板消息通知学员，谨慎操作）`
-      } else if (index === 2) {
-        this.title = `点击发送${this.certificateYear} 年${this.certificateMonth} 月的全勤奖（将会发送模板消息通知学员，谨慎操作）`
       }
     },
     /*发送数据*/
@@ -124,8 +121,6 @@ export default {
         this.certificate('manage.certificateSend.generateCertificate')
       } else if (this.index === 1) {
         this.certificate('manage.certificateSend.sendCertificate')
-      } else if (this.index === 2) {
-        this.certificate('manage.certificateSend.Attendance')
       }
     }
   },

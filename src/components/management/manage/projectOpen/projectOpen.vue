@@ -241,7 +241,7 @@
         };
         this.id ? Object.assign(param,{id:this.id}):'';
         apiDataFilter.request({
-          apiPath:'manage.projectOpen.upconfig',
+          apiPath:'manage.projectOpen.updateConfig',
           method:'post',
           data:param,
           successCallback:(res)=>{
