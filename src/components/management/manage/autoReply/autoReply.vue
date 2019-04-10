@@ -33,6 +33,13 @@
             <p>{{scope.row.isDefault ? '是':'否'}}</p>
           </template>
         </el-table-column>
+        <el-table-column
+                prop="isDefault"
+                label="公众号">
+          <template slot-scope="scope">
+            <p>{{scope.row.originName}}</p>
+          </template>
+        </el-table-column>
         <el-table-column width="200" fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button
@@ -51,6 +58,10 @@
         :show-close="false"
         width="40%">
         <div class="popout-box">
+          <div class="wechat-menu-top">
+            公众号：
+            <WeChat @getServiceId="handleGet"></WeChat>
+          </div>
           <h4>回复关键词，多个关键词用 ‘|’ 分隔</h4>
           <el-input placeholder="请输入关键词" v-model="itemData.keyword" clearable></el-input>
           <h4>详细内容</h4>
@@ -69,8 +80,11 @@
 
 <script>
 import ApiDataFilter from '@/libraries/apiDataFilter'
+import weChat from '../../../common/weChat/weChat'
+
 export default {
   name: 'autoReply',
+  components: {WeChat: weChat},
   data () {
     return {
       replyList: [], //总list
@@ -78,7 +92,8 @@ export default {
         keyword: '', //回复关键词
         message: '', //详细内容
         exact: false, //是否精准匹配
-        isDefault: false//是否默认回复
+        isDefault: false, //是否默认回复
+        serviceId: 1, //默认是圈外同学
       },
       dialogVisible: false,
       title: '新增',
@@ -87,6 +102,9 @@ export default {
     }
   },
   methods: {
+    handleGet(id) {
+      this.itemData.serviceId = id;
+    },
     getReplyList () {
       let self = this;
       ApiDataFilter.request({
@@ -107,7 +125,8 @@ export default {
     /*新增和更新数据*/
     handleInsertUpdate (index) {
       let self = this;
-      let param = {exact: this.itemData.exact, isDefault: this.itemData.isDefault, keyword: this.itemData.keyword, message: this.itemData.message, type: 1 };
+      let param = {exact: this.itemData.exact, isDefault: this.itemData.isDefault, keyword: this.itemData.keyword,
+        message: this.itemData.message, type: 1, wechatServiceId: this.itemData.serviceId };
       index == 0 ? '' : Object.assign(param, {id: this.id})
       let apiPath = index == 0 ? 'manage.reply.replyAdd' : 'manage.reply.replyUpdate';
       ApiDataFilter.request({
