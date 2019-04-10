@@ -21,11 +21,11 @@ import (
 ); //创建优惠券
 const addvip = () =>
 import (
-  /* webpackChunkName: "manage" */ '@/components/management/manage/addvip/addvip'
+  /* webpackChunkName: "manage" */ '@/components/management/advance/addvip/addvip'
 ); // 添加会员
 const openCourse = () =>
 import (
-  /* webpackChunkName: "manage" */ '@/components/management/manage/openCourse/openCourse'
+  /* webpackChunkName: "manage" */ '@/components/management/advance/openCourse/openCourse'
 ); //新开/解锁课程
 export default [
   { path: 'refund', name: 'refund', component: refund },

@@ -142,5 +142,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-  @import "./addvip.less";
+  @import "addvip.less";
 </style>
