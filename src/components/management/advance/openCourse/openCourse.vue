@@ -95,5 +95,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-  @import "./openCourse.less";
+  @import "openCourse.less";
 </style>

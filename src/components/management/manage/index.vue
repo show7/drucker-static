@@ -10,13 +10,6 @@
                active-text-color="#7DBE00"
                router>
         <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
-        <el-menu-item index="/management/manage/addvip">添加会员</el-menu-item>
-        <el-menu-item index="/management/manage/opencourse">新开/解锁课程</el-menu-item>
-        <el-submenu index="1">
-          <template slot="title">优惠券管理</template>
-          <el-menu-item index="/management/manage/coupon">添加优惠券</el-menu-item>
-          <el-menu-item index="/management/manage/couponclear">消除优惠券</el-menu-item>
-        </el-submenu>
         <el-submenu index="2">
           <template slot="title">发送消息</template>
           <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
@@ -59,8 +52,6 @@
         <el-menu-item index="/management/manage/qrcode">推广二维码</el-menu-item>
         <el-menu-item index="/management/manage/survey">问卷链接设置</el-menu-item>
         <el-menu-item index="/management/manage/changewechat">交换微信号</el-menu-item>
-        <el-menu-item index="/management/manage/coin">礼金管理</el-menu-item>
-        <el-menu-item index="/management/manage/invest">投资圈外</el-menu-item>
         <el-menu-item index="/management/manage/task">任务宝后台</el-menu-item>
         <el-menu-item index="/management/manage/classgrouping">班级分组</el-menu-item>
       </el-menu>
