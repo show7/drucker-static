@@ -125,6 +125,7 @@
           {value: 'arch', name: '架构'},
           {value: 'front', name: '前端资源'},
           {value: 'kotler', name: '营销平台'},
+          {value: 'steve', name: '数据任务'},
         ],
         projectValue: 'rise',
         resultList: [],
