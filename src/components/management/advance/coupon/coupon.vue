@@ -1,39 +1,85 @@
 <template>
-    <div class="coupon-container">
-      <h3>添加优惠券</h3>
-      <div class="coupon-top">
-        <el-row>
-          <el-col :span="8">
-            <h4>优惠券截止日期</h4>
-            <el-date-picker v-model="expiredDate" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-          </el-col>
-          <el-col :span="8">
-            <h4>优惠券金额</h4>
-            <el-input type="number" placeholder="请输入金额" v-model="amount" clearable></el-input>
-          </el-col>
-       <!-- <el-col :span="6">
-            <h4>优惠券类型</h4>
-            <el-select v-model="couponConfigId" placeholder="请选择">
-              <el-option v-for="item in couponTypeList" :key="item.id" :label="item.description" :value="item.id"></el-option>
-            </el-select>
-          </el-col>-->
-          <el-col :span="8">
-            <h4>学员的圈外id(换行隔开)</h4>
-            <el-input  type="textarea"  placeholder="请输入学员的圈外id" :row="4" v-model="riseIdList" clearable></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <h4>优惠券描述</h4>
-            <el-input type="textarea" placeholder="请输入描述" v-model="description" clearable></el-input>
-          </el-col>
-          <el-col :span="12" class="button-send">
-            <el-button type="primary" @click="handleCheck">提交</el-button>
-          </el-col>
-        </el-row>
 
-      </div>
-    </div>
+  <div class="coupon-container">
+    <el-card shadow="hover">
+      <el-row>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item>首页</el-breadcrumb-item>
+          <el-breadcrumb-item>高级功能</el-breadcrumb-item>
+          <el-breadcrumb-item>优惠券管理</el-breadcrumb-item>
+          <el-breadcrumb-item>添加优惠券</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-row>
+    </el-card>
+    <br>
+    <br>
+    <el-card shadow="hover">
+      <el-form :model="couponFrom"
+               status-icon
+               :rules="couponFromRules"
+               ref="couponFrom"
+               label-width="200px"
+               class="demo-ruleForm">
+        <el-form-item label="优惠劵截止日期"
+                      prop="expiredDate">
+          <el-date-picker v-model="couponFrom.expiredDate"
+                          value-format="yyyy-MM-dd"
+                          type="date"
+                          style="width:300px"
+                          placeholder="选择日期"></el-date-picker>
+
+        </el-form-item>
+        <el-form-item label="优惠劵金额"
+                      prop="amount">
+          <el-input type="text"
+                    placeholder="请输入金额"
+                    style="width:300px"
+                    v-model.number="couponFrom.amount"
+                    clearable></el-input>
+
+        </el-form-item>
+        <el-form-item label="优惠劵类型"
+                      prop="category">
+          <el-select v-model="couponFrom.category"
+                     clearable
+                     style="width:300px"
+                     placeholder="请选择">
+            <el-option v-for="(item,i) in couponType"
+                       :key="i"
+                       :label="item.category"
+                       :value="item.category">
+            </el-option>
+          </el-select>
+
+        </el-form-item>
+        <el-form-item label="学员的圈外id(换行隔开)"
+                      prop="riseIdList">
+          <el-input type="textarea"
+                    placeholder="请输入学员的圈外id"
+                    style="width:300px"
+                    :row="4"
+                    v-model="couponFrom.riseIdList"
+                    clearable></el-input>
+
+        </el-form-item>
+        <el-form-item label="优惠劵描述"
+                      prop="description">
+          <el-input type="textarea"
+                    placeholder="请输入学员的圈外id"
+                    style="width:300px"
+                    :row="4"
+                    v-model="couponFrom.description"
+                    clearable></el-input>
+
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary"
+                     @click="submitSendData('couponFrom')">发送优惠劵</el-button>
+          <el-button @click="resetForm('couponFrom')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -43,12 +89,24 @@ export default {
   name: 'coupon',
   data () {
     return {
-      amount: '',
-      description: '', //优惠券描述
-      expiredDate: '',
-      riseIdList: '',
-      couponTypeList: [], //优惠券类型
-      couponConfigId: null//类型id
+      couponFrom: {
+        expiredDate: '',
+        amount: 50,
+        riseIdList: '',
+        description: '',
+        category: '',
+        couponType: []
+      },
+      couponFromRules: {
+        expiredDate:
+          { required: true, message: '请选择优惠券截止日期', trigger: 'blur' },
+        amount: [{ required: true, message: '请输入优惠券金额', trigger: 'blur' }, { type: 'number', message: '优惠券金额必须为数字值' }],
+        riseIdList: { required: true, message: '请输入学员的圈外id(换行隔开)', trigger: 'blur' },
+        description: { required: false, message: '请输入优惠劵描述', trigger: 'blur' },
+        category: { required: true, message: '请选择优惠劵类型', trigger: 'change' }
+      },
+      couponType: [],
+
     }
   },
   methods: {
@@ -58,14 +116,27 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.coupon.loadType',
         successCallback (res) {
-          self.couponTypeList = res.msg;
+          self.couponType = res.msg
+          // self.couponTypeList = res.msg;
+          console.log(res)
         }
       })
+    },
+    submitSendData (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.handleSendData()
+        }
+      });
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields();
     },
     /*添加优惠券*/
     handleSendData () {
       let self = this;
-      let param = {amount: this.amount, description: this.description, expiredDate: this.expiredDate, riseIdList: this.riseIdList.split('\n')}
+      const { amount, description, category, expiredDate, riseIdList } = this.couponFrom
+      let param = { amount, description, category, expiredDate, riseIdList: riseIdList.split('\n') }
       ApiDataFilter.request({
         apiPath: 'manage.coupon.couponAdd',
         method: 'post',
@@ -85,7 +156,7 @@ export default {
     }
   },
   created () {
-    /*this.getLoadType()*/
+    this.getLoadType()
   }
 }
 </script>
