@@ -12,6 +12,7 @@
         router>
         <el-menu-item index="/management/admin/role">身份管理</el-menu-item>
         <el-menu-item index="/management/admin/projectconfig">项目配置</el-menu-item>
+        <el-menu-item index="/management/admin/invest">投资圈外</el-menu-item>
 
       </el-menu>
     </div>

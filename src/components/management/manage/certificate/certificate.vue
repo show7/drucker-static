@@ -89,14 +89,17 @@
           </el-col>
         </el-row>
        <el-row>
+         <el-col :span="12">
+           <el-input
+             type="textarea"
+             :placeholder="profileSearchTypeId == 1 ? '请输入学号，换行区分':'请输入圈外 id，换行区分'"
+             v-model="textareaValue">
+           </el-input>
+         </el-col>
+       </el-row>
+       <el-row>
          <el-col :span="6">
            <div class="button-submit">
-             <el-input
-               type="textarea"
-               :autosize="{ minRows: 2, maxRows: 4}"
-               :placeholder="profileSearchTypeId == 1 ? '请输入学号，换行区分':'请输入圈外 id，换行区分'"
-               v-model="textareaValue">
-             </el-input>
              <el-button type="primary" plain  @click="dialogVisible = true">点击提交</el-button>
            </div>
          </el-col>
@@ -245,5 +248,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "./certificate";
+@import "./certificate.less";
 </style>

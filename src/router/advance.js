@@ -7,10 +7,6 @@ const coin = () =>
 import (
   /* webpackChunkName: "manage" */ '@/components/management/advance/coin/coin'
 ); //礼金
-const invest = () =>
-import (
-  /* webpackChunkName: "manage" */ '@/components/management/advance/invest/invest'
-); //投资圈外
 const couponClear = () =>
 import (
   /* webpackChunkName: "manage" */ '@/components/management/advance/couponClear/couponClear'
@@ -33,7 +29,6 @@ export default [
   { path: 'templatemessage', name: 'templateMessage', component: templateMessage},
   { path: 'coin', name: 'coin', component: coin},
   { path: 'couponClear', name: 'couponClear', component: couponClear},
-  { path: 'invest', name: 'invest', component: invest},
   { path: 'coupon', name: 'coupon', component: coupon},
   { path: 'addvip', name: 'addvip', component: addvip},
   { path: 'opencourse', name: 'openCourse', component: openCourse},

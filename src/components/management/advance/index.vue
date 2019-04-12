@@ -21,7 +21,6 @@
           <el-menu-item index="/management/advance/couponclear">消除优惠券</el-menu-item>
         </el-submenu>
         <el-menu-item index="/management/advance/coin">礼金管理</el-menu-item>
-        <el-menu-item index="/management/advance/invest">投资圈外</el-menu-item>
       </el-menu>
     </div>
 
