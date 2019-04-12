@@ -9,7 +9,7 @@
           <el-breadcrumb-item>优惠券管理</el-breadcrumb-item>
           <el-breadcrumb-item>添加优惠券</el-breadcrumb-item>
         </el-breadcrumb>
-      </el-row>
+      </el-row>a
     </el-card>
     <br>
     <br>
@@ -38,8 +38,7 @@
                     clearable></el-input>
 
         </el-form-item>
-        <el-form-item label="优惠劵类型"
-                      prop="category">
+        <el-form-item label="优惠劵类型">
           <el-select v-model="couponFrom.category"
                      clearable
                      style="width:300px"
@@ -47,7 +46,7 @@
             <el-option v-for="(item,i) in couponType"
                        :key="i"
                        :label="item.category"
-                       :value="item.category">
+                       :value="item.category==='默认优惠劵类型'?'':item.category">
             </el-option>
           </el-select>
 
@@ -88,9 +87,10 @@ import ApiDataFilter from '@/libraries/apiDataFilter'
 export default {
   name: 'coupon',
   data () {
+    const expiredDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`
     return {
       couponFrom: {
-        expiredDate: '',
+        expiredDate,
         amount: 50,
         riseIdList: '',
         description: '',
@@ -98,14 +98,12 @@ export default {
         couponType: []
       },
       couponFromRules: {
-        expiredDate:
-          { required: true, message: '请选择优惠券截止日期', trigger: 'blur' },
+        expiredDate: { required: true, message: '请选择优惠券截止日期', trigger: 'blur' },
         amount: [{ required: true, message: '请输入优惠券金额', trigger: 'blur' }, { type: 'number', message: '优惠券金额必须为数字值' }],
         riseIdList: { required: true, message: '请输入学员的圈外id(换行隔开)', trigger: 'blur' },
-        description: { required: false, message: '请输入优惠劵描述', trigger: 'blur' },
-        category: { required: true, message: '请选择优惠劵类型', trigger: 'change' }
+        description: { required: false, message: '请输入优惠劵描述', trigger: 'blur' }
       },
-      couponType: [],
+      couponType: []
 
     }
   },
@@ -116,7 +114,7 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.coupon.loadType',
         successCallback (res) {
-          self.couponType = res.msg
+          self.couponType = [{ category: '默认优惠劵类型' }, ...res.msg]
           // self.couponTypeList = res.msg;
           console.log(res)
         }
