@@ -9,7 +9,7 @@
           <el-breadcrumb-item>优惠券管理</el-breadcrumb-item>
           <el-breadcrumb-item>添加优惠券</el-breadcrumb-item>
         </el-breadcrumb>
-      </el-row>a
+      </el-row>
     </el-card>
     <br>
     <br>
@@ -46,7 +46,7 @@
             <el-option v-for="(item,i) in couponType"
                        :key="i"
                        :label="item.category"
-                       :value="item.category==='默认优惠劵类型'?'':item.category">
+                       :value="item.category==='全场通用优惠劵'? '':item.category">
             </el-option>
           </el-select>
 
@@ -64,7 +64,7 @@
         <el-form-item label="优惠劵描述"
                       prop="description">
           <el-input type="textarea"
-                    placeholder="请输入学员的圈外id"
+                    placeholder="请输入优惠劵描述"
                     style="width:300px"
                     :row="4"
                     v-model="couponFrom.description"
@@ -114,7 +114,7 @@ export default {
       ApiDataFilter.request({
         apiPath: 'manage.coupon.loadType',
         successCallback (res) {
-          self.couponType = [{ category: '默认优惠劵类型' }, ...res.msg]
+          self.couponType = [{ category: '全场通用优惠劵' }, ...res.msg]
           // self.couponTypeList = res.msg;
           console.log(res)
         }
