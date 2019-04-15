@@ -65,6 +65,7 @@
                       prop="description">
           <el-input type="textarea"
                     placeholder="请输入优惠劵描述"
+                    maxlength="15"
                     style="width:300px"
                     :row="4"
                     v-model="couponFrom.description"
