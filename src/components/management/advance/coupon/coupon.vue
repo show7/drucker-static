@@ -33,8 +33,10 @@
                       prop="amount">
           <el-input type="text"
                     placeholder="请输入金额"
+                    maxlength="11"
+                    step="0.01"
                     style="width:300px"
-                    v-model.number="couponFrom.amount"
+                    v-model="couponFrom.amount"
                     clearable></el-input>
 
         </el-form-item>
@@ -65,7 +67,7 @@
                       prop="description">
           <el-input type="textarea"
                     placeholder="请输入优惠劵描述"
-                    maxlength="15"
+                    maxlength="20"
                     style="width:300px"
                     :row="4"
                     v-model="couponFrom.description"
@@ -87,7 +89,18 @@ import ApiDataFilter from '@/libraries/apiDataFilter'
 
 export default {
   name: 'coupon',
+
   data () {
+    let checkAmount = (rule, value, callback) => {
+      if (value) {
+        let rgx = /^\d+(\.\d{1,2})?$/;
+        if (value.match(rgx) == null) {
+          return callback(new Error('请检查输入格式，不能为空，且最多两位位小数'))
+        } else {
+          callback();
+        }
+      }
+    };
     const expiredDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`
     return {
       couponFrom: {
@@ -100,7 +113,8 @@ export default {
       },
       couponFromRules: {
         expiredDate: { required: true, message: '请选择优惠券截止日期', trigger: 'blur' },
-        amount: [{ required: true, message: '请输入优惠券金额', trigger: 'blur' }, { type: 'number', message: '优惠券金额必须为数字值' }],
+        amount: [{ required: true, message: '请检查输入格式，不能为空，且最多两位位小数', trigger: 'change' },
+        { validator: checkAmount, trigger: 'change' }],
         riseIdList: { required: true, message: '请输入学员的圈外id(换行隔开)', trigger: 'blur' },
         description: { required: false, message: '请输入优惠劵描述', trigger: 'blur' }
       },
