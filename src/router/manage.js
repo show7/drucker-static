@@ -110,6 +110,8 @@ const statusChange = () =>
   import (
     /* webpackChunkName: "manage" */ '@/components/management/manage/statusChange/statusChange'
   ); // 修改学籍
+const classScheduling = () =>
+  import ('@/components/management/manage/classScheduling/classScheduling'); // 体验课排期
 
 export default [
   {path: 'userinfo', name: 'userInfo', component: userInfo},
@@ -150,4 +152,9 @@ export default [
   {path: 'classgrouping', name: 'classgrouping', component: classGrouping},
   {path: 'statuschange', name: 'statusChange', component: statusChange},
   {path: 'classgroup', name: 'classGroup', component: classGroup},
+  {
+    path: 'classScheduling',
+    name: 'classScheduling',
+    component: classScheduling,
+  },
 ];

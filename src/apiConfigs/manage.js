@@ -150,5 +150,10 @@ export default {
     load: 'pc/promotion/config/loadAll', // 获取任务列表
     update: 'pc/promotion/config/save', // 更新任务
     test: 'pc/promotion/config/test' // 测试消息
+  },
+  classScheduling: {
+    load: 'pc/drainage/term/load', //加载类型
+    save: 'pc/drainage/term/save', //编辑&新增
+    del: 'pc/drainage/term/del' //删除
   }
 };
