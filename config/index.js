@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require ('path');
-const targetUrl = 'http://beta.confucius.mobi';
+const targetUrl = 'https://www.confucius.mobi';
 module.exports = {
   dev: {
     // Paths
