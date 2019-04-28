@@ -1,14 +1,15 @@
 <template>
   <section class="status-change-wrapper">
     <el-form :model="ruleForm"
-             :rules="rules">
+             :rules="rules"
+             ref="ruleForm">
       <el-row :gutter="30">
         <el-col :span="5">
           <el-row>
             <el-col :span="24">
               <el-form-item label="所学项目"
-                            prop="region">
-                <el-select v-model="courseId"
+                            prop="courseId">
+                <el-select v-model="ruleForm.courseId"
                            placeholder="项目类型"
                            :clearable="true">
                   <el-option v-for="item in course"
@@ -25,8 +26,8 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="所学项目"
-                            prop="region">
-                <el-select v-model="periodsId"
+                            prop="periodsId">
+                <el-select v-model="ruleForm.periodsId"
                            placeholder="项目类型"
                            :clearable="true">
                   <el-option v-for="item in periods"
@@ -43,8 +44,8 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="所学项目"
-                            prop="region">
-                <el-select v-model="classNumberId"
+                            prop="classNumberId">
+                <el-select v-model="ruleForm.classNumberId"
                            placeholder="项目类型"
                            :clearable="true">
                   <el-option v-for="item in classNumber"
@@ -61,8 +62,8 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="所学项目"
-                            prop="region">
-                <el-select v-model="headmasterId"
+                            prop="headmasterId">
+                <el-select v-model="ruleForm.headmasterId"
                            placeholder="项目类型"
                            :clearable="true">
                   <el-option v-for="(item, index) in headmaster"
@@ -76,8 +77,10 @@
           </el-row>
         </el-col>
         <el-col :span="3">
-          <el-button type="primary"
-                     @click="getQuery">筛选</el-button>
+          <el-form-item>
+            <el-button type="primary"
+                       @click="submitForm('ruleForm')">筛选</el-button>
+          </el-form-item>
         </el-col>
       </el-row>
       <el-row class="textTit">
@@ -225,13 +228,9 @@ export default {
   data () {
     return {
       course: [], //项目列表
-      courseId: '', //项目选中index
       statusList: [],
-      headmasterId: '', //班主任选中index
       headmaster: [], //班主任数组
-      classNumberId: '', //班级好选中index
       classNumber: [], //班级数组
-      periodsId: '', //选中期数index
       periods: [], //期数数组
       openrate: '', //班级开课率
       completerate: '', //班级完课率
@@ -244,19 +243,46 @@ export default {
       currentPage: 1,
       isrepay: '',
       studentTotal: 0,
+      ruleForm: {
+        courseId: '', //项目选中index
+        headmasterId: '', //班主任选中index
+        classNumberId: '', //班级好选中index
+        periodsId: '' //选中期数index
+      },
       rules: {
-        course: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        courseId: [
+          { required: true, message: '请选择项目', trigger: 'change' }
+        ],
+        headmasterId: [
+          { required: true, message: '请选择项目', trigger: 'change' }
+        ],
+        classNumberId: [
+          { required: true, message: '请选择项目', trigger: 'change' }
+        ],
+        periodsId: [
+          { required: true, message: '请选择项目', trigger: 'change' }
         ]
       }
     }
   },
   methods: {
+    submitForm (formName) {
+      console.log(formName)
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+          this.getQuery()
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     getQuery () {
       apiDataFilter.request({
         apiPath: 'manage.classScheduling.getQuery',
         method: 'post',
+        data: this.ruleForm,
         successCallback: (res) => {
           const { msg } = res
           console.log(msg)
@@ -294,28 +320,36 @@ export default {
     }
   },
   watch: {
-    courseId: function (val) {
-      this.periodsId = ''
-      this.headmasterId = ''
-      this.classNumberId = ''
-      this.periods = []
-      this.mapArr(this.course, this.periods, 'termList', 'memberTypeId', val)
+    'ruleForm.courseId': {
+      deep: true,
+      handler: function (val) {
+        this.ruleForm.periodsId = ''
+        this.ruleForm.headmasterId = ''
+        this.ruleForm.classNumberId = ''
+        this.periods = []
+        this.mapArr(this.course, this.periods, 'termList', 'memberTypeId', val)
+      }
     },
-    periodsId (val) {
-      this.headmasterId = ''
-      this.classNumberId = ''
-      this.classNumber = []
-      this.mapArr(this.periods, this.classNumber, 'rotateDtoList', 'term', val)
+    'ruleForm.periodsId': {
+      deep: true,
+      handler: function (val) {
+        this.ruleForm.headmasterId = ''
+        this.ruleForm.classNumberId = ''
+        this.classNumber = []
+        this.mapArr(this.periods, this.classNumber, 'rotateDtoList', 'term', val)
+      }
     },
-    headmasterId: function (val) {
+    // headmasterId: function (val) {
 
-    },
-    classNumberId (val) {
-      this.headmasterId = ''
-      this.headmaster = []
-      this.mapArr(this.classNumber, this.headmaster, 'classNumberList', 'headTeacherId', val)
+    // },
+    'ruleForm.classNumberId': {
+      deep: true,
+      handler: function (val) {
+        this.ruleForm.headmasterId = ''
+        this.headmaster = []
+        this.mapArr(this.classNumber, this.headmaster, 'classNumberList', 'headTeacherId', val)
+      }
     }
-
   },
   mounted () {
     this.getCourse()
