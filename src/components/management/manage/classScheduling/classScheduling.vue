@@ -88,6 +88,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
+                       :disabled="checkTime(scope.row.activeDate,scope.row.expiredDate)"
                        @click="edit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini"
                        type="danger"
@@ -211,6 +212,9 @@ export default {
     this.load()
   },
   methods: {
+    checkTime (startTime, endTime) {
+      return new Date() > new Date(startTime.replace(/-/g, '/')) || new Date() >= new Date(endTime.replace(/-/g, '/'))
+    },
     load () {
       apiDataFilter.request({
         apiPath: 'manage.classScheduling.load',
