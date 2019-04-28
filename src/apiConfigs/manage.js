@@ -154,6 +154,7 @@ export default {
   classScheduling: {
     load: 'pc/drainage/term/load', //加载类型
     save: 'pc/drainage/term/save', //编辑&新增
-    del: 'pc/drainage/term/del' //删除
+    del: 'pc/drainage/term/del', //删除
+    getInfo: 'pc/drainage/classmate/init' //获取学院信息
   }
-};
+}
