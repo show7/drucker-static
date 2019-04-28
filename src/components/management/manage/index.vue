@@ -11,8 +11,8 @@
                router>
         <el-submenu index="1">
           <template slot="title">用户信息</template>
-          <el-menu-item index="/management/manage/userinfo">体验课</el-menu-item>
-          <el-menu-item index="/management/manage/audioCourse">商学院</el-menu-item>
+          <el-menu-item index="/management/manage/audioCourse">体验课</el-menu-item>
+          <el-menu-item index="/management/manage/userinfo">商学院</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">发送消息</template>
