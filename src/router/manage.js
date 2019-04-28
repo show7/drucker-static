@@ -113,6 +113,10 @@ const statusChange = () =>
 const classScheduling = () =>
   import ('@/components/management/manage/classScheduling/classScheduling'); // 体验课排期
 
+const classSort = () =>
+  import ('@/components/management/manage/classSort/classSort'); // 体验课排班
+const addClass = () =>
+  import ('@/components/management/manage/addClass/addClass'); // 体验课排班
 export default [
   {path: 'userinfo', name: 'userInfo', component: userInfo},
   {path: 'certificate', name: 'certificate', component: certificate},
@@ -156,5 +160,15 @@ export default [
     path: 'classScheduling',
     name: 'classScheduling',
     component: classScheduling,
+  },
+  {
+    path: 'classSort',
+    name: 'classSort',
+    component: classSort,
+  },
+  {
+    path: 'addClass',
+    name: 'addClass',
+    component: addClass,
   },
 ];

@@ -155,5 +155,13 @@ export default {
     load: 'pc/drainage/term/load', //加载类型
     save: 'pc/drainage/term/save', //编辑&新增
     del: 'pc/drainage/term/del' //删除
+  },
+  classSort: {
+    load: 'pc/drainage/term/load', //加载类型
+    del: 'pc/drainage/class/del', //删除
+    listLoad: 'pc/drainage/class/load', //根据条件加载类型
+    loadTeacher: 'pc/drainage/load/all/teacher', //加载老师
+    saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
+    saveGroup: 'pc/drainage/class/group/save' //添加群二维码
   }
 };
