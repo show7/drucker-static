@@ -115,13 +115,15 @@
                  :key='j'>
 
           <el-form-item label="输入班级号"
-                        prop="groupClass[0].classNumber">
+                        :rules=" [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }]"
+                        :prop="`groupClass.${j}.classNumber`">
             <el-input v-model.number="items.classNumber"
                       style="width:250px"
                       autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="班级渠道"
-                        prop="groupClass[0].channel">
+                        :rules="[{ required: true, message: '请输入渠道', trigger: 'change' }]"
+                        :prop="`groupClass.${j}.channel`">
             <el-select v-model="items.channel"
                        style="width:250px"
                        value-key="typeName"
@@ -134,7 +136,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="上传二维码"
-                        prop="groupClass[0].qrcodeUrl">
+                        prop="qrcodeUrl">
             <div @click="setUploadIndex(i,j)">
               <el-upload class="avatar-uploader"
                          action="/pc/upload/file"
@@ -149,7 +151,8 @@
             </div>
           </el-form-item>
           <el-form-item label="请输入优先级"
-                        prop="groupClass[0].sequence">
+                        :rules="[{ required: true, message: '请输入优先级', trigger: 'change' }]"
+                        :prop="`groupClass.${j}.sequence`">
             <el-input v-model.number="items.sequence"
                       style="width:250px"
                       autocomplete="off"></el-input>
@@ -195,6 +198,7 @@ export default {
         }
 
       ],
+      validate,
       addClassType2: [{
         headTeacherId: '',
         groupClass: [
@@ -214,11 +218,10 @@ export default {
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
       },
       addClassType2Rules: {
-        // headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
-        // 'groupClass[0].classNumber': [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
-        // 'groupClass[0].channel': [{ required: true, message: '请输入渠道', trigger: 'change' }],
-        // 'groupClass[0].qrcodeUrl': [{ required: true, message: '请上传图片', trigger: 'change' }],
-        // 'groupClass[0].sequence': [{ required: true, message: '请输入优先级', trigger: 'change' }]
+        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        //'groupClass[0].classNumber': [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
+
+        'groupClass[0].qrcodeUrl': [{ required: true, message: '请上传图片', trigger: 'change' }]
       },
       projectType: [],
       memberTypeId: '',

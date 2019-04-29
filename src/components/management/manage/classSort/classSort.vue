@@ -64,7 +64,7 @@
                          width="100"
                          label="班级号">
         </el-table-column>
-        <el-table-column prop="headTeacher['nickName']"
+        <el-table-column prop="headTeacher.nickName"
                          width="120"
                          label="班主任">
         </el-table-column>
