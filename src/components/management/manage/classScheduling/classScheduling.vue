@@ -92,6 +92,7 @@
                        @click="edit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini"
                        type="danger"
+                       :disabled="checkTime(scope.row.activeDate,scope.row.expiredDate)"
                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -279,6 +280,9 @@ export default {
         }
       });
     },
+    resetForm (formName) {
+      this.$refs[formName].resetFields();
+    },
     handleDelete (index, row) {
       console.log(row)
       const { id = '' } = row
@@ -311,10 +315,8 @@ export default {
 
     }
 
-  },
-  resetForm (formName) {
-    this.$refs[formName].resetFields();
   }
+
 }
 
 </script>
