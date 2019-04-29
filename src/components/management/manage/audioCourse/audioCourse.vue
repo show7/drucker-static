@@ -79,12 +79,15 @@
         <el-col :span="3">
           <el-form-item>
             <el-button type="primary"
-                       @click="submitForm('ruleForm')">筛选</el-button>
+                       @click="submitForm('ruleForm')"
+                       style="margin-top:42px">筛选</el-button>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row style="border-top: 2px solid #ccc;padding-top:8px">
-        <el-col :span="2">
+      <el-row style="border-top: 2px solid #7DBE00;padding-top:8px"
+              v-show="classmatePracticePlanDto.length > 0">
+        <el-col :span="2"
+                style="margin-top:10px">
           班级概况：
         </el-col>
       </el-row>
@@ -92,13 +95,13 @@
         <el-col :span="24"
                 class="textList">
           <el-row>
-            <el-col v-for="item in classmatePracticePlanDto"
-                    :key="item"
+            <el-col v-for="(item,index) in classmatePracticePlanDto"
+                    :key="index"
                     :span="4">
               学习第{{item.series}}节：{{item.complete}}/{{item.total}}
             </el-col>
           </el-row>
-          <el-row>
+          <el-row v-show="studentTotal > 0">
             <el-col :span="4">
               班级复购L1：{{repayL1}}
             </el-col>
@@ -118,16 +121,17 @@
         <el-form :model="selectForm"
                  :rules="selectRules"
                  ref="ruleForm">
-          <el-col :span="10">
+          <el-col :span="10"
+                  style="margin-top:10px">
             学员列表
           </el-col>
           <el-col :span="5"
                   :gutter="1">
             <el-row>
-              <el-col :span="8"
+              <!-- <el-col :span="8"
                       style="line-height:40px">
                 学员查询
-              </el-col>
+              </el-col> -->
               <!-- <el-col :span="15">
                 <el-form-item label="是否复购"
                               prop="studentStr"
@@ -167,7 +171,7 @@
         </el-form>
       </el-row>
       <div class="table-wrapper">
-        <el-table :data="statusList"
+        <el-table :data="nowList"
                   style="width: 100%">
           <el-table-column prop="memberId"
                            label="学号">
@@ -216,7 +220,7 @@
         <el-pagination @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
                        :current-page.sync="currentPage"
-                       :page-size="2"
+                       :page-size="pageSize"
                        layout="prev, pager, next, jumper"
                        :total="studentTotal">
         </el-pagination>
@@ -230,6 +234,8 @@ import apiDataFilter from '../../../../libraries/apiDataFilter'
 export default {
   data () {
     return {
+      nowList: [],
+      pageSize: 2,
       classmatePracticePlanDto: [],
       course: [], //项目列表
       statusList: [],
@@ -302,8 +308,9 @@ export default {
         data: this.ruleForm,
         successCallback: (res) => {
           const { msg } = res
+          this.studentTotal = msg.userInfoDtoList.length
           this.statusList = msg.userInfoDtoList
-          // this.studentTotal = msg.userInfoDtoList.length
+          this.handleCurrentChange()
           this.classmatePracticePlanDto = msg.classmatePracticePlanDto
           this.repayL1 = msg.repurchaseL1
           this.repayL2 = msg.repurchaseL2
@@ -316,7 +323,7 @@ export default {
 
     },
     handleCurrentChange (val) {
-      console.log(val)
+      this.nowList = this.statusList.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     },
     handleSizeChange (val) {
       console.log(val)
