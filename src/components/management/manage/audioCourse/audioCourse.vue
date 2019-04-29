@@ -124,8 +124,7 @@
         </el-col>
         <el-form :model="selectForm"
                  :rules="selectRules"
-                 ref="ruleFormData"
-                 v-show="nowList.length>0">
+                 ref="ruleFormData">
           <el-col :span="8"
                   :gutter="1">
             <el-row>
@@ -134,7 +133,7 @@
                               prop="studentSearch"
                               class="flexLine">
                   <el-select v-model="selectForm.studentSearch"
-                             placeholder="学员昵称/ID/学号"
+                             placeholder="学员昵称/圈外ID/学号"
                              :clearable="true">
                     <el-option v-for="(item, index) in studentSearch"
                                :key="index"
@@ -247,7 +246,7 @@ export default {
   data () {
     return {
       searchStr: '',
-      studentSearch: [{ type: 1, text: '学员昵称' }, { type: 2, text: 'ID' }, { type: 3, text: '学号' }],
+      studentSearch: [{ type: 1, text: '学员昵称' }, { type: 2, text: '圈外ID' }, { type: 3, text: '学号' }],
       getrepay: [{ type: 0, text: '全部' }, { type: 1, text: '已复购' }, { type: 2, text: '未复购' }],
       nowList: [],
       pageSize: 15,
@@ -307,13 +306,14 @@ export default {
 
     },
     submitFormSearch (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.getSearch()
-        } else {
-          return false;
-        }
-      });
+      this.getSearch()
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     this.getSearch()
+      //   } else {
+      //     return false;
+      //   }
+      // });
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -328,7 +328,7 @@ export default {
       let _obj = {}
       if (this.selectForm.studentSearch === 1) {
         _obj = {
-          memberId: this.searchStr
+          nickname: this.searchStr
         }
       } else if (this.selectForm.studentSearch === 2) {
         _obj = {
@@ -336,7 +336,7 @@ export default {
         }
       } else if (this.selectForm.studentSearch === 3) {
         _obj = {
-          nickname: this.searchStr
+          memberId: this.searchStr
         }
       }
       let requestObj = Object.assign(_obj, { repurchase: this.selectForm.isrepay }, this.ruleForm)
