@@ -8,8 +8,8 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="所学项目"
-                            prop="courseId">
-                <el-select v-model="ruleForm.courseId"
+                            prop="memberTypeId">
+                <el-select v-model="ruleForm.memberTypeId"
                            placeholder="项目类型"
                            :clearable="true">
                   <el-option v-for="item in course"
@@ -25,10 +25,10 @@
         <el-col :span="5">
           <el-row>
             <el-col :span="24">
-              <el-form-item label="所学项目"
-                            prop="periodsId">
-                <el-select v-model="ruleForm.periodsId"
-                           placeholder="项目类型"
+              <el-form-item label="选择期数"
+                            prop="term">
+                <el-select v-model="ruleForm.term"
+                           placeholder="选择期数"
                            :clearable="true">
                   <el-option v-for="item in periods"
                              :key="item.term"
@@ -43,12 +43,12 @@
         <el-col :span="5">
           <el-row>
             <el-col :span="24">
-              <el-form-item label="所学项目"
-                            prop="classNumberId">
-                <el-select v-model="ruleForm.classNumberId"
-                           placeholder="项目类型"
+              <el-form-item label="班主任"
+                            prop="headTeacherId">
+                <el-select v-model="ruleForm.headTeacherId"
+                           placeholder="班主任"
                            :clearable="true">
-                  <el-option v-for="item in classNumber"
+                  <el-option v-for="item in headmaster"
                              :key="item.id"
                              :label="item.headTeacherName"
                              :value="item.headTeacherId">
@@ -61,12 +61,12 @@
         <el-col :span="5">
           <el-row>
             <el-col :span="24">
-              <el-form-item label="所学项目"
-                            prop="headmasterId">
-                <el-select v-model="ruleForm.headmasterId"
-                           placeholder="项目类型"
+              <el-form-item label="班级号"
+                            prop="classNumber">
+                <el-select v-model="ruleForm.classNumber"
+                           placeholder="班级号"
                            :clearable="true">
-                  <el-option v-for="(item, index) in headmaster"
+                  <el-option v-for="(item, index) in classNumber"
                              :key="index"
                              :label="item"
                              :value="item">
@@ -156,47 +156,29 @@
       <div class="table-wrapper">
         <el-table :data="statusList"
                   style="width: 100%">
-          <el-table-column prop="riseId"
+          <el-table-column prop="memberId"
                            label="学号">
           </el-table-column>
-          <el-table-column prop="nickName"
+          <el-table-column prop="riseId"
                            label="圈外ID">
           </el-table-column>
-          <el-table-column label="头像">
+          <el-table-column label="头像"
+                           width="100%">
             <template slot-scope="scope">
-              <span v-if="!scope.row.isEdit">{{ scope.row.className }}</span>
-              <div v-else>
-                <el-input v-model="edit.className"
-                          placeholder="请输入内容"></el-input>
-              </div>
+              <img :src="scope.row.headimgurl"
+                   class="headImg">
             </template>
           </el-table-column>
-          <el-table-column label="昵称">
-            <template slot-scope="scope">
-              <span v-if="!scope.row.isEdit">{{ scope.row.groupNo }}</span>
-              <div v-else>
-                <el-input v-model="edit.groupNo"
-                          placeholder="请输入内容"></el-input>
-              </div>
-            </template>
+          <el-table-column label="昵称"
+                           prop="nickname">
           </el-table-column>
-          <el-table-column label="课程完成进度">
-            <template slot-scope="scope">
-              <el-button type="primary"
-                         v-if="!scope.row.isEdit"
-                         @click="handleEdit(scope.row)">编辑</el-button>
-              <template v-else>
-                <el-button type="success"
-                           @click="handleChangeStatus">提交</el-button>
-                <el-button type="info"
-                           @click="() => { scope.row.isEdit = false }">取消</el-button>
-              </template>
-            </template>
+          <el-table-column label="课程完成进度"
+                           prop="courseCompletion">
           </el-table-column>
-          <el-table-column prop="riseId"
+          <el-table-column prop="homeworkCompletion"
                            label="作业完成情况">
           </el-table-column>
-          <el-table-column prop="riseId"
+          <el-table-column prop="repurchase"
                            label="复购情况">
           </el-table-column>
           <el-table-column prop="riseId"
@@ -244,22 +226,22 @@ export default {
       isrepay: '',
       studentTotal: 0,
       ruleForm: {
-        courseId: '', //项目选中index
-        headmasterId: '', //班主任选中index
-        classNumberId: '', //班级好选中index
-        periodsId: '' //选中期数index
+        memberTypeId: '', //项目选中index
+        headTeacherId: '', //班主任选中index
+        classNumber: '', //班级好选中index
+        term: '' //选中期数index
       },
       rules: {
-        courseId: [
+        memberTypeId: [
           { required: true, message: '请选择项目', trigger: 'change' }
         ],
-        headmasterId: [
+        headTeacherId: [
           { required: true, message: '请选择项目', trigger: 'change' }
         ],
-        classNumberId: [
+        classNumber: [
           { required: true, message: '请选择项目', trigger: 'change' }
         ],
-        periodsId: [
+        term: [
           { required: true, message: '请选择项目', trigger: 'change' }
         ]
       }
@@ -270,10 +252,8 @@ export default {
       console.log(formName)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
           this.getQuery()
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
@@ -285,8 +265,7 @@ export default {
         data: this.ruleForm,
         successCallback: (res) => {
           const { msg } = res
-          console.log(msg)
-          // this.statusList = msg.memberTypeList
+          this.statusList = msg.userInfoDtoList
         }
       })
     },
@@ -320,36 +299,36 @@ export default {
     }
   },
   watch: {
-    'ruleForm.courseId': {
+    'ruleForm.memberTypeId': {
       deep: true,
       handler: function (val) {
-        this.ruleForm.periodsId = ''
-        this.ruleForm.headmasterId = ''
-        this.ruleForm.classNumberId = ''
+        this.ruleForm.term = ''
+        this.ruleForm.headTeacherId = ''
+        this.ruleForm.classNumber = ''
         this.periods = []
         this.mapArr(this.course, this.periods, 'termList', 'memberTypeId', val)
       }
     },
-    'ruleForm.periodsId': {
+    'ruleForm.term': {
       deep: true,
       handler: function (val) {
-        this.ruleForm.headmasterId = ''
-        this.ruleForm.classNumberId = ''
-        this.classNumber = []
-        this.mapArr(this.periods, this.classNumber, 'rotateDtoList', 'term', val)
+        this.ruleForm.headTeacherId = ''
+        this.ruleForm.classNumber = ''
+        this.headmaster = []
+        this.mapArr(this.periods, this.headmaster, 'rotateDtoList', 'term', val)
       }
     },
-    // headmasterId: function (val) {
-
-    // },
-    'ruleForm.classNumberId': {
+    'ruleForm.headTeacherId': {
       deep: true,
       handler: function (val) {
-        this.ruleForm.headmasterId = ''
-        this.headmaster = []
-        this.mapArr(this.classNumber, this.headmaster, 'classNumberList', 'headTeacherId', val)
+        this.ruleForm.classNumber = ''
+        this.classNumber = []
+        this.mapArr(this.headmaster, this.classNumber, 'classNumberList', 'headTeacherId', val)
       }
     }
+    // 'ruleForm.classNumber': {
+
+    // }
   },
   mounted () {
     this.getCourse()
