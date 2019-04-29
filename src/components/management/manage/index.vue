@@ -34,7 +34,7 @@
         <el-submenu index="6">
           <template slot="title">课程项目管理</template>
           <el-menu-item index="/management/manage/classScheduling">体验课排期</el-menu-item>
-          <el-menu-item index="/">体验课排班</el-menu-item>
+          <el-menu-item index="/management/manage/classSort">体验课排班</el-menu-item>
           <el-menu-item index="/management/manage/classadviser">项目添加班主任</el-menu-item>
           <el-menu-item index="/management/manage/classGroup">入群二维码管理</el-menu-item>
           <el-menu-item index="/management/manage/classadvisermanage">班主任管理</el-menu-item>
