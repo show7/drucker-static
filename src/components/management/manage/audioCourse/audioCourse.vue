@@ -83,26 +83,22 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row style="border-top: 2px solid #ccc;padding-top:8px">
+        <el-col :span="2">
+          班级概况：
+        </el-col>
+      </el-row>
       <el-row class="textTit">
         <el-col :span="24"
                 class="textList">
           <el-row>
-            <el-col :span="2">
-              班级概况：
-            </el-col>
-            <el-col :span="4">
-              班级开课率：{{openrate}}
-            </el-col>
-            <el-col :span="4">
-              班级完课率：{{completerate}}
-            </el-col>
-            <el-col :span="4">
-              更新时间（{{updateTime}}）
+            <el-col v-for="item in classmatePracticePlanDto"
+                    :key="item"
+                    :span="4">
+              学习第{{item.series}}节：{{item.complete}}/{{item.total}}
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="2">
-            </el-col>
             <el-col :span="4">
               班级复购L1：{{repayL1}}
             </el-col>
@@ -119,39 +115,56 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="10">
-          学员列表
-        </el-col>
-        <el-col :span="5"
-                :gutter="1">
-          <el-row>
-            <el-col :span="8"
-                    style="line-height:40px">
-              学员查询
-            </el-col>
-            <el-col :span="15">
-              <el-input>
-              </el-input>
-            </el-col>
-          </el-row>
-        </el-col>
-        <el-col :span="5">
-          <el-row>
-            <el-col :span="8"
-                    class="titleText">是否复购</el-col>
-            <el-col :span="16">
-              <el-select v-model="isrepay"
-                         placeholder=""
-                         :clearable="true">
-                <el-option v-for="(item,index) in isrepayList"
-                           :key="item.id"
-                           :label="item.typeName"
-                           :value="index">
-                </el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-        </el-col>
+        <el-form :model="selectForm"
+                 :rules="selectRules"
+                 ref="ruleForm">
+          <el-col :span="10">
+            学员列表
+          </el-col>
+          <el-col :span="5"
+                  :gutter="1">
+            <el-row>
+              <el-col :span="8"
+                      style="line-height:40px">
+                学员查询
+              </el-col>
+              <!-- <el-col :span="15">
+                <el-form-item label="是否复购"
+                              prop="studentStr"
+                              class="flexLine">
+                  <el-input v-model="selectForm.studentStr">
+                  </el-input>
+                </el-form-item>
+              </el-col> -->
+            </el-row>
+          </el-col>
+          <!-- <el-col :span="6">
+            <el-row>
+              <el-col :span="24"
+                      class="titleText">
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="是否复购"
+                              prop="isrepay"
+                              class="flexLine">
+                  <el-select v-model="isrepay"
+                             placeholder="是否复购"
+                             :clearable="true">
+                    <el-option label="全部"
+                               value="0">
+                    </el-option>
+                    <el-option label="已复购"
+                               value="1">
+                    </el-option>
+                    <el-option label="未复购"
+                               value="2">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-col> -->
+        </el-form>
       </el-row>
       <div class="table-wrapper">
         <el-table :data="statusList"
@@ -203,7 +216,7 @@
         <el-pagination @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
                        :current-page.sync="currentPage"
-                       :page-size="15"
+                       :page-size="2"
                        layout="prev, pager, next, jumper"
                        :total="studentTotal">
         </el-pagination>
@@ -217,6 +230,7 @@ import apiDataFilter from '../../../../libraries/apiDataFilter'
 export default {
   data () {
     return {
+      classmatePracticePlanDto: [],
       course: [], //项目列表
       statusList: [],
       headmaster: [], //班主任数组
@@ -244,12 +258,24 @@ export default {
           { required: true, message: '请选择项目', trigger: 'change' }
         ],
         headTeacherId: [
-          { required: true, message: '请选择项目', trigger: 'change' }
+          { required: true, message: '请选择期数', trigger: 'change' }
         ],
         classNumber: [
-          { required: true, message: '请选择项目', trigger: 'change' }
+          { required: true, message: '请选择班主任', trigger: 'change' }
         ],
         term: [
+          { required: true, message: '请选择班号', trigger: 'change' }
+        ]
+      },
+      selectForm: {
+        studentStr: '',
+        isrepay: 0
+      },
+      selectRules: {
+        studentStr: [
+          { required: true, message: '请输入学员信息', trigger: 'change' }
+        ],
+        isrepay: [
           { required: true, message: '请选择项目', trigger: 'change' }
         ]
       }
@@ -277,6 +303,12 @@ export default {
         successCallback: (res) => {
           const { msg } = res
           this.statusList = msg.userInfoDtoList
+          // this.studentTotal = msg.userInfoDtoList.length
+          this.classmatePracticePlanDto = msg.classmatePracticePlanDto
+          this.repayL1 = msg.repurchaseL1
+          this.repayL2 = msg.repurchaseL2
+          this.repayL3 = msg.repurchaseL3
+          this.total = msg.repurchaseTotal
         }
       })
     },
