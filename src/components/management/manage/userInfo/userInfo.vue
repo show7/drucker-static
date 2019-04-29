@@ -49,6 +49,12 @@
               <el-table-column prop="memberTypes"
                                label="会员类型">
               </el-table-column>
+              <el-table-column prop="audioRotateNickName"
+                               label="体验课班主任昵称">
+              </el-table-column>
+              <el-table-column prop="audioRotateRiseId"
+                               label="体验课班主任id">
+              </el-table-column>
               <el-table-column prop="couponSum"
                                label="优惠券总金额">
               </el-table-column>
@@ -116,6 +122,12 @@
             </el-table-column>
             <el-table-column prop="memberTypes"
                              label="会员类型">
+            </el-table-column>
+            <el-table-column prop="audioRotateNickName"
+                             label="体验课班主任昵称">
+            </el-table-column>
+            <el-table-column prop="audioRotateRiseId"
+                             label="体验课班主任id">
             </el-table-column>
             <el-table-column prop="couponSum"
                              label="优惠券总金额">
