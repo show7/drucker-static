@@ -298,6 +298,8 @@ export default {
               message: '删除成功',
               type: 'success'
             });
+            this.load()
+            this.selectItem = ''
           }
         })
       }).catch(() => {

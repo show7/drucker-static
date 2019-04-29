@@ -42,7 +42,7 @@
                :rules="addClassTypeRules"
                status-icon
                :ref="`addClassType1${i}`"
-               label-width="100px"
+               label-width="120px"
                class="demo-ruleForm">
         <el-form-item label="输入班级号"
                       prop="classNumber">
@@ -51,7 +51,7 @@
                     autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="班级渠道"
-                      prop="classNumber">
+                      prop="channel">
           <el-select v-model="item.channel"
                      style="width:250px"
                      value-key="typeName"
@@ -67,6 +67,7 @@
                       prop="headTeacherId">
           <el-select v-model="item.headTeacherId"
                      filterable
+                     style="width:250px"
                      placeholder="请选择班主任">
             <el-option v-for="item in headTeachers"
                        :key="item.id"
@@ -74,6 +75,12 @@
                        :value="item.id">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="请输入优先级"
+                      prop="sequence">
+          <el-input v-model.number="item.sequence"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <i class="el-icon-delete"
            style="margin-top:15px"
@@ -185,29 +192,12 @@ export default {
           channel: '',
           headTeacherId: '',
           sequence: ''
-        },
-        {
-          classNumber: 2,
-          channel: '',
-          headTeacherId: '',
-          sequence: ''
-        }, {
-          classNumber: 3,
-          channel: '',
-          headTeacherId: '',
-          sequence: ''
         }
+
       ],
       addClassType2: [{
         headTeacherId: '',
         groupClass: [
-          {
-            classNumber: '',
-            channel: '',
-            qrcodeUrl: '',
-            sequence: '',
-
-          },
           {
             classNumber: '',
             channel: '',
@@ -219,14 +209,16 @@ export default {
       }],
       addClassTypeRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
-        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' }
+        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        channel: { required: true, message: '请选择渠道', trigger: 'change' },
+        sequence: { required: true, message: '请输入顺序', trigger: 'change' }
       },
       addClassType2Rules: {
-        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
-        'groupClass[0].classNumber': [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
-        'groupClass[0].channel': [{ required: true, message: '请输入渠道', trigger: 'change' }],
-        'groupClass[0].qrcodeUrl': [{ required: true, message: '请上传图片', trigger: 'change' }],
-        'groupClass[0].sequence': [{ required: true, message: '请输入优先级', trigger: 'change' }]
+        // headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        // 'groupClass[0].classNumber': [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
+        // 'groupClass[0].channel': [{ required: true, message: '请输入渠道', trigger: 'change' }],
+        // 'groupClass[0].qrcodeUrl': [{ required: true, message: '请上传图片', trigger: 'change' }],
+        // 'groupClass[0].sequence': [{ required: true, message: '请输入优先级', trigger: 'change' }]
       },
       projectType: [],
       memberTypeId: '',
@@ -362,8 +354,8 @@ export default {
     },
     submitSave () {
       const type = this.entryType
-      let data
-      if (type) {//班主任
+      console.log(type)
+      if (!type) {//班主任
         const validateList = this.addClassType1.map((item, i) => {
           let validboolen
           this.$refs[`addClassType1${i}`][0].validate((valid) => {
@@ -373,15 +365,21 @@ export default {
         })
         let checkSuccess = validateList.every(item => item === true)
         if (checkSuccess) {
-          const { memberTypeId, term, entryType, addClassType2: classes } = this
-
-          data = { memberTypeId, term, entryType, classes }
+          console.log('入群')
+          const { memberTypeId, term, entryType, addClassType1: classes } = this
+          const data = { memberTypeId, term, entryType, classes }
+          this.saveSubmit(data)
         }
       } else {
+        console.log('班主任')
         const { memberTypeId, term, entryType, addClassType2: classes } = this
-
-        data = { memberTypeId, term, entryType, classes }
+        const data = { memberTypeId, term, entryType, classes }
+        this.saveSubmit(data)
       }
+
+      // console.log(checkSuccess)
+    },
+    saveSubmit (data) {
       const { entryType } = data
       apiDataFilter.request({
         data,
@@ -392,9 +390,7 @@ export default {
 
         }
       })
-      console.log(checkSuccess)
     }
-
   }}
 </script>
 <style lang="less">
