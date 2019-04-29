@@ -68,9 +68,15 @@
                          width="120"
                          label="班主任">
         </el-table-column>
-        <el-table-column prop="city"
-                         width="200"
+        <el-table-column prop="enterGroupQrCode"
                          label="群二维码">
+          <template scope="scope">
+            <img :src="scope.row.enterGroupQrCode ?scope.row.enterGroupQrCode.qrCode:''"
+                 @click="viewBigQrcodeClick(scope.row.enterGroupQrCode.qrCode)"
+                 width="39"
+                 height="65"
+                 class="head_pic" />
+          </template>
         </el-table-column>
         <el-table-column prop="sequence"
                          width="120"
@@ -86,7 +92,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)"
+            <el-button @click="handleEdit(scope.row)"
                        size="mini">编辑</el-button>
             <el-button type="danger"
                        @click="handledelete(scope.row)"
@@ -101,15 +107,114 @@
                      :current-page.sync="currentPage"
                      :page-size="15"
                      layout="prev, pager, next, jumper"
-                     :total="total">
+                     :total="Number(total)">
       </el-pagination>
     </el-card>
+    <!-- 编辑 -->
+    <el-dialog title="编辑"
+               :visible.sync="editPopup">
+      <el-form :model="editForm"
+               status-icon
+               label-width="120px"
+               ref="editForm"
+               :rules="editFormRules">
+        <el-form-item label="班级号"
+                      prop="classNumber">
+          <el-input v-model.number="editForm.classNumber"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="顺序"
+                      prop="sequence">
+          <el-input v-model.number="editForm.sequence"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="投放渠道"
+                      prop="channel">
+          <el-select v-model="editForm.channel"
+                     style="width:250px"
+                     value-key="typeName"
+                     placeholder="请选择">
+            <el-option v-for="item in memberLabels"
+                       :key="item.label"
+                       :label="item.labelName"
+                       :value="item.label">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择班主任"
+                      v-show="!entryType"
+                      prop="headTeacherId">
+          <el-select v-model="editForm.headTeacherId"
+                     filterable
+                     style="width:250px"
+                     placeholder="请选择班主任">
+            <el-option v-for="item in headTeachers"
+                       :key="item.id"
+                       :label="item.nickName"
+                       :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-show="entryType"
+                      label="群二维码"
+                      ref="imageUpload"
+                      :rules="{ required: true, message: '上传群二维码', trigger: 'change' }"
+                      prop="qrcodeUrl">
+          <el-upload class="avatar-uploader"
+                     action="/pc/upload/file"
+                     list-type="picture-card"
+                     :limit="1"
+                     :multiple="false"
+                     :on-remove="upQrcode"
+                     :on-success="upQrcode">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+
+        <!-- <el-form-item label="活动区域"
+                      :label-width="formLabelWidth">
+          <el-select v-model="form.region"
+                     placeholder="请选择活动区域">
+            <el-option label="区域一"
+                       value="shanghai"></el-option>
+            <el-option label="区域二"
+                       value="beijing"></el-option>
+          </el-select>
+        </el-form-item> -->
+      </el-form>
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="editPopup = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="editSubmit('editForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="查看大图"
+               :visible.sync="viewBigQrcode">
+      <div style="{'width':'395px',height:'659px',text-align:center}">
+        <img :src="bigQcordUrl"
+             style="width:80%"
+             alt="入群二维码">
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import apiDataFilter from '../../../../libraries/apiDataFilter';
 export default {
   data () {
+    const validate = (rule, value, callback) => {
+      const { classNumbers } = this
+      console.log(classNumbers, value)
+      if (!value) return callback('班级号不能为空')
+      if (classNumbers.includes(value)) {
+        callback('班级号已存在')
+      } else {
+        callback()
+      }
+    }
     return {
       selectForm: {
         projectPeriod: [],
@@ -118,6 +223,12 @@ export default {
       selectFormRule: {
         projectPeriod: { required: true, message: '请选择项目／日期', trigger: 'change' },
         selectClass: { required: true, message: '请选择班级类型', trigger: 'change' }
+      },
+      editFormRules: {
+        classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
+        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        channel: { required: true, message: '请选择渠道', trigger: 'change' },
+        sequence: { required: true, message: '请输入顺序', trigger: 'change' }
       },
       classTypeList: [{
         typeName: '加班主任',
@@ -131,11 +242,26 @@ export default {
       tableData: [],
       projectType: [],
       currentPage: 1,
-      total: ''
+      total: '',
+      editPopup: false,
+      editForm: {
+        classNumber: '',
+        channel: '',
+        qrcodeUrl: '',
+        headTeacherId: '',
+        sequence: ''
+      },
+      classNumbers: [],
+      headTeachers: [],
+      memberLabels: [],
+      entryType: '',
+      viewBigQrcode: false,
+      bigQcordUrl: ''
     }
   },
   mounted () {
     this.load()
+
   },
   methods: {
     load () {
@@ -164,16 +290,40 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log('pppp')
+          const { entryType } = this.selectForm.selectClass
+          this.entryType = entryType
           this.loadPageList()
+          this.loadTeacher()
         }
       });
     },
-    loadPageList (page) {
-      const { projectPeriod, selectClass: entryType } = this.selectForm
+    loadTeacher () {
+      const [memberTypeId, term] = this.selectForm.projectPeriod
+      const data = {
+        memberTypeId, term
+      }
+      apiDataFilter.request({
+        data,
+        apiPath: 'manage.classSort.loadTeacher',
+        successCallback: (res) => {
+          console.log(res)
+          const { classNumbers, headTeachers, memberLabels } = res.msg
+          this.classNumbers = classNumbers
+          this.headTeachers = headTeachers
+          this.memberLabels = memberLabels
+        }
+      })
+    },
+    loadPageList (page) {//筛选排班
+      const { projectPeriod, selectClass } = this.selectForm
       const [memberTypeId, term] = projectPeriod
+      const { entryType } = selectClass
 
       const params = {
-        page: page || this.currentPage
+        memberTypeId,
+        term,
+        page: page || this.currentPage,
+        entryType
       }
 
       console.log(memberTypeId, term)
@@ -202,11 +352,12 @@ export default {
           const { projectPeriod, selectClass } = this.selectForm
           const [memberTypeId, term] = projectPeriod
           const { entryType } = selectClass
+          const { projectType } = this
           // alert()
           console.log(entryType)
           this.$router.push({
             path: '/management/manage/addClass',
-            query: { memberTypeId, term, entryType }
+            query: { memberTypeId, term, entryType, projectType }
           })
           console.log('pppp')
         }
@@ -242,6 +393,37 @@ export default {
     },
     loadCurrentChange () {
       this.loadPageList(this.currentPage)
+    },
+    handleEdit (row) {
+      console.log(row)
+      const { classNumber, sequence, channel, headTeacher, enterGroupQrCode } = row
+      const { id: headTeacherId } = headTeacher
+      const { qrCode: qrcodeUrl } = enterGroupQrCode
+      this.editForm = {
+        classNumber,
+        channel,
+        qrcodeUrl,
+        headTeacherId,
+        sequence
+      }
+      this.editPopup = true
+    },
+    editSubmit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) return
+        console.log('success')
+      });
+    },
+    upQrcode (res, file, fileList) {
+      const isJPG = file.type === 'image/jpeg';
+      if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
+      let { msg } = res
+      this.editForm.qrcodeUrl = msg
+      this.$refs.imageUpload.clearValidate()
+    },
+    viewBigQrcodeClick (url) {
+      this.viewBigQrcode = true
+      this.bigQcordUrl = url
     }
   }
 }

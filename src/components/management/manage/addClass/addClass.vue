@@ -20,7 +20,7 @@
       </div>
       <el-row :gutter="20">
         <el-col :span="8">
-          <span>所选项目：<el-tag type="success">标签二</el-tag></span>
+          <span>所选项目：<el-tag type="success">{{typeName}}</el-tag></span>
         </el-col>
         <el-col :span="8">
           <span>选择期数：<el-tag type="success">{{term}}</el-tag></span>
@@ -47,6 +47,7 @@
         <el-form-item label="输入班级号"
                       prop="classNumber">
           <el-input v-model.number="item.classNumber"
+                    @blur="setClassNumbers"
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
@@ -118,6 +119,7 @@
                         :rules=" [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }]"
                         :prop="`groupClass.${j}.classNumber`">
             <el-input v-model.number="items.classNumber"
+                      @blur="setClassNumbers"
                       style="width:250px"
                       autocomplete="off"></el-input>
           </el-form-item>
@@ -172,6 +174,7 @@
                icon="el-icon-circle-plus"
                v-show='!addClassTypeLength'
                @click="addRow">继续添加</el-button>
+
   </div>
 </template>
 <script>
@@ -179,10 +182,10 @@ import apiDataFilter from '../../../../libraries/apiDataFilter';
 export default {
   data () {
     const validate = (rule, value, callback) => {
-      const { classNumbers } = this
-      console.log(classNumbers, value)
+      const { allClassNumbers } = this
+      console.log(allClassNumbers, value)
       if (!value) return callback('班级号不能为空')
-      if (classNumbers.includes(value)) {
+      if (allClassNumbers.includes(value)) {
         callback('班级号已存在')
       } else {
         callback()
@@ -191,7 +194,7 @@ export default {
     return {
       addClassType1: [
         {
-          classNumber: 1,
+          classNumber: '',
           channel: '',
           headTeacherId: '',
           sequence: ''
@@ -223,34 +226,45 @@ export default {
 
         'groupClass[0].qrcodeUrl': [{ required: true, message: '请上传图片', trigger: 'change' }]
       },
+
       projectType: [],
       memberTypeId: '',
       term: '',
       entryType: '',
+      typeName: '',
       addRowButton: true,
       classNumbers: [],
       headTeachers: [],
       memberLabels: '',
       timeout: null,
       selectIndex: '',
-      uploadIndex: ''
+      uploadIndex: '',
+      allClassNumbers: []
+
 
     }
   },
   computed: {
     addClassTypeLength () {
-      return (this.addClassType1.length === 10) || (this.addClassType2.length === 10)
+      return (this.addClassType1.length === 10) || (this.addClassType2.length === 5)
     }
 
   },
   mounted () {
-    const { memberTypeId, term, entryType } = this.$route.query
+    const { memberTypeId, term, entryType, projectType } = this.$route.query
+    console.log(projectType)
+    let item = projectType.filter(item => item.memberTypeId === memberTypeId)
+    const { typeName } = item[0]
     this.memberTypeId = memberTypeId
+    this.typeName = typeName
     this.term = term
     this.entryType = entryType
     this.loadTeacher()
   },
   methods: {
+    setClassNumbers () {
+
+    },
     deleteRow (i) {
       this.$confirm('此操作将删除该条编辑，无法恢复, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -332,6 +346,9 @@ export default {
     },
     upPicSuccess (res, file, fileList) {//添加图片
       console.log(res, file, fileList)
+      const isJPG = file.type === 'image/jpeg';
+      if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
+
       let { msg } = res
       const [i, j] = this.uploadIndex
       let map = new Map()
@@ -374,6 +391,15 @@ export default {
           this.saveSubmit(data)
         }
       } else {
+        const validateList = this.addClassType2.map((item, i) => {
+          let validboolen
+          this.$refs[`addClassType2${i}`][0].validate((valid) => {
+            validboolen = (valid === true)
+          });
+          return validboolen
+        })
+        let check2Success = validateList.every(item => item === true)
+        if (!check2Success) return
         console.log('班主任')
         const { memberTypeId, term, entryType, addClassType2: classes } = this
         const data = { memberTypeId, term, entryType, classes }
@@ -393,6 +419,17 @@ export default {
 
         }
       })
+    },
+    editSubmit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) return
+        console.log('success')
+      });
+    },
+    upQrcode (res, file, fileList) {
+      let { msg } = res
+      this.editForm.qrcodeUrl = msg
+      this.$refs.imageUpload.clearValidate()
     }
   }}
 </script>
