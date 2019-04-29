@@ -346,7 +346,7 @@ export default {
         data: requestObj,
         successCallback: (res) => {
           const { msg } = res
-          this.studentTotal = msg.userInfoDtoList.length
+          this.studentTotal = msg.userInfoDtoList !== null ? msg.userInfoDtoList.length : 0
           this.statusList = msg.userInfoDtoList
           this.handleCurrentChange()
           this.classmatePracticePlanDto = msg.classmatePracticePlanDto
@@ -364,7 +364,7 @@ export default {
         data: this.ruleForm,
         successCallback: (res) => {
           const { msg } = res
-          this.studentTotal = msg.userInfoDtoList.length
+          this.studentTotal = msg.userInfoDtoList !== null ? msg.userInfoDtoList.length : 0
           this.statusList = msg.userInfoDtoList
           this.handleCurrentChange()
           this.classmatePracticePlanDto = msg.classmatePracticePlanDto
