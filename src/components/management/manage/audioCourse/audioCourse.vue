@@ -117,32 +117,41 @@
           </el-row>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row style="margin-top:20px">
+        <el-col :span="7"
+                style="margin-top:10px;height:40px">
+          学员列表
+        </el-col>
         <el-form :model="selectForm"
                  :rules="selectRules"
-                 ref="ruleForm">
-          <el-col :span="10"
-                  style="margin-top:10px">
-            学员列表
-          </el-col>
-          <el-col :span="5"
+                 ref="ruleFormData"
+                 v-show="nowList.length>0">
+          <el-col :span="8"
                   :gutter="1">
             <el-row>
-              <!-- <el-col :span="8"
-                      style="line-height:40px">
-                学员查询
-              </el-col> -->
-              <!-- <el-col :span="15">
-                <el-form-item label="是否复购"
-                              prop="studentStr"
+              <el-col :span="18">
+                <el-form-item label="学员查询"
+                              prop="studentSearch"
                               class="flexLine">
-                  <el-input v-model="selectForm.studentStr">
-                  </el-input>
+                  <el-select v-model="selectForm.studentSearch"
+                             placeholder="学员昵称/ID/学号"
+                             :clearable="true">
+                    <el-option v-for="(item, index) in studentSearch"
+                               :key="index"
+                               :label="item.text"
+                               :value="item.type">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
-              </el-col> -->
+              </el-col>
+              <el-col :span="6">
+                <el-form-item>
+                  <el-input v-model="searchStr"></el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-col>
-          <!-- <el-col :span="6">
+          <el-col :span="6">
             <el-row>
               <el-col :span="24"
                       class="titleText">
@@ -151,23 +160,26 @@
                 <el-form-item label="是否复购"
                               prop="isrepay"
                               class="flexLine">
-                  <el-select v-model="isrepay"
+                  <el-select v-model="selectForm.isrepay"
                              placeholder="是否复购"
                              :clearable="true">
-                    <el-option label="全部"
-                               value="0">
-                    </el-option>
-                    <el-option label="已复购"
-                               value="1">
-                    </el-option>
-                    <el-option label="未复购"
-                               value="2">
+                    <el-option v-for="(item, index) in getrepay"
+                               :key="index"
+                               :label="item.text"
+                               :value="item.type">
                     </el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
             </el-row>
-          </el-col> -->
+          </el-col>
+          <el-col :span="3">
+            <el-form-item>
+              <el-button type="primary"
+                         @click="submitFormSearch('ruleFormData')"
+                         style="margin:0 auto;display:block">筛选</el-button>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-row>
       <div class="table-wrapper">
@@ -234,8 +246,11 @@ import apiDataFilter from '../../../../libraries/apiDataFilter'
 export default {
   data () {
     return {
+      searchStr: '',
+      studentSearch: [{ type: 1, text: '学员昵称' }, { type: 2, text: 'ID' }, { type: 3, text: '学号' }],
+      getrepay: [{ type: 0, text: '全部' }, { type: 1, text: '已复购' }, { type: 2, text: '未复购' }],
       nowList: [],
-      pageSize: 2,
+      pageSize: 15,
       classmatePracticePlanDto: [],
       course: [], //项目列表
       statusList: [],
@@ -274,11 +289,11 @@ export default {
         ]
       },
       selectForm: {
-        studentStr: '',
-        isrepay: 0
+        studentSearch: '',
+        isrepay: ''
       },
       selectRules: {
-        studentStr: [
+        studentSearch: [
           { required: true, message: '请输入学员信息', trigger: 'change' }
         ],
         isrepay: [
@@ -291,8 +306,16 @@ export default {
     viewReport () {
 
     },
+    submitFormSearch (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.getSearch()
+        } else {
+          return false;
+        }
+      });
+    },
     submitForm (formName) {
-      console.log(formName)
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.getQuery()
@@ -300,6 +323,39 @@ export default {
           return false;
         }
       });
+    },
+    getSearch () {
+      let _obj = {}
+      if (this.selectForm.studentSearch === 1) {
+        _obj = {
+          memberId: this.searchStr
+        }
+      } else if (this.selectForm.studentSearch === 2) {
+        _obj = {
+          riseId: this.searchStr
+        }
+      } else if (this.selectForm.studentSearch === 3) {
+        _obj = {
+          nickname: this.searchStr
+        }
+      }
+      let requestObj = Object.assign(_obj, { repurchase: this.selectForm.isrepay }, this.ruleForm)
+      apiDataFilter.request({
+        apiPath: 'manage.classScheduling.getQuery',
+        method: 'post',
+        data: requestObj,
+        successCallback: (res) => {
+          const { msg } = res
+          this.studentTotal = msg.userInfoDtoList.length
+          this.statusList = msg.userInfoDtoList
+          this.handleCurrentChange()
+          this.classmatePracticePlanDto = msg.classmatePracticePlanDto
+          this.repayL1 = msg.repurchaseL1
+          this.repayL2 = msg.repurchaseL2
+          this.repayL3 = msg.repurchaseL3
+          this.total = msg.repurchaseTotal
+        }
+      })
     },
     getQuery () {
       apiDataFilter.request({
