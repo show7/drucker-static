@@ -183,6 +183,14 @@
           </el-table-column>
           <el-table-column prop="riseId"
                            label="问卷信息">
+            <template slot-scope="scope">
+              <div>
+                <a v-if="!scope.row.enrolment"
+                   class="viewReport"
+                   @click="viewReport">查看问卷</a>
+                <a v-else>未填写问卷</a>
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="riseId"
                            label="操作">
@@ -248,6 +256,9 @@ export default {
     }
   },
   methods: {
+    viewReport () {
+
+    },
     submitForm (formName) {
       console.log(formName)
       this.$refs[formName].validate((valid) => {
