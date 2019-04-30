@@ -261,7 +261,6 @@ export default {
   },
   mounted () {
     this.load()
-
   },
   methods: {
     load () {
@@ -278,11 +277,9 @@ export default {
               Object.assign(project, { label: `第${term}期`, value: term })
             }
             Object.assign(item, { label: typeName, value: memberTypeId })
-
           })
           console.log(projectType)
           this.projectType = projectType
-
         }
       })
     },
@@ -314,7 +311,7 @@ export default {
         }
       })
     },
-    loadPageList (page) {//筛选排班
+    loadPageList (page) { //筛选排班
       const { projectPeriod, selectClass } = this.selectForm
       const [memberTypeId, term] = projectPeriod
       const { entryType } = selectClass

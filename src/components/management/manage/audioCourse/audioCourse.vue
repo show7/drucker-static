@@ -209,22 +209,21 @@
           <el-table-column prop="repurchase"
                            label="复购情况">
           </el-table-column>
-          <el-table-column prop="riseId"
-                           label="问卷信息">
+          <el-table-column label="问卷信息">
             <template slot-scope="scope">
               <div>
-                <a v-if="!scope.row.enrolment"
+                <a v-if="scope.row.enrolment"
                    class="viewReport"
-                   @click="viewReport">查看问卷</a>
+                   @click="viewReport(scope.row.riseId)">查看问卷</a>
                 <a v-else>未填写问卷</a>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="riseId"
+          <!-- <el-table-column prop="riseId"
                            label="操作">
             <el-button type="success"
                        @click="handleChangeStatus">查看作业</el-button>
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
       </div>
       <div class="paginat">
@@ -237,6 +236,18 @@
         </el-pagination>
       </div>
     </el-form>
+    <el-dialog title="学员问卷"
+               :visible.sync="dialogFormVisible">
+      <el-table :data="qeustionList"
+                style="width: 100%;max-height: 400px;overflow-y: scroll;">
+        <el-table-column prop="question"
+                         label="问题">
+        </el-table-column>
+        <el-table-column prop="userValue"
+                         label="答案">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </section>
 </template>
 
@@ -245,6 +256,8 @@ import apiDataFilter from '../../../../libraries/apiDataFilter'
 export default {
   data () {
     return {
+      dialogFormVisible: false,
+      qeustionList: [],
       searchStr: '',
       studentSearch: [{ type: 1, text: '学员昵称' }, { type: 2, text: '圈外ID' }, { type: 3, text: '学号' }],
       getrepay: [{ type: 0, text: '全部' }, { type: 1, text: '已复购' }, { type: 2, text: '未复购' }],
@@ -293,27 +306,29 @@ export default {
       },
       selectRules: {
         studentSearch: [
-          { required: true, message: '请输入学员信息', trigger: 'change' }
+          { required: false, message: '请输入学员信息', trigger: 'change' }
         ],
         isrepay: [
-          { required: true, message: '请选择项目', trigger: 'change' }
+          { required: false, message: '请选择项目', trigger: 'change' }
         ]
       }
     }
   },
   methods: {
-    viewReport () {
-
+    viewReport (riseId) {
+      this.dialogFormVisible = true
+      apiDataFilter.request({
+        apiPath: 'manage.classScheduling.getQuestion',
+        method: 'post',
+        data: { riseId: riseId },
+        successCallback: (res) => {
+          const { msg } = res
+          this.qeustionList = msg.questionDtoList
+        }
+      })
     },
     submitFormSearch (formName) {
       this.getSearch()
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     this.getSearch()
-      //   } else {
-      //     return false;
-      //   }
-      // });
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -325,6 +340,14 @@ export default {
       });
     },
     getSearch () {
+      if (this.ruleForm.memberTypeId === '' || this.ruleForm.headTeacherId === '' || this.ruleForm.classNumber === '' || this.ruleForm.term === '') {
+        this.$message({
+          showClose: true,
+          message: '请先查询班级信息',
+          type: 'warning'
+        });
+        return
+      }
       let _obj = {}
       if (this.selectForm.studentSearch === 1) {
         _obj = {
