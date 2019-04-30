@@ -57,20 +57,19 @@
     <el-card shadow="hover">
       <el-table :data="tableData">
         <el-table-column prop="classType"
-                         width="100"
                          label="班级类型">
         </el-table-column>
         <el-table-column prop="classNumber"
-                         width="100"
                          label="班级号">
         </el-table-column>
         <el-table-column prop="headTeacher.nickName"
-                         width="120"
-                         label="班主任">
+                         label="班主任"
+                         v-if="!entryType">
         </el-table-column>
         <el-table-column prop="enterGroupQrCode"
-                         label="群二维码">
-          <template scope="scope">
+                         label="群二维码"
+                         v-if="entryType">
+          <template slot-scope="scope">
             <img :src="scope.row.enterGroupQrCode ?scope.row.enterGroupQrCode.qrCode:''"
                  @click="viewBigQrcodeClick(scope.row.enterGroupQrCode.qrCode)"
                  width="39"
@@ -79,15 +78,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="sequence"
-                         width="120"
                          label="顺序">
         </el-table-column>
         <el-table-column prop="limit"
-                         width="120"
                          label="班级上限">
         </el-table-column>
         <el-table-column prop="channel"
-                         width="150"
                          label="投放渠道">
         </el-table-column>
         <el-table-column label="操作">
@@ -166,23 +162,16 @@
                      action="/pc/upload/file"
                      list-type="picture-card"
                      :limit="1"
+                     :class="{hide:hideUpload1}"
+                     :file-list="fileList1"
                      :multiple="false"
-                     :on-remove="upQrcode"
+                     :on-remove="clearFileList1"
                      :on-success="upQrcode">
+
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
 
-        <!-- <el-form-item label="活动区域"
-                      :label-width="formLabelWidth">
-          <el-select v-model="form.region"
-                     placeholder="请选择活动区域">
-            <el-option label="区域一"
-                       value="shanghai"></el-option>
-            <el-option label="区域二"
-                       value="beijing"></el-option>
-          </el-select>
-        </el-form-item> -->
       </el-form>
       <div slot="footer"
            class="dialog-footer">
@@ -193,7 +182,7 @@
     </el-dialog>
     <el-dialog title="查看大图"
                :visible.sync="viewBigQrcode">
-      <div style="{'width':'395px',height:'659px',text-align:center}">
+      <div style="text-align:center">
         <img :src="bigQcordUrl"
              style="width:80%"
              alt="入群二维码">
@@ -256,12 +245,18 @@ export default {
       memberLabels: [],
       entryType: '',
       viewBigQrcode: false,
-      bigQcordUrl: ''
+      bigQcordUrl: '',
+      hideUpload: false,
+      fileList1: []
     }
   },
   mounted () {
     this.load()
-
+  },
+  computed: {
+    hideUpload1 () {
+      return this.fileList1.length >= 1
+    }
   },
   methods: {
     load () {
@@ -355,9 +350,9 @@ export default {
           const { projectType } = this
           // alert()
           console.log(entryType)
+          localStorage.setItem('query', JSON.stringify({ projectType, memberTypeId, term, entryType }))
           this.$router.push({
-            path: '/management/manage/addClass',
-            query: { memberTypeId, term, entryType, projectType }
+            path: '/management/manage/addClass'
           })
           console.log('pppp')
         }
@@ -396,6 +391,7 @@ export default {
     },
     handleEdit (row) {
       console.log(row)
+      const { entryType } = this
       const { classNumber, sequence, channel, headTeacher, enterGroupQrCode } = row
       const { id: headTeacherId } = headTeacher
       const { qrCode: qrcodeUrl } = enterGroupQrCode
@@ -406,7 +402,10 @@ export default {
         headTeacherId,
         sequence
       }
+
       this.editPopup = true
+      if (!entryType) return //班主任类型不需要
+      this.fileList1 = [{ url: qrcodeUrl }]
     },
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
@@ -415,15 +414,18 @@ export default {
       });
     },
     upQrcode (res, file, fileList) {
-      const isJPG = file.type === 'image/jpeg';
-      if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
       let { msg } = res
       this.editForm.qrcodeUrl = msg
+      this.fileList1 = fileList
+      console.log(fileList)
       this.$refs.imageUpload.clearValidate()
     },
     viewBigQrcodeClick (url) {
       this.viewBigQrcode = true
       this.bigQcordUrl = url
+    },
+    clearFileList1 () {
+      this.fileList1 = []
     }
   }
 }

@@ -253,14 +253,7 @@ export default {
           this.dialogFormVisible = false
           this.load()
           this.selectItem = ''
-          this.addScheduling = {
-            item: '',
-            term: '',
-            activeDate: '',
-            expiredDate: '',
-            openDate: '',
-            closeDate: ''
-          }
+          this.resetForm('addScheduling')
         }
       })
     },
@@ -275,12 +268,20 @@ export default {
     submitSendData (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('pppp')
           this.addSchedulings()
+
         }
       });
     },
     resetForm (formName) {
+      this.addScheduling = {
+        item: '',
+        term: '',
+        activeDate: '',
+        expiredDate: '',
+        openDate: '',
+        closeDate: ''
+      }
       this.$refs[formName].resetFields();
     },
     handleDelete (index, row) {

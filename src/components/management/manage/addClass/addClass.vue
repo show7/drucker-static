@@ -36,7 +36,7 @@
              v-show="!entryType"
              v-for="(item,i) in addClassType1"
              :key='i'>
-
+      <el-tag type="success">序号：{{i+1}}</el-tag>
       <el-form :model="item"
                :inline="!entryType"
                :rules="addClassTypeRules"
@@ -93,6 +93,7 @@
              v-show="entryType"
              v-for="(item,i) in addClassType2"
              :key='i'>
+      <el-tag type="success">序号：{{i+1}}</el-tag>
       <el-form :model="item"
                :rules="addClassType2Rules"
                status-icon
@@ -112,12 +113,12 @@
           </el-select>
         </el-form-item>
         <el-card class="box-card"
-                 v-for="(items,j) in item.groupClass"
+                 v-for="(items,j) in item.groupClasses"
                  :key='j'>
 
           <el-form-item label="输入班级号"
                         :rules=" [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }]"
-                        :prop="`groupClass.${j}.classNumber`">
+                        :prop="`groupClasses.${j}.classNumber`">
             <el-input v-model.number="items.classNumber"
                       @blur="setClassNumbers"
                       style="width:250px"
@@ -125,7 +126,7 @@
           </el-form-item>
           <el-form-item label="班级渠道"
                         :rules="[{ required: true, message: '请输入渠道', trigger: 'change' }]"
-                        :prop="`groupClass.${j}.channel`">
+                        :prop="`groupClasses.${j}.channel`">
             <el-select v-model="items.channel"
                        style="width:250px"
                        value-key="typeName"
@@ -154,7 +155,7 @@
           </el-form-item>
           <el-form-item label="请输入优先级"
                         :rules="[{ required: true, message: '请输入优先级', trigger: 'change' }]"
-                        :prop="`groupClass.${j}.sequence`">
+                        :prop="`groupClasses.${j}.sequence`">
             <el-input v-model.number="items.sequence"
                       style="width:250px"
                       autocomplete="off"></el-input>
@@ -162,7 +163,7 @@
 
         </el-card>
         <el-button icon="el-icon-edit"
-                   v-show='item.groupClass.length!==3'
+                   v-show='item.groupClasses.length!==3'
                    @click="addClassItem(item)"
                    type="success">继续添加班主任</el-button>
       </el-form>
@@ -204,7 +205,7 @@ export default {
       validate,
       addClassType2: [{
         headTeacherId: '',
-        groupClass: [
+        groupClasses: [
           {
             classNumber: '',
             channel: '',
@@ -251,8 +252,7 @@ export default {
 
   },
   mounted () {
-    const { memberTypeId, term, entryType, projectType } = this.$route.query
-    console.log(projectType)
+    const { memberTypeId, term, entryType, projectType } = JSON.parse(localStorage.getItem('query'))
     let item = projectType.filter(item => item.memberTypeId === memberTypeId)
     const { typeName } = item[0]
     this.memberTypeId = memberTypeId
@@ -289,7 +289,7 @@ export default {
       if (type) {
         this.addClassType2.push({
           headTeacherId: '',
-          groupClass: [
+          groupClasses: [
             {
               classNumber: '',
               channel: '',
@@ -314,7 +314,7 @@ export default {
     },
     addClassItem (item) {
       console.log(item)
-      item.groupClass.push({
+      item.groupClasses.push({
         classNumber: '',
         channel: '',
         qrcodeUrl: '',
@@ -346,8 +346,8 @@ export default {
     },
     upPicSuccess (res, file, fileList) {//添加图片
       console.log(res, file, fileList)
-      const isJPG = file.type === 'image/jpeg';
-      if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
+      // const isJPG = file.type === 'image/jpeg';
+      // if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
 
       let { msg } = res
       const [i, j] = this.uploadIndex
@@ -355,7 +355,7 @@ export default {
       this.addClassType2.forEach((item, i) => {
         map.set(i, item)
       })
-      map.get(i).groupClass.forEach((item, i) => {
+      map.get(i).groupClasses.forEach((item, i) => {
         item.qrcodeUrl = i === j ? msg : item.qrcodeUrl
       })
     },
@@ -365,7 +365,7 @@ export default {
       this.addClassType2.forEach((item, i) => {
         map.set(i, item)
       })
-      map.get(i).groupClass.forEach((item, i) => {
+      map.get(i).groupClasses.forEach((item, i) => {
         item.qrcodeUrl = i === j ? '' : item.qrcodeUrl
       })
     },
