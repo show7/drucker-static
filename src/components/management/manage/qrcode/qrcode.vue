@@ -24,10 +24,11 @@
         </template>
         <el-col :span="8"
                 v-if="!!member">
-          <h4>渠道选择</h4>
+          <h4>课程选择</h4>
           <el-select v-model="memberId"
                      placeholder="请选择渠道"
-                     :clearable="true">
+                     :clearable="true"
+                     @clear="clearCourse">
             <el-option v-for="item in memberLabelList"
                        :key="item.id"
                        :label="item.labelName"
@@ -52,6 +53,9 @@
       <el-button type="primary"
                  @click="addParameter"
                  v-if="!!channel">添加</el-button>
+      <el-button type="primary"
+                 @click="reduceParameter"
+                 v-if="!!channel">删除</el-button>
       <br />
       <el-row>
         <el-col :span="8">
@@ -196,6 +200,28 @@ export default {
     }
   },
   methods: {
+    clearCourse () {
+      let _strsearch = this.scene.split('#rise#')[0].split('|')[0]
+      let _strCourse = this.scene.split('#rise#')[1]
+      this.scene = _strsearch + '#rise#' + _strCourse
+    },
+    reduceParameter () {
+      if (this.parameters.length === 1) return
+      this.parameters.splice(this.parameters.length - 1, this.parameters.length - 1)
+      let _arr = this.scene.split('#rise#')[1].split('|')
+      let scene = this.scene.split('#rise#')[0] + '#rise#'
+      let _scene = ''
+      _arr.map((item, index) => {
+        if (index < _arr.length - 1) {
+          if (index === _arr.length - 2) {
+            _scene += item
+          } else {
+            _scene += item + '|'
+          }
+        }
+      })
+      this.scene = scene + _scene
+    },
     addParameter () {
       if (this.parameters[this.parameters.length - 1] === '') return
       this.parameters.push('')
@@ -267,7 +293,8 @@ export default {
       }
     },
     handleChangeLabel (value) {
-      this.scene = this.channel.channel + '|' + value + '#rise#';
+      let _str = this.scene.split('#rise#')[1]
+      this.scene = this.channel.channel + '|' + value + '#rise#' + _str;
     }
   },
   created () {
