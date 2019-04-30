@@ -29,7 +29,7 @@
         </el-col>
         <el-col :span="9">
           <el-button type="primary"
-                     @click="dialogFormVisible=true"
+                     @click="openAddSchedulingPopup"
                      icon="el-icon-edit">新建排期</el-button>
         </el-col>
       </el-row>
@@ -100,7 +100,7 @@
     </el-card>
     <!-- 新增排期 -->
 
-    <el-dialog title="新增排期"
+    <el-dialog :title="popupTitle"
                :visible.sync="dialogFormVisible">
       <el-form :model="addScheduling"
                status-icon
@@ -185,6 +185,7 @@ export default {
   name: 'classScheduling',
   data () {
     return {
+      popupTitle: '新增排期',
       selectItem: {},
       formLabelWidth: '180px',
       dialogFormVisible: false,
@@ -213,6 +214,10 @@ export default {
     this.load()
   },
   methods: {
+    openAddSchedulingPopup () {
+      this.dialogFormVisible = true
+      this.popupTitle = '新增排期'
+    },
     checkTime (startTime, endTime) {
       return new Date() > new Date(startTime.replace(/-/g, '/')) || new Date() >= new Date(endTime.replace(/-/g, '/'))
     },
@@ -259,6 +264,7 @@ export default {
     },
     edit (index, row) {
       console.log(index, row)
+      this.popupTitle = '编辑排期'
       this.dialogFormVisible = true
       this.addScheduling = {
         item: this.selectItem,
@@ -284,7 +290,7 @@ export default {
       }
       this.$refs[formName].resetFields();
     },
-    handleDelete (index, row) {
+    handleDelete (i, row) {
       console.log(row)
       const { id = '' } = row
       this.$confirm('此操作将永久删除该条信息吗, 是否继续?', '提示', {
@@ -299,12 +305,13 @@ export default {
           successCallback: (res) => {
             console.log(res)
             if (res.code !== 200) return
+            this.selectItem.projectList.splice(i, 1)
             this.$message({
               message: '删除成功',
               type: 'success'
             });
             this.load()
-            this.selectItem = ''
+
           }
         })
       }).catch(() => {

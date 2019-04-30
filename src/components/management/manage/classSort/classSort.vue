@@ -91,7 +91,7 @@
             <el-button @click="handleEdit(scope.row)"
                        size="mini">编辑</el-button>
             <el-button type="danger"
-                       @click="handledelete(scope.row)"
+                       @click="handledelete(scope.row,scope.$index)"
                        size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -220,11 +220,11 @@ export default {
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
       },
       classTypeList: [{
-        typeName: '加班主任',
+        typeName: '扫码加班主任',
         entryType: 0
 
       }, {
-        typeName: '加微信群',
+        typeName: '扫码入群',
         entryType: 1
 
       }],
@@ -358,8 +358,9 @@ export default {
         }
       });
     },
-    handledelete (row) {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+    handledelete (row, i) {
+      console.log(row, i)
+      this.$confirm('此操作将永久删除该条记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -367,13 +368,16 @@ export default {
         const { id: operateRotateId } = row
         const params = { operateRotateId }
         apiDataFilter.request({
-          apiPath: 'manage.classSort.listLoad',
+          apiPath: 'manage.classSort.del',
           data: params,
+          method: 'post',
           successCallback: (res) => {
+            this.tableData.splice(i, 1)
             this.$message({
               type: 'success',
               message: '删除成功!'
             });
+
             this.load()
           }
         })
@@ -384,7 +388,6 @@ export default {
         });
       });
 
-      console.log(row)
     },
     loadCurrentChange () {
       this.loadPageList(this.currentPage)

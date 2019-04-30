@@ -158,7 +158,7 @@ export default {
   },
   classSort: {
     load: 'pc/drainage/term/load', //加载类型
-    del: 'pc/drainage/class/del', //删除
+    del: 'pc/drainage/class/del', //删除排期
     listLoad: 'pc/drainage/class/load', //根据条件加载类型
     loadTeacher: 'pc/drainage/load/all/teacher', //加载老师
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
