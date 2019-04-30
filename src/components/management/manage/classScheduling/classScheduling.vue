@@ -223,6 +223,7 @@ export default {
       }
       this.saveType = 0
       this.dialogFormVisible = true
+      this.$refs['addScheduling'].resetFields();
     },
     checkTime (startTime, endTime) {
       return new Date() > new Date(startTime.replace(/-/g, '/')) || new Date() >= new Date(endTime.replace(/-/g, '/'))
