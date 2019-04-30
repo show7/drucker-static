@@ -134,7 +134,8 @@
                               class="flexLine">
                   <el-select v-model="selectForm.studentSearch"
                              placeholder="学员昵称/圈外ID/学号"
-                             :clearable="true">
+                             :clearable="true"
+                             @clear="clearStundetStr">
                     <el-option v-for="(item, index) in studentSearch"
                                :key="index"
                                :label="item.text"
@@ -315,6 +316,9 @@ export default {
     }
   },
   methods: {
+    clearStundetStr () {
+      this.searchStr = ''
+    },
     viewReport (riseId) {
       this.dialogFormVisible = true
       apiDataFilter.request({
@@ -370,9 +374,9 @@ export default {
         successCallback: (res) => {
           const { msg } = res
           this.studentTotal = msg.userInfoDtoList !== null ? msg.userInfoDtoList.length : 0
-          this.statusList = msg.userInfoDtoList
+          this.statusList = msg.userInfoDtoList !== null ? msg.userInfoDtoList : []
           this.handleCurrentChange()
-          this.classmatePracticePlanDto = msg.classmatePracticePlanDto
+          this.classmatePracticePlanDto = msg.classmatePracticePlanDto !== null ? msg.classmatePracticePlanDto : []
           this.repayL1 = msg.repurchaseL1
           this.repayL2 = msg.repurchaseL2
           this.repayL3 = msg.repurchaseL3
@@ -388,9 +392,9 @@ export default {
         successCallback: (res) => {
           const { msg } = res
           this.studentTotal = msg.userInfoDtoList !== null ? msg.userInfoDtoList.length : 0
-          this.statusList = msg.userInfoDtoList
+          this.statusList = msg.userInfoDtoList !== null ? msg.userInfoDtoList : []
           this.handleCurrentChange()
-          this.classmatePracticePlanDto = msg.classmatePracticePlanDto
+          this.classmatePracticePlanDto = msg.classmatePracticePlanDto !== null ? msg.classmatePracticePlanDto : []
           this.repayL1 = msg.repurchaseL1
           this.repayL2 = msg.repurchaseL2
           this.repayL3 = msg.repurchaseL3
