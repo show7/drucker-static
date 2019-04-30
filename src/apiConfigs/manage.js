@@ -154,7 +154,10 @@ export default {
   classScheduling: {
     load: 'pc/drainage/term/load', //加载类型
     save: 'pc/drainage/term/save', //编辑&新增
-    del: 'pc/drainage/term/del' //删除
+    del: 'pc/drainage/term/del', //删除
+    getInfo: 'pc/drainage/classmate/init', //获取学院信息
+    getQuery: 'pc/drainage/classmate/query', //获取学院信息
+    getQuestion: 'pc/drainage/classmate/query/question' //获取问卷信息
   },
   classSort: {
     load: 'pc/drainage/term/load', //加载类型
@@ -162,6 +165,7 @@ export default {
     listLoad: 'pc/drainage/class/load', //根据条件加载类型
     loadTeacher: 'pc/drainage/load/all/teacher', //加载老师
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
-    saveGroup: 'pc/drainage/class/group/save' //添加群二维码
+    saveGroup: 'pc/drainage/class/group/save', //添加群二维码
+    upClass: 'pc/drainage/class/update'
   }
 };

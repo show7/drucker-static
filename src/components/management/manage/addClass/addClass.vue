@@ -26,7 +26,7 @@
           <span>选择期数：<el-tag type="success">{{term}}</el-tag></span>
         </el-col>
         <el-col :span="8">
-          <span>班级类型：<el-tag type="success">{{entryType? '微信群':'班主任'}}</el-tag></span>
+          <span>班级类型：<el-tag type="success">{{entryType? '扫码入群':'扫码加班主任'}}</el-tag></span>
         </el-col>
       </el-row>
 
@@ -47,7 +47,6 @@
         <el-form-item label="输入班级号"
                       prop="classNumber">
           <el-input v-model.number="item.classNumber"
-                    @blur="setClassNumbers"
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
@@ -93,13 +92,19 @@
              v-show="entryType"
              v-for="(item,i) in addClassType2"
              :key='i'>
-      <el-tag type="success">序号：{{i+1}}</el-tag>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-tag type="success">序号：{{i+1}}</el-tag>
+        </el-col>
+      </el-row>
+      <br>
       <el-form :model="item"
                :rules="addClassType2Rules"
                status-icon
                :ref="`addClassType2${i}`"
                label-width="100px"
                class="demo-ruleForm">
+
         <el-form-item label="选择班主任"
                       prop="headTeacherId">
           <el-select v-model="item.headTeacherId"
@@ -117,14 +122,15 @@
                  :key='j'>
 
           <el-form-item label="输入班级号"
+                        label-width="150px"
                         :rules=" [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }]"
                         :prop="`groupClasses.${j}.classNumber`">
             <el-input v-model.number="items.classNumber"
-                      @blur="setClassNumbers"
                       style="width:250px"
                       autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="班级渠道"
+                        label-width="150px"
                         :rules="[{ required: true, message: '请输入渠道', trigger: 'change' }]"
                         :prop="`groupClasses.${j}.channel`">
             <el-select v-model="items.channel"
@@ -139,28 +145,32 @@
             </el-select>
           </el-form-item>
           <el-form-item label="上传二维码"
+                        label-width="150px"
                         prop="qrcodeUrl">
             <div @click="setUploadIndex(i,j)">
               <el-upload class="avatar-uploader"
                          action="/pc/upload/file"
-                         :class="{hide:items.hideUpload}"
                          list-type="picture-card"
                          :limit="1"
                          :multiple="false"
                          :on-remove="removePic"
+                         :before-upload="checkPicType"
+                         :on-change="upPicChange"
                          :on-success="upPicSuccess">
                 <i class="el-icon-plus"></i>
               </el-upload>
             </div>
           </el-form-item>
           <el-form-item label="请输入优先级"
+                        label-width="150px"
                         :rules="[{ required: true, message: '请输入优先级', trigger: 'change' }]"
                         :prop="`groupClasses.${j}.sequence`">
             <el-input v-model.number="items.sequence"
                       style="width:250px"
                       autocomplete="off"></el-input>
           </el-form-item>
-
+          <i class="el-icon-delete"
+             @click="deleteClassRow(i,j)"></i>
         </el-card>
         <el-button icon="el-icon-edit"
                    v-show='item.groupClasses.length!==3'
@@ -169,7 +179,7 @@
       </el-form>
     </el-card>
     <el-button @click="submitSave">保存</el-button>
-    <el-button @click="addSendData('addClassType1')"
+    <el-button @click="cancelSave"
                type="primary">取消</el-button>
     <el-button type="primary"
                icon="el-icon-circle-plus"
@@ -262,9 +272,6 @@ export default {
     this.loadTeacher()
   },
   methods: {
-    setClassNumbers () {
-
-    },
     deleteRow (i) {
       this.$confirm('此操作将删除该条编辑，无法恢复, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -283,6 +290,19 @@ export default {
         });
       });
 
+    },
+    checkPicType (file) {
+      const { type } = file
+      if (type !== 'image/jpeg') {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+        return false
+      }
+    },
+    deleteClassRow (i, j) {
+      console.log(i, j)
+      this.addClassType2[i].groupClasses.splice(j, 1)
+      if (this.addClassType2[i].groupClasses.length) return
+      this.addClassType2.splice(i, 1)
     },
     addRow () {
       const type = this.entryType
@@ -416,20 +436,27 @@ export default {
         apiPath: `manage.classSort.${entryType ? 'saveGroup' : 'saveTeacher'}`,
         successCallback: (res) => {
           console.log(res)
-
+          this.$message({
+            type: 'success',
+            message: '保存成功!'
+          });
+          this.$router.push('/management/manage/classSort')
         }
       })
-    },
-    editSubmit (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (!valid) return
-        console.log('success')
-      });
     },
     upQrcode (res, file, fileList) {
       let { msg } = res
       this.editForm.qrcodeUrl = msg
       this.$refs.imageUpload.clearValidate()
+    },
+    cancelSave () {
+      this.$confirm('确定取消保存并返回排班管理页面, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$router.push('/management/manage/classSort')
+      })
     }
   }}
 </script>

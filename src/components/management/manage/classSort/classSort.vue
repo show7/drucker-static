@@ -63,8 +63,7 @@
                          label="班级号">
         </el-table-column>
         <el-table-column prop="headTeacher.nickName"
-                         label="班主任"
-                         v-if="!entryType">
+                         label="班主任">
         </el-table-column>
         <el-table-column prop="enterGroupQrCode"
                          label="群二维码"
@@ -77,8 +76,12 @@
                  class="head_pic" />
           </template>
         </el-table-column>
+
         <el-table-column prop="sequence"
                          label="顺序">
+        </el-table-column>
+        <el-table-column prop="actualQuantity"
+                         label="班级实时人数">
         </el-table-column>
         <el-table-column prop="limit"
                          label="班级上限">
@@ -88,7 +91,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleEdit(scope.row)"
+            <el-button @click="handleEdit(scope.row,scope.$index)"
                        size="mini">编辑</el-button>
             <el-button type="danger"
                        @click="handledelete(scope.row,scope.$index)"
@@ -118,6 +121,7 @@
                       prop="classNumber">
           <el-input v-model.number="editForm.classNumber"
                     style="width:250px"
+                    :disabled="editdDisabled"
                     autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="顺序"
@@ -130,6 +134,7 @@
                       prop="channel">
           <el-select v-model="editForm.channel"
                      style="width:250px"
+                     :disabled="editdDisabled"
                      value-key="typeName"
                      placeholder="请选择">
             <el-option v-for="item in memberLabels"
@@ -139,11 +144,18 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="班级实时人数">
+          <el-input v-model.number="editForm.actualQuantity"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="选择班主任"
-                      v-show="!entryType"
-                      prop="headTeacherId">
+                      v-show="!entryType">
           <el-select v-model="editForm.headTeacherId"
                      filterable
+                     headTeacherId:
+                     :rules="{ required: true, message: '请选择班主任', trigger: 'change' }"
+                     :disabled="editdDisabled"
                      style="width:250px"
                      placeholder="请选择班主任">
             <el-option v-for="item in headTeachers"
@@ -156,15 +168,17 @@
         <el-form-item v-show="entryType"
                       label="群二维码"
                       ref="imageUpload"
-                      :rules="{ required: true, message: '上传群二维码', trigger: 'change' }"
+                      :rules="entryType ? { required: true, message: '上传群二维码', trigger: 'change' }:''"
                       prop="qrcodeUrl">
           <el-upload class="avatar-uploader"
                      action="/pc/upload/file"
                      list-type="picture-card"
                      :limit="1"
+                     :disabled="editdDisabled"
                      :class="{hide:hideUpload1}"
                      :file-list="fileList1"
                      :multiple="false"
+                     :before-upload="checkPicType"
                      :on-remove="clearFileList1"
                      :on-success="upQrcode">
 
@@ -214,8 +228,7 @@ export default {
         selectClass: { required: true, message: '请选择班级类型', trigger: 'change' }
       },
       editFormRules: {
-        classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
-        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }],
         channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
       },
@@ -237,8 +250,10 @@ export default {
         classNumber: '',
         channel: '',
         qrcodeUrl: '',
+        actualQuantity: '',
         headTeacherId: '',
-        sequence: ''
+        sequence: '',
+        operateRotateId: ''
       },
       classNumbers: [],
       headTeachers: [],
@@ -247,7 +262,9 @@ export default {
       viewBigQrcode: false,
       bigQcordUrl: '',
       hideUpload: false,
-      fileList1: []
+      fileList1: [],
+      editdDisabled: false,
+      editIndex: ''
     }
   },
   mounted () {
@@ -309,6 +326,13 @@ export default {
         }
       })
     },
+    checkPicType (file) {
+      const { type } = file
+      if (type !== 'image/jpeg') {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+        return false
+      }
+    },
     loadPageList (page) {//筛选排班
       const { projectPeriod, selectClass } = this.selectForm
       const [memberTypeId, term] = projectPeriod
@@ -331,7 +355,7 @@ export default {
 
           const { list, page } = res.msg
           list.forEach(item => {
-            Object.assign(item, { classType: item.entryType ? '微信群' : '班主任' })
+            Object.assign(item, { classType: item.entryType ? '扫码入群' : '扫码加班主任' })
           })
           const { page: currentPage, total } = page
           this.currentPage = currentPage
@@ -392,19 +416,29 @@ export default {
     loadCurrentChange () {
       this.loadPageList(this.currentPage)
     },
-    handleEdit (row) {
-      console.log(row)
+    handleEdit (row, i) { // 编辑
+      this.editIndex = i
       const { entryType } = this
-      const { classNumber, sequence, channel, headTeacher, enterGroupQrCode } = row
-      const { id: headTeacherId } = headTeacher
-      const { qrCode: qrcodeUrl } = enterGroupQrCode
-      this.editForm = {
+      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId } = row
+      this.editdDisabled = new Date() > new Date(termActiveDate.replace(/-/g, '/'))
+      let qrcodeUrl, headTeacherId
+      if (entryType) {
+        const { qrCode = '' } = enterGroupQrCode
+        qrcodeUrl = qrCode
+      } else {
+        const { id = '' } = headTeacher
+        headTeacherId = id
+      }
+
+      console.log(headTeacherId, qrcodeUrl)
+      const editForm = {
         classNumber,
         channel,
-        qrcodeUrl,
-        headTeacherId,
-        sequence
+        sequence,
+        actualQuantity,
+        operateRotateId
       }
+      this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
       this.editPopup = true
       if (!entryType) return //班主任类型不需要
@@ -413,7 +447,24 @@ export default {
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-        console.log('success')
+        const { actualQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId } = this.editForm
+        const params = {
+          actualQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId
+        }
+        apiDataFilter.request({
+          apiPath: 'manage.classSort.upClass',
+          data: params,
+          method: 'post',
+          successCallback: (res) => {
+
+            this.$message({
+              type: 'success',
+              message: '编辑成功!'
+            });
+            this.submitScreen('selectForm')
+            this.editPopup = false
+          }
+        })
       });
     },
     upQrcode (res, file, fileList) {

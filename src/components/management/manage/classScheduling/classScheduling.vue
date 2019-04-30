@@ -39,12 +39,12 @@
     <el-card shadow="hover">
       <el-table :data="selectItem.projectList"
                 style="width: 100%">
-        <el-table-column label="项目名称"
+        <!-- <el-table-column label="项目名称"
                          width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.memberTypeName }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="体验课期数">
           <template slot-scope="scope">
             <div slot="reference"
@@ -100,7 +100,7 @@
     </el-card>
     <!-- 新增排期 -->
 
-    <el-dialog :title="popupTitle"
+    <el-dialog :title="saveType?'编辑排期':'新增排期'"
                :visible.sync="dialogFormVisible">
       <el-form :model="addScheduling"
                status-icon
@@ -185,7 +185,7 @@ export default {
   name: 'classScheduling',
   data () {
     return {
-      popupTitle: '新增排期',
+      saveType: 0,
       selectItem: {},
       formLabelWidth: '180px',
       dialogFormVisible: false,
@@ -207,16 +207,22 @@ export default {
       }
     }
   },
-  computed: {
-
-  },
   mounted () {
     this.load()
   },
   methods: {
     openAddSchedulingPopup () {
+      this.addScheduling = {
+        item: '',
+        term: '',
+        id: '',
+        activeDate: '',
+        expiredDate: '',
+        openDate: '',
+        closeDate: ''
+      }
+      this.saveType = 0
       this.dialogFormVisible = true
-      this.popupTitle = '新增排期'
     },
     checkTime (startTime, endTime) {
       return new Date() > new Date(startTime.replace(/-/g, '/')) || new Date() >= new Date(endTime.replace(/-/g, '/'))
@@ -264,7 +270,7 @@ export default {
     },
     edit (index, row) {
       console.log(index, row)
-      this.popupTitle = '编辑排期'
+      this.saveType = 1
       this.dialogFormVisible = true
       this.addScheduling = {
         item: this.selectItem,
@@ -275,12 +281,13 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addSchedulings()
-
         }
       });
     },
     resetForm (formName) {
-      this.addScheduling = {
+      const { saveType } = this
+      const { id = '' } = this.addScheduling
+      const addScheduling = {
         item: '',
         term: '',
         activeDate: '',
@@ -288,6 +295,7 @@ export default {
         openDate: '',
         closeDate: ''
       }
+      this.addScheduling = saveType ? Object.assign(addScheduling, { id }) : addScheduling
       this.$refs[formName].resetFields();
     },
     handleDelete (i, row) {
