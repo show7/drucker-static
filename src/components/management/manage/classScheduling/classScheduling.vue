@@ -29,7 +29,7 @@
         </el-col>
         <el-col :span="9">
           <el-button type="primary"
-                     @click="dialogFormVisible=true"
+                     @click="openAddSchedulingPopup"
                      icon="el-icon-edit">新建排期</el-button>
         </el-col>
       </el-row>
@@ -39,12 +39,12 @@
     <el-card shadow="hover">
       <el-table :data="selectItem.projectList"
                 style="width: 100%">
-        <el-table-column label="项目名称"
+        <!-- <el-table-column label="项目名称"
                          width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.memberTypeName }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="体验课期数">
           <template slot-scope="scope">
             <div slot="reference"
@@ -88,9 +88,11 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
+                       :disabled="checkTime(scope.row.activeDate,scope.row.expiredDate)"
                        @click="edit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini"
                        type="danger"
+                       :disabled="checkTime(scope.row.activeDate,scope.row.expiredDate)"
                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -98,7 +100,7 @@
     </el-card>
     <!-- 新增排期 -->
 
-    <el-dialog title="新增排期"
+    <el-dialog :title="saveType?'编辑排期':'新增排期'"
                :visible.sync="dialogFormVisible">
       <el-form :model="addScheduling"
                status-icon
@@ -183,6 +185,7 @@ export default {
   name: 'classScheduling',
   data () {
     return {
+      saveType: 0,
       selectItem: {},
       formLabelWidth: '180px',
       dialogFormVisible: false,
@@ -204,13 +207,27 @@ export default {
       }
     }
   },
-  computed: {
-
-  },
   mounted () {
     this.load()
   },
   methods: {
+    openAddSchedulingPopup () {
+      this.addScheduling = {
+        item: '',
+        term: '',
+        id: '',
+        activeDate: '',
+        expiredDate: '',
+        openDate: '',
+        closeDate: ''
+      }
+      this.saveType = 0
+      this.dialogFormVisible = true
+      this.$refs['addScheduling'].resetFields();
+    },
+    checkTime (startTime, endTime) {
+      return new Date() > new Date(startTime.replace(/-/g, '/')) || new Date() >= new Date(endTime.replace(/-/g, '/'))
+    },
     load () {
       apiDataFilter.request({
         apiPath: 'manage.classScheduling.load',
@@ -248,19 +265,13 @@ export default {
           this.dialogFormVisible = false
           this.load()
           this.selectItem = ''
-          this.addScheduling = {
-            item: '',
-            term: '',
-            activeDate: '',
-            expiredDate: '',
-            openDate: '',
-            closeDate: ''
-          }
+          this.resetForm('addScheduling')
         }
       })
     },
     edit (index, row) {
       console.log(index, row)
+      this.saveType = 1
       this.dialogFormVisible = true
       this.addScheduling = {
         item: this.selectItem,
@@ -270,33 +281,59 @@ export default {
     submitSendData (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('pppp')
           this.addSchedulings()
         }
       });
     },
-    handleDelete (index, row) {
+    resetForm (formName) {
+      const { saveType } = this
+      const { id = '' } = this.addScheduling
+      const addScheduling = {
+        item: '',
+        term: '',
+        activeDate: '',
+        expiredDate: '',
+        openDate: '',
+        closeDate: ''
+      }
+      this.addScheduling = saveType ? Object.assign(addScheduling, { id }) : addScheduling
+      this.$refs[formName].resetFields();
+    },
+    handleDelete (i, row) {
       console.log(row)
       const { id = '' } = row
-      apiDataFilter.request({
-        apiPath: 'manage.classScheduling.del',
-        data: { id },
-        method: 'post',
-        successCallback: (res) => {
-          console.log(res)
-          if (res.code !== 200) return
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          });
-        }
-      })
+      this.$confirm('此操作将永久删除该条信息吗, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        apiDataFilter.request({
+          apiPath: 'manage.classScheduling.del',
+          data: { id },
+          method: 'post',
+          successCallback: (res) => {
+            console.log(res)
+            if (res.code !== 200) return
+            this.selectItem.projectList.splice(i, 1)
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            this.load()
+
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+
     }
 
-  },
-  resetForm (formName) {
-    this.$refs[formName].resetFields();
   }
+
 }
 
 </script>

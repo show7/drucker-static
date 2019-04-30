@@ -9,7 +9,11 @@
                text-color="#fff"
                active-text-color="#7DBE00"
                router>
-        <el-menu-item index="/management/manage/userinfo">用户信息</el-menu-item>
+        <el-submenu index="1">
+          <template slot="title">用户信息</template>
+          <el-menu-item index="/management/manage/audioCourse">体验课</el-menu-item>
+          <el-menu-item index="/management/manage/userinfo">商学院</el-menu-item>
+        </el-submenu>
         <el-submenu index="2">
           <template slot="title">发送消息</template>
           <el-menu-item index="/management/manage/customermessage">客服消息</el-menu-item>
@@ -30,7 +34,7 @@
         <el-submenu index="6">
           <template slot="title">课程项目管理</template>
           <el-menu-item index="/management/manage/classScheduling">体验课排期</el-menu-item>
-          <el-menu-item index="/">体验课排班</el-menu-item>
+          <el-menu-item index="/management/manage/classSort">体验课排班</el-menu-item>
           <el-menu-item index="/management/manage/classadviser">项目添加班主任</el-menu-item>
           <el-menu-item index="/management/manage/classGroup">入群二维码管理</el-menu-item>
           <el-menu-item index="/management/manage/classadvisermanage">班主任管理</el-menu-item>
