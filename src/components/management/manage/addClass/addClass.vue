@@ -195,7 +195,8 @@ export default {
     const validate = (rule, value, callback) => {
       const { allClassNumbers } = this
       console.log(allClassNumbers, value)
-      if (!value) return callback('班级号不能为空')
+      if (typeof value !== 'number') return callback('班级号只能为数字')
+      if (!value) return callback('班级号不能为0')
       if (allClassNumbers.includes(value)) {
         callback('班级号已存在')
       } else {
@@ -226,7 +227,7 @@ export default {
         ]
       }],
       addClassTypeRules: {
-        classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }],
+        classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }, { type: 'number', message: '班级号为数字值' }],
         headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
         channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }

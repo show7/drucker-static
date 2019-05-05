@@ -184,6 +184,14 @@ import apiDataFilter from '../../../../libraries/apiDataFilter';
 export default {
   name: 'classScheduling',
   data () {
+    const termValidate = (rule, value, callback) => {
+      const validate = /^[1-9]\d*$/
+      if (validate.test(value)) {
+        callback()
+      } else {
+        callback('期数输入不合法')
+      }
+    }
     return {
       saveType: 0,
       selectItem: {},
@@ -191,10 +199,10 @@ export default {
       dialogFormVisible: false,
       addSchedulingRules: {
         item: { required: true, message: '请选择项目类型', trigger: 'change' },
-        term: { required: true, message: '请输入期数', trigger: 'change' },
+        term: [{ required: true, message: '请输入期数', trigger: 'change' }, { validator: termValidate, trigger: 'change' }],
         activeDate: { type: 'string', required: true, message: '请选择时间', trigger: 'change' },
         expiredDate: { type: 'string', required: true, message: '请选择时间', trigger: 'change' },
-        openDate: { type: 'string', required: true, message: '请选择时间', trigger: 'change' },
+        openDate: { type: 'string', required: true, message: '请选择时间', trigger: 'change' }
       },
       projectType: [],
       addScheduling: {
@@ -239,13 +247,12 @@ export default {
     setCloseDate () {
       const { openDate } = this.addScheduling
       const { problemScheduleSize } = this.addScheduling.item
-      console.log(openDate, problemScheduleSize)
       let startDate = new Date(openDate.replace(/-/g, '/'))
       var date = new Date(startDate.setDate(startDate.getDate() + problemScheduleSize));
-      this.addScheduling.closeDate = date.toLocaleDateString().replace(/\//g, '-');
-      console.log(date.toLocaleDateString().replace(/\//g, '-'))
+      this.addScheduling.closeDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     },
     addSchedulings () {
+      const { saveType } = this
       const { item, term, activeDate, expiredDate, id = '', openDate, closeDate } = this.addScheduling
       const { memberTypeId } = item
       const params = {
@@ -259,7 +266,7 @@ export default {
           console.log(res)
           if (res.code !== 200) return
           this.$message({
-            message: '修改成功',
+            message: saveType ? '修改成功' : '新建成功',
             type: 'success'
           });
           this.dialogFormVisible = false
