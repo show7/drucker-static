@@ -13,32 +13,40 @@ import './style/theme/index.css';
 import App from './App';
 import router from './router';
 import apiDataFilter from './libraries/apiDataFilter';
-import {initSentry} from './libraries/sentry';
+import {
+  initSentry
+} from './libraries/sentry';
 
 router.beforeEach((to, from, next) => {
-  // if (to.path != '/login') {
-  //   let param = {uri: to.path};
-  //   apiDataFilter.request({
-  //     apiPath: 'common.permission',
-  //     method: 'post',
-  //     data: param,
-  //     successCallback (res) {
-  //       if (res.msg) {
-  //         next();
-  //       } else {
-  //         if (from.name) {
-  //           alert('抱歉，当前页面无权访问');
-  //           next({path: from.path});
-  //         } else {
-  //           alert('抱歉，当前页面无权访问');
-  //           next({path: '/'});
-  //         }
-  //       }
-  //     }
-  //   });
-  // } else {
-  next();
-  // }
+  if (to.path != '/login') {
+    let param = {
+      uri: to.path
+    };
+    apiDataFilter.request({
+      apiPath: 'common.permission',
+      method: 'post',
+      data: param,
+      successCallback (res) {
+        if (res.msg) {
+          next();
+        } else {
+          if (from.name) {
+            alert('抱歉，当前页面无权访问');
+            next({
+              path: from.path
+            });
+          } else {
+            alert('抱歉，当前页面无权访问');
+            next({
+              path: '/'
+            });
+          }
+        }
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -58,6 +66,8 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
-  components: {App},
+  components: {
+    App
+  },
   template: '<App/>'
 });
