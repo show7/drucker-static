@@ -315,9 +315,9 @@ export default {
     },
     loadTeacher () {
       const [memberTypeId, term] = this.selectForm.projectPeriod
-      const { entryType } = this
+      const { entryType: enterType } = this
       const data = {
-        memberTypeId, term, entryType
+        memberTypeId, term, enterType
       }
       apiDataFilter.request({
         data,
