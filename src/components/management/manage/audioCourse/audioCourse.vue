@@ -47,7 +47,8 @@
                             prop="headTeacherId">
                 <el-select v-model="ruleForm.headTeacherId"
                            placeholder="班主任"
-                           :clearable="true">
+                           :clearable="true"
+                           filterable>
                   <el-option v-for="item in headmaster"
                              :key="item.id"
                              :label="item.headTeacherName"
