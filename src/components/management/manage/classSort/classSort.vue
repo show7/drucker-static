@@ -94,6 +94,7 @@
             <el-button @click="handleEdit(scope.row,scope.$index)"
                        size="mini">编辑</el-button>
             <el-button type="danger"
+                       :disabled="editdDisabled"
                        @click="handledelete(scope.row,scope.$index)"
                        size="mini">删除</el-button>
           </template>
