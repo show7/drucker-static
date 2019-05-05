@@ -348,9 +348,9 @@ export default {
 
     },
     loadTeacher () {
-      const { memberTypeId, term } = this
+      const { memberTypeId, term, entryType } = this
       const data = {
-        memberTypeId, term
+        memberTypeId, term, entryType
       }
       apiDataFilter.request({
         data,
