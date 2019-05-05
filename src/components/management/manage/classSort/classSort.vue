@@ -222,7 +222,10 @@ export default {
     return {
       selectForm: {
         projectPeriod: [],
-        selectClass: ''
+        selectClass: {
+          entryType: 0,
+          typeName: '扫码加班主任'
+        }
       },
       selectFormRule: {
         projectPeriod: { required: true, message: '请选择项目／日期', trigger: 'change' },
@@ -312,8 +315,9 @@ export default {
     },
     loadTeacher () {
       const [memberTypeId, term] = this.selectForm.projectPeriod
+      const { entryType } = this
       const data = {
-        memberTypeId, term
+        memberTypeId, term, entryType
       }
       apiDataFilter.request({
         data,
