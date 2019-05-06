@@ -94,7 +94,7 @@
             <el-button @click="handleEdit(scope.row,scope.$index)"
                        size="mini">编辑</el-button>
             <el-button type="danger"
-                       :disabled="editdDisabled"
+                       :disabled="scope.row.isOperable"
                        @click="handledelete(scope.row,scope.$index)"
                        size="mini">删除</el-button>
           </template>
@@ -338,7 +338,7 @@ export default {
         return false
       }
     },
-    loadPageList (page) {//筛选排班
+    loadPageList (page) { // 筛选班级
       const { projectPeriod, selectClass } = this.selectForm
       const [memberTypeId, term] = projectPeriod
       const { entryType } = selectClass
@@ -360,7 +360,7 @@ export default {
 
           const { list, page } = res.msg
           list.forEach(item => {
-            Object.assign(item, { classType: item.entryType ? '扫码入群' : '扫码加班主任' })
+            Object.assign(item, { isOperable: new Date() > new Date(item.termActiveDate.replace(/-/g, '/')), classType: item.entryType ? '扫码入群' : '扫码加班主任' })
           })
           const { page: currentPage, total } = page
           this.currentPage = currentPage
