@@ -55,12 +55,17 @@
           <el-menu-item index="/management/manage/activities">线下活动编辑</el-menu-item>
           <el-menu-item index="/management/manage/articles">圈圈文章编辑</el-menu-item>
         </el-submenu>
+        <el-submenu index="8">
+          <template slot="title">又更新了管理</template>
+          <el-menu-item index="/management/manage/publicCheck">公号推荐审核</el-menu-item>
+        </el-submenu>
         <el-menu-item index="/management/manage/application">商学院申请审批</el-menu-item>
         <el-menu-item index="/management/manage/qrcode">推广二维码</el-menu-item>
         <el-menu-item index="/management/manage/survey">问卷链接设置</el-menu-item>
         <el-menu-item index="/management/manage/changewechat">交换微信号</el-menu-item>
         <el-menu-item index="/management/manage/task">任务宝后台</el-menu-item>
         <el-menu-item index="/management/manage/classgrouping">班级分组</el-menu-item>
+
       </el-menu>
     </div>
 
