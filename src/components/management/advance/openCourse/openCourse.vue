@@ -24,7 +24,7 @@
           </el-date-picker>
         </el-col>
         <el-col :span="6">
-          <p>圈外Id,多人换行书写</p>
+          <p>用户信息</p>
           <el-input
             type="textarea"
             :rows="2"
