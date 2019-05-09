@@ -28,7 +28,7 @@
           <el-input
             type="textarea"
             :rows="2"
-            placeholder="请输入圈外Id,多人换行书写"
+            placeholder="请输入圈外Id或学号,多人换行书写"
             v-model="riseIds">
           </el-input>
         </el-col>
