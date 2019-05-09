@@ -38,6 +38,9 @@
         <el-checkbox v-model="sendWelcomeMsg">是否发送模板消息</el-checkbox>
       </el-col>
         <el-col :span="6">
+          <el-checkbox v-model="delImprovementPlan">强制关闭课程</el-checkbox>
+        </el-col>
+        <el-col :span="6">
           <el-button type="primary" @click="sendData">提交</el-button>
         </el-col>
       </el-row>
@@ -55,6 +58,7 @@ export default {
     return {
       problemId: null, //
       sendWelcomeMsg: false, //是否发送模板消息
+      delImprovementPlan: false, //是否是强制关闭课程
       startDate: '', //课程开始时间
       riseIds: '', //
       courseTitleList: []
@@ -67,7 +71,7 @@ export default {
         this.$message.info('请补充完整数据再提交');
         return
       }
-      let param = {riseIds: this.riseIds.split('\n'), problemId: this.problemId, startDate: this.startDate, sendWelcomeMsg: this.sendWelcomeMsg}
+      let param = {riseIds: this.riseIds.split('\n'), problemId: this.problemId, startDate: this.startDate, sendWelcomeMsg: this.sendWelcomeMsg, delImprovementPlan: this.delImprovementPlan}
       ApiDataFilter.request({
         apiPath: 'manage.openCourse.openCourseByriseIds',
         method: 'post',
