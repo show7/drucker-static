@@ -67,6 +67,11 @@ const classSort = () =>
   import('@/components/management/manage/classSort/classSort') // 体验课排班
 const addClass = () =>
   import('@/components/management/manage/addClass/addClass') // 体验课排班
+
+const publicCheck = () =>
+  import('@/components/management/manage/webWeChatPublic/publicCheck/publicCheck') // 体验课排班
+
+
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
   { path: 'audioCourse', name: 'audioCourse', component: audioCourse },
@@ -121,5 +126,10 @@ export default [
     path: 'addClass',
     name: 'addClass',
     component: addClass
+  },
+  {
+    path: 'publicCheck',
+    name: 'publicCheck',
+    component: publicCheck
   }
 ]
