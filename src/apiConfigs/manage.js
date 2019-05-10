@@ -167,5 +167,9 @@ export default {
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
     saveGroup: 'pc/drainage/class/group/save', //添加群二维码
     upClass: 'pc/drainage/class/update'
+  },
+  publicCheck: {
+    load: 'pc/wechat/load/recommend', //加载类型 manage.publicCheck.load
+    deal: 'pc/wechat/deal/recommend' //处理订阅号推荐 manage.publicCheck.deal
   }
 };
