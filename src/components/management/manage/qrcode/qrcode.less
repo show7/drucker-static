@@ -1,37 +1,36 @@
-
-@import "../../../../style/mixins.less";
-.qrcode{
+@import '../../../../style/mixins.less';
+.qrcode {
   padding: 20px;
-  h3{
+  h3 {
     margin-bottom: 10px;
   }
-  .qrcode-top{
+  .qrcode-top {
     .top-bac();
-    h4{
+    h4 {
       margin-bottom: 10px;
-      color: #50505A;
+      color: #50505a;
     }
-    .el-input{
+    .el-input {
       width: 70%;
     }
   }
-  .qrcode-content{
-    .single{
+  .qrcode-content {
+    .single {
       .top-bac();
-      .nickname-url{
-        p{
+      .nickname-url {
+        p {
           margin-bottom: 10px;
-          color: #50505A;
+          color: #50505a;
         }
-        .el-input{
+        .el-input {
           width: 70%;
           margin-bottom: 10px;
           position: relative;
-          &.required{
-            &:before{
+          &.required {
+            &:before {
               content: '*';
               position: absolute;
-              color: #F56C6C;
+              color: #f56c6c;
               left: -10px;
             }
           }
@@ -39,7 +38,7 @@
       }
     }
   }
-  .qrcode-pic{
+  .qrcode-pic {
     margin-top: 56px;
   }
 }

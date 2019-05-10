@@ -24,16 +24,23 @@
         </template>
         <el-col :span="8"
                 v-if="!!member">
-          <h4>课程选择</h4>
-          <el-select v-model="memberId"
-                     placeholder="请选择渠道"
-                     :clearable="true"
-                     @clear="clearCourse">
-            <el-option v-for="item in memberLabelList"
-                       :key="item.id"
-                       :label="item.labelName"
-                       :value="item.id"></el-option>
-          </el-select>
+          <h4>课程选择(必填)</h4>
+          <el-form :model="ruleForm"
+                   :rules="rules"
+                   ref="ruleForm">
+            <el-form-item prop="project">
+              <el-select v-model="ruleForm.project"
+                         placeholder="请选择渠道"
+                         :clearable="true"
+                         @clear="clearCourse"
+                         filterable>
+                <el-option v-for="item in memberLabelList"
+                           :key="item.id"
+                           :label="item.labelName"
+                           :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
         </el-col>
       </el-row>
       <br />
@@ -170,8 +177,15 @@ export default {
       defaultValue: '',
       parameters: [''],
       memberLabelList: [],
-      memberId: undefined,
-      member: undefined
+      member: undefined,
+      ruleForm: {
+        project: ''
+      },
+      rules: {
+        project: [
+          { required: true, message: '请选择项目', trigger: 'change' }
+        ]
+      }
     }
   },
   watch: {
@@ -192,10 +206,13 @@ export default {
         this.onChannelChange();
       }
     },
-    memberId (val) {
-      let selectArr = this.memberLabelList.filter(item => item.id === val);
-      if (selectArr.length > 0) {
-        this.handleChangeLabel(selectArr[0].label);
+    'ruleForm.project': {
+      deep: true,
+      handler: function (val) {
+        let selectArr = this.memberLabelList.filter(item => item.id === val);
+        if (selectArr.length > 0) {
+          this.handleChangeLabel(selectArr[0].label);
+        }
       }
     }
   },
@@ -246,7 +263,7 @@ export default {
     handleDel (index) {
       this.ruleList.splice(index, 1)
     },
-    checkData () {
+    canCheck () {
       if (!this.remark) {
         this.$message.error('请输入中文活动名称');
         return
@@ -266,6 +283,19 @@ export default {
           return
         }*/
       this.sendData();
+    },
+    checkData () {
+      if (this.$refs['ruleForm']) {
+        this.$refs['ruleForm'].validate((valid) => {
+          if (valid) {
+            this.canCheck()
+          } else {
+            return false;
+          }
+        });
+      } else {
+        this.canCheck()
+      }
     },
     sendData () {
       let self = this;
