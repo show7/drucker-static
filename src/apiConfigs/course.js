@@ -6,10 +6,10 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default {
   'courseIntroduction': { //课程介绍
-    'catalog': 'pc/operation/problem/catalog/load', // 获取小课主及次类别
+    'catalog': 'pc/operation/problem/catalog/load', // 获取课程主及次类别
     'sendData': 'pc/asst/problem/load', // 发送选择的标题名称
     'uploadAudio': 'pc/upload/audio/revise', //上传和修改语音文案接口
-    'save': 'pc/operation/problem/save' //更新小课导入数据
+    'save': 'pc/operation/problem/save' //更新课程导入数据
   },
   'courseThinking': {
     'load': 'pc/operation/preview/load',//课前思考列表

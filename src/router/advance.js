@@ -22,14 +22,19 @@ import (
 const openCourse = () =>
 import (
   /* webpackChunkName: "manage" */ '@/components/management/advance/openCourse/openCourse'
+); //赠送课程
+const importCourse = () =>
+import (
+  /* webpackChunkName: "manage" */ '@/components/management/advance/importCourse/importCourse'
 ); //新开/解锁课程
 export default [
   { path: 'refund', name: 'refund', component: refund },
   { path: 'employee', name: 'employee', component: employee},
   { path: 'templatemessage', name: 'templateMessage', component: templateMessage},
   { path: 'coin', name: 'coin', component: coin},
-  { path: 'couponClear', name: 'couponClear', component: couponClear},
+  { path: 'couponclear', name: 'couponClear', component: couponClear},
   { path: 'coupon', name: 'coupon', component: coupon},
   { path: 'addvip', name: 'addvip', component: addvip},
   { path: 'opencourse', name: 'openCourse', component: openCourse},
+  { path: 'importcourse', name: 'importCourse', component: importCourse},
 ]

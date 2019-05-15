@@ -55,8 +55,8 @@
            <el-input type="text" placeholder="学组号" v-model="groupNo"></el-input>
          </el-col>
          <el-col :span="6">
-           <h4>选择小课</h4>
-           <el-select v-model="courseTitleValue" placeholder="请选择小课">
+           <h4>选择课程</h4>
+           <el-select v-model="courseTitleValue" placeholder="请选择课程">
              <el-option
                v-for="item in courseTitleList"
                :key="item.id"
@@ -67,7 +67,7 @@
          </el-col>
          <el-col :span="6">
            <h4>选择学员查找方式</h4>
-           <el-select v-model="profileSearchTypeId" placeholder="请选择小课">
+           <el-select v-model="profileSearchTypeId" placeholder="请选择课程">
              <el-option
                v-for="item in ProfileSearchType"
                :key="item.id"
@@ -164,7 +164,7 @@ export default {
   },
 
   methods: {
-    // 获取小课名称列表
+    // 获取课程名称列表
     getData () {
       ApiDataFilter.request({
         apiPath: 'common.simple',

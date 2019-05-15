@@ -1,11 +1,11 @@
 <template>
   <div class="course-introduce">
-    <h2>小课导入</h2>
+    <h2>课程导入</h2>
     <el-row class="content-box">
       <el-col :span="6">
         <div class="box">
-          <p>小课标题</p>
-          <el-select v-model="courseTitleValueId" @change="sendData(courseTitleValueId)" placeholder="请选择小课标题">
+          <p>课程标题</p>
+          <el-select v-model="courseTitleValueId" @change="sendData(courseTitleValueId)" placeholder="请选择课程标题">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -17,9 +17,9 @@
       </el-col>
       <el-col :span="6">
         <div class="box">
-          <p>小课副标题</p>
+          <p>课程副标题</p>
           <el-input
-            placeholder="请输入小课副标题"
+            placeholder="请输入课程副标题"
             v-model="problem"
             clearable>
           </el-input>
@@ -27,8 +27,8 @@
       </el-col>
       <el-col :span="6">
         <div class="box">
-          <p>小课主类别</p>
-          <el-select v-model="catalogsValue" placeholder="请选择小课主类别">
+          <p>课程主类别</p>
+          <el-select v-model="catalogsValue" placeholder="请选择课程主类别">
             <el-option
               v-for="item in catalogMain.catalogs"
               :key="item.id"
@@ -40,8 +40,8 @@
       </el-col>
       <el-col :span="6">
         <div class="box">
-          <p>小课次级类别</p>
-          <el-select v-model="subCatalogsValue" placeholder="请选择小课次级类别">
+          <p>课程次级类别</p>
+          <el-select v-model="subCatalogsValue" placeholder="请选择课程次级类别">
             <el-option
               v-for="item in catalogMain.subCatalogs"
               :key="item.id"
@@ -259,14 +259,14 @@ export default {
   components: {Editor:editor},
   data () {
     return {
-      courseTitleList: [], // 小课标题list
-      courseTitleValueId: '', // 选择小课标题之后的id
-      abbreviation: '', //小课标题
-      courseChangeData: {}, // 选择小课之后的返回的数据
-      catalogMain: {}, // 小课类别
-      catalogsValue: '', //小课主类别value
-      subCatalogsValue: '', //小课次类别value
-      problem: '', // 小课缩略名
+      courseTitleList: [], // 课程标题list
+      courseTitleValueId: '', // 选择课程标题之后的id
+      abbreviation: '', //课程标题
+      courseChangeData: {}, // 选择课程之后的返回的数据
+      catalogMain: {}, // 课程类别
+      catalogsValue: '', //课程主类别value
+      subCatalogsValue: '', //课程次类别value
+      problem: '', // 课程缩略名
       who: '', // 适用人群
       oneEditorValue: '', //课程介绍
       twoEditorValue: '', // 知识体系
@@ -301,14 +301,14 @@ export default {
   methods: {
     getData () {
       let self = this;
-      // 获取小课名称列表
+      // 获取课程名称列表
       ApiDataFilter.request({
         apiPath: 'common.simple',
         successCallback (res) {
           self.courseTitleList = res.msg
         }
       });
-      // 获取小课主次类别
+      // 获取课程主次类别
       ApiDataFilter.request({
         apiPath: 'course.courseIntroduction.catalog',
         successCallback (res) {
@@ -316,7 +316,7 @@ export default {
         }
       });
     },
-    /* 发送选择小课名称接口*/
+    /* 发送选择课程名称接口*/
     sendData (value) {
       let self = this;
       this.authorPic = [];

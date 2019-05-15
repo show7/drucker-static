@@ -5,7 +5,7 @@
       <el-row>
         <el-col :span="12">
           <h4>课程</h4>
-          <el-select v-model="searchCourseTitleValueId" filterable placeholder="请选择小课标题" @change="handleChangeSelect">
+          <el-select v-model="searchCourseTitleValueId" filterable placeholder="请选择课程标题" @change="handleChangeSelect">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -76,7 +76,7 @@
         <el-row>
           <el-col :span="12">
             <h4>课程</h4>
-            <el-select v-model="courseTitleValueId" filterable :disabled="disabledFlag" placeholder="请选择小课标题">
+            <el-select v-model="courseTitleValueId" filterable :disabled="disabledFlag" placeholder="请选择课程标题">
               <el-option
                 v-for="item in courseTitleList"
                 :key="item.id"
@@ -172,7 +172,7 @@
       }
     },
     methods: {
-      // 获取小课名称列表
+      // 获取课程名称列表
       getData() {
         ApiDataFilter.request({
           apiPath: 'common.simple',

@@ -5,8 +5,8 @@
 3. 作者：liyang@iquanwai.com
 4. 备注：
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-const courseIntroduce = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseIntroduce/courseIntroduce') //小课导入
-const courseKnowledge = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseKnowledge/courseKnowledge') //小课知识导入
+const courseIntroduce = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseIntroduce/courseIntroduce') //课程导入
+const courseKnowledge = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseKnowledge/courseKnowledge') //课程知识导入
 const courseThinking = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseThinking/courseThinking') // 课前思考导入
 const courseExtended = () => import(/* webpackChunkName: "course" */ '@/components/management/course/courseExtended/courseExtended') // 拓展学习
 const exerciseChoice = () => import(/* webpackChunkName: "course" */ '@/components/management/course/exerciseChoice/exerciseChoice') // 选择题管理

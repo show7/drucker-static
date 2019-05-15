@@ -16,7 +16,7 @@ export default {
   },
   'suffix': { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
     'common': { // 公共接口
-      'simple': 'pc/asst/problem/simple' ,// 获取小课标题
+      'simple': 'pc/asst/problem/simple' ,// 获取课程标题
       'permission':'pc/permission/check',//权限
       'auth':'wx/oauth/pc/auth',//登录
       'info':'rise/customer/info'

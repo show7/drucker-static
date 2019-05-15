@@ -11,9 +11,9 @@
           text-color="#fff"
           active-text-color="#7DBE00"
           router>
-          <el-menu-item index="/management/course/courseintroduce">小课导入</el-menu-item>
+          <el-menu-item index="/management/course/courseintroduce">课程导入</el-menu-item>
           <el-menu-item index="/management/course/coursethinking">课前思考导入</el-menu-item>
-          <el-menu-item index="/management/course/courseknowledge">小课知识导入</el-menu-item>
+          <el-menu-item index="/management/course/courseknowledge">课程知识导入</el-menu-item>
           <el-menu-item index="/management/course/exercisechoice">选择题管理</el-menu-item>
           <el-menu-item index="/management/course/exerciseapplication">应用题管理</el-menu-item>
           <el-menu-item index="/management/course/courseextended">拓展学习</el-menu-item>

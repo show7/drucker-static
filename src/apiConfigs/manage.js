@@ -14,7 +14,7 @@ export default {
     generateCertificate: 'rise/operation/backend/generate/certificate', // 证书正在生成中
     sendCertificate: 'rise/operation/backend/send/certificate', //证书正在发送中
     learnList: 'pc/operation/memberType/load/list', // 学习项目列表
-    templateList: 'pc/operation/memberType/load/masterplate'
+    templateList: 'pc/operation/memberType/load/masterplate' // 获取证书列表
   },
   templates: {
     //模板消息
@@ -28,7 +28,11 @@ export default {
   },
   openCourse: {
     //新课/解锁课程
-    openCourseByriseIds: 'rise/operation/backend/open/course/riseId' //新课/解锁课程提交
+    openCourseByRiseIds: 'rise/operation/backend/open/course/riseId' //新课/解锁课程提交
+  },
+  addCourse: {
+    //添加课表
+    addCourseByRiseIds: 'pc/operation/add/course' //添加课表提交
   },
   application: {
     //申请审批
