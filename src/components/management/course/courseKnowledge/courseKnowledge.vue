@@ -1,11 +1,11 @@
 <template>
   <div class="course-knowledge-container">
-    <h3>小课知识导入</h3>
+    <h3>课程知识导入</h3>
     <div class="course-knowledge-top">
       <el-row>
         <el-col :span="12">
           <h4>课程</h4>
-          <el-select v-model="searchCourseTitleValueId" placeholder="请选择小课标题" @change="getList">
+          <el-select v-model="searchCourseTitleValueId" placeholder="请选择课程标题" @change="getList">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -272,7 +272,7 @@ export default {
     }
   },
   methods: {
-    //获取小课名称列表
+    //获取课程名称列表
     getData () {
       ApiDataFilter.request({
         apiPath: 'common.simple',

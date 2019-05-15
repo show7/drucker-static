@@ -4,8 +4,8 @@
     <div class="course-top">
       <el-row>
         <el-col :span="6">
-          <p>选择小课</p>
-          <el-select v-model="problemId" placeholder="请选择小课">
+          <p>选择课程</p>
+          <el-select v-model="problemId" placeholder="请选择课程">
             <el-option
               v-for="item in courseTitleList"
               :key="item.id"
@@ -81,7 +81,7 @@ export default {
         }
       })
     },
-    /* 获取小课名称列表*/
+    /* 获取课程名称列表*/
     getList () {
       let self = this;
       ApiDataFilter.request({

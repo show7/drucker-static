@@ -62,7 +62,7 @@
       :close-on-click-modal="false"
       width="60%">
       <div class="pop-out">
-        <h4>小课内容：</h4>
+        <h4>课程内容：</h4>
         <el-row>
           <el-col :span="12">
             <div class="grid-content">升降级倒计时天数：
@@ -70,7 +70,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div class="grid-content">小课学习（累积）:
+            <div class="grid-content">课程学习（累积）:
               <el-input v-model="detailData.learnedProblem" placeholder=""></el-input>
             </div>
           </el-col>

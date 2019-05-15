@@ -149,7 +149,7 @@
       }
     },
     methods: {
-      // 获取小课名称列表
+      // 获取课程名称列表
       getData () {
         let self = this;
         ApiDataFilter.request({

@@ -87,7 +87,7 @@
       :close-on-click-modal="false"
       width="60%">
       <div class="pop-out">
-        <h4>小课内容：</h4>
+        <h4>课程内容：</h4>
         <el-row>
           <el-col :span="12">
             <div class="grid-content">新增点评数： <el-input :disabled="disabled" v-model="detailData.reviewedNumber" placeholder=""></el-input></div>
