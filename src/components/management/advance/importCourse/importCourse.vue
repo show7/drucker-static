@@ -26,12 +26,12 @@
           </el-select>
         </el-col>
         <el-col :span="6">
-          <p>课程开始时间</p>
+          <p>项目开始时间</p>
           <el-date-picker
             v-model="startDate"
             type="date"
             default-value
-            placeholder="选择项目开始月份">
+            placeholder="选择项目开始时间">
           </el-date-picker>
         </el-col>
       </el-row>
@@ -63,14 +63,12 @@ export default {
   name: 'openCourse',
   data () {
     return {
-      problemId: null, //
-      sendWelcomeMsg: false, //是否发送模板消息
-      delImprovementPlan: false, //是否是强制关闭课程
+      problemId: null, // 课程id
       startDate: '', //课程开始时间
       riseIds: '', //圈外id
       courseTitleList: [], //课程标题列表
       memberTypeIdList : [], //会员类型列表
-      memberTypeId : 0, //会员类型
+      memberTypeId : null, //会员类型
     }
   },
   methods: {
@@ -85,7 +83,7 @@ export default {
     },
     sendData () {
       let self = this;
-      if (!this.problemId || !this.riseIds || !this.memberTypeId) {
+      if (!this.problemId || !this.riseIds || !this.memberTypeId || !this.startDate) {
         this.$message.info('请补充完整数据再提交');
         return
       }

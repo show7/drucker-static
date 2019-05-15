@@ -73,7 +73,7 @@ export default {
       }
       let param = {riseIds: this.riseIds.split('\n'), problemId: this.problemId, startDate: this.startDate, sendWelcomeMsg: this.sendWelcomeMsg, delImprovementPlan: this.delImprovementPlan}
       ApiDataFilter.request({
-        apiPath: 'manage.openCourse.openCourseByriseIds',
+        apiPath: 'manage.openCourse.openCourseByRiseIds',
         method: 'post',
         data: param,
         successCallback (res) {
