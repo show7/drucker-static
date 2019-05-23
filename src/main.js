@@ -16,7 +16,7 @@ import apiDataFilter from './libraries/apiDataFilter';
 import {
   initSentry
 } from './libraries/sentry';
-
+// require('@/mock');
 router.beforeEach((to, from, next) => {
   if (to.path != '/login') {
     let param = {

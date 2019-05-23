@@ -1,5 +1,3 @@
 // require('./localconfig')
 
-export const getMock = () => {
-  return window.MockId
-}
+export const getMock = () => 'i3nf65v'
