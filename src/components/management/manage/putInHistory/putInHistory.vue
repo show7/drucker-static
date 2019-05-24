@@ -16,13 +16,13 @@
       <el-form :model="historyForm"
                :inline="true"
                status-icon
-               :rules="historyRules"
                ref="historyForm">
         <el-row>
           <el-col :span="12">
             <el-form-item label="投放课程"
                           prop="memberLabelId">
               <el-select v-model="historyForm.memberLabelId"
+                         clearable
                          placeholder="请选择">
                 <el-option v-for="item in memberLabels"
                            :key="item.id"
@@ -50,13 +50,14 @@
             <el-form-item label="公众号搜索"
                           prop="kolAccountName">
               <el-input v-model="historyForm.kolAccountName"
+                        clearable
                         placeholder="请输入公众号名字"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item>
               <el-button type="primary"
-                         @click="submitQuery('historyForm')">查询</el-button>
+                         @click="submitQuery()">查询</el-button>
               <el-button type="primary"
                          plain
                          @click="addCode()">新增渠道二维码</el-button>
@@ -70,16 +71,14 @@
                 align="center"
                 style="width: 100%">
         <el-table-column label="投放课程"
-                         align="center"
                          fixed
-                         width="170">
+                         align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.memberLabelIdStr }}</span>
           </template>
         </el-table-column>
         <el-table-column label="投放公众号"
-                         align="center"
-                         width="100">
+                         align="center">
           <template slot-scope="scope">
             <el-popover trigger="hover"
                         placement="top">
@@ -93,24 +92,25 @@
           </template>
         </el-table-column>
         <el-table-column label="渠道码"
-                         align="center"
-                         width="80">
+                         align="center">
           <template slot-scope="scope">
             <el-popover trigger="hover"
                         placement="top">
               <p>渠道码: {{ scope.row.channelSource }}</p>
               <div slot="reference"
                    class="name-wrapper">
+
                 <el-tag class="channel-source"
+                        data-clipboard-action="copy"
+                        :data-clipboard-text="scope.row.channelSource"
+                        @click.native="copyChannel"
                         size="medium">{{ scope.row.channelSource }}</el-tag>
               </div>
             </el-popover>
-
           </template>
         </el-table-column>
         <el-table-column label="投放时间"
-                         align="center"
-                         width="180">
+                         align="center">
           <template slot-scope="scope">
             <div>预计:<br><i class="el-icon-time"></i><span class="green-tip">{{ scope.row.publishTime }}</span> </div>
             <div>首次到客:<br><i class="el-icon-time"></i> <span class="green-tip">{{ scope.row.firstComeTime }}</span></div>
@@ -118,16 +118,14 @@
           </template>
         </el-table-column>
         <el-table-column label="到客情况"
-                         align="center"
-                         width="180">
+                         align="center">
           <template slot-scope="scope">
-            <div>预计: {{ scope.row.predictAmount }}</div>
-            <div>实际人数: {{ scope.row.comeMembers }}</div>
+            <div>预计扫码人数: {{ scope.row.predictAmount }}</div>
+            <div>实际扫码人数: {{ scope.row.comeMembers }}</div>
           </template>
         </el-table-column>
         <el-table-column label="流量分布"
-                         align="center"
-                         width="150">
+                         align="center">
           <template slot-scope="scope">
             <el-link style="color:#7DBE00;cursor:pointer"
                      @click="viewTeacherList(scope.row.flowTeachers,scope.row.kolAccountTypeStr)">查看班主任列表<i class="el-icon-view el-icon--right"></i> </el-link>
@@ -135,8 +133,7 @@
         </el-table-column>
         <el-table-column label="操作"
                          align="center"
-                         fixed="right"
-                         width="100">
+                         fixed="right">
           <template slot-scope="scope">
             <el-button size="mini"
                        :disabled="!scope.row.isEdit"
@@ -251,6 +248,7 @@
         <el-form-item label="投放课程"
                       prop="memberLabelId">
           <el-select v-model="addCodeForm.memberLabelId"
+                     clearable
                      class="input-width"
                      :disabled="!editStatus"
                      placeholder="请选择">
@@ -290,7 +288,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="获客观公众号"
+        <el-form-item label="获客公众号"
                       prop="weChatServiceId">
           <el-select v-model="addCodeForm.weChatServiceId"
                      class="input-width"
@@ -311,7 +309,7 @@
                           placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="预估人数"
+        <el-form-item label="预计扫码人数"
                       prop="predictAmount">
           <el-input class="input-width"
                     v-model="addCodeForm.predictAmount"></el-input>
@@ -331,6 +329,7 @@
 
 <script>
 import ApiDataFilter from '@/libraries/apiDataFilter';
+import ClipboardJS from 'clipboard'
 export default {
   name: 'put-in-history',
   data () {
@@ -340,11 +339,11 @@ export default {
         publishTime: [],
         kolAccountName: ''
       },
-      historyRules: {
-        memberLabelId: { required: true, message: '请选择投放课程', trigger: 'change' },
-        publishTime: { required: true, message: '请选择投放时间', trigger: 'change' },
-        kolAccountName: { required: true, message: '请输入公众号', trigger: 'change' }
-      },
+      // historyRules: {
+      //   memberLabelId: { required: true, message: '请选择投放课程', trigger: 'change' },
+      //   publishTime: { required: true, message: '请选择投放时间', trigger: 'change' },
+      //   kolAccountName: { required: true, message: '请输入公众号', trigger: 'change' }
+      // },
       addCodeForm: {
         channelLabelId: '',
         memberLabelId: '',//投放课程
@@ -384,9 +383,9 @@ export default {
       memberLabels: [], //课程类型
       weChatServiceTypes: [],
       pageInfo: {
-        page: '',
-        pageSize: '',
-        total: ''
+        page: 1,
+        pageSize: 20,
+        total: 0
       },
       tableData: [
         // {
@@ -417,7 +416,8 @@ export default {
       flowTeachers: {},
       kolAccountTypeStr: '',
       channelAnalysis: '',
-      id: ''
+      id: '',
+      ClipboardJS: ''
     }
 
   },
@@ -437,13 +437,9 @@ export default {
     });
   },
   methods: {
-    submitQuery (formName) {
+    submitQuery () {
       this.loadCurrentChange()
-      this.$refs[formName].validate((valid) => {
-        if (!valid) return
-        console.log('formName')
-        this.loadCurrentChange()
-      })
+
     },
     submitGenerate (formName) {// 生成二维码
       this.$refs[formName].validate((valid) => {
@@ -500,6 +496,7 @@ export default {
     },
     createContinue () {
       this.innerVisible = false
+      this.editStatus = 1
       this.$refs['addCodeForm'].resetFields()
     },
     addCode () { //新增渠道二维码
@@ -579,6 +576,34 @@ export default {
           this.tableData = list
         }
       })
+    },
+    copyChannel (e) {
+
+      this.clipboard = new ClipboardJS(e.target)
+      this.$nextTick(function () {
+        this.clipboard.on('success', (e) => {
+          this.$message({
+            message: '复制成功',
+            type: 'success'
+          });
+          console.log('success')
+          this.clipboard.destroy()
+        })
+        this.clipboard.on('error', (e) => {
+          console.log('error')
+          this.$message({
+            message: '复制失败',
+            type: 'error'
+          });
+          this.clipboard.destroy()
+        })
+      })
+
+      // obj.value = e.target.textContent
+      // console.log(obj)
+      // obj.select()
+      // document.execCommand('Copy')
+      // console.log('复制完成')
     },
     handleDelete (channelLabelId) {//删除
       this.$confirm('此操作将永久删除本条记录, 是否继续?', '温馨提示', {
