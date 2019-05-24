@@ -57,10 +57,10 @@
           <el-col :span="12">
             <el-form-item>
               <el-button type="primary"
-                         @click="submitQuery()">查询</el-button>
+                         @click="submitQuery">查询</el-button>
               <el-button type="primary"
                          plain
-                         @click="addCode()">新增渠道二维码</el-button>
+                         @click="addCode">新增渠道二维码</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -262,6 +262,7 @@
         <el-form-item label="公众号类型"
                       prop="kolAccountType">
           <el-select v-model="addCodeForm.kolAccountType"
+                     clearable
                      class="input-width"
                      placeholder="请选择">
             <el-option v-for="item in kolAccountTypes"
@@ -274,11 +275,13 @@
         <el-form-item label="投放公众号"
                       prop="kolAccountName">
           <el-input class="input-width"
+                    clearable
                     v-model="addCodeForm.kolAccountName"></el-input>
         </el-form-item>
         <el-form-item label="投放文案"
                       prop="advertType">
           <el-select v-model="addCodeForm.advertType"
+                     clearable
                      class="input-width"
                      placeholder="请选择">
             <el-option v-for="item in advertTypes"
@@ -291,6 +294,7 @@
         <el-form-item label="获客公众号"
                       prop="weChatServiceId">
           <el-select v-model="addCodeForm.weChatServiceId"
+                     clearable
                      class="input-width"
                      placeholder="请选择">
             <el-option v-for="item in weChatServiceTypes"
@@ -312,6 +316,7 @@
         <el-form-item label="预计扫码人数"
                       prop="predictAmount">
           <el-input class="input-width"
+                    clearable
                     v-model="addCodeForm.predictAmount"></el-input>
         </el-form-item>
         <el-form-item style="display:none"
@@ -501,6 +506,8 @@ export default {
     },
     addCode () { //新增渠道二维码
       console.log('add')
+      console.log(!this.editStatus)
+      this.addCodeForm = {}
       !this.editStatus && this.$refs['addCodeForm'].resetFields()
       this.outerVisible = true
       this.editStatus = true
