@@ -70,7 +70,8 @@ const addClass = () =>
 
 const publicCheck = () =>
   import('@/components/management/manage/webWeChatPublic/publicCheck/publicCheck') // 体验课排班
-
+  //投放历史
+const putInHistory = ()=>import('@/components/management/manage/putInHistory/putInHistory')
 
 export default [
   { path: 'userinfo', name: 'userInfo', component: userInfo },
@@ -131,5 +132,9 @@ export default [
     path: 'publicCheck',
     name: 'publicCheck',
     component: publicCheck
+  },{
+    path: 'putInHistory',
+    name: 'putInHistory',
+    component: putInHistory
   }
 ]
