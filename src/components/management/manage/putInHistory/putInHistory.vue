@@ -501,6 +501,7 @@ export default {
     },
     createContinue () {
       this.innerVisible = false
+      this.editStatus = false
       this.addCode()
     },
     addCode () { //新增渠道二维码
