@@ -501,8 +501,7 @@ export default {
     },
     createContinue () {
       this.innerVisible = false
-      this.editStatus = 1
-      this.$refs['addCodeForm'].resetFields()
+      this.addCode()
     },
     addCode () { //新增渠道二维码
       console.log('add')
