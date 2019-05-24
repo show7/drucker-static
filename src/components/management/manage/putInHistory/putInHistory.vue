@@ -110,18 +110,18 @@
           </template>
         </el-table-column>
         <el-table-column label="投放时间"
-                         align="center">
+                         align="left"
+                         width="250">
           <template slot-scope="scope">
-            <div>预计:<br><i class="el-icon-time"></i><span class="green-tip">{{ scope.row.publishTime }}</span> </div>
-            <div>首次到客:<br><i class="el-icon-time"></i> <span class="green-tip">{{ scope.row.firstComeTime }}</span></div>
-            <div>最新到客:<br><i class="el-icon-time"></i> <span class="green-tip">{{ scope.row.lastComeTime }}</span></div>
+            <div>预计投放:<i class="el-icon-time"></i><span class="green-tip">{{ scope.row.publishTime }}</span> </div>
+            <div>首次到客:<i class="el-icon-time"></i> <span class="green-tip">{{ scope.row.firstComeTime }}</span></div>
+            <div>最新到客:<i class="el-icon-time"></i> <span class="green-tip">{{ scope.row.lastComeTime }}</span></div>
           </template>
         </el-table-column>
-        <el-table-column label="到客情况"
-                         align="center">
+        <el-table-column label="到客情况">
           <template slot-scope="scope">
-            <div>预计扫码人数: {{ scope.row.predictAmount }}</div>
-            <div>实际扫码人数: {{ scope.row.comeMembers }}</div>
+            <div>预计到客人数: {{ scope.row.predictAmount }}</div>
+            <div>实际到客人数: {{ scope.row.comeMembers }}</div>
           </template>
         </el-table-column>
         <el-table-column label="流量分布"
@@ -166,12 +166,12 @@
     <!-- 查看班主任 -->
     <el-dialog :title="`${kolAccountTypeStr}投放流量分布`"
                :visible.sync="viewTeacher"
-               width="50%"
+               width="60%"
                :before-close="viewTeacher">
       <el-table :data="flowTeachers">
         <el-table-column property="teacherName"
                          label="班主任"
-                         width="180"></el-table-column>
+                         width="250"></el-table-column>
         <el-table-column property="comeTimeRange"
                          label="到客周期"
                          width="350"></el-table-column>
@@ -313,7 +313,7 @@
                           placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="预计扫码人数"
+        <el-form-item label="预计到客人数"
                       prop="predictAmount">
           <el-input class="input-width"
                     clearable
