@@ -65,69 +65,72 @@
                  :visible.sync="dialogVisible"
                  :close-on-click-modal="false"
                  width="30%">
-        <div class="popout">
-          <el-row>
-            <el-col :span="6">
-              真实姓名
-            </el-col>
-            <el-col :span="18">
-              <el-input v-model="nickName"
-                        placeholder="请输入真实姓名"></el-input>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              手机
-            </el-col>
-            <el-col :span="18">
-              <el-input v-model="phone"
-                        placeholder="请输入手机"></el-input>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              部门
-            </el-col>
-            <el-col :span="18">
-              <el-select v-model="itemData.department"
-                         placeholder="请选择公众号"
-                         clearable
-                         filterable>
-                <el-option v-for="item in department"
-                           :key="item.id"
-                           :label="item.name"
-                           :value="item.id">
-                </el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              职位
-            </el-col>
-            <el-col :span="18">
-              <el-select v-model="itemData.position"
-                         placeholder="请选择公众号"
-                         clearable
-                         filterable>
-                <el-option v-for="item in position"
-                           :key="item.id"
-                           :label="item.name"
-                           :value="item.id">
-                </el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              组长
-            </el-col>
-            <el-col :span="18">
-              <el-input v-model="leader"
-                        placeholder="请输入组长"></el-input>
-            </el-col>
-          </el-row>
-        </div>
+        <el-form :model="itemData"
+                 :rules="rules">
+          <div class="popout">
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="真实姓名"
+                              prop="nickName">
+                  <el-input v-model="itemData.nickName"
+                            placeholder="请输入真实姓名"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                手机
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="itemData.phone"
+                          placeholder="请输入手机"></el-input>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                部门
+              </el-col>
+              <el-col :span="18">
+                <el-select v-model="itemData.department"
+                           placeholder="请选择公众号"
+                           clearable
+                           filterable>
+                  <el-option v-for="item in department"
+                             :key="item.name"
+                             :label="item.name"
+                             :value="item.name">
+                  </el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                职位
+              </el-col>
+              <el-col :span="18">
+                <el-select v-model="itemData.position"
+                           placeholder="请选择公众号"
+                           clearable
+                           filterable>
+                  <el-option v-for="item in position"
+                             :key="item.name"
+                             :label="item.name"
+                             :value="item.name">
+                  </el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                组长
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="leader"
+                          placeholder="请输入组长"></el-input>
+              </el-col>
+            </el-row>
+          </div>
+        </el-form>
         <span slot="footer"
               class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -163,8 +166,16 @@
               部门
             </el-col>
             <el-col :span="18">
-              <el-input v-model="itemData.department"
-                        placeholder="请输入部门"></el-input>
+              <el-select v-model="itemData.department"
+                         placeholder="请选择公众号"
+                         clearable
+                         filterable>
+                <el-option v-for="item in department"
+                           :key="item.name"
+                           :label="item.name"
+                           :value="item.name">
+                </el-option>
+              </el-select>
             </el-col>
           </el-row>
           <el-row>
@@ -172,21 +183,34 @@
               职位
             </el-col>
             <el-col :span="18">
-              <el-input v-model="itemData.position"
-                        placeholder="请输入职位"></el-input>
+              <el-select v-model="itemData.position"
+                         placeholder="请选择公众号"
+                         clearable
+                         filterable>
+                <el-option v-for="item in position"
+                           :key="item.name"
+                           :label="item.name"
+                           :value="item.name">
+                </el-option>
+              </el-select>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="6">
               组长
             </el-col>
-            <el-select v-model="editLeader"
+            <el-select v-model="itemData.leader"
                        placeholder="请选择组长"
-                       @change="handleSelect">
-              <el-option v-for="item in itemData.leader"
-                         :key="item.id"
+                       @change="handleSelect"
+                       clearable
+                       filterable
+                       remote
+                       reserve-keyword
+                       :remote-method="getLeader">
+              <el-option v-for="item in leader"
+                         :key="item.name"
                          :label="item.name"
-                         :value="item.serviceId">
+                         :value="item.name">
               </el-option>
             </el-select>
           </el-row>
@@ -220,26 +244,44 @@ export default {
       phone: '',
       department: [],
       position: [],
-      leader: '',
+      leader: [],
       editLeader: '',
       itemData: {
         nickName: '',
         phone: '',
         department: '',
         position: '',
-        leader: []
+        leader: ''
+      },
+      rules: {
+        nickName: [
+          { required: true, message: '请选择项目', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请选择期数', trigger: 'change' }
+        ],
+        department: [
+          { required: true, message: '请选择班主任', trigger: 'change' }
+        ],
+        position: [
+          { required: true, message: '请选择班号', trigger: 'change' }
+        ],
+        leader: [
+          { required: true, message: '请选择班号', trigger: 'change' }
+        ]
       }
     }
   },
   methods: {
-    mapArr (arr, setArr, str, listId, val) {
-      arr.map((item, index) => {
-        if (item[listId] === val) {
-          item[str].map((res, i) => {
-            this.$set(setArr, i, res)
-          })
+    mapArr (val) {
+      this.department.map((item, index) => {
+        if (item.name === val) {
+          this.position = item.positions
         }
       })
+      if (this.position.length === 0) {
+        this.itemData.position = ''
+      }
     },
     handleSelect (item) {
       console.log(item)
@@ -265,6 +307,18 @@ export default {
         }
       })
     },
+    getLeader (query) {
+      let queryString = query || ''
+      const name = { name: queryString }
+      apiDataFilter.request({
+        apiPath: 'advance.employee.leader',
+        data: name,
+        successCallback: (res) => {
+          let result = res.msg;
+          this.leader = result
+        }
+      })
+    },
     delEmployee () {
       let param = { id: this.id };
       apiDataFilter.request({
@@ -280,7 +334,7 @@ export default {
     handleEdit (index, row) {
       this.itemData = Object.assign(this.itemData, row)
       this.editVisible = true
-      this.get()
+      this.getLeader(this.itemData.leader)
     },
     handleDevice () {
 
@@ -325,6 +379,13 @@ export default {
       this.dialogVisible = true;
       this.riseId = '';
       this.nickName = '';
+      this.itemData = {
+        nickName: '',
+        phone: '',
+        department: '',
+        position: '',
+        leader: ''
+      }
     },
     handleSearch () {
       let param = { page: this.pageIndex, riseId: this.riseId };
@@ -341,13 +402,13 @@ export default {
   },
   created () {
     this.getList()
+    this.get()
   },
   watch: {
     'itemData.department': {
       deep: true,
       handler: function (val) {
-        this.periods = []
-        this.mapArr(this.department, this.position, 'positions', 'id', val)
+        this.mapArr(val)
       }
     }
   }
