@@ -78,55 +78,67 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                手机
-              </el-col>
               <el-col :span="18">
-                <el-input v-model="itemData.phone"
-                          placeholder="请输入手机"></el-input>
+                <el-form-item label="手机"
+                              prop="phone">
+                  <el-input v-model="itemData.phone"
+                            placeholder="请输入手机"></el-input>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                部门
-              </el-col>
               <el-col :span="18">
-                <el-select v-model="itemData.department"
-                           placeholder="请选择公众号"
-                           clearable
-                           filterable>
-                  <el-option v-for="item in department"
-                             :key="item.name"
-                             :label="item.name"
-                             :value="item.name">
-                  </el-option>
-                </el-select>
+                <el-form-item label="部门"
+                              prop="department">
+                  <el-select v-model="itemData.department"
+                             placeholder="请选择公众号"
+                             clearable
+                             filterable>
+                    <el-option v-for="item in department"
+                               :key="item.name"
+                               :label="item.name"
+                               :value="item.name">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                职位
-              </el-col>
               <el-col :span="18">
-                <el-select v-model="itemData.position"
-                           placeholder="请选择公众号"
-                           clearable
-                           filterable>
-                  <el-option v-for="item in position"
-                             :key="item.name"
-                             :label="item.name"
-                             :value="item.name">
-                  </el-option>
-                </el-select>
+                <el-form-item label="职位"
+                              prop="position">
+                  <el-select v-model="itemData.position"
+                             placeholder="请选择公众号"
+                             clearable
+                             filterable>
+                    <el-option v-for="item in position"
+                               :key="item.name"
+                               :label="item.name"
+                               :value="item.name">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                组长
-              </el-col>
               <el-col :span="18">
-                <el-input v-model="leader"
-                          placeholder="请输入组长"></el-input>
+                <el-form-item label="组长"
+                              prop="department">
+                  <el-select v-model="itemData.leader"
+                             placeholder="请选择组长"
+                             @change="handleSelect"
+                             clearable
+                             filterable
+                             remote
+                             reserve-keyword
+                             :remote-method="getLeader">
+                    <el-option v-for="item in leader"
+                               :key="item.name"
+                               :label="item.name"
+                               :value="item.name">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
               </el-col>
             </el-row>
           </div>
@@ -142,79 +154,82 @@
                  :visible.sync="editVisible"
                  :close-on-click-modal="false"
                  width="30%">
-        <div class="popout">
-          <el-row>
-            <el-col :span="6">
-              真实姓名
-            </el-col>
-            <el-col :span="18">
-              <el-input v-model="itemData.nickName"
-                        placeholder="请输入真实姓名"></el-input>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              手机
-            </el-col>
-            <el-col :span="18">
-              <el-input v-model="itemData.phone"
-                        placeholder="请输入手机"></el-input>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              部门
-            </el-col>
-            <el-col :span="18">
-              <el-select v-model="itemData.department"
-                         placeholder="请选择公众号"
-                         clearable
-                         filterable>
-                <el-option v-for="item in department"
-                           :key="item.name"
-                           :label="item.name"
-                           :value="item.name">
-                </el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              职位
-            </el-col>
-            <el-col :span="18">
-              <el-select v-model="itemData.position"
-                         placeholder="请选择公众号"
-                         clearable
-                         filterable>
-                <el-option v-for="item in position"
-                           :key="item.name"
-                           :label="item.name"
-                           :value="item.name">
-                </el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              组长
-            </el-col>
-            <el-select v-model="itemData.leader"
-                       placeholder="请选择组长"
-                       @change="handleSelect"
-                       clearable
-                       filterable
-                       remote
-                       reserve-keyword
-                       :remote-method="getLeader">
-              <el-option v-for="item in leader"
-                         :key="item.name"
-                         :label="item.name"
-                         :value="item.name">
-              </el-option>
-            </el-select>
-          </el-row>
-        </div>
+        <el-form :model="itemData"
+                 :rules="rules">
+          <div class="popout">
+            <el-row>
+              <el-col :span="6">
+                真实姓名
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="itemData.nickName"
+                          placeholder="请输入真实姓名"></el-input>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="手机"
+                              prop="phone">
+                  <el-input v-model="itemData.phone"
+                            placeholder="请输入手机"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="部门"
+                              prop="department">
+                  <el-select v-model="itemData.department"
+                             placeholder="请选择公众号"
+                             clearable
+                             filterable>
+                    <el-option v-for="item in department"
+                               :key="item.name"
+                               :label="item.name"
+                               :value="item.name">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="职位"
+                              prop="position">
+                  <el-select v-model="itemData.position"
+                             placeholder="请选择公众号"
+                             clearable
+                             filterable>
+                    <el-option v-for="item in position"
+                               :key="item.name"
+                               :label="item.name"
+                               :value="item.name">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-form-item label="组长"
+                            prop="leader">
+                <el-select v-model="itemData.leader"
+                           placeholder="请选择组长"
+                           @change="handleSelect"
+                           clearable
+                           filterable
+                           remote
+                           reserve-keyword
+                           :remote-method="getLeader">
+                  <el-option v-for="item in leader"
+                             :key="item.name"
+                             :label="item.name"
+                             :value="item.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-row>
+          </div>
+        </el-form>
         <span slot="footer"
               class="dialog-footer">
           <el-button @click="editVisible = false">取 消</el-button>
@@ -258,16 +273,7 @@ export default {
           { required: true, message: '请选择项目', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '请选择期数', trigger: 'change' }
-        ],
-        department: [
-          { required: true, message: '请选择班主任', trigger: 'change' }
-        ],
-        position: [
-          { required: true, message: '请选择班号', trigger: 'change' }
-        ],
-        leader: [
-          { required: true, message: '请选择班号', trigger: 'change' }
+          { required: true, message: '请输入手机', trigger: 'blur' }
         ]
       }
     }
