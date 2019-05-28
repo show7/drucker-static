@@ -6,6 +6,7 @@ export default {
   employee: {
     list: 'pc/operation/employee/list', //员工list
     add: 'pc/operation/employee/add', //添加新员工
-    del: 'pc/operation/employee/del' //删除
+    del: 'pc/operation/employee/del', //删除
+    get: 'pc/operation/employee/functions'
   }
-};
+}

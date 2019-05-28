@@ -294,11 +294,9 @@ export default {
               Object.assign(project, { label: `第${term}期`, value: term })
             }
             Object.assign(item, { label: typeName, value: memberTypeId })
-
           })
           console.log(projectType)
           this.projectType = projectType
-
         }
       })
     },
@@ -416,7 +414,6 @@ export default {
           message: '已取消删除'
         });
       });
-
     },
     loadCurrentChange () {
       this.loadPageList(this.currentPage)
@@ -461,7 +458,6 @@ export default {
           data: params,
           method: 'post',
           successCallback: (res) => {
-
             this.$message({
               type: 'success',
               message: '编辑成功!'

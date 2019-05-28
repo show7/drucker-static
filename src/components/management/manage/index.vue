@@ -37,7 +37,7 @@
           <el-menu-item index="/management/manage/classSort">体验课排班</el-menu-item>
           <el-menu-item index="/management/manage/classadviser">项目添加班主任</el-menu-item>
           <el-menu-item index="/management/manage/classGroup">入群二维码管理</el-menu-item>
-          <el-menu-item index="/management/manage/classadvisermanage">班主任管理</el-menu-item>
+          <el-menu-item index="/management/manage/classadvisermanage">班主任微信管理</el-menu-item>
           <el-menu-item index="/management/manage/projectopen">项目开课时间</el-menu-item>
 
         </el-submenu>

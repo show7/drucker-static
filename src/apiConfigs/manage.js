@@ -170,10 +170,11 @@ export default {
     loadTeacher: 'pc/drainage/load/all/teacher', //加载老师
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
     saveGroup: 'pc/drainage/class/group/save', //添加群二维码
-    upClass: 'pc/drainage/class/update'
+    upClass: 'pc/drainage/class/update',
+    historyName: 'pc/drainage/load/pre/teacher'
   },
   publicCheck: {
     load: 'pc/wechat/load/recommend', //加载类型 manage.publicCheck.load
     deal: 'pc/wechat/deal/recommend' //处理订阅号推荐 manage.publicCheck.deal
   }
-};
+}
