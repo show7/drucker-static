@@ -171,11 +171,8 @@ export default {
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
     saveGroup: 'pc/drainage/class/group/save', //添加群二维码
     upClass: 'pc/drainage/class/update',
-<<<<<<< HEAD
-    flowInfo: 'pc/drainage/class/load/flow/info' //查看分布
-=======
+    flowInfo: 'pc/drainage/class/load/flow/info', //查看分布
     historyName: 'pc/drainage/load/pre/teacher'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
   },
   publicCheck: {
     load: 'pc/wechat/load/recommend', //加载类型 manage.publicCheck.load
