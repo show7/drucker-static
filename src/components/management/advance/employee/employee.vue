@@ -366,6 +366,11 @@ export default {
         successCallback: (res) => {
           let result = res.msg;
           this.leader = result
+          this.leader.map(item => {
+            if (item.name === this.itemData.leader) {
+              this.leaderProfileId = item.profileId
+            }
+          })
         }
       })
     },

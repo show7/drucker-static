@@ -276,8 +276,8 @@ export default {
       editFormRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }],
         channel: { required: true, message: '请选择渠道', trigger: 'change' },
-        sequence: { required: true, message: '请输入顺序', trigger: 'change' },
-        actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
+        sequence: { required: true, message: '请输入顺序', trigger: 'change' }
+        // actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
       },
       classTypeList: [{
         typeName: '扫码加班主任',
