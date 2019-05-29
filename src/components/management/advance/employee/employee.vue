@@ -366,7 +366,7 @@ export default {
         successCallback: (res) => {
           let result = res.msg;
           this.leader = result
-          this.leaderProfileId = ''
+          // this.leaderProfileId = ''
           this.leader.map(item => {
             if (item.name === this.itemData.leader) {
               this.leaderProfileId = item.profileId
@@ -434,6 +434,7 @@ export default {
         this.$message.error('请填写完整信息');
         return
       }
+      this.leaderProfileId = this.itemData.leader === '' ? '' : this.leaderProfileId
       const itemData = this.itemData
       let param = {
         nickName: itemData.nickName,
