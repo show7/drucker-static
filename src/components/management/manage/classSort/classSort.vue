@@ -92,8 +92,8 @@
         <el-table-column prop="actualQuantity"
                          label="实际到客">
           <template slot-scope="scope">
-            <span>添加班主任：{{scope.row.actualQuantity}}</span>
-            <span>加入班级群：{{scope.row.actualEnterGroupQuantity}}</span>
+            <span>添加班主任：{{scope.row.actualQuantity ? scope.row.actualQuantity:0}}</span>
+            <span>加入班级群：{{scope.row.actualEnterGroupQuantity ? scope.row.actualEnterGroupQuantity:0}}</span>
           </template>
         </el-table-column>
 

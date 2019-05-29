@@ -50,7 +50,7 @@
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="班级渠道"
+        <el-form-item label="班级渠道"
                       prop="channel">
           <el-select v-model="item.channel"
                      style="width:250px"
@@ -62,7 +62,7 @@
                        :value="item.label">
             </el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="请输入优先级"
                       prop="sequence">
           <el-input v-model.number="item.sequence"
