@@ -177,5 +177,12 @@ export default {
   publicCheck: {
     load: 'pc/wechat/load/recommend', //加载类型 manage.publicCheck.load
     deal: 'pc/wechat/deal/recommend' //处理订阅号推荐 manage.publicCheck.deal
+  },
+  putInHistory: {
+    loadSelectInfo: 'pc/flow/channel/types/config', //加载下拉框选项
+    saveGenerate: 'pc/flow/channel/qrCode/save',
+    loadPageList: 'pc/flow/channel/history',
+    channelAnalysis: 'pc/flow/channel/analysis', //渠道分析
+    delete: 'pc/flow/channel/qrCode/delete'
   }
 }

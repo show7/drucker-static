@@ -41,7 +41,10 @@
           <el-menu-item index="/management/manage/projectopen">项目开课时间</el-menu-item>
 
         </el-submenu>
-
+        <el-submenu index="9">
+          <template slot="title">投放管理</template>
+          <el-menu-item index="/management/manage/putInHistory">投放历史</el-menu-item>
+        </el-submenu>
         <el-submenu index="7">
           <template slot="title">学籍管理</template>
           <el-menu-item index="/management/manage/statuschange">修改学籍</el-menu-item>
