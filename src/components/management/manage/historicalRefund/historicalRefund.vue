@@ -37,8 +37,49 @@
       </el-form>
     </el-card>
     <el-card shadow="hover">
-      <el-table :data="tableData"
-                style="width: 100%">
+      <el-table :data="tableData">
+        <el-table-column label="圈外ID">
+        </el-table-column>
+        <el-table-column label="用户微信昵称">
+        </el-table-column>
+        <el-table-column label="体验课班级">
+        </el-table-column>
+        <el-table-column label="分享人信息">
+        </el-table-column>
+        <el-table-column label="购买课程">
+        </el-table-column>
+        <el-table-column label="支付时间">
+        </el-table-column>
+        <el-table-column label="实际支付金额（元）">
+        </el-table-column>
+        <el-table-column label="姓名"
+                         width="180">
+          <template slot-scope="scope">
+            <el-popover trigger="hover"
+                        placement="top">
+              <p>姓名: {{ scope.row.name }}</p>
+              <p>住址: {{ scope.row.address }}</p>
+              <div slot="reference"
+                   class="name-wrapper">
+                <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column label="姓名"
+                         width="180">
+          <template slot-scope="scope">
+            <el-popover trigger="hover"
+                        placement="top">
+              <p>姓名: {{ scope.row.name }}</p>
+              <p>住址: {{ scope.row.address }}</p>
+              <div slot="reference"
+                   class="name-wrapper">
+                <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column label="日期"
                          width="180">
           <template slot-scope="scope">
@@ -81,12 +122,11 @@ export default {
       screenForm: {
 
       },
-      tableData: []
+      tableData: [],
+      value3: ''
     }
   }
 }
 </script>
 <style lang="less">
 </style>
-
-
