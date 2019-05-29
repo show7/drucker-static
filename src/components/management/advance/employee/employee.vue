@@ -424,7 +424,7 @@ export default {
       });
     },
     handleSubmit (isAdd) {
-      if (!this.itemData.nickName || !this.itemData.riseId || !this.itemData.phone || !this.departmentId || !this.positionId || !this.leaderProfileId) {
+      if (!this.itemData.nickName || !this.itemData.riseId || !this.itemData.phone /*|| !this.departmentId || !this.positionId || !this.leaderProfileId*/) {
         this.$message.error('请填写完整信息');
         return
       }
@@ -497,6 +497,7 @@ export default {
     'itemData.position': {
       deep: true,
       handler: function (val) {
+        this.positionId = ''
         this.position.map(item => {
           if (item.name === this.itemData.position) {
             this.positionId = item.id
