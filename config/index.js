@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require ('path');
-const targetUrl = 'https://www.confucius.mobi';
+const path = require('path')
+const targetUrl = 'https://www.confucius.mobi'
 module.exports = {
   dev: {
     // Paths
@@ -15,105 +15,81 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/pc/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/rise/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/subscribe/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/cache/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/backend/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/file/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
+        }
       },
       '/wx/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
-          ) {
-            return 'index.html';
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
           }
-        },
-      },
+        }
+      }
     },
 
     // Various Dev Server settings
@@ -144,15 +120,15 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true,
+    cssSourceMap: true
   },
 
   build: {
     // Template for index.html
-    index: path.resolve (__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve (__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: process.env.VERSION
       ? `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/`
@@ -177,6 +153,6 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report,
-  },
-};
+    bundleAnalyzerReport: process.env.npm_config_report
+  }
+}

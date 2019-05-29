@@ -11,8 +11,6 @@
         </el-breadcrumb>
       </el-row>
     </el-card>
-    <br>
-    <br>
     <el-card shadow="hover">
       <el-form :inline="true"
                :rules="selectFormRule"
@@ -56,14 +54,17 @@
     <br>
     <el-card shadow="hover">
       <el-table :data="tableData">
-        <el-table-column prop="classType"
+        <!-- <el-table-column prop="classType"
                          label="班级类型">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="classNumber"
                          label="班级号">
         </el-table-column>
-        <el-table-column prop="headTeacher.nickName"
+        <el-table-column prop="quanwaiEmployee.name"
                          label="班主任">
+        </el-table-column>
+        <el-table-column prop="headTeacher.nickName"
+                         label="微信昵称">
         </el-table-column>
         <el-table-column prop="enterGroupQrCode"
                          label="群二维码"
@@ -80,23 +81,38 @@
         <el-table-column prop="sequence"
                          label="顺序">
         </el-table-column>
+        <el-table-column prop="systemClassQuantity"
+                         label="流量分布">
+          <template slot-scope="scope">
+            {{scope.row.systemClassQuantity}}/{{scope.row.limit}} <el-link style="color:#7DBE00"
+                     @click.stop="viewFlowInfo(scope.row)"
+                     type="success">查看分布</el-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="actualQuantity"
-                         label="班级实时人数">
+                         label="实际到客">
+          <template slot-scope="scope">
+            <span>添加班主任：{{scope.row.actualQuantity ? scope.row.actualQuantity:0}}</span>
+            <span>加入班级群：{{scope.row.actualEnterGroupQuantity ? scope.row.actualEnterGroupQuantity:0}}</span>
+          </template>
         </el-table-column>
-        <el-table-column prop="limit"
-                         label="班级上限">
-        </el-table-column>
+
         <el-table-column prop="channel"
                          label="投放渠道">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleEdit(scope.row,scope.$index)"
-                       size="mini">编辑</el-button>
-            <el-button type="danger"
-                       :disabled="scope.row.isOperable"
-                       @click="handledelete(scope.row,scope.$index)"
-                       size="mini">删除</el-button>
+            <div>
+              <el-button @click="handleEdit(scope.row,scope.$index)"
+                         size="mini">编辑</el-button>
+            </div><br>
+            <div>
+              <el-button type="danger"
+                         :disabled="scope.row.isOperable"
+                         @click="handledelete(scope.row,scope.$index)"
+                         size="mini">删除</el-button>
+            </div>
+
           </template>
         </el-table-column>
       </el-table>
@@ -131,6 +147,18 @@
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="添加班主任"
+                      prop="actualQuantity">
+          <el-input v-model.number="editForm.actualQuantity"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="加入班级群"
+                      prop="actualEnterGroupQuantity">
+          <el-input v-model.number="editForm.actualEnterGroupQuantity"
+                    style="width:250px"
+                    autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="投放渠道"
                       prop="channel">
           <el-select v-model="editForm.channel"
@@ -145,20 +173,31 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="班级实时人数">
-          <el-input v-model.number="editForm.actualQuantity"
-                    style="width:250px"
-                    autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="选择班主任"
                       v-show="!entryType">
-          <el-select v-model="editForm.headTeacherId"
+          <el-select v-model="editForm.quanwaiEmployees"
                      filterable
                      headTeacherId:
                      :rules="{ required: true, message: '请选择班主任', trigger: 'change' }"
                      :disabled="editdDisabled"
                      style="width:250px"
                      placeholder="请选择班主任">
+            <el-option v-for="item in quanwaiEmployees"
+                       :key="item.name"
+                       :label="item.name"
+                       :value="item.name">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="微信昵称"
+                      v-show="!entryType">
+          <el-select v-model="editForm.nickName"
+                     filterable
+                     headTeacherId:
+                     :rules="{ required: true, message: '请选择微信昵称', trigger: 'change' }"
+                     :disabled="editdDisabled"
+                     style="width:250px"
+                     placeholder="请选择微信昵称">
             <el-option v-for="item in headTeachers"
                        :key="item.id"
                        :label="item.nickName"
@@ -203,6 +242,23 @@
              alt="入群二维码">
       </div>
     </el-dialog>
+    <el-dialog title="查看分布"
+               :visible.sync="distributionPopup">
+      <el-table :data="distributionData">
+        <el-table-column property="channelName"
+                         label="渠道"></el-table-column>
+        <el-table-column property='actualQuantity'
+                         label="到客周期">
+          <template slot-scope="scope">
+            <span>{{scope.row.firstReachDate}} ~ {{scope.row.lastReachDate}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column property="channelCount"
+                         label="公众号到客"></el-table-column>
+        <el-table-column property="channelAnalysis"
+                         label="渠道分析"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -220,21 +276,26 @@ export default {
       }
     }
     return {
+      quanwaiEmployees: [],
+      quanwaiEmployeesId: '',
       selectForm: {
         projectPeriod: [],
         selectClass: {
           entryType: 0,
           typeName: '扫码加班主任'
-        }
+        },
+        channelType: ''
       },
+      channelTypeList: [{ name: '公众号投放', value: 1 }, { name: '老带新', value: 2 }, { name: '自增长', value: 3 }],
       selectFormRule: {
         projectPeriod: { required: true, message: '请选择项目／日期', trigger: 'change' },
         selectClass: { required: true, message: '请选择班级类型', trigger: 'change' }
       },
       editFormRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }],
-        channel: { required: true, message: '请选择渠道', trigger: 'change' },
+        // channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
+        // actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
       },
       classTypeList: [{
         typeName: '扫码加班主任',
@@ -257,7 +318,10 @@ export default {
         actualQuantity: '',
         headTeacherId: '',
         sequence: '',
-        operateRotateId: ''
+        operateRotateId: '',
+        actualEnterGroupQuantity: '',
+        nickName: '',
+        quanwaiEmployees: ''
       },
       classNumbers: [],
       headTeachers: [],
@@ -268,7 +332,9 @@ export default {
       hideUpload: false,
       fileList1: [],
       editdDisabled: false,
-      editIndex: ''
+      editIndex: '',
+      distributionPopup: false,
+      distributionData: []
     }
   },
   mounted () {
@@ -294,11 +360,9 @@ export default {
               Object.assign(project, { label: `第${term}期`, value: term })
             }
             Object.assign(item, { label: typeName, value: memberTypeId })
-
           })
           console.log(projectType)
           this.projectType = projectType
-
         }
       })
     },
@@ -324,10 +388,11 @@ export default {
         apiPath: 'manage.classSort.loadTeacher',
         successCallback: (res) => {
           console.log(res)
-          const { classNumbers, headTeachers, memberLabels } = res.msg
+          const { classNumbers, headTeachers, memberLabels, quanwaiEmployees } = res.msg
           this.classNumbers = classNumbers
           this.headTeachers = headTeachers
           this.memberLabels = memberLabels
+          this.quanwaiEmployees = quanwaiEmployees
         }
       })
     },
@@ -416,7 +481,6 @@ export default {
           message: '已取消删除'
         });
       });
-
     },
     loadCurrentChange () {
       this.loadPageList(this.currentPage)
@@ -424,7 +488,7 @@ export default {
     handleEdit (row, i) { // 编辑
       this.editIndex = i
       const { entryType } = this
-      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId } = row
+      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId, actualEnterGroupQuantity, quanwaiEmployee } = row
       this.editdDisabled = new Date() > new Date(termActiveDate.replace(/-/g, '/'))
       let qrcodeUrl, headTeacherId
       if (entryType) {
@@ -434,14 +498,17 @@ export default {
         const { id = '' } = headTeacher
         headTeacherId = id
       }
-
-      console.log(headTeacherId, qrcodeUrl)
+      let nickName = headTeacher.nickName
+      this.quanwaiEmployeesId = row.quanwaiEmployee != null ? row.quanwaiEmployee.id : null
       const editForm = {
         classNumber,
         channel,
         sequence,
         actualQuantity,
-        operateRotateId
+        operateRotateId,
+        actualEnterGroupQuantity,
+        nickName,
+        quanwaiEmployees: row.quanwaiEmployee != null ? row.quanwaiEmployee.name : ''
       }
       this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
@@ -452,16 +519,15 @@ export default {
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-        const { actualQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId } = this.editForm
+        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees } = this.editForm
         const params = {
-          actualQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId
+          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees
         }
         apiDataFilter.request({
           apiPath: 'manage.classSort.upClass',
           data: params,
           method: 'post',
           successCallback: (res) => {
-
             this.$message({
               type: 'success',
               message: '编辑成功!'
@@ -485,6 +551,20 @@ export default {
     },
     clearFileList1 () {
       this.fileList1 = []
+    },
+    viewFlowInfo (row) {
+      const { id: classId } = row
+      apiDataFilter.request({
+        apiPath: 'manage.classSort.flowInfo',
+        data: { classId },
+        method: 'get',
+        successCallback: (res) => {
+          console.log(res)
+          this.distributionPopup = true
+          this.distributionData = res.msg
+        }
+      })
+      console.log(row)
     }
   }
 }
