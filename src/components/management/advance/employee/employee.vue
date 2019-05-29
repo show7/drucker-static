@@ -513,6 +513,10 @@ export default {
     'itemData.leader': {
       deep: true,
       handler: function (val) {
+        if (val === '') {
+          this.leaderProfileId = ''
+          return
+        }
         this.leader.map(item => {
           if (item.name === this.itemData.leader) {
             this.leaderProfileId = item.profileId

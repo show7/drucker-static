@@ -54,9 +54,9 @@
     <br>
     <el-card shadow="hover">
       <el-table :data="tableData">
-        <el-table-column prop="classType"
+        <!-- <el-table-column prop="classType"
                          label="班级类型">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="classNumber"
                          label="班级号">
         </el-table-column>
@@ -175,17 +175,17 @@
         </el-form-item>
         <el-form-item label="选择班主任"
                       v-show="!entryType">
-          <el-select v-model="editForm.headTeacherId"
+          <el-select v-model="editForm.quanwaiEmployees"
                      filterable
                      headTeacherId:
                      :rules="{ required: true, message: '请选择班主任', trigger: 'change' }"
                      :disabled="editdDisabled"
                      style="width:250px"
                      placeholder="请选择班主任">
-            <el-option v-for="item in headTeachers"
-                       :key="item.id"
-                       :label="item.nickName"
-                       :value="item.id">
+            <el-option v-for="item in quanwaiEmployees"
+                       :key="item.name"
+                       :label="item.name"
+                       :value="item.name">
             </el-option>
           </el-select>
         </el-form-item>
@@ -246,17 +246,17 @@
                :visible.sync="distributionPopup">
       <el-table :data="distributionData">
         <el-table-column property="channelName"
-                         label="渠道"
-                         width="150"></el-table-column>
+                         label="渠道"></el-table-column>
         <el-table-column property='actualQuantity'
-                         label="到客周期"
-                         width="200">
+                         label="到客周期">
           <template slot-scope="scope">
             <span>{{scope.row.firstReachDate}} ~ {{scope.row.lastReachDate}}</span>
           </template>
         </el-table-column>
         <el-table-column property="channelCount"
                          label="公众号到客"></el-table-column>
+        <el-table-column property="channelAnalysis"
+                         label="渠道分析"></el-table-column>
       </el-table>
     </el-dialog>
   </div>
@@ -276,6 +276,8 @@ export default {
       }
     }
     return {
+      quanwaiEmployees: [],
+      quanwaiEmployeesId: '',
       selectForm: {
         projectPeriod: [],
         selectClass: {
@@ -291,7 +293,7 @@ export default {
       },
       editFormRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }],
-        channel: { required: true, message: '请选择渠道', trigger: 'change' },
+        // channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
         // actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
       },
@@ -318,7 +320,8 @@ export default {
         sequence: '',
         operateRotateId: '',
         actualEnterGroupQuantity: '',
-        nickName: ''
+        nickName: '',
+        quanwaiEmployees: ''
       },
       classNumbers: [],
       headTeachers: [],
@@ -385,10 +388,11 @@ export default {
         apiPath: 'manage.classSort.loadTeacher',
         successCallback: (res) => {
           console.log(res)
-          const { classNumbers, headTeachers, memberLabels } = res.msg
+          const { classNumbers, headTeachers, memberLabels, quanwaiEmployees } = res.msg
           this.classNumbers = classNumbers
           this.headTeachers = headTeachers
           this.memberLabels = memberLabels
+          this.quanwaiEmployees = quanwaiEmployees
         }
       })
     },
@@ -484,7 +488,7 @@ export default {
     handleEdit (row, i) { // 编辑
       this.editIndex = i
       const { entryType } = this
-      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId, actualEnterGroupQuantity } = row
+      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId, actualEnterGroupQuantity, quanwaiEmployee } = row
       this.editdDisabled = new Date() > new Date(termActiveDate.replace(/-/g, '/'))
       let qrcodeUrl, headTeacherId
       if (entryType) {
@@ -495,7 +499,7 @@ export default {
         headTeacherId = id
       }
       let nickName = headTeacher.nickName
-      console.log(headTeacherId, qrcodeUrl)
+      this.quanwaiEmployeesId = row.quanwaiEmployee.id
       const editForm = {
         classNumber,
         channel,
@@ -503,7 +507,8 @@ export default {
         actualQuantity,
         operateRotateId,
         actualEnterGroupQuantity,
-        nickName
+        nickName,
+        quanwaiEmployees: row.quanwaiEmployee.name
       }
       this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
@@ -514,9 +519,9 @@ export default {
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName } = this.editForm
+        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees } = this.editForm
         const params = {
-          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName
+          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees
         }
         apiDataFilter.request({
           apiPath: 'manage.classSort.upClass',

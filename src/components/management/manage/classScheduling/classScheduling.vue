@@ -44,7 +44,7 @@
           <template slot-scope="scope">
             <div slot="reference"
                  class="name-wrapper">
-              {{ scope.row.typeName }}
+              {{ scope.row.memberTypeName }}
             </div>
           </template>
         </el-table-column>
@@ -88,9 +88,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="体验课项目"
+        <el-table-column label="添加班主任人数/报名人数"
                          width="180"
                          prop='typeName'>
+          <template slot-scope="scope">
+            <div slot="reference"
+                 class="name-wrapper">
+              {{scope.row.addQuantity?scope.row.addQuantity:0}}/{{scope.row.actualQuantity?scope.row.actualQuantity:0}}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
