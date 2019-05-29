@@ -108,7 +108,7 @@
                 <el-form-item label="部门"
                               prop="department">
                   <el-select v-model="itemData.department"
-                             placeholder="请选择公众号"
+                             placeholder="请选择部门"
                              clearable
                              filterable>
                     <el-option v-for="item in department"
@@ -125,7 +125,7 @@
                 <el-form-item label="职位"
                               prop="position">
                   <el-select v-model="itemData.position"
-                             placeholder="请选择公众号"
+                             placeholder="请选择职位"
                              clearable
                              filterable>
                     <el-option v-for="item in position"
@@ -206,7 +206,7 @@
                 <el-form-item label="部门"
                               prop="department">
                   <el-select v-model="itemData.department"
-                             placeholder="请选择公众号"
+                             placeholder="请选择部门"
                              clearable
                              filterable>
                     <el-option v-for="item in department"
@@ -223,7 +223,7 @@
                 <el-form-item label="职位"
                               prop="position">
                   <el-select v-model="itemData.position"
-                             placeholder="请选择公众号"
+                             placeholder="请选择职位"
                              clearable
                              filterable>
                     <el-option v-for="item in position"
@@ -300,10 +300,10 @@ export default {
       },
       rules: {
         riseId: [
-          { required: true, message: '请选择项目', trigger: 'blur' }
+          { required: true, message: '请输入riseId', trigger: 'blur' }
         ],
         nickName: [
-          { required: true, message: '请选择项目', trigger: 'blur' }
+          { required: true, message: '请输入真实姓名', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机', trigger: 'blur' }
@@ -496,6 +496,7 @@ export default {
     'itemData.department': {
       deep: true,
       handler: function (val) {
+        this.departmentId = ''
         this.mapArr(val)
       }
     },
