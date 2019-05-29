@@ -43,10 +43,18 @@
                          fixed="right"
                          label="操作">
           <template slot-scope="scope">
-            <el-button size="mini"
-                       @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini"
-                       @click="handleDevice(scope.$index, scope.row)">离职</el-button>
+            <div v-if='scope.row.status===0'>
+              <el-button size="mini"
+                         @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini"
+                         @click="handleDevice(scope.$index, scope.row)">离职</el-button>
+            </div>
+            <div v-else>
+              <el-button size="mini"
+                         disabled>已离职</el-button>
+              <el-button size="mini"
+                         @click="handleDelect(scope.$index, scope.row)">删除</el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -68,6 +76,15 @@
         <el-form :model="itemData"
                  :rules="rules">
           <div class="popout">
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="riseId"
+                              prop="riseId">
+                  <el-input v-model="itemData.riseId"
+                            placeholder="请输入riseId"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-row>
               <el-col :span="18">
                 <el-form-item label="真实姓名"
@@ -123,7 +140,7 @@
             <el-row>
               <el-col :span="18">
                 <el-form-item label="组长"
-                              prop="department">
+                              prop="leader">
                   <el-select v-model="itemData.leader"
                              placeholder="请选择组长"
                              @change="handleSelect"
@@ -147,7 +164,7 @@
               class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary"
-                     @click="handleSubmit">确 定</el-button>
+                     @click="handleSubmit(true)">确 定</el-button>
         </span>
       </el-dialog>
       <el-dialog title="添加员工"
@@ -158,12 +175,21 @@
                  :rules="rules">
           <div class="popout">
             <el-row>
-              <el-col :span="6">
-                真实姓名
-              </el-col>
               <el-col :span="18">
-                <el-input v-model="itemData.nickName"
-                          placeholder="请输入真实姓名"></el-input>
+                <el-form-item label="riseId"
+                              prop="riseId">
+                  <el-input v-model="itemData.riseId"
+                            placeholder="请输入riseId"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="真实姓名"
+                              prop="nickName">
+                  <el-input v-model="itemData.nickName"
+                            placeholder="请输入真实姓名"></el-input>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
@@ -234,7 +260,7 @@
               class="dialog-footer">
           <el-button @click="editVisible = false">取 消</el-button>
           <el-button type="primary"
-                     @click="handleSubmit">确 定</el-button>
+                     @click="handleSubmit(false)">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -257,6 +283,9 @@ export default {
       nickName: '',
       id: '',
       phone: '',
+      departmentId: '',
+      positionId: '',
+      leaderProfileId: '',
       department: [],
       position: [],
       leader: [],
@@ -266,23 +295,38 @@ export default {
         phone: '',
         department: '',
         position: '',
-        leader: ''
+        leader: '',
+        riseId: ''
       },
       rules: {
+        riseId: [
+          { required: true, message: '请选择项目', trigger: 'blur' }
+        ],
         nickName: [
           { required: true, message: '请选择项目', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机', trigger: 'blur' }
         ]
+        // department: [
+        //   { required: true, message: '请选择项目', trigger: 'change' }
+        // ],
+        // position: [
+        //   { required: true, message: '请输入手机', trigger: 'change' }
+        // ],
+        // leader: [
+        //   { required: true, message: '请选择项目', trigger: 'change' }
+        // ]
       }
     }
   },
   methods: {
     mapArr (val) {
+      this.position = []
       this.department.map((item, index) => {
         if (item.name === val) {
           this.position = item.positions
+          this.departmentId = item.id
         }
       })
       if (this.position.length === 0) {
@@ -342,8 +386,27 @@ export default {
       this.editVisible = true
       this.getLeader(this.itemData.leader)
     },
-    handleDevice () {
-
+    handleDevice (index, row) {
+      this.$confirm('此操作将离职员工, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        apiDataFilter.request({
+          apiPath: 'advance.employee.leave',
+          data: { id: row.id },
+          method: 'post',
+          successCallback: (res) => {
+            this.$message.success('离职成功');
+            this.getList()
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
     },
     handleDelect (index, row) {
       this.id = row.id;
@@ -360,19 +423,32 @@ export default {
         });
       });
     },
-    handleSubmit () {
-      if (!this.nickName || !this.riseId) {
+    handleSubmit (isAdd) {
+      if (!this.itemData.nickName || !this.itemData.riseId || !this.itemData.phone || !this.departmentId || !this.positionId || !this.leaderProfileId) {
         this.$message.error('请填写完整信息');
         return
       }
-      let param = { riseId: this.riseId, nickName: this.nickName };
+      const itemData = this.itemData
+      let param = {
+        nickName: itemData.nickName,
+        id: itemData.id,
+        riseId: itemData.riseId,
+        mobile: itemData.phone,
+        departmentId: this.departmentId,
+        positionId: this.positionId,
+        leaderProfileId: this.leaderProfileId
+      }
       apiDataFilter.request({
-        apiPath: 'advance.employee.add',
+        apiPath: 'advance.employee.edit',
         method: 'post',
         data: param,
         successCallback: (res) => {
           this.$message.success('提交成功');
-          this.dialogVisible = false;
+          if (isAdd) {
+            this.dialogVisible = false;
+          } else {
+            this.editVisible = false;
+          }
           this.getList()
         }
       })
@@ -390,7 +466,8 @@ export default {
         phone: '',
         department: '',
         position: '',
-        leader: ''
+        leader: '',
+        riseId: ''
       }
     },
     handleSearch () {
@@ -415,6 +492,26 @@ export default {
       deep: true,
       handler: function (val) {
         this.mapArr(val)
+      }
+    },
+    'itemData.position': {
+      deep: true,
+      handler: function (val) {
+        this.position.map(item => {
+          if (item.name === this.itemData.position) {
+            this.positionId = item.id
+          }
+        })
+      }
+    },
+    'itemData.leader': {
+      deep: true,
+      handler: function (val) {
+        this.leader.map(item => {
+          if (item.name === this.itemData.leader) {
+            this.leaderProfileId = item.id
+          }
+        })
       }
     }
   }

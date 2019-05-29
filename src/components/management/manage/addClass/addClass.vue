@@ -84,23 +84,17 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="微信昵称"
-                      prop="headTeacherId">
-          <el-select v-model="item.headTeacherId"
-                     placeholder="请选择公众号"
-                     clearable
-                     filterable
-                     @change="inputName">
-            <el-option v-for="item in headTeachers"
-                       :key="item.id"
-                       :label="item.nickName"
-                       :value="item.id">
-            </el-option>
-          </el-select>
+        <el-form-item label="微信昵称">
+
+          <el-autocomplete v-model="nickName"
+                           :fetch-suggestions="querySearch"
+                           :trigger-on-focus="false"></el-autocomplete>
+
         </el-form-item>
         <i class="el-icon-delete"
            style="margin-top:15px"
            @click="deleteRow(i)"></i>
+
       </el-form>
     </el-card>
     <el-card shadow="hover"
@@ -220,6 +214,8 @@ export default {
       }
     }
     return {
+      nickName: '',
+      searchStr: '',
       addClassType1: [
         {
           classNumber: '',
@@ -292,6 +288,23 @@ export default {
     this.loadTeacher()
   },
   methods: {
+    querySearch (queryString, cb) {
+      let results = queryString ? this.allheadTeachers.filter(this.createFilter(queryString)) : this.allheadTeachers;
+      results = results.map(item => { return { value: item.nickName } })
+      if (results.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '微信昵称未找到!'
+        });
+      }
+      console.log(results)
+      cb(results);
+    },
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.nickName.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
     inputName () {
       this.headTeachers = this.allheadTeachers
     },
