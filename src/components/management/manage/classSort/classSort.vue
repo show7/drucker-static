@@ -499,7 +499,7 @@ export default {
         headTeacherId = id
       }
       let nickName = headTeacher.nickName
-      this.quanwaiEmployeesId = row.quanwaiEmployee.id
+      this.quanwaiEmployeesId = row.quanwaiEmployee != null ? row.quanwaiEmployee.id : null
       const editForm = {
         classNumber,
         channel,
@@ -508,7 +508,7 @@ export default {
         operateRotateId,
         actualEnterGroupQuantity,
         nickName,
-        quanwaiEmployees: row.quanwaiEmployee.name
+        quanwaiEmployees: row.quanwaiEmployee != null ? row.quanwaiEmployee.name : ''
       }
       this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
