@@ -85,11 +85,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="微信昵称">
-
-          <el-autocomplete v-model="nickName"
+          <el-autocomplete v-model="item.headTeacherId"
                            :fetch-suggestions="querySearch"
-                           :trigger-on-focus="false"></el-autocomplete>
-
+                           @select="selectName"
+                           @focus='focusName(i)'></el-autocomplete>
         </el-form-item>
         <i class="el-icon-delete"
            style="margin-top:15px"
@@ -214,6 +213,8 @@ export default {
       }
     }
     return {
+      itemInedx: 0,
+      headTeacherId: [],
       nickName: '',
       searchStr: '',
       addClassType1: [
@@ -288,15 +289,22 @@ export default {
     this.loadTeacher()
   },
   methods: {
+    selectName (itemContent) {
+      this.addClassType1.map((item, index) => { if (index === this.itemInedx) { this.headTeacherId[index] = itemContent.id } })
+      console.log(this.headTeacherId)
+    },
+    focusName (index) {
+      this.itemInedx = index
+    },
     querySearch (queryString, cb) {
-      let results = queryString ? this.allheadTeachers.filter(this.createFilter(queryString)) : this.allheadTeachers;
-      results = results.map(item => { return { value: item.nickName } })
-      if (results.length === 0) {
-        this.$message({
-          type: 'error',
-          message: '微信昵称未找到!'
-        });
-      }
+      let results = queryString !== '' ? this.allheadTeachers.filter(this.createFilter(queryString)) : this.headTeachers;
+      results = results.map(item => { return { value: item.nickName, id: item.id } })
+      // if (results.length === 0) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: '微信昵称未找到!'
+      //   });
+      // }
       console.log(results)
       cb(results);
     },
@@ -480,8 +488,12 @@ export default {
     },
     saveSubmit (data) {
       const { entryType } = data
+      let newdata = JSON.parse(JSON.stringify(data))
+      console.log(newdata.classes)
+      newdata.classes.map((item, index) => { item.headTeacherId = this.headTeacherId[index] })
+      console.log(newdata)
       apiDataFilter.request({
-        data,
+        data: newdata,
         method: 'post',
         apiPath: `manage.classSort.${entryType ? 'saveGroup' : 'saveTeacher'}`,
         successCallback: (res) => {
