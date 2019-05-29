@@ -189,6 +189,22 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="微信昵称"
+                      v-show="!entryType">
+          <el-select v-model="editForm.nickName"
+                     filterable
+                     headTeacherId:
+                     :rules="{ required: true, message: '请选择微信昵称', trigger: 'change' }"
+                     :disabled="editdDisabled"
+                     style="width:250px"
+                     placeholder="请选择微信昵称">
+            <el-option v-for="item in headTeachers"
+                       :key="item.id"
+                       :label="item.nickName"
+                       :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item v-show="entryType"
                       label="群二维码"
                       ref="imageUpload"
@@ -301,7 +317,8 @@ export default {
         headTeacherId: '',
         sequence: '',
         operateRotateId: '',
-        actualEnterGroupQuantity: ''
+        actualEnterGroupQuantity: '',
+        nickName: ''
       },
       classNumbers: [],
       headTeachers: [],
@@ -477,7 +494,7 @@ export default {
         const { id = '' } = headTeacher
         headTeacherId = id
       }
-
+      let nickName = headTeacher.nickName
       console.log(headTeacherId, qrcodeUrl)
       const editForm = {
         classNumber,
@@ -485,7 +502,8 @@ export default {
         sequence,
         actualQuantity,
         operateRotateId,
-        actualEnterGroupQuantity
+        actualEnterGroupQuantity,
+        nickName
       }
       this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
@@ -496,9 +514,9 @@ export default {
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId } = this.editForm
+        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName } = this.editForm
         const params = {
-          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId
+          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName
         }
         apiDataFilter.request({
           apiPath: 'manage.classSort.upClass',
