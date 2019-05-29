@@ -38,80 +38,137 @@
     </el-card>
     <el-card shadow="hover">
       <el-table :data="tableData">
-        <el-table-column label="圈外ID">
+        <el-table-column label="圈外ID"
+                         prop="riseId">
         </el-table-column>
-        <el-table-column label="用户微信昵称">
+        <el-table-column label="用户微信昵称"
+                         prop="nickName">
         </el-table-column>
-        <el-table-column label="体验课班级">
+        <el-table-column label="体验课班级"
+                         prop="audioCourse">
         </el-table-column>
-        <el-table-column label="分享人信息">
+        <el-table-column label="分享人信息"
+                         prop="shareInfo">
         </el-table-column>
-        <el-table-column label="购买课程">
+        <el-table-column label="购买课程"
+                         prop="purchase">
         </el-table-column>
-        <el-table-column label="支付时间">
+        <el-table-column label="支付时间"
+                         prop="payTime">
         </el-table-column>
-        <el-table-column label="实际支付金额（元）">
+        <el-table-column label="实际支付金额（元）"
+                         prop="totalPay">
         </el-table-column>
-        <el-table-column label="姓名"
-                         width="180">
-          <template slot-scope="scope">
-            <el-popover trigger="hover"
-                        placement="top">
-              <p>姓名: {{ scope.row.name }}</p>
-              <p>住址: {{ scope.row.address }}</p>
-              <div slot="reference"
-                   class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.name }}</el-tag>
-              </div>
-            </el-popover>
-          </template>
+        <el-table-column label="退款金额（元）"
+                         prop="payBack">
         </el-table-column>
-        <el-table-column label="姓名"
-                         width="180">
-          <template slot-scope="scope">
-            <el-popover trigger="hover"
-                        placement="top">
-              <p>姓名: {{ scope.row.name }}</p>
-              <p>住址: {{ scope.row.address }}</p>
-              <div slot="reference"
-                   class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.name }}</el-tag>
-              </div>
-            </el-popover>
-          </template>
-        </el-table-column>
-        <el-table-column label="日期"
-                         width="180">
-          <template slot-scope="scope">
-            <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="姓名"
-                         width="180">
-          <template slot-scope="scope">
-            <el-popover trigger="hover"
-                        placement="top">
-              <p>姓名: {{ scope.row.name }}</p>
-              <p>住址: {{ scope.row.address }}</p>
-              <div slot="reference"
-                   class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.name }}</el-tag>
-              </div>
-            </el-popover>
-          </template>
+        <el-table-column label="实收金额（元）"
+                         prop="totalGet">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini"
+            <el-button size="small"
                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini"
-                       type="danger"
-                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+    <el-dialog title="分配订单"
+               :visible.sync="editVisible"
+               :close-on-click-modal="false"
+               width="30%">
+      <el-form :model="itemData"
+               :rules="rules">
+        <div class="popout">
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="riseId"
+                            prop="riseId">
+                <el-input v-model="itemData.riseId"
+                          placeholder="请输入riseId"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="真实姓名"
+                            prop="nickName">
+                <el-input v-model="itemData.nickName"
+                          placeholder="请输入真实姓名"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="手机"
+                            prop="phone">
+                <el-input v-model="itemData.phone"
+                          placeholder="请输入手机"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="部门"
+                            prop="department">
+                <el-select v-model="itemData.department"
+                           placeholder="请选择公众号"
+                           clearable
+                           filterable>
+                  <el-option v-for="item in department"
+                             :key="item.name"
+                             :label="item.name"
+                             :value="item.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="职位"
+                            prop="position">
+                <el-select v-model="itemData.position"
+                           placeholder="请选择公众号"
+                           clearable
+                           filterable>
+                  <el-option v-for="item in position"
+                             :key="item.name"
+                             :label="item.name"
+                             :value="item.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-form-item label="组长"
+                          prop="leader">
+              <el-select v-model="itemData.leader"
+                         placeholder="请选择组长"
+                         @change="handleSelect"
+                         clearable
+                         filterable
+                         remote
+                         reserve-keyword
+                         :remote-method="getLeader">
+                <el-option v-for="item in leader"
+                           :key="item.name"
+                           :label="item.name"
+                           :value="item.name">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-row>
+        </div>
+      </el-form>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="handleSubmit(false)">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -122,7 +179,7 @@ export default {
       screenForm: {
 
       },
-      tableData: [],
+      tableData: [{ riseId: '123123', nickName: 'yuyu', audioCourse: 'qweasd', shareInfo: 'asdzxc', purchase: 'tushu', payTime: '2019', totalPay: '100', payBack: '50', totalGet: '50' }],
       value3: ''
     }
   }
