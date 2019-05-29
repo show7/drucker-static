@@ -334,7 +334,9 @@ export default {
       }
     },
     handleSelect (item) {
-      console.log(item)
+      if (item === '') {
+        this.leaderProfileId = ''
+      }
     },
     getList () {
       let param = { page: this.pageIndex };
