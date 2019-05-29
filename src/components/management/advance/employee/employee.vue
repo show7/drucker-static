@@ -509,7 +509,7 @@ export default {
       handler: function (val) {
         this.leader.map(item => {
           if (item.name === this.itemData.leader) {
-            this.leaderProfileId = item.id
+            this.leaderProfileId = item.profileid
           }
         })
       }
