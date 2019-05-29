@@ -50,7 +50,7 @@
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="班级渠道"
+        <!-- <el-form-item label="班级渠道"
                       prop="channel">
           <el-select v-model="item.channel"
                      style="width:250px"
@@ -62,29 +62,38 @@
                        :value="item.label">
             </el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="选择班主任"
-                      prop="headTeacherId">
-          <el-select v-model="item.headTeacherId"
-                     filterable
-                     style="width:250px"
-                     placeholder="请选择班主任">
-            <el-option v-for="item in headTeachers"
-                       :key="item.id"
-                       :label="item.nickName"
-                       :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="请输入优先级"
                       prop="sequence">
           <el-input v-model.number="item.sequence"
                     style="width:250px"
                     autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="选择班主任"
+                      prop="quanwaiEmployeeId">
+          <el-select v-model="item.quanwaiEmployeeId"
+                     filterable
+                     style="width:250px"
+                     placeholder="请选择班主任"
+                     clearable
+                     @change="headerChange(i,item.quanwaiEmployeeId)">
+            <el-option v-for="item in employees"
+                       :key="item.id"
+                       :label="item.name"
+                       :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="微信昵称">
+          <el-autocomplete v-model="item.headTeacherId"
+                           :fetch-suggestions="querySearch"
+                           @select="selectName"
+                           @focus='focusName(i)'></el-autocomplete>
+        </el-form-item>
         <i class="el-icon-delete"
            style="margin-top:15px"
            @click="deleteRow(i)"></i>
+
       </el-form>
     </el-card>
     <el-card shadow="hover"
@@ -148,7 +157,7 @@
                         label-width="150px"
                         prop="qrcodeUrl">
             <div @click="setUploadIndex(i,j)">
-              <el-upload class="avatar-uploader"
+              <!-- <el-upload class="avatar-uploader"
                          action="/pc/upload/file"
                          list-type="picture-card"
                          :limit="1"
@@ -158,7 +167,7 @@
                          :on-change="upPicChange"
                          :on-success="upPicSuccess">
                 <i class="el-icon-plus"></i>
-              </el-upload>
+              </el-upload> -->
             </div>
           </el-form-item>
           <el-form-item label="请输入优先级"
@@ -204,24 +213,30 @@ export default {
       }
     }
     return {
+      itemInedx: 0,
+      headTeacherId: [],
+      nickName: '',
+      searchStr: '',
       addClassType1: [
         {
           classNumber: '',
           channel: '',
           headTeacherId: '',
-          sequence: ''
+          sequence: '',
+          quanwaiEmployeeId: ''
         }
 
       ],
       validate,
       addClassType2: [{
         headTeacherId: '',
+        quanwaiEmployeeId: '',
         groupClasses: [
           {
             classNumber: '',
             channel: '',
             qrcodeUrl: '',
-            sequence: '',
+            sequence: ''
 
           }
         ]
@@ -230,7 +245,8 @@ export default {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }, { type: 'number', message: '班级号为数字值' }],
         headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
         channel: { required: true, message: '请选择渠道', trigger: 'change' },
-        sequence: { required: true, message: '请输入顺序', trigger: 'change' }
+        sequence: { required: true, message: '请输入顺序', trigger: 'change' },
+        quanwaiEmployeeId: { required: true, message: '请选择或输入班主任', trigger: 'change' }
       },
       addClassType2Rules: {
         headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
@@ -247,13 +263,13 @@ export default {
       addRowButton: true,
       classNumbers: [],
       headTeachers: [],
+      employees: [],
       memberLabels: '',
       timeout: null,
       selectIndex: '',
       uploadIndex: '',
-      allClassNumbers: []
-
-
+      allClassNumbers: [],
+      allheadTeachers: []
     }
   },
   computed: {
@@ -273,6 +289,48 @@ export default {
     this.loadTeacher()
   },
   methods: {
+    selectName (itemContent) {
+      this.addClassType1.map((item, index) => { if (index === this.itemInedx) { this.headTeacherId[index] = itemContent.id } })
+      console.log(this.headTeacherId)
+    },
+    focusName (index) {
+      this.itemInedx = index
+    },
+    querySearch (queryString, cb) {
+      let results = queryString !== '' ? this.allheadTeachers.filter(this.createFilter(queryString)) : this.headTeachers;
+      results = results.map(item => { return { value: item.nickName, id: item.id } })
+      // if (results.length === 0) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: '微信昵称未找到!'
+      //   });
+      // }
+      console.log(results)
+      cb(results);
+    },
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.nickName.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    inputName () {
+      this.headTeachers = this.allheadTeachers
+    },
+    headerChange (index, quanwaiEmployeeId) {
+      if (!quanwaiEmployeeId) return
+      const { memberTypeId,
+        term } = this
+      const data = { memberTypeId,
+        quanwaiEmployeeId,
+        term }
+      apiDataFilter.request({
+        data,
+        apiPath: 'manage.classSort.historyName',
+        successCallback: (res) => {
+          this.headTeachers = res.msg
+        }
+      })
+    },
     deleteRow (i) {
       this.$confirm('此操作将删除该条编辑，无法恢复, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -290,7 +348,6 @@ export default {
           message: '已取消删除'
         });
       });
-
     },
     checkPicType (file) {
       const { type } = file
@@ -310,6 +367,7 @@ export default {
       if (type) {
         this.addClassType2.push({
           headTeacherId: '',
+          quanwaiEmployeeId: '',
           groupClasses: [
             {
               classNumber: '',
@@ -320,18 +378,17 @@ export default {
             }
           ]
         })
-
       } else {
         this.addClassType1.push(
           {
             classNumber: '',
             channel: '',
             headTeacherId: '',
+            quanwaiEmployeeId: '',
             sequence: ''
           }
         )
       }
-
     },
     addClassItem (item) {
       console.log(item)
@@ -346,7 +403,6 @@ export default {
     handleSelect (item) {
       const { selectIndex, addClassType1 } = this
       this.$set(this.addClassType1, selectIndex)
-
     },
     loadTeacher () {
       const { memberTypeId, term, entryType: enterType } = this
@@ -358,14 +414,15 @@ export default {
         apiPath: 'manage.classSort.loadTeacher',
         successCallback: (res) => {
           console.log(res)
-          const { classNumbers, headTeachers, memberLabels } = res.msg
+          const { classNumbers, headTeachers, memberLabels, quanwaiEmployees } = res.msg
           this.classNumbers = classNumbers
-          this.headTeachers = headTeachers
+          this.allheadTeachers = headTeachers
           this.memberLabels = memberLabels
+          this.employees = quanwaiEmployees
         }
       })
     },
-    upPicSuccess (res, file, fileList) {//添加图片
+    upPicSuccess (res, file, fileList) { //添加图片
       console.log(res, file, fileList)
       // const isJPG = file.type === 'image/jpeg';
       // if (!isJPG) return this.$message.error('上传头像图片只能是 JPG 格式!');
@@ -380,7 +437,7 @@ export default {
         item.qrcodeUrl = i === j ? msg : item.qrcodeUrl
       })
     },
-    removePic () {//移除图片
+    removePic () { //移除图片
       const [i, j] = this.uploadIndex
       let map = new Map()
       this.addClassType2.forEach((item, i) => {
@@ -396,7 +453,7 @@ export default {
     submitSave () {
       const type = this.entryType
       console.log(type)
-      if (!type) {//班主任
+      if (!type) { //班主任
         const validateList = this.addClassType1.map((item, i) => {
           let validboolen
           this.$refs[`addClassType1${i}`][0].validate((valid) => {
@@ -431,8 +488,12 @@ export default {
     },
     saveSubmit (data) {
       const { entryType } = data
+      let newdata = JSON.parse(JSON.stringify(data))
+      console.log(newdata.classes)
+      newdata.classes.map((item, index) => { item.headTeacherId = this.headTeacherId[index] })
+      console.log(newdata)
       apiDataFilter.request({
-        data,
+        data: newdata,
         method: 'post',
         apiPath: `manage.classSort.${entryType ? 'saveGroup' : 'saveTeacher'}`,
         successCallback: (res) => {
@@ -464,4 +525,3 @@ export default {
 <style lang="less">
 @import "./addClass.less";
 </style>
-

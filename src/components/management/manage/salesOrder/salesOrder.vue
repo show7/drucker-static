@@ -17,8 +17,9 @@
                :inline="true">
 
         <el-col :span="12">
-          <el-form-item label="支付时间">
-            <el-date-picker v-model="value6"
+          <el-form-item label="支付时间"
+                        prop="paymentDate">
+            <el-date-picker v-model="screenForm.paymentDate"
                             type="daterange"
                             range-separator="至"
                             start-placeholder="开始日期"
@@ -27,10 +28,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="选择班主任">
-            <el-select v-model="value"
-                       placeholder="请选择">
-              <el-option v-for="item in options"
+          <el-form-item label="选择班主任"
+                        prop="teacher">
+            <el-select v-model="screenForm.teacher"
+                       placeholder="请选择班主任">
+              <el-option v-for="item in teacherList"
                          :key="item.value"
                          :label="item.label"
                          :value="item.value">
@@ -41,8 +43,8 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="学员查询">
-              <el-input v-model="input"
-                        placeholder="请输入内容"></el-input>
+              <el-input v-model="screenForm.studentInfo"
+                        placeholder="学员昵称/ID/学号"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -128,8 +130,31 @@ export default {
   data () {
     return {
       screenForm: {
-
-      }
+        paymentDate: [],
+        teacher: '',
+        studentInfo: ''
+      },
+      screenRules: {
+        paymentDate: { required: true, message: '请输入支付日期', trigger: 'change' },
+        teacher: { required: true, message: '请选择班主任', trigger: 'change' },
+        studentInfo: { required: true, message: '学员昵称/ID/学号', trigger: 'change' }
+      },
+      tableData: [
+        {
+          riseId: '12121',
+          userNickName: '昵称',//用户昵称
+          classNumber: '121',//体验课班级
+          teacherInfo: {
+            teacherName: '灭霸', //班主任姓名
+            teacherNickName: '灭霸爸爸' //班主任昵称
+          },
+          buyCourse: 'L1项目', //购买项目
+          paymentDate: '2018-10-21', //支付日期
+          amountReceived: '1200', //实际支付金额
+          efundAmount: '1200', //退款金额
+          AmountReceived: '1200'//实收金额
+        }
+      ]
     }
   }
 }

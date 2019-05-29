@@ -1,9 +1,14 @@
-'use strict';
+'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
+<<<<<<< HEAD
 const path = require('path');
 const targetUrl = 'https://www.confucius.mobi';
+=======
+const path = require('path')
+const targetUrl = 'https://www.confucius.mobi'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
 module.exports = {
   dev: {
     // Paths
@@ -15,105 +20,145 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/pc/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/rise/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/subscribe/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/cache/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/backend/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/file/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
+        }
       },
       '/wx/*': {
         target: targetUrl,
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
+<<<<<<< HEAD
           if (
             req.headers.accept &&
             req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
+=======
+          if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+            return 'index.html'
+>>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
-        },
-      },
+        }
+      }
     },
 
     // Various Dev Server settings
@@ -144,7 +189,7 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true,
+    cssSourceMap: true
   },
 
   build: {
@@ -176,6 +221,6 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report,
-  },
-};
+    bundleAnalyzerReport: process.env.npm_config_report
+  }
+}
