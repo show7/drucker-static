@@ -39,12 +39,15 @@
     <el-card shadow="hover">
       <el-table :data="selectItem.projectList"
                 style="width: 100%">
-        <!-- <el-table-column label="项目名称"
+        <el-table-column label="体验课项目"
                          width="180">
           <template slot-scope="scope">
-            <span>{{ scope.row.memberTypeName }}</span>
+            <div slot="reference"
+                 class="name-wrapper">
+              {{ scope.row.typeName }}
+            </div>
           </template>
-        </el-table-column> -->
+        </el-table-column>
         <el-table-column label="体验课期数">
           <template slot-scope="scope">
             <div slot="reference"
@@ -84,6 +87,10 @@
               {{ scope.row.closeDate }}
             </div>
           </template>
+        </el-table-column>
+        <el-table-column label="体验课项目"
+                         width="180"
+                         prop='typeName'>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -327,7 +334,6 @@ export default {
               type: 'success'
             });
             this.load()
-
           }
         })
       }).catch(() => {
@@ -336,7 +342,6 @@ export default {
           message: '已取消删除'
         });
       });
-
     }
 
   }
@@ -347,4 +352,3 @@ export default {
 <style lang="less">
 @import "./classScheduling.less";
 </style>
-

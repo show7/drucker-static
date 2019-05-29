@@ -84,7 +84,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="微信昵称">
+        <el-form-item label="微信昵称"
+                      prop='headTeacherId'>
           <el-autocomplete v-model="item.headTeacherId"
                            :fetch-suggestions="querySearch"
                            @select="selectName"
@@ -243,10 +244,10 @@ export default {
       }],
       addClassTypeRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }, { validator: validate, trigger: 'blur' }, { type: 'number', message: '班级号为数字值' }],
-        headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
+        headTeacherId: { required: true, message: '请选择或输入微信昵称', trigger: 'change' },
         channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' },
-        quanwaiEmployeeId: { required: true, message: '请选择或输入班主任', trigger: 'change' }
+        quanwaiEmployeeId: { required: true, message: '请选择班主任', trigger: 'change' }
       },
       addClassType2Rules: {
         headTeacherId: { required: true, message: '请选择班主任', trigger: 'change' },
