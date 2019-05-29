@@ -69,7 +69,7 @@
         </el-pagination>
       </div>
 
-      <el-dialog title="编辑员工"
+      <el-dialog title="添加员工"
                  :visible.sync="dialogVisible"
                  :close-on-click-modal="false"
                  width="30%">
