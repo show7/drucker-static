@@ -171,6 +171,7 @@ export default {
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
     saveGroup: 'pc/drainage/class/group/save', //添加群二维码
     upClass: 'pc/drainage/class/update',
+    flowInfo: 'pc/drainage/class/load/flow/info', //查看分布
     historyName: 'pc/drainage/load/pre/teacher'
   },
   publicCheck: {
