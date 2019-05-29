@@ -45,6 +45,12 @@
           <template slot="title">投放管理</template>
           <el-menu-item index="/management/manage/putInHistory">投放历史</el-menu-item>
         </el-submenu>
+        <el-submenu index="10">
+          <template slot="title">业务管理</template>
+          <el-menu-item index="/management/manage/salesOrder">销售订单管理</el-menu-item>
+          <el-menu-item index="/management/manage/disputeOrder">争议订单认领</el-menu-item>
+          <el-menu-item index="/management/manage/historicalRefund">历史退款管理</el-menu-item>
+        </el-submenu>
         <el-submenu index="7">
           <template slot="title">学籍管理</template>
           <el-menu-item index="/management/manage/statuschange">修改学籍</el-menu-item>

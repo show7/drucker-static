@@ -2,7 +2,7 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require ('path');
+const path = require('path');
 const targetUrl = 'https://www.confucius.mobi';
 module.exports = {
   dev: {
@@ -17,7 +17,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -30,7 +30,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -43,7 +43,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -56,7 +56,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -69,7 +69,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -82,7 +82,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -95,7 +95,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -108,7 +108,7 @@ module.exports = {
         bypass: function (req) {
           if (
             req.headers.accept &&
-            req.headers.accept.indexOf ('html') !== -1
+            req.headers.accept.indexOf('html') !== -1
           ) {
             return 'index.html';
           }
@@ -149,14 +149,13 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve (__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve (__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: process.env.VERSION
-      ? `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/`
-      : '/script/drucker_js/',
+    assetsPublicPath: process.env.VERSION ?
+      `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/` : '/script/drucker_js/',
 
     /**
      * Source Maps
