@@ -143,7 +143,6 @@
                               prop="leader">
                   <el-select v-model="itemData.leader"
                              placeholder="请选择组长"
-                             @change="handleSelect"
                              clearable
                              filterable
                              remote
@@ -240,7 +239,6 @@
                             prop="leader">
                 <el-select v-model="itemData.leader"
                            placeholder="请选择组长"
-                           @change="handleSelect"
                            clearable
                            filterable
                            remote
@@ -334,9 +332,7 @@ export default {
       }
     },
     handleSelect (item) {
-      if (item === '') {
-        this.leaderProfileId = ''
-      }
+      console.log(item)
     },
     getList () {
       let param = { page: this.pageIndex };
@@ -368,7 +364,6 @@ export default {
         successCallback: (res) => {
           let result = res.msg;
           this.leader = result
-          // this.leaderProfileId = ''
           this.leader.map(item => {
             if (item.name === this.itemData.leader) {
               this.leaderProfileId = item.profileId
@@ -436,7 +431,6 @@ export default {
         this.$message.error('请填写完整信息');
         return
       }
-      this.leaderProfileId = this.itemData.leader === '' ? '' : this.leaderProfileId
       const itemData = this.itemData
       let param = {
         nickName: itemData.nickName,
@@ -520,13 +514,13 @@ export default {
       handler: function (val) {
         if (val === '') {
           this.leaderProfileId = ''
-          return
+        } else {
+          this.leader.map(item => {
+            if (item.name === this.itemData.leader) {
+              this.leaderProfileId = item.profileId
+            }
+          })
         }
-        this.leader.map(item => {
-          if (item.name === this.itemData.leader) {
-            this.leaderProfileId = item.profileId
-          }
-        })
       }
     }
   }
