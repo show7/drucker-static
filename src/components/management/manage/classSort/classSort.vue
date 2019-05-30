@@ -278,7 +278,7 @@ export default {
     }
     return {
       quanwaiEmployees: [],
-      quanwaiEmployeesId: '',
+      quanwaiEmployeeId: '',
       selectForm: {
         projectPeriod: [],
         selectClass: {
@@ -507,7 +507,7 @@ export default {
         headTeacherId = id
       }
       let nickName = headTeacher.nickName
-      this.quanwaiEmployeesId = row.quanwaiEmployee != null ? row.quanwaiEmployee.id : null
+      this.quanwaiEmployeeId = row.quanwaiEmployee != null ? row.quanwaiEmployee.id : null
       const editForm = {
         classNumber,
         channel,
@@ -528,8 +528,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
         const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees } = this.editForm
+        let quanwaiEmployeeId = ''
+        this.quanwaiEmployees.map((item) => { if (item.name === quanwaiEmployees) { quanwaiEmployeeId = item.id } })
         const params = {
-          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees
+          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployeeId
         }
         apiDataFilter.request({
           apiPath: 'manage.classSort.upClass',
