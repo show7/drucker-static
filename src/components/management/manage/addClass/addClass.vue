@@ -86,10 +86,29 @@
         </el-form-item>
         <el-form-item label="微信昵称"
                       prop='headTeacherId'>
-          <el-autocomplete v-model="item.headTeacherId"
+          <!-- <el-autocomplete v-model="item.headTeacherId"
                            :fetch-suggestions="querySearch"
                            @select="selectName"
-                           @focus='focusName(i)'></el-autocomplete>
+                           @focus='focusName(i)'
+                           @change='selectName'></el-autocomplete> -->
+          <el-select v-model="item.headTeacherId"
+                     style="width:250px"
+                     value-key="typeName"
+                     placeholder="请选择"
+                     filterable
+                     clearable
+                     @focus='focusName(i)'
+                     @change="selectName">
+            <el-option-group v-for="group in headTeachers"
+                             :key="group.label"
+                             :label="group.label">
+              <el-option v-for="item in group.options"
+                         :key="item.id"
+                         :label="item.nickName"
+                         :value="item.id">
+              </el-option>
+            </el-option-group>
+          </el-select>
         </el-form-item>
         <i class="el-icon-delete"
            style="margin-top:15px"
@@ -291,7 +310,8 @@ export default {
   },
   methods: {
     selectName (itemContent) {
-      this.addClassType1.map((item, index) => { if (index === this.itemInedx) { this.headTeacherId[index] = itemContent.id } })
+      console.log(itemContent)
+      this.addClassType1.map((item, index) => { if (index === this.itemInedx) { this.headTeacherId[index] = itemContent } })
       console.log(this.headTeacherId)
     },
     focusName (index) {
@@ -328,7 +348,8 @@ export default {
         data,
         apiPath: 'manage.classSort.historyName',
         successCallback: (res) => {
-          this.headTeachers = res.msg
+          this.headTeachers = [{ label: '历史昵称', options: res.msg }, { label: '全部昵称', options: this.allheadTeachers }]
+          console.log(this.headTeachers)
         }
       })
     },
@@ -490,9 +511,8 @@ export default {
     saveSubmit (data) {
       const { entryType } = data
       let newdata = JSON.parse(JSON.stringify(data))
-      console.log(newdata.classes)
+      console.log(this.headTeacherId)
       newdata.classes.map((item, index) => { item.headTeacherId = this.headTeacherId[index] })
-      console.log(newdata)
       apiDataFilter.request({
         data: newdata,
         method: 'post',
