@@ -53,7 +53,8 @@
     </el-card>
     <br>
     <el-card shadow="hover">
-      <el-table :data="tableData">
+      <el-table :data="tableData"
+                v-loading="loading">
         <!-- <el-table-column prop="classType"
                          label="班级类型">
         </el-table-column> -->
@@ -97,9 +98,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="channel"
+        <!-- <el-table-column prop="channel"
                          label="投放渠道">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div>
@@ -181,7 +182,7 @@
                      :rules="{ required: true, message: '请选择班主任', trigger: 'change' }"
                      :disabled="editdDisabled"
                      style="width:250px"
-                     placeholder="请选择班主任">
+                     :placeholder="editdDisabled ? '':'请选择班主任'">
             <el-option v-for="item in quanwaiEmployees"
                        :key="item.name"
                        :label="item.name"
@@ -334,7 +335,8 @@ export default {
       editdDisabled: false,
       editIndex: '',
       distributionPopup: false,
-      distributionData: []
+      distributionData: [],
+      loading: false
     }
   },
   mounted () {
@@ -404,6 +406,7 @@ export default {
       }
     },
     loadPageList (page) { // 筛选班级
+      this.loading = true
       const { projectPeriod, selectClass } = this.selectForm
       const [memberTypeId, term] = projectPeriod
       const { entryType } = selectClass
@@ -420,6 +423,7 @@ export default {
         apiPath: 'manage.classSort.listLoad',
         data: params,
         successCallback: (res) => {
+          this.loading = false
           console.log(res)
           if (res.code !== 200) return
 
@@ -431,6 +435,10 @@ export default {
           this.currentPage = currentPage
           this.total = total
           this.tableData = list
+        },
+        errorCallback: (err) => {
+          this.loading = false
+          this.$message.error(err)
         }
       })
     },
