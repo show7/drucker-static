@@ -53,11 +53,11 @@ export default {
   data () {
     return {
       itemList: [{ name: '小程序', path: '/management/wechat' },
-        { name: '课程相关', path: '/management/course' },
-        { name: '运营功能相关', path: '/management/manage' },
-        { name: '数据运营', path: '/management/steve' },
-        { name: '管理员功能', path: '/management/admin' },
-        { name: '高级功能', path: '/management/advance' }
+      { name: '课程相关', path: '/management/course' },
+      { name: '运营功能相关', path: '/management/manage' },
+      { name: '数据运营', path: '/management/steve' },
+      { name: '管理员功能', path: '/management/admin' },
+      { name: '高级功能', path: '/management/advance' }
       ],
       activeIndex: '/management/wechat',
       userName: '',
@@ -114,6 +114,7 @@ export default {
       apiDataFilter.request({
         apiPath: 'common.info',
         successCallback: (res) => {
+          window.ENV = { ...window.ENV, ...res.msg }
           this.userName = res.msg.nickname;
           this.headImgUrl = res.msg.headimgurl;
         }

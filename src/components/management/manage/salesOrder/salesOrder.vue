@@ -15,19 +15,7 @@
       <el-form ref="screenForm"
                :model="screenForm"
                :inline="true">
-
-        <el-col :span="12">
-          <el-form-item label="支付时间"
-                        prop="paymentDate">
-            <el-date-picker v-model="screenForm.paymentDate"
-                            type="daterange"
-                            range-separator="至"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期">
-            </el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <el-form-item label="选择班主任"
                         prop="teacher">
             <el-select v-model="screenForm.teacher"
@@ -40,12 +28,35 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="8">
+          <el-form-item label="学员查询">
+            <el-select v-model="screenForm.studentInfoType"
+                       placeholder="选择查询类型">
+              <el-option label="区域一"
+                         value="shanghai"></el-option>
+              <el-option label="区域二"
+                         value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="">
+            <el-input v-model="screenForm.studentInfo"
+                      placeholder="学员昵称/ID/学号"></el-input>
+          </el-form-item>
+        </el-col>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学员查询">
-              <el-input v-model="screenForm.studentInfo"
-                        placeholder="学员昵称/ID/学号"></el-input>
+            <el-form-item label="支付时间"
+                          prop="paymentDate">
+              <el-date-picker v-model="screenForm.paymentDate"
+                              type="daterange"
+                              range-separator="至"
+                              start-placeholder="开始日期"
+                              end-placeholder="结束日期">
+              </el-date-picker>
             </el-form-item>
+
           </el-col>
           <el-col :span="12">
             <el-button type="primary">筛选报表</el-button>
@@ -132,13 +143,20 @@ export default {
       screenForm: {
         paymentDate: [],
         teacher: '',
-        studentInfo: ''
+        studentInfoType: 1
       },
       screenRules: {
         paymentDate: { required: true, message: '请输入支付日期', trigger: 'change' },
         teacher: { required: true, message: '请选择班主任', trigger: 'change' },
         studentInfo: { required: true, message: '学员昵称/ID/学号', trigger: 'change' }
       },
+      teacherList: [
+        { value: '1', label: '' },
+        { value: '', label: '' }
+      ],
+      studentInfoTypeList: [
+
+      ],
       tableData: [
         {
           riseId: '12121',
