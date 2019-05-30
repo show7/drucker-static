@@ -2,13 +2,8 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-<<<<<<< HEAD
-const path = require('path');
-const targetUrl = 'https://www.confucius.mobi';
-=======
 const path = require('path')
 const targetUrl = 'https://www.confucius.mobi'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
 module.exports = {
   dev: {
     // Paths
@@ -20,16 +15,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -38,16 +25,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -56,16 +35,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -74,16 +45,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -92,16 +55,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -110,16 +65,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -128,16 +75,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       },
@@ -146,16 +85,8 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         bypass: function (req) {
-<<<<<<< HEAD
-          if (
-            req.headers.accept &&
-            req.headers.accept.indexOf('html') !== -1
-          ) {
-            return 'index.html';
-=======
           if (req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
             return 'index.html'
->>>>>>> 0090fe834faa73ae5bb057220c1aa922113f314c
           }
         }
       }
@@ -163,7 +94,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 4000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 4001, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

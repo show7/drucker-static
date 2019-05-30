@@ -171,8 +171,8 @@ export default {
     saveTeacher: 'pc/drainage/class/teacher/save', //添加班主任
     saveGroup: 'pc/drainage/class/group/save', //添加群二维码
     upClass: 'pc/drainage/class/update',
-    flowInfo: 'pc/drainage/class/load/flow/info', //查看分布
-    historyName: 'pc/drainage/load/pre/teacher'
+    historyName: 'pc/drainage/load/pre/teacher',
+    flowInfo: 'pc/drainage/class/load/flow/info' //查看分布
   },
   publicCheck: {
     load: 'pc/wechat/load/recommend', //加载类型 manage.publicCheck.load
@@ -190,6 +190,6 @@ export default {
     confirmClaim: 'pc/performance/order/apply', //确认认领
     loadSelectInfo: 'pc/performance/init', //加载下拉信息,
     delete: 'pc/performance/order/delete', //删除
-    rejectAndAdopt: '/order/check' //驳回&&通过申请
+    rejectAndAdopt: 'pc/performance/order/check' //驳回&&通过申请
   }
 }
