@@ -182,7 +182,7 @@
                      :rules="{ required: true, message: '请选择班主任', trigger: 'change' }"
                      :disabled="editdDisabled"
                      style="width:250px"
-                     placeholder="请选择班主任">
+                     :placeholder="editdDisabled ? '':'请选择班主任'">
             <el-option v-for="item in quanwaiEmployees"
                        :key="item.name"
                        :label="item.name"
