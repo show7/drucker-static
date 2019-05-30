@@ -93,21 +93,12 @@
         <el-table-column prop="actualQuantity"
                          label="实际到客">
           <template slot-scope="scope">
-<<<<<<< HEAD
-            <span>添加班主任：{{scope.row.actualQuantity}}</span>
-            <span>加入班级群：{{scope.row.actualEnterGroupQuantity}}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="channel"
-=======
             <span>添加班主任：{{scope.row.actualQuantity ? scope.row.actualQuantity:0}}</span>
             <span>加入班级群：{{scope.row.actualEnterGroupQuantity ? scope.row.actualEnterGroupQuantity:0}}</span>
           </template>
         </el-table-column>
 
         <!-- <el-table-column prop="channel"
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
                          label="投放渠道">
         </el-table-column> -->
         <el-table-column label="操作">
@@ -256,28 +247,17 @@
                :visible.sync="distributionPopup">
       <el-table :data="distributionData">
         <el-table-column property="channelName"
-<<<<<<< HEAD
-                         label="渠道"
-                         width="150"></el-table-column>
-        <el-table-column property='actualQuantity'
-                         label="到客周期"
-                         width="200">
-=======
                          label="渠道"></el-table-column>
         <el-table-column property='actualQuantity'
                          label="到客周期">
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
           <template slot-scope="scope">
             <span>{{scope.row.firstReachDate}} ~ {{scope.row.lastReachDate}}</span>
           </template>
         </el-table-column>
         <el-table-column property="channelCount"
                          label="公众号到客"></el-table-column>
-<<<<<<< HEAD
-=======
         <el-table-column property="channelAnalysis"
                          label="渠道分析"></el-table-column>
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
       </el-table>
     </el-dialog>
   </div>
@@ -314,15 +294,9 @@ export default {
       },
       editFormRules: {
         classNumber: [{ required: true, message: '请输入班级号', trigger: 'change' }],
-<<<<<<< HEAD
-        channel: { required: true, message: '请选择渠道', trigger: 'change' },
-        sequence: { required: true, message: '请输入顺序', trigger: 'change' },
-        actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
-=======
         // channel: { required: true, message: '请选择渠道', trigger: 'change' },
         sequence: { required: true, message: '请输入顺序', trigger: 'change' }
         // actualEnterGroupQuantity: { required: true, message: '请输入加入班级群', trigger: 'change' }
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
       },
       classTypeList: [{
         typeName: '扫码加班主任',
@@ -346,13 +320,9 @@ export default {
         headTeacherId: '',
         sequence: '',
         operateRotateId: '',
-<<<<<<< HEAD
-        actualEnterGroupQuantity: ''
-=======
         actualEnterGroupQuantity: '',
         nickName: '',
         quanwaiEmployees: ''
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
       },
       classNumbers: [],
       headTeachers: [],
@@ -365,12 +335,8 @@ export default {
       editdDisabled: false,
       editIndex: '',
       distributionPopup: false,
-<<<<<<< HEAD
-      distributionData: []
-=======
       distributionData: [],
       loading: false
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
     }
   },
   mounted () {
@@ -530,11 +496,7 @@ export default {
     handleEdit (row, i) { // 编辑
       this.editIndex = i
       const { entryType } = this
-<<<<<<< HEAD
-      const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId, actualEnterGroupQuantity } = row
-=======
       const { classNumber, sequence, channel, actualQuantity, headTeacher, enterGroupQrCode, termActiveDate, id: operateRotateId, actualEnterGroupQuantity, quanwaiEmployee } = row
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
       this.editdDisabled = new Date() > new Date(termActiveDate.replace(/-/g, '/'))
       let qrcodeUrl, headTeacherId
       if (entryType) {
@@ -552,13 +514,9 @@ export default {
         sequence,
         actualQuantity,
         operateRotateId,
-<<<<<<< HEAD
-        actualEnterGroupQuantity
-=======
         actualEnterGroupQuantity,
         nickName,
         quanwaiEmployees: row.quanwaiEmployee != null ? row.quanwaiEmployee.name : ''
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
       }
       this.editForm = entryType ? Object.assign(editForm, { qrcodeUrl }) : Object.assign(editForm, { headTeacherId })
 
@@ -569,17 +527,11 @@ export default {
     editSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) return
-<<<<<<< HEAD
-        const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId } = this.editForm
-        const params = {
-          actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId
-=======
         const { actualQuantity, actualEnterGroupQuantity, classNumber, headTeacherId, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployees } = this.editForm
         let quanwaiEmployeeId = ''
         this.quanwaiEmployees.map((item) => { if (item.name === quanwaiEmployees) { quanwaiEmployeeId = item.id } })
         const params = {
           actualQuantity, actualEnterGroupQuantity, headTeacherId, classNumber, sequence, channel, qrcodeUrl, operateRotateId, nickName, quanwaiEmployeeId
->>>>>>> f7266f528b64d7ac96f7af6c3bfd76cad91a4b3f
         }
         apiDataFilter.request({
           apiPath: 'manage.classSort.upClass',
