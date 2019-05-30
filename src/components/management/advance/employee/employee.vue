@@ -364,11 +364,11 @@ export default {
         successCallback: (res) => {
           let result = res.msg;
           this.leader = result
-          // this.leader.map(item => {
-          //   if (item.name === this.itemData.leader) {
-          //     this.leaderProfileId = item.profileId
-          //   }
-          // })
+          this.leader.map(item => {
+            if (item.name === this.itemData.leader) {
+              this.leaderProfileId = item.profileId
+            }
+          })
         }
       })
     },
@@ -387,6 +387,7 @@ export default {
     handleEdit (index, row) {
       this.itemData = Object.assign(this.itemData, row)
       this.editVisible = true
+      this.leaderProfileId = ''
       this.getLeader(this.itemData.leader)
     },
     handleDevice (index, row) {
