@@ -1,3 +1,5 @@
+//权限判断
+
 export class Authentication {
   constructor (departmentId, positionId) {
     this.departmentId = departmentId

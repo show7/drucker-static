@@ -63,6 +63,7 @@
                 <el-radio label="pic">pic</el-radio>
                 <el-radio label="view">view</el-radio>
                 <el-radio label="parent">parent</el-radio>
+                <el-radio label="click">click</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -70,7 +71,7 @@
         <el-row>
           <el-col :span="24">
             <div class="grid-content type-content">
-              <el-input v-if="singleButton.type== 'text'" type="textarea" :rows="4" placeholder="请输入内容" v-model="singleButton.value"></el-input>
+              <el-input v-if="singleButton.type== 'text' || singleButton.type== 'click'" type="textarea" :rows="4" placeholder="请输入内容" v-model="singleButton.value"></el-input>
               <el-input v-if="singleButton.type== 'view'" v-model="singleButton.value" placeholder="请输入url"></el-input>
               <div class="lang-url" v-if="singleButton.type=='pic'">
                 <el-upload

@@ -108,7 +108,7 @@
                 <el-form-item label="部门"
                               prop="department">
                   <el-select v-model="itemData.department"
-                             placeholder="请选择公众号"
+                             placeholder="请选择部门"
                              clearable
                              filterable>
                     <el-option v-for="item in department"
@@ -125,7 +125,7 @@
                 <el-form-item label="职位"
                               prop="position">
                   <el-select v-model="itemData.position"
-                             placeholder="请选择公众号"
+                             placeholder="请选择职位"
                              clearable
                              filterable>
                     <el-option v-for="item in position"
@@ -143,7 +143,6 @@
                               prop="leader">
                   <el-select v-model="itemData.leader"
                              placeholder="请选择组长"
-                             @change="handleSelect"
                              clearable
                              filterable
                              remote
@@ -167,7 +166,7 @@
                      @click="handleSubmit(true)">确 定</el-button>
         </span>
       </el-dialog>
-      <el-dialog title="添加员工"
+      <el-dialog title="编辑员工"
                  :visible.sync="editVisible"
                  :close-on-click-modal="false"
                  width="30%">
@@ -206,7 +205,7 @@
                 <el-form-item label="部门"
                               prop="department">
                   <el-select v-model="itemData.department"
-                             placeholder="请选择公众号"
+                             placeholder="请选择部门"
                              clearable
                              filterable>
                     <el-option v-for="item in department"
@@ -223,7 +222,7 @@
                 <el-form-item label="职位"
                               prop="position">
                   <el-select v-model="itemData.position"
-                             placeholder="请选择公众号"
+                             placeholder="请选择职位"
                              clearable
                              filterable>
                     <el-option v-for="item in position"
@@ -240,7 +239,6 @@
                             prop="leader">
                 <el-select v-model="itemData.leader"
                            placeholder="请选择组长"
-                           @change="handleSelect"
                            clearable
                            filterable
                            remote
@@ -300,10 +298,10 @@ export default {
       },
       rules: {
         riseId: [
-          { required: true, message: '请选择项目', trigger: 'blur' }
+          { required: true, message: '请输入riseId', trigger: 'blur' }
         ],
         nickName: [
-          { required: true, message: '请选择项目', trigger: 'blur' }
+          { required: true, message: '请输入真实姓名', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机', trigger: 'blur' }
@@ -366,6 +364,11 @@ export default {
         successCallback: (res) => {
           let result = res.msg;
           this.leader = result
+          this.leader.map(item => {
+            if (item.name === this.itemData.leader) {
+              this.leaderProfileId = item.profileId
+            }
+          })
         }
       })
     },
@@ -384,6 +387,7 @@ export default {
     handleEdit (index, row) {
       this.itemData = Object.assign(this.itemData, row)
       this.editVisible = true
+      this.leaderProfileId = ''
       this.getLeader(this.itemData.leader)
     },
     handleDevice (index, row) {
@@ -424,7 +428,7 @@ export default {
       });
     },
     handleSubmit (isAdd) {
-      if (!this.itemData.nickName || !this.itemData.riseId || !this.itemData.phone || !this.departmentId || !this.positionId || !this.leaderProfileId) {
+      if (!this.itemData.nickName || !this.itemData.riseId || !this.itemData.phone /*|| !this.departmentId || !this.positionId || !this.leaderProfileId*/) {
         this.$message.error('请填写完整信息');
         return
       }
@@ -491,12 +495,14 @@ export default {
     'itemData.department': {
       deep: true,
       handler: function (val) {
+        this.departmentId = ''
         this.mapArr(val)
       }
     },
     'itemData.position': {
       deep: true,
       handler: function (val) {
+        this.positionId = ''
         this.position.map(item => {
           if (item.name === this.itemData.position) {
             this.positionId = item.id
@@ -507,11 +513,15 @@ export default {
     'itemData.leader': {
       deep: true,
       handler: function (val) {
-        this.leader.map(item => {
-          if (item.name === this.itemData.leader) {
-            this.leaderProfileId = item.profileId
-          }
-        })
+        if (val === '') {
+          this.leaderProfileId = ''
+        } else {
+          this.leader.map(item => {
+            if (item.name === this.itemData.leader) {
+              this.leaderProfileId = item.profileId
+            }
+          })
+        }
       }
     }
   }
