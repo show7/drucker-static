@@ -184,5 +184,12 @@ export default {
     loadPageList: 'pc/flow/channel/history',
     channelAnalysis: 'pc/flow/channel/analysis', //渠道分析
     delete: 'pc/flow/channel/qrCode/delete'
+  },
+  salesOrder: {
+    loadScreeningList: 'pc/performance/order/load', //筛选查询
+    confirmClaim: 'pc/performance/order/apply', //确认认领
+    loadSelectInfo: 'pc/performance/init', //加载下拉信息,
+    delete: 'pc/performance/order/delete', //删除
+    rejectAndAdopt: 'pc/performance/order/check' //驳回&&通过申请
   }
 }

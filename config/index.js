@@ -94,7 +94,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 4000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 4001, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -130,9 +130,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: process.env.VERSION
-      ? `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/`
-      : '/script/drucker_js/',
+    assetsPublicPath: process.env.VERSION ?
+      `https://static.iqycamp.com/script/drucker_js/${process.env.VERSION}/` : '/script/drucker_js/',
 
     /**
      * Source Maps

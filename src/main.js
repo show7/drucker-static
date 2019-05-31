@@ -13,6 +13,7 @@ import './style/theme/index.css';
 import App from './App';
 import router from './router';
 import apiDataFilter from './libraries/apiDataFilter';
+import store from './store'
 import {
   initSentry
 } from './libraries/sentry';
@@ -66,6 +67,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },
