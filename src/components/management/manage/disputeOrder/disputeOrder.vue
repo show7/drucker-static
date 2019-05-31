@@ -252,7 +252,7 @@ export default {
         status: { required: false, message: '请选择认领状态', trigger: 'change' }
       },
       studentTypeList: [{
-        label: '学院昵称', value: 'nickname'
+        label: '学员昵称', value: 'nickname'
       }, {
         label: 'ID', value: 'riseId'
       }, {
