@@ -17,7 +17,7 @@ import store from './store'
 import {
   initSentry
 } from './libraries/sentry';
-require('@/mock');
+// require('@/mock');
 router.beforeEach((to, from, next) => {
   if (to.path != '/login') {
     let param = {

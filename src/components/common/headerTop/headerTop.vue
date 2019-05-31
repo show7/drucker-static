@@ -63,7 +63,7 @@ export default {
       apiDataFilter.request({
         apiPath: 'common.info',
         successCallback: (res) => {
-          window.ENV = { ...window.ENV, ...res.msg }
+          window.ENV = res.msg
           this.userName = res.msg.nickname;
           this.headImgUrl = res.msg.headimgurl;
         }

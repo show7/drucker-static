@@ -16,7 +16,7 @@
                :rules="queryFormRules"
                :model="queryForm">
         <el-row>
-          <el-col :span="6">
+          <el-col :lg="12">
             <el-form-item label="学员查询"
                           prop="type">
               <el-select v-model="queryForm.type"
@@ -28,14 +28,13 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="7">
             <el-form-item prop="userInfo">
               <el-input v-model="queryForm.userInfo"
+                        clearable
                         placeholder="学员昵称/ID/学号"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :lg="12">
             <el-form-item label="购买项目"
                           prop="memberTypeId">
               <el-select v-model="queryForm.memberTypeId"
@@ -48,7 +47,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :lg="7">
             <el-form-item label="认领状态"
                           prop="status">
               <el-select v-model="queryForm.status"
@@ -60,7 +59,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="3">
+          <el-col :lg="3">
             <el-button @click="queryFiltering('queryForm')"
                        type="primary">查询</el-button>
           </el-col>
@@ -116,7 +115,7 @@
         <el-table-column label="操作"
                          align="center">
           <template slot-scope="scope">
-            <div v-show="!scope.row.status && userRole && [1,2,3].includes(userRole)">
+            <div v-show="!scope.row.status && userRole && [1,2,3,4].includes(userRole)">
               <el-button size="mini"
                          @click="handleEdit(scope.row,scope.$index)">认领申请</el-button>
               <br>
@@ -134,10 +133,9 @@
             </div>
             <div v-show="scope.row.status === 2 ">
               <el-button size="mini"
-                         type="success">已审核</el-button>
+                         type="success">审核通过</el-button>
               <br>
             </div>
-
             <div>
               <el-button size="mini"
                          type="danger"
@@ -187,6 +185,7 @@
                     v-show="!popupType">{{applyForm.applyReason}}</el-tag>
             <el-input type="textarea"
                       :rows="2"
+                      clearable
                       v-show="popupType"
                       placeholder="请输入认领理由"
                       v-model="applyForm.applyReason"></el-input>
@@ -203,6 +202,7 @@
                        action="/pc/upload/file"
                        list-type="picture"
                        :limit="1"
+                       accept="image/*"
                        :multiple="false"
                        :on-success="upPicSuccess"
                        :on-remove="handleRemove"
@@ -303,9 +303,11 @@ export default {
   methods: {
     ...mapActions(['setUserInfo']),
     handleEdit (row) {
+      this.fileList = []
       this.popupType = 1
       this.dialogFormVisible = true
       this.applyForm = { ...this.applyForm, ...row }
+      this.$refs['applyForm'].resetFields();
     },
     queryFiltering (formName) {
       this.$refs[formName].validate(valid => {
@@ -326,6 +328,9 @@ export default {
         successCallback: (res) => {
           console.log(res)
           this.tableData = res.msg
+        },
+        errorCallback () {
+          this.$refs['applyForm'].resetFields();
         }
       })
     },
@@ -342,6 +347,7 @@ export default {
       this.popupType = 0
       this.dialogFormVisible = true
       this.applyForm = { ...this.applyForm, ...row }
+      this.$refs['applyForm'].resetFields();
     },
     confirmClaim (formName) { //确定认领
       const { id: disputeId, proofPictures, applyReason, teacher } = this.applyForm
@@ -354,11 +360,13 @@ export default {
           method: 'post',
           successCallback: (res) => {
             console.log(res)
-
             this.$message({
               type: 'success',
               message: '确认认领成功!'
             });
+            this.loadList()
+            this.applyForm = {}
+            this.$refs['applyForm'].resetFields();
             this.dialogFormVisible = false
           }
         })
@@ -378,7 +386,7 @@ export default {
     },
     async handleDelete (row) {
       const { id } = row
-      await this.$confirm('此操作将删除该员工, 是否继续?', '提示', {
+      await this.$confirm('此操作将删除该争议订单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -399,16 +407,17 @@ export default {
     rejectAndAdopt (status) {
       this.$refs['applyForm'].resetFields();
       console.log(this.applyForm)
-      const { id } = this.applyForm
+      const { applicationId } = this.applyForm
       apiDataFilter.request({
         apiPath: 'manage.salesOrder.rejectAndAdopt',
-        data: { id, status },
+        data: { applicationId, status },
         method: 'post',
         successCallback: (res) => {
           this.$message({
             type: 'success',
             message: status === 1 ? '提交通过申请' : '认领已经驳回'
           });
+          this.dialogFormVisible = false
           this.loadList()
         }
       })
