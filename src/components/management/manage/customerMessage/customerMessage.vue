@@ -107,7 +107,7 @@ export default {
       dialogImageUrl: '',
       isUpImage: true,
       shortUrl: '/wx/file/upload/image/?tmp=1&remark=',
-      serviceList: [{ serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' }],
+      serviceList: [{ serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' }, { serviceId: 13, name: '圈外职场研究所' }],
       messageModel: [{ type: 1, name: '文字' }, { type: 2, name: '图片' }]
     }
   },
