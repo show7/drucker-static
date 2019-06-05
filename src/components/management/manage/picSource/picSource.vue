@@ -80,7 +80,7 @@ export default {
       shortUrl: '/wx/file/upload/image/?tmp=1&remark=',
       langUrl: '/wx/file/upload/image/?tmp=0&remark=',
       serviceId: 1,
-      serviceList: [{ serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' }],
+      serviceList: [{ serviceId: 1, name: '圈外同学' }, { serviceId: 6, name: '圈外职场学园' }, { serviceId: 10, name: '又更新了' }, { serviceId: 13, name: '圈外职场研究所' }],
       info: '',
       dialogVisible: false
     }
